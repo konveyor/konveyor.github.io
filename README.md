@@ -1,2 +1,2 @@
-# konveyor.github.io-
+# konveyor.github.io
 Documentation for Konveyor projects
