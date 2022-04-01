@@ -2,3 +2,5 @@ baseURL = 'http://konveyor.github.io/'
 languageCode = 'en-us'
 title = 'Documentation for Konveyor projects'
 theme = 'learn'
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
