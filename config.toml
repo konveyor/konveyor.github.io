@@ -1,4 +1,4 @@
 baseURL = 'http://konveyor.github.io/'
 languageCode = 'en-us'
-title = 'My New Hugo Site'
+title = 'Documentation for Konveyor projects'
 theme = 'learn'
