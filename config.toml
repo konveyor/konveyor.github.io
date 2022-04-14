@@ -4,3 +4,5 @@ title = 'Documentation for Konveyor projects'
 theme = 'learn'
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
+[params]
+themeVariant = "Konveyor"
