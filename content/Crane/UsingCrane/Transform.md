@@ -1,9 +1,10 @@
 ---
-title: "Transforming workloads"
-date: 2022-04-14T15:21:35-06:00
+title: "Transform"
+date: 2022-04-18T18:28:29-06:00
 draft: true
 ---
-## Transforming workloads
+
+### Transforming workloads
 
 Frequently when migrating workloads between one environment to another, There arises a need to change something about the resources before they’re imported into your target environment. A few examples include:
 
@@ -28,3 +29,4 @@ To see the list of available optional command for configured plugins, run the fo
 ```
 crane transform optionals
 ```
+See Managing PlugIns for more information on plugins that can be consumed by the transform command.

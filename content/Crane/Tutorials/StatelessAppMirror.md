@@ -1,7 +1,7 @@
 ---
-title: "Example: Stateless application mirror"
+title: "Tutorial: Stateless application mirror"
 date: 2022-04-14T15:18:35-06:00
-draft: true
+draft: false
 ---
 ## Stateless application mirror
 This tutorial demonstrates how to mirror a simple stateless PHP Guestbook application using Crane.

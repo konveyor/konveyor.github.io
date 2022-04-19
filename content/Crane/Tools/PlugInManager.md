@@ -1,7 +1,7 @@
 ---
 title: "Managing Plugins"
 date: 2022-04-14T15:19:04-06:00
-draft: true
+draft: false
 ---
 ## Plugin management
 A helper to manage plugins that gets consumed by `transform` command. This is an optional step rather a utility to get any needed plugins and add them to appropriate location to be consumed by `transform` command.
