@@ -3,13 +3,15 @@ title: "Developing custom plugins"
 date: 2022-04-14T15:22:29-06:00
 draft: false
 ---
-## Developing custom plugins
-
 This document covers how to write a plugin binary using crane-lib. It requires:
 
 1. Go to the development environment setup. (Optionally, an overview of the crane toolkit.)
 
-A binary plugin for crane-lib is meant to be a simple Go program in the following format:
+Create binary plugin for crane-lib as a simple Go program in the following format that will:
+Read an input from stdin.
+Call the `Run` function with the input object passed as unstructured.
+Print the return value of Run function on stdout.
+
 ```
 package main
 
@@ -41,11 +43,11 @@ func main() {
 	return resp, nil
 }
 ```
-All it does is read an input from stdin, calls the `Run` function with the input object passed as unstructured and prints the return value of Run function on stdout.
+The json is passed in using stdin is a `transform.PluginRequest` which consists of an inline unstructured object and an optional `Extras` map containing additional flags. Without any `Extras` the format is identical to the json output from a `kubectl get -o json` call.
 
-The json passed in via stdin is a `transform.PluginRequest` which consists of an inline unstructured object and an optional `Extras` map containing additional flags. Without any `Extras` the format is identical to the json output from a `kubectl get -o json` call. When adding extra parameters, a map field “extras” is added at the top level (parallel to “apiVersion”, “kind”, etc.).
+When adding extra parameters, a map field “extras” is added at the top level (parallel to “apiVersion”, “kind”, etc.).
 
-During the development of the plugin, one can iterate by passing in the JSON object on stdin manually. For example, if the above code is compiled and run with the following json as input, the output will be `{"version": "v1"}`.
+Version the plugin development output by passing in the JSOC object on stdin manually during development.  For example, if the code above  is compiled and run with the following json as input, the output will be `{"version": "v1"}`.
 ```
 ./my-plugin
 {
@@ -123,6 +125,6 @@ During the development of the plugin, one can iterate by passing in the JSON obj
    }
 }
 ```
-From here, one can iterate over the plugin development. Once the plugin is ready to be tested, it can be put in a directory and run with the crane cli command.
+When the plugin is ready to be tested, put it in a directory and run with the crane cli command.
 
 More accurate detail can be found [here] (https://github.com/konveyor/crane-lib/blob/main/transform/binary-plugin/README.md).
