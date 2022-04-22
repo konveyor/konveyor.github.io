@@ -6,8 +6,6 @@ chapter = true
 pre = "<b>3 </b>"
 +++
 
-### Chapter X
+# Crane
 
-# Some Chapter title
-
-Lorem Ipsum.
+Use this section to better understand and use the Konveyor Tackle tool.
