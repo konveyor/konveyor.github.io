@@ -6,6 +6,6 @@ chapter = true
 pre = "<b>3 </b>"
 +++
 
-# Crane
+# Tackle
 
 Use this section to better understand and use the Konveyor Tackle tool.
