@@ -1,7 +1,7 @@
 ---
 title: "Step Two: Transform"
 date: 2022-04-22T10:29:06-06:00
-draft: true
+draft: false
 ---
 The Transform command facilitates the changes to the exported resources that are frequently necessary when migrating workloads between one environment to another. For example:
 
