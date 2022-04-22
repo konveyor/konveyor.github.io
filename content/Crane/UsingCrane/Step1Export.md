@@ -1,7 +1,7 @@
 ---
 title: "Step One: Export"
 date: 2022-04-22T10:29:18-06:00
-draft: true
+draft: false
 ---
 
 The first step of the cluster migration process is exporting resources from a source cluster of any namespace to be input for the subsequent commands.
