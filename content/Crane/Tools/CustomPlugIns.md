@@ -7,10 +7,10 @@ This document covers how to write a plugin binary using crane-lib. It requires:
 
 1. Go to the development environment setup. (Optionally, an overview of the crane toolkit.)
 
-Create binary plugin for crane-lib as a simple Go program in the following format that will:
-Read an input from stdin.
-Call the `Run` function with the input object passed as unstructured.
-Print the return value of Run function on stdout.
+2. Create binary plugin for crane-lib as a simple Go program in the following format that will:
+- Read an input from stdin.
+- Call the `Run` function with the input object passed as unstructured.
+- Print the return value of `Run` function on stdout.
 
 ```
 package main

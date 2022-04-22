@@ -3,32 +3,29 @@ title: "Tunnel API"
 date: 2022-04-14T15:21:57-06:00
 draft: false
 ---
-## Tunnel Api
+The `tunnel-api` sub-command can be used to access an on-premise cluster from a cloud cluster to allow orchestrating migrations from on-premise clusters using MTC where access is not possible otherwise.
 
-
-The `tunnel-api` sub-command can be used to access an on-premise cluster from a cloud cluster. The intention is to allow orchestrating migrations from on-premise clusters using MTC where access is not possible otherwise.
-
-To provide access an openvpn client on the on-premise cluster will connect to a server running on the cloud cluster. The openvpn server is exposed to the client using a load balancer address on the cloud cluster.
+An openvpn client on the on-premise cluster will connect to a server running on the cloud cluster and the openvpn server is exposed to the client using a load balancer address on the cloud cluster.
 
 A service created on the cloud cluster is used to expose the on-premise clusters API to MTC running on the cloud cluster.
 
 ### Requirements
 - The system used to create the VPN tunnel must have access and be logged in to both clusters.
 - It must be possible to create a load balancer on the cloud cluster.
-- An available namespace on each cluster to run the tunnel in. This should not be created in advance,
+- An available namespace on each cluster to run the tunnel in not created in advance.
 
-**Note:** To connect multiple on-premise source clusters to your cloud cluster you should use a separate namespace for each.
+**Note:** To connect multiple on-premise source clusters to your cloud cluster use a separate namespace for each.
 
 ### api-tunnel options
-- namespace: The namespace to launch the VPN tunnel in, defaults to openvpn
-- destination-context: The cloud destination cluster context where the openvpn server will be launched.
-- destination-image: The container image to use on the destination cluster. Defaults to quay.io/konveyor/openvpn:latest
-- source-context: The on-premise source cluster context where the openvpn client will be launched.
-- source-image: The container image to use on the source cluster. Defaults to quay.io/konveyor/openvpn:latest
-- proxy-host: The hostname of an http-proxy to use on the source cluster for connecting to the destination cluster
-- proxy-pass: The password for the http-proxy. If specified you must also specify a username or it will be ignored.
-- proxy-port: The port the http-proxy is listening on. If no specified it will default to 3128
-- proxy-user: The username for the http-proxy. If specified you must also specify a password or it will be ignored.
+- **namespace:** The namespace used to launch the VPN tunnel in, defaults to openvpn
+- **destination-context:** The cloud destination cluster context where the openvpn server will be launched.
+- **destination-image:** The container image to use on the destination cluster. (Default: quay.io/konveyor/openvpn:latest)
+- **source-context:** The on-premise source cluster context where the openvpn client will be launched.
+- **source-image:** The container image to use on the source cluster. (Default: quay.io/konveyor/openvpn:latest)
+- **proxy-host:** The hostname of an http-proxy to use on the source cluster for connecting to the destination cluster.
+- **proxy-pass:** The password for the http-proxy. If specified you must also specify a username or it will be ignored.
+- **proxy-port:** The port the http-proxy is listening on. If none is specified it will default to 3128
+- **proxy-user:** The username for the http-proxy. If specified you must also specify a password or it will be ignored.
 
 **Example**
 ```

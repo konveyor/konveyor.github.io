@@ -6,15 +6,15 @@ draft: false
 This tutorial demonstrates how to mirror a simple, stateless [PHP Guestbook application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/) using Crane.
 
 **Roadmap**
-- Deploy the Guestbook application in the source cluster.
-- Extract resources from the source cluster using Crane Export.
-- Generate transformations to prepare manifests for the destination cluster using Crane Transform.
-- Apply the transformations using Crane Apply.
-- Apply application manifests into the destination cluster.
+- **1. Deploy** the Guestbook application in the source cluster.
+- **2. Extract** resources from the source cluster using Crane Export.
+- **3. Transform** resources to prepare manifests for the destination cluster using Crane Transform.
+- **4. Apply** the transformations using Crane Apply.
+    - Apply application manifests to the destination cluster.
 
 ### Prerequisites
 
-Create a source and destination Kubernetes cluster environment in minikube or Kind:
+1. Create a source and destination Kubernetes cluster environment in minikube or Kind:
 
 **minikube**
 ```
@@ -26,7 +26,7 @@ chmod +x minikube-clusters-start.sh./minikube-clusters-start.sh
 wget "https://raw.githubusercontent.com/konveyor/crane-runner/main/hack/kind-up.sh"
 chmod +x kind-up.sh./kind-up.sh
 ```
-Install Crane using the [Installation Guide](https://crane-docs.konveyor.io/content/getting-started/installation/).
+2. Install Crane using the [Installation Guide](https://crane-docs.konveyor.io/content/getting-started/installation/).
 
 **Important:** Read through [Kubernetes' documentation on accessing multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/). This document references **src** and **dest** contexts that refer to the clusters created using the minikube startup scripts above.
 
@@ -179,7 +179,7 @@ The resources are  effectively cluster agnostic  and ready to be kubectl applied
 
 **Note:** Additional patches to add/remove/replace additional fields on the resources previously exported are available if optional flags are specified..
 
-### 5. Apply the manifests to the destination cluster
+#### Apply the manifests to the destination cluster
 
 Apply the manifests prepared for the destination cluster using `kubectl` directly:
 ```
