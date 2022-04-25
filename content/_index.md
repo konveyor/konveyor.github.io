@@ -5,11 +5,6 @@ draft: false
 ---
 # Konveyor Documentation
 
----
-title: "Konveyor Documentation"
-date: 2022-04-14T14:58:17-06:00
-draft: false
----
 # Konveyor background
 Sysadmins and Developers are tired of the words “Digital Transformation.”  They don’t want to hear about the “five keys to digital transformation” or the “seven must-haves to transform.” They are also tired of every vendor presenting their framework and methodology for digital transformation bundled with a bunch of proprietary tools.
 
