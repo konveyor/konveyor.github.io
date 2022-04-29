@@ -3,9 +3,6 @@ title: "Konveyor Documentation"
 date: 2022-04-14T14:58:17-06:00
 draft: false
 ---
-# Konveyor Documentation
-
-# Konveyor background
 Sysadmins and Developers are tired of the words “Digital Transformation.”  They don’t want to hear about the “five keys to digital transformation” or the “seven must-haves to transform.” They are also tired of every vendor presenting their framework and methodology for digital transformation bundled with a bunch of proprietary tools.
 
 Developers and sysadmins want to learn how to actually transform their applications and infrastructure so they can take advantage of new technologies to deliver new capabilities faster, at greater scale, and with higher quality while reducing technical debt. It is clear that one of the technologies that underpins the future of applications and infrastructure is Kubernetes - an open-source system for automating deployment, scaling, and management of containerized applications.
@@ -35,4 +32,3 @@ Pelorus is focused around measuring the improvement that moving and modernizing 
 Together, these five projects comprise today the Konveyor community.  Moving forward, it is inevitable that demand for each will align with evolving migration strategies and technology trends.  For example, whereas rehosting with Forklift defined use cases may reach heightened demand in the short term, this project could also very well lose traction as Virtual Machines are fully containerized across the landscape in the longer term.  New tools could then hypothetically emerge in the Konveyor community empowering users to further extend these containerized applications to edge computing environments, perhaps relying on AI/ML and event-driven architectures.  That being said, it is widely expected that there will be ebb and flow with existing project usage, as well as the introduction of entirely new projects altogether.
 
 -Content taken from the [Konveyor Messaging Guide](https://docs.google.com/document/d/1ihwqflbCH2baS_lqGUJVbImJcwMc1-GFyP1SV1QjrDY/edit#heading=h.th9fk8bf62kx)
-
