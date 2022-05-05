@@ -8,10 +8,10 @@ title: "Managing Applications"
 date: 2022-05-04T17:02:46-06:00
 draft: true
 ---
-Create, import, tag, and modify your applications in the Application inventory page of the Tackle web console.
+Follow the procedures in this section to create, import, tag, and modify your applications in the Application inventory page of the Tackle web console.
 
 ### Creating an application
-Create an application on the Application inventory page of the Tackle web console.
+Follow the steps below to create an application on the Application inventory page of the Tackle web console.
 
 **Procedure**
 1. Open the Tackle web console.
@@ -28,7 +28,7 @@ The new application is displayed on the Application inventory page.
 Expand the application to view its tags and comments.
 
 ### Importing applications
-Import one or more applications into the Application inventory page of the Tackle web console by using a CSV file.
+Follow the steps below to import one or more applications into the Application inventory page of the Tackle web console by using a CSV file.
 
 **Note:** You cannot create tags or business services by importing a CSV file. Specified tags or business services must exist in the web console before you import the applications.
 
@@ -81,7 +81,7 @@ Specified business services, tag types, and tags created in the web console.
 The imported applications are displayed on the Application inventory page .
 
 ## Managing application imports
-Manage application imports on the Application import page of the Tackle web console.
+Follow the steps below to manage application imports on the Application import page of the Tackle web console.
 
 **Procedure**
 1. Open the Tackle web console.
@@ -96,7 +96,7 @@ The Application import page displays a list of application imports.
 * **Export Errors:** Enables you to save the application import errors as a CSV file.
 
 ## Updating the tags assigned to an application
-Add or remove tags assigned to an application on the Application inventory page of the Tackle web console.
+Follow the steps below to add or remove tags assigned to an application on the Application inventory page of the Tackle web console.
 
 **Procedure**
 1. Open the Tackle web console.
@@ -106,7 +106,7 @@ Add or remove tags assigned to an application on the Application inventory page 
 5. Expand the application to view the updated tags.
 
 ## Updating the business service assigned to an application
-Update the business service assigned to an application on the Application inventory page of the Tackle web console.
+Follow the steps below to update the business service assigned to an application on the Application inventory page of the Tackle web console.
 
 **Prerequisites**
 
@@ -121,7 +121,7 @@ The business service must exist on the Controls page.
 The updated business service is displayed in the Business service column of the application.
 
 ## Managing application dependencies
-Add, delete, and view application dependencies in the Manage dependencies window on the Application inventory page of the Tackle web console.
+Follow the steps below to add, delete, and view application dependencies in the Manage dependencies window on the Application inventory page of the Tackle web console.
 
 **Procedure**
 1. Open the Tackle web console.
