@@ -1,10 +1,8 @@
 ---
-title: "Installation"
+title: "Installing Tackle"
 date: 2022-05-03T11:00:46-06:00
-draft: true
+draft: false
 ---
-
-## Installing Tackle
 This section provides the necessary steps needed to install Tackle.
 
 ### Installing the Tackle Operator

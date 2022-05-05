@@ -1,9 +1,8 @@
 ---
-title: "About"
+title: "Tackle Overview"
 date: 2022-05-03T09:57:46-06:00
-draft: true
+draft: false
 ---
-
 Tackle is a collection of tools that support the modernization and migration of applications to Kubernetes. These tools assess applications to determine which option is the appropriate migration strategy for each application:
 * Rehosting
 * Replatforming
@@ -12,13 +11,13 @@ Tackle is a collection of tools that support the modernization and migration of 
 Tackle uses an interactive questionnaire for the assessment which enables key stakeholders to gather information about applications, discuss risks flagged by Tackle, and reach a consensus in formulating recommendations for each application.
 
 ## Tackle Refactoring Tools
-The tools are cloud-native microservices that are accessible from a common Tackle UI.
+The tools are cloud-native micro-services that are accessible from a common Tackle UI.
 * Application Inventory
 * Pathfinder
 * Controls
 
 ### Application Inventory
-Tackle Application Inventory is the vehicle which selects applications for assessment by Pathfinder. It provides users four  main functionalities:
+Tackle Application Inventory is the vehicle which selects applications for assessment by Pathfinder. It provides users four  main functions:
 * Maintain a portfolio of applications.
 * Link applications to the business services they support.
 * Define interdependencies.
