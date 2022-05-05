@@ -9,7 +9,7 @@ Developers and sysadmins want to learn how to actually transform their applicati
 
 The Konveyor community exists to accelerate sysadmins and developers' journey to Kubernetes. Konveyor is a community of people passionate about helping others modernize and migrate their applications for Kubernetes by building tools, identifying patterns, and providing advice.
 
-# Konveyor projects
+## Konveyor projects
 
 Konveyor currently consists of five tools or projects:
 
