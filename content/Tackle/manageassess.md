@@ -1,7 +1,7 @@
 ---
-title: "Managing Assessments"
+title: "Managing assessments"
 date: 2022-05-05T15:15:05-06:00
-draft: true
+draft: false
 ---
 
 Start, edit, review, and delete application assessments in the Application inventory page of the Tackle web console.
@@ -9,7 +9,7 @@ Start, edit, review, and delete application assessments in the Application inven
 ## Starting an assessment
 Follow the steps below to start an application assessment on the Application inventory page of the Tackle web console.
 
-**Procedure**
+#### Procedure
 1. Start the Tackle web console
 2. Click **Application Inventory**.
 3. Select an application that does not have a Completed assessment status and click the **Assess** button in the toolbar.
@@ -25,11 +25,11 @@ The Assessment status of each assessed application is set to Completed.
 ## Editing an assessment
 Follow the steps below to take an application assessment on the Application inventory page of the Tackle web console.
 
-**Prerequisites**
+#### Prerequisites
 
 An application must have a Completed assessment status.
 
-**Procedure**
+#### Procedure
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Select an application that does not have a Completed assessment status and click the **Assess** button in the toolbar.
@@ -40,10 +40,11 @@ An application must have a Completed assessment status.
 ##Reviewing an assessment
 Follow the steps below to review an application assessment on the Application inventory page of the Tackle web console.
 
-**Prerequisites**
+#### Prerequisites
+
 An application must have a Completed assessment status and a Not started review status.
 
-**Procedure**
+#### Procedure
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Select an application with a Completed assessment status and a Not Started review status and click the **Review** button in the toolbar.
@@ -68,11 +69,11 @@ Follow the steps below to:
 * Copy an assessment or assessment and review from a single application and apply them to multiple applications on the Application inventory page of the Tackle web console.
 * Apply assessments and reviews to groups of related applications, for example, applications written in Java or belonging to the same business service.
 
-**Prerequisites**
+#### Prerequisites
 
 An application must have a Completed assessment status or Completed assessment and review statuses, depending on whether you are copying an assessment or an assessment and review.
 
-**Procedure**
+#### Procedure
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Click the **Options** menu kebab beside an application with a Completed assessment status or Completed assessment and Review statuses.
@@ -91,10 +92,11 @@ The selected applications are set to a Completed assessment status or Completed 
 ## Deleting an assessment
 Follow the steps below to delete an application assessment on the Application inventory page of the Tackle web console. Deleting an assessment deletes its review.
 
-Prerequisites
+#### Prerequisites
+
 An application must have a Completed assessment status.
 
-Procedure
+#### Procedure
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Click he **Options** menu kebab beside an application with a Completed assessment status and select **Discard** assessment.

@@ -5,10 +5,10 @@ draft: false
 ---
 Follow the procedures in this section to install Tackle.
 
-### Installing the Tackle Operator
+## Installing the Tackle Operator
 Follow the steps below to download and install the Tackle Operator on an Enterprise Kubernetes Platform cluster.
 
-**Prerequisites**
+#### Prerequisites
 * Cluster-admin privileges.
 
 #### Procedure
@@ -25,10 +25,10 @@ The Tackle Operator is installed in the my-tackle-operator namespace by default.
 ```
 $ kubectl get all -n my-tackle-operator
 ```
-### Installing the Tackle application
+## Installing the Tackle application
 Follow the steps below to install Tackle in a namespace by creating an instance of the Tackle application.
 
-**Prerequisites**
+#### Prerequisites
 * Tackle Operator installed on the cluster.
 * Project-admin privileges.
 
@@ -42,10 +42,10 @@ $ kubectl apply -n <namespace> -f https://raw.githubusercontent.com/konveyor/tac
 2. Open the Kubernetes dashboard
 3. Click **Workloads** then **Deployments** to verify the installation.
 
-### Logging into the Tackle web console
+## Logging into the Tackle web console
 Follow the steps below to log into the Tackle web console.
 
-**Prerequisites**
+#### Prerequisites
 * Tackle application installed.
 
 #### Procedure
@@ -53,7 +53,7 @@ Follow the steps below to log into the Tackle web console.
 2. Click **Services** then **Ingresses**.
 3. Click the Endpoint of the tackle-sample ingress to launch the Tackle web console in a new browser window.
 4. Enter the following:
-* ```tackle``` in the **Username** or **Email** field
+* **tackle** in the **Username** or **Email** field
 * Set a password in the **Password** field.
 5. Click **Log in**.
 
