@@ -6,8 +6,6 @@ chapter = true
 pre = "<b>2 </b>"
 +++
 
-### Chapter X
+# Forklift
 
-# Some Chapter title
-
-Lorem Ipsum.
+Use this section to better understand and use the Konveyor Forklift tool.
