@@ -3,15 +3,22 @@ title: "Konveyor Documentation"
 date: 2022-04-14T14:58:17-06:00
 draft: false
 ---
+### Why Konveyor?
+
 Sysadmins and Developers are tired of the words “Digital Transformation.”  They don’t want to hear about the “five keys to digital transformation” or the “seven must-haves to transform.” They are also tired of every vendor presenting their framework and methodology for digital transformation bundled with a bunch of proprietary tools.
 
 Developers and sysadmins want to learn how to actually transform their applications and infrastructure so they can take advantage of new technologies to deliver new capabilities faster, at greater scale, and with higher quality while reducing technical debt. It is clear that one of the technologies that underpins the future of applications and infrastructure is Kubernetes - an open-source system for automating deployment, scaling, and management of containerized applications.
 
 The Konveyor community exists to accelerate sysadmins and developers' journey to Kubernetes. Konveyor is a community of people passionate about helping others modernize and migrate their applications for Kubernetes by building tools, identifying patterns, and providing advice.
 
-## Konveyor projects
+### Konveyor projects
 
 Konveyor currently consists of five tools or projects:
+* Forklift
+* Crane
+* Move2Kube
+* Tackle
+* Pelorus
 
 Forklift is focused on migrating virtual machines to Kubernetes and provides the ability to migrate multiple virtual machines to KubeVirt with minimal downtime.  It allows organizations to rehost, or “lift and shift'' applications residing on these VMs.  While rehosting doesn’t provide the same depth of benefits as replatforming or refactoring, it’s the first step in the right direction. It’s often useful to have all the unmodified development workloads in Kubernetes as a basecamp for further transformations,  or in cases where development teams may not have the ability to change or modify code, such as with vendor provided software. Rehosting also helps teams enjoy the benefits of the new platform with less friction in improving process and culture.  
 
