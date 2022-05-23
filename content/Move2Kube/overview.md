@@ -13,4 +13,4 @@ The project includes a few tools:
 - [move2kube-ui](https://github.com/konveyor/move2kube-ui): A UI for interacting with the Move2Kube CLI tool. This also allows for fully-managed Move2Kube runtimes.
 - [move2kube-transformers](https://github.com/konveyor/move2kube-transformers): Collection of useful transformers for extending Move2Kube's functionality. Built by the Konveyor community based on experience from performing migrations for clients.
 
-For more information, documentation and tutorials please visit [https://move2kube.konveyor.io/](https://move2kube.konveyor.io/)
+For more information, documentation and tutorials, please visit [https://move2kube.konveyor.io/](https://move2kube.konveyor.io/)
