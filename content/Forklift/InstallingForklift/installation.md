@@ -4,9 +4,9 @@ date: 2022-05-11T15:57:06-06:00
 draft: false
 ---
 
-Install the Forklift Operator by using the OKD web console or the command line interface (CLI).
+The Forklift Operator can be installed using the OKD web console or the command line interface (CLI).
 
-## Installing the Forklift Operator by using the OKD web console
+## Installing the Forklift Operator using the OKD web console
 Follow the steps below to install the Forklift Operator by using the OKD web console.
 
 ### Prerequisites

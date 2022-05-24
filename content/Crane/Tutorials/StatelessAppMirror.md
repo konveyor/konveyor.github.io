@@ -1,9 +1,9 @@
 ---
-title: "Tutorial: Stateless application mirror"
+title: "Stateless application mirror"
 date: 2022-04-14T15:18:35-06:00
 draft: false
 ---
-This tutorial demonstrates how to mirror a simple, stateless [PHP Guestbook application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/) using Crane.
+This tutorial is an example of how to mirror a simple, stateless [PHP Guestbook application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/) using Crane.
 
 **Roadmap**
 - **1. Deploy** the Guestbook application in the source cluster.
@@ -30,7 +30,7 @@ chmod +x kind-up.sh./kind-up.sh
 
 **Important:** Read through [Kubernetes' documentation on accessing multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/). This document references **src** and **dest** contexts that refer to the clusters created using the minikube startup scripts above.
 
-If you are working in your own environment, or use kind (`kind-src` and `kind-dest`), you will need to modify the commands below to reference the correct cluster context.
+When working in the home environment, or use kind (`kind-src` and `kind-dest`), modify the commands below to reference the correct cluster context.
 
 ### 1. Deploy the Guestbook application in the source cluster
 
@@ -46,14 +46,14 @@ kubectl --context src --namespace guestbook wait --for=condition=ready pod --sel
 ```
 **Optional**
 
-Forward localhost traffic to the frontend of the Guestbook application to access Guestbook from the browser of your choice using `localhost:8080`:
+Forward localhost traffic to the frontend of the Guestbook application to access Guestbook from a browser using `localhost:8080`:
 ```
 kubectl --context src --namespace guestbook port-forward svc/frontend 8080:80
 ```
 
 ### 2. Extract from the source cluster
 
-Crane’s `export` command is how you extract all of the resources you want from the “source” cluster.
+Crane’s `export` command extracts all of the specified resources from the “source” cluster.
 ```
 crane export --context src --namespace guestbook
 ```
@@ -93,9 +93,9 @@ export
 4 directories, 24 files
 ```
 
-Crane Export is using a discovery client to see all of the API resources in the specified namespace of the designated cluster and outputing them to the disk in YAML form. This allows you to migrate your workloads in a non-destructive way.
+Crane Export is using a discovery client to see all of the API resources in the specified namespace of the designated cluster and outputing them to the disk in YAML form. This allows workloads to migrate in a non-destructive way.
 
-Going forward you’ll be working against these manifests on the disk without impacting the active resources in the “source” cluster.
+Going forward these manifests will be working on the disk without impacting the active resources in the “source” cluster.
 
 ### 3. Generate Transformations
 Crane’s `transform` command generates tranformations in the form of JSON patches and stores them on the disk in the transform directory (unless overridden using ``--transform-dir`).
@@ -138,7 +138,7 @@ transform
 
 2 directories, 24 files
 ```
-Crane Transform is iterating through the configured plugins and running them against the exported resources from the previous step. You can see which plugins are configured with Crane Transform list-plugins and optional arguments to those plugins with crane transform optionals.
+Crane Transform is iterating through the configured plugins and running them against the exported resources from the previous step. View which plugins are configured with Crane Transform list-plugins and optional arguments to those plugins with crane transform optionals.
 
 Explore what plugins can be configured with the Crane plugin-manager list, install one, and customize the exported resources:
 ```
@@ -175,7 +175,7 @@ When crane applies the transformations for the Guestbook frontend it executes a 
 
 The leftover data from the source cluster is removed from the final manifests to make them applicable to the destination cluster.
 
-The resources are  effectively cluster agnostic  and ready to be kubectl applied to the cluster of your choosing or placed under version control to be later managed by GitOps and CI/CD pipelines.
+The resources are  effectively cluster agnostic  and ready to be kubectl applied to the chosen cluster or placed under version control to be later managed by GitOps and CI/CD pipelines.
 
 **Note:** Additional patches to add/remove/replace additional fields on the resources previously exported are available if optional flags are specified..
 
@@ -211,7 +211,7 @@ After creating the custom-guestbook namespace, apply the kustomization.yaml with
 
 ### Next Steps
 - Read more about Crane.
-- Check out Crane Runner where you can perform application migrations inside Kubernetes.
+- Check out Crane Runner to perform application migrations inside Kubernetes.
 
 ### Cleanup
 ```

@@ -33,7 +33,7 @@ An application must have a Completed assessment status.
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Select an application that does not have a Completed assessment status and click the **Assess** button in the toolbar.
-4. Click **Continue** to confirm you want to edit the assessment.
+4. Click **Continue** to confirm editing the assessment.
 5. Update entries.
 6. Click **Save** to save the assessment, or **Save and Review** to start the assessment review process.
 
@@ -71,7 +71,7 @@ Follow the steps below to:
 
 #### Prerequisites
 
-An application must have a Completed assessment status or Completed assessment and review statuses, depending on whether you are copying an assessment or an assessment and review.
+An application must have a Completed assessment status or Completed assessment and review statuses, depending on whether an assessment or an assessment and review is being copied.
 
 #### Procedure
 1. Open the Tackle web console.
@@ -83,7 +83,7 @@ An application must have a Completed assessment status or Completed assessment a
 * Tag and select a tag.
 * Java to display a filtered list of applications.
 
-5. Select the applications to which you want to apply the copied assessment or assessment and review.
+5. Select the applications to apply the copied assessment or assessment and review to.
 6. If a selected application has an existing assessment or review, select the Yes, continue check box to confirm that existing assessments and reviews will be overwritten.
 7. Click Copy.
 

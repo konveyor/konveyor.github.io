@@ -8,7 +8,7 @@ draft: false
 The following prerequisites ensure the environment is prepared for migration.
 
 ## Software compatibility guidelines
-Install compatible software versions using the table below.
+Install compatible software versions with Forklift using the table below.
 
 | Forklift |	OKD|	KubeVirt |	VMware vSphere |	oVirt |
 |--|--|--|--|--|
@@ -17,10 +17,8 @@ Install compatible software versions using the table below.
 ## Storage support and default modes
 Forklift uses the following default volume and access modes for supported storage.
 **Note:** The following settings must be applied if the KubeVirt storage does not support [dynamic provisioning](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/storage/dynamic-provisioning):
-* Filesystem volume mode
-* Filesystem volume mode is slower than Block volume mode.
-* ReadWriteOnce access mode
-* ReadWriteOnce access mode does not support live virtual machine migration.
+* **Filesystem volume mode:** Slower than Block volume mode.
+* **ReadWriteOnce access mode:** Does not support live virtual machine migration.
 
 See [Enabling a statically-provisioned storage class](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/virtualization/virtual-machines#virt-customizing-storage-profile_virt-creating-data-volumes) for details on editing the storage profile.
 
@@ -45,7 +43,7 @@ The following prerequisites apply to all migrations:
 
 * IP addresses, VLANs, and other network configuration settings must not be changed before or after migration. The MAC addresses of the virtual machines are preserved during migration.
 * The network connections between the source environment, the KubeVirt cluster, and the replication repository must be reliable and uninterrupted.
-* If mapping more than one source and destination network, a network attachment definition for each additional destination network must be created.
+* A network attachment definition for each additional destination network must be created if mapping more than one source and destination network.
 
 ## Ports
 Use the following port parameters for migration.
@@ -59,7 +57,7 @@ The firewalls must enable traffic over the following required network ports for 
 |902|TCP|OpenShift nodes|VMware ESXi hosts|Disk transfer data copy|
 
 ### oVirt
-he firewalls must enable traffic over the following required network ports for migrating from oVirt.
+The firewalls must enable traffic over the following required network ports for migrating from oVirt.
 
 |Port|	Protocol|	Source|	Destination|	Purpose|
 |--|--|--|--|--|
@@ -79,21 +77,21 @@ The following prerequisites apply to all migrations:
 
 ### oVirt prerequisites
 The following prerequisites apply to oVirt migrations:
-* Must have the CA certificate of the Engine.
+* Must have the CA certificate of the engine.
 * Able to obtain the CA certificate by navigating to:
 ```
  https://<{rhv-short}_engine_host>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA
 ```
 ### VMware prerequisites
 The following prerequisites apply to VMware migrations:
-* Must install [VMware Tools](https://docs.vmware.com/en/VMware-Workstation-Pro/index.html) on all source virtual machines (VMs).
+* Install [VMware Tools](https://docs.vmware.com/en/VMware-Workstation-Pro/index.html) must be installon all source virtual machines (VMs).
 * If running a warm migration, [changed block tracking (CBT)](https://kb.vmware.com/s/article/1020128) on the VMs and on the VM disks must be enabled.
-* Must create a VMware Virtual Disk Development Kit (VDDK) image.
-* Must obtain the SHA-1 fingerprint of the vCenter host.
-* If migrating more than 10 VMs from an ESXi host in the same migration plan, the NFC service memory of the host must be increased.
+* Create a VMware Virtual Disk Development Kit (VDDK) image.
+* Obtain the SHA-1 fingerprint of the vCenter host.
+* The NFC service memory of the host must be increased if migrating more than 10 VMs from an ESXi host in the same migration plan.
 
 ## Creating a VDDK image
-Forklift uses the VMware Virtual Disk Development Kit (VDDK) SDK to transfer virtual disks from VMware vSphere. Follow the steps in the procedures below to create the VDDK image.
+Forklift uses the VMware Virtual Disk Development Kit (VDDK) SDK to transfer virtual disks from VMware vSphere. Follow the steps below to create the VDDK image.
 
 **Note:**
 The VDDK init image path is required to add a VMware source provider:
@@ -139,10 +137,10 @@ $ podman build . -t <registry_route_or_server_path>/vddk:<tag>
 ```
 $ podman push <registry_route_or_server_path>/vddk:<tag>
 ```
-9. Ensure that the image is accessible to your KubeVirt environment.
+9. Ensure that the image is accessible to the KubeVirt environment.
 
 ## Obtaining the SHA-1 fingerprint of a vCenter host
-Obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.
+Follow the steps below to obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.
 
 ### Procedure
 1. Run the following command:

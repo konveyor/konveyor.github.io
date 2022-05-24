@@ -3,9 +3,11 @@ title: "Upgrading Forklift"
 date: 2022-05-17T14:36:19-06:00
 draft: false
 ---
-Upgrade the Forklift Operator using the OKD web console.
+Follow the steps below to upgrade the Forklift Operator using the OKD web console.
 
 **Important:** Do not skip a release when upgrading.  For example, upgrade 2.0 to 2.1 and then 2.1 to 2.2.
+
+If upgrading from 2.2 to 2.3, see the [### Forklift 2.2 to 2.3 Upgrade Notes](#Forklift-2.2-to-2.3-Upgrade-Notes) section after the procedure
 
 ## Procedure
 1. Open the OKD web console.
@@ -32,7 +34,7 @@ The **Upgrade status** changes from **Up to date** to **Upgrade available**.
 * **Automatic:** Starts upgrades automatically.
 * **Manual** Forces approval to start the upgrade. See [Manually approving a pending Operator upgrade](https://docs.okd.io/latest/operators/admin/olm-upgrading-operators.html#olm-approving-pending-upgrade_olm-upgrading-operators) in the OKD documentation.
 
-5. Verify that the forklift-ui pod is in a **Ready** state before you log in to the web console:
+5. Verify that the forklift-ui pod is in a **Ready** state before logging into the web console:
 ```
 $ kubectl get pods -n konveyor-forklift
 ```

@@ -5,8 +5,8 @@ draft: false
 ---
 Forklift provides a simplistic way for large scale migration virtual machines at scale to Kubernetes from traditional hypervisors like VMware (vSphere) and Red Hat Virtualization (oVirt) to KubeVirt. Forklift is an open source tool based on proven core linux v2v technologies that can rehost a few or hundreds of VMs while minimizing downtime as it lifts and shifts the applications. The benefits of Forklift include:
 
-* **Migration Analytics:** Validate the compatibility of your virtual machine before executing your migration.
-* **Warm migrations:** Reduce downtime by using warm migration capabilities, which will pre-copy your data before finalizing your migration.
+* **Migration Analytics:** Validate the compatibility of the virtual machine before executing the migration.
+* **Warm migrations:** Reduce downtime by using warm migration capabilities, which will pre-copy the data before finalizing the migration.
 * **Migration at Scale:** Migrate small or large amount of virtual machines at once.
 
 Forklift operates using the functionality of multiple projects:

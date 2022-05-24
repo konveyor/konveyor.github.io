@@ -14,7 +14,7 @@ A service created on the cloud cluster is used to expose the on-premise clusters
 - It must be possible to create a load balancer on the cloud cluster.
 - An available namespace on each cluster to run the tunnel in not created in advance.
 
-**Note:** To connect multiple on-premise source clusters to your cloud cluster use a separate namespace for each.
+**Note:** To connect multiple on-premise source clusters to the cloud cluster use a separate namespace for each.
 
 ### api-tunnel options
 - **namespace:** The namespace used to launch the VPN tunnel in, defaults to openvpn
@@ -23,9 +23,9 @@ A service created on the cloud cluster is used to expose the on-premise clusters
 - **source-context:** The on-premise source cluster context where the openvpn client will be launched.
 - **source-image:** The container image to use on the source cluster. (Default: quay.io/konveyor/openvpn:latest)
 - **proxy-host:** The hostname of an http-proxy to use on the source cluster for connecting to the destination cluster.
-- **proxy-pass:** The password for the http-proxy. If specified you must also specify a username or it will be ignored.
+- **proxy-pass:** The password for the http-proxy. If specified, also specify a username or it will be ignored.
 - **proxy-port:** The port the http-proxy is listening on. If none is specified it will default to 3128
-- **proxy-user:** The username for the http-proxy. If specified you must also specify a password or it will be ignored.
+- **proxy-user:** The username for the http-proxy. If specified, also specify a password or it will be ignored.
 
 **Example**
 ```
@@ -41,9 +41,9 @@ crane tunnel-api --namespace openvpn-311 \
 ### MTC Configuration
 When configuring the source cluster in MTC the API URL takes the form of `https://proxied-cluster.${namespace}.svc.cluster.local:8443`.
 
-You may also set the image registry for direct image migrations to `proxied-cluster.${namespace}.svc.cluster.local:5000`.
+**Optional:** Set the image registry for direct image migrations to `proxied-cluster.${namespace}.svc.cluster.local:5000`.
 
-Replace ``${namespace}`` with either `openvpn` or the namespace you specified when running the command to set up the tunnel.
+Replace ``${namespace}`` with either `openvpn` or the specified namespace when running the command to set up the tunnel.
 
 ### Demo
 [https://youtu.be/wrPVcZ4bP1M](https://youtu.be/wrPVcZ4bP1M)
@@ -51,7 +51,7 @@ Replace ``${namespace}`` with either `openvpn` or the namespace you specified wh
 ### Troubleshooting
 It may take 3 to 5 minutes after the setup to complete for the load balancer address to become resolvable. During this time the client will be unable to connect and establish a connection and the tunnel will not function.
 
-During this time you can run `oc get pods` in the namespace you specified for setup, and monitor the logs of the openvpn container to see the connection establish.
+During this time, run `oc get pods` in the specified namespace for setup, and monitor the logs of the openvpn container to see the connection establish.
 
 **Example**
 ```

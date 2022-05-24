@@ -8,7 +8,7 @@ title: "Managing Applications"
 date: 2022-05-04T17:02:46-06:00
 draft: true
 ---
-Follow the procedures in this section to create, import, tag, and modify your applications in the Application inventory page of the Tackle web console.
+Follow the procedures in this section to create, import, tag, and modify the applications in the Application inventory page of the Tackle web console.
 
 ## Creating an application
 Follow the steps below to create an application on the Application inventory page of the Tackle web console.
@@ -19,8 +19,8 @@ Follow the steps below to create an application on the Application inventory pag
 3. Complete the following fields:
 * **Name:** Name of the application.
 * **Description:** Optional. Description of the application.
-* **Business service:** Optional. You can select a business service that describes the application.
-* **Tags:** Optional. You can select one or more tags.
+* **Business service:** Optional. Select a business service that describes the application.
+* **Tags:** Optional. Select one or more tags.
 * **Comments:** Optional. Comments about the application.
 4. Click **Create**.
 
@@ -30,7 +30,7 @@ Expand the application to view its tags and comments.
 ## Importing applications
 Follow the steps below to import one or more applications into the Application inventory page of the Tackle web console by using a CSV file.
 
-**Note:** You cannot create tags or business services by importing a CSV file. Specified tags or business services must exist in the web console before you import the applications.
+**Note:** Do not create tags or business services by importing a CSV file. Specified tags or business services must exist in the web console before importing the applications.
 
 The CSV file contains the following fields:
 * Record Type 1:
@@ -47,7 +47,7 @@ The following values are allowed for Record Type 1:
     * **Tag Type <1..20>:** Optional. Must exist in the web console.
     * **Tag <1..20>:** Optional. Must exist in the web console.
 
-**Note:** You can import up to 20 Tag Type <x> and Tag <x> fields.
+**Note:** Import up to 20 Tag Type <x> and Tag <x> fields.
 
 * **Application dependencies:** This option requires the following fields:
     * **Application Name**
@@ -93,7 +93,7 @@ The Application import page displays a list of application imports.
 4. Click the **Options** menu kebab beside an application import and select one of the following options:
 * **Delete:** Deletes the application import.
 * **View Error:** Report displays a table of application import errors.
-* **Export Errors:** Enables you to save the application import errors as a CSV file.
+* **Export Errors:** Saves the application import errors as a CSV file.
 
 ## Updating the tags assigned to an application
 Follow the steps below to add or remove tags assigned to an application on the Application inventory page of the Tackle web console.

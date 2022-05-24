@@ -1,11 +1,11 @@
 ---
-title: "Tutorial: Migrating a Kubernetes cluster"
+title: "Migrating a Kubernetes cluster"
 date: 2022-04-14T15:14:19-06:00
 draft: false
 ---
 ## Migrating a Kubernetes cluster
 
-This tutorial follows a demo showing how to use the Konveyor tool Crane to migrate an application (inventory) from the source Kubernetes cluster (src) to the destination cluster (dest).
+This tutorial is an example of how to use the Konveyor tool Crane to migrate an application (inventory) from the source Kubernetes cluster (src) to the destination cluster (dest).
 
 Refer to the Crane Documentation for more detailed information.
 

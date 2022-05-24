@@ -11,8 +11,8 @@ Tackle web console provides the following services:
 * Controls
 
 ### Application inventory
-The Application inventory page enables you to perform the following tasks:
-* Manage your application portfolio.
+The Application inventory page can perform the following tasks:
+* Manage application portfolios.
 * Define and manage application dependencies.
 * Link applications to the business services that they support.
 * Describe and categorize applications by using tags.
@@ -28,19 +28,19 @@ Review a completed assessment on the Application inventory page where the follow
 
 * **Proposed action:** Best alternative for modernizing and migrating the application.
 * **Effort estimate:** The likely amount of effort involved in migrating the application based on the proposed action and the identified risks.
-* **Business criticality:** Estimate of how critical the application is to your business on a scale of 1 to 10.
+* **Business criticality:** Estimate of how critical the application is to the business on a scale of 1 to 10.
 * **Work priority:** Estimated priority for the proposed action on a scale of 1 to 10.
 
 The Reports page displays the results of the reviews.
 
 ## Reports
-The Reports page displays the results of the application assessments and reviews and can help you to plan your migration by providing the following information:
+The Reports page displays the results of the application assessments and reviews and can help plan the migration by providing the following information:
 * Suitability of applications for containerization.
 * Possible risks and severity.
 * Adoption plan based on estimated effort, work priority, and application dependencies.
 
 ## Controls
-The Controls page enables you to manage the following entities:
+The Controls page can manage the following entities:
 
 * **Stakeholder:** Individual with an interest in an application or a subject matter expert.
 * **Stakeholder group:** Related stakeholders who may belong to one or more stakeholder groups used to assign multiple stakeholders to review an assessment.
