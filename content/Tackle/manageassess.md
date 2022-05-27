@@ -103,3 +103,5 @@ An application must have a Completed assessment status.
 4. Click **Continue** to confirm the deletion.
 
 The Assessment and Review status of the application are set to Not started.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/manageassess.md)

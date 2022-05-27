@@ -59,3 +59,5 @@ Create a new user in the Tackle realm. See [Creating a new user](https://www.key
 * [Admin console](https://www.keycloak.org/docs/latest/server_admin/#admin-console) in the Keycloak documentation.
 * [User management](https://www.keycloak.org/docs/latest/server_admin/#user-management) in the Keycloak documentation.
 * [Keycloak Operator on Kubernetes](https://www.keycloak.org/getting-started/getting-started-operator-kubernetes) in the Keycloak documentation.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/manageusers.md)

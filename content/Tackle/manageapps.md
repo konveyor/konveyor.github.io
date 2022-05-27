@@ -131,3 +131,5 @@ Follow the steps below to add, delete, and view application dependencies in the 
 * **To add dependencies:** Select applications in the northbound or southbound dependencies fields.
 * **To remove dependencies:** Delete selected applications in the northbound or southbound dependencies fields.
 5. Click **Close** to save and close.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/manageapps.md)

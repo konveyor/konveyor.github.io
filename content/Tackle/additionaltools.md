@@ -11,3 +11,5 @@ draft: false
 
 ### Container Advisor
 [Tackle Container Advisor](https://github.com/konveyor/tackle-container-advisor) provides containerization advisory information for a large scale application portfolio. It takes a natural language description of applications and recommends whether the applications can be containerized in terms of images from multiple container catalogs (DockerHub, Openshift). (Future project plans  include supporting Operators and recommending disposition that is explainable.)
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/additionaltools.md)

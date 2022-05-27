@@ -128,3 +128,5 @@ Version the plugin development output by passing in the JSOC object on stdin man
 When the plugin is ready to be tested, put it in a directory and run with the crane cli command.
 
 More accurate detail can be found [here] (https://github.com/konveyor/crane-lib/blob/main/transform/binary-plugin/README.md).
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Tools/CustomPlugIns.md)

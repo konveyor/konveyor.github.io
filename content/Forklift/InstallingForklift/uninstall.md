@@ -39,3 +39,5 @@ $ kubectl get crd -o name | grep 'forklift' | xargs kubectl delete
 ```
 $ kubectl delete oauthclient/forklift-ui
 ```
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/InstallingForklift/uninstall.md)

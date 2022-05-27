@@ -1,5 +1,5 @@
 ---
-title: "Step Two: Transform"
+title: "Step Two: Transform Exports"
 date: 2022-04-22T10:29:06-06:00
 draft: false
 ---
@@ -27,3 +27,5 @@ Run the following to see the list of available optional commands for configured 
 crane transform optionals
 ```
 See Managing PlugIns for more information on plugins that can be consumed by the transform command.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/UsingCrane/Step2Transform.md)

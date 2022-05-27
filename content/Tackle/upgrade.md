@@ -85,3 +85,5 @@ $ kubectl set image -n <namespace> deployment/<tackle_instance>-ui \
 5. Log in to the web console and click the **Help** icon beside the user name to verify the upgrade.
 
 The About Tackle window opens and displays the version number.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/upgrade.md)

@@ -259,3 +259,5 @@ Warm migration only: When the precopy stage starts.
 The migration details screen displays the migration start and end time, the amount of data copied, and a progress pipeline for each VM being migrated.
 
 3. Expand a VM to view the migration steps, elapsed time of each step, and its state.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/MigratingVMs/migrateweb.md)

@@ -76,3 +76,5 @@ go build -f <plugin-name> .
 cp <plugin> /bin/usr/crane/plugins/<plugin-name>
 ```
 **Note:** Adding plugins available in the plugin repo manually is not advisable as long as it can be added using`plugin-manager`. For custom plugins or testing plugins under development, manual management is necessary.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Tools/PlugInManager.md)

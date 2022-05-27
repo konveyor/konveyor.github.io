@@ -54,3 +54,5 @@ forklift-ui-7cdf96d8f6-xnw5n          1/1    Running  0         2m
 If the configuration is mapped to NFS on the OKD destination provider in Forklift 2.2, upgrading to Forklift 2.3 invalidates the NFS mapping.
 
 **Fix:** Edit the AccessModes and VolumeMode parameters in the NFS storage profile. For more information, see [Customizing the storage profile](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.9/html-single/virtualization/index#virt-customizing-storage-profile_virt-creating-data-volumes).
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/InstallingForklift/upgrade.md)

@@ -24,3 +24,5 @@ Deleting a migration plan does not remove temporary resources such as importer p
 * **View details:** Display the details of a migration plan.
 * **Restart:** Restart a failed or canceled migration plan.
 * **Cancel scheduled cutover:** Cancel a scheduled cutover migration for a warm migration plan.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/MigratingVMs/migrateoptions.md)

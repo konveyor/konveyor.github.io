@@ -305,3 +305,5 @@ The value of the id key is the managed object reference, for a VMware VM, or the
 ```
 $ kubectl get migration/<migration> -n konveyor-forklift -o yaml
 ```
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/MigratingVMs/migratecli.md)

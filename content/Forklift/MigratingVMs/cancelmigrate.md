@@ -16,3 +16,5 @@ The status of the VM shows canceled in the Migration details by VM list. The unm
 
 #### Restarting
 Restart a canceled migration by clicking **Restart** beside the migration plan on the Migration plans page.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/MigratingVMs/cancelmigrate.md)

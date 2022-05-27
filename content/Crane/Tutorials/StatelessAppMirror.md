@@ -217,3 +217,5 @@ After creating the custom-guestbook namespace, apply the kustomization.yaml with
 ```
 kubectl --context dest delete namespace guestbook
 ```
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Tutorials/StatelessAppMirror.md)

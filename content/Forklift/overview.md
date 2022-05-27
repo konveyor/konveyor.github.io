@@ -45,3 +45,5 @@ The precopy stage runs until the cutover stage is started manually or is schedul
 The VMs are shut down during the cutover stage and the remaining data is migrated. Data stored in RAM is not migrated.
 
 Start the cutover stage manually by using the Forklift console or by scheduling a cutover time in the Migration manifest.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/overview.md)

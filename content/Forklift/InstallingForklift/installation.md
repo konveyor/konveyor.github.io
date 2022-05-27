@@ -151,3 +151,5 @@ Example output:
 https://virt-konveyor-forklift.apps.cluster.openshift.com.
 ```
 2. launch a browser and navigate to the Forklift web console.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/InstallingForklift/installation.md)

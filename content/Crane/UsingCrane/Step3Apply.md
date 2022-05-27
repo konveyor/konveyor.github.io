@@ -1,5 +1,5 @@
 ---
-title: "Step Three: Apply"
+title: "Step Three: Apply Patches"
 date: 2022-04-22T10:28:43-06:00
 draft: false
 ---
@@ -11,3 +11,5 @@ crane apply -e export -t transform -o output
 Apply the patches in the `transform` directory to the resources in the `export` directory and save the modified resource files in the `output` directory.
 
 After applying the patches, the resources located in output directory can either be deployed to the destination cluster using `kubectl apply`, or they can be pushed to a repository and then applied with the help of the GitOps pipeline. An example of the later scenario can be found [here](https://crane-docs.konveyor.io/content/usage/Advance%20Usage/gitops.md).
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/UsingCrane/Step3Apply.md)

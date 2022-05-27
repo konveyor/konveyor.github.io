@@ -47,3 +47,5 @@ go build -o crane main.go
 cp crane /usr/bin/crane
 ```
 **Note:** Install the released version instead of building from upstream main.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Installation.md)

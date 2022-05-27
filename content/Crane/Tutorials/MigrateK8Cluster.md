@@ -124,3 +124,5 @@ When the application is migrated, this information must be updated to the new cl
 27. Open the migrated application.
 28. Verify Argo picked up and provisioned all the manifests from the git repo.
 29. Click the Sync button at the top of the screen where the application can be resynced from the git repo.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Tutorials/MigrateK8Cluster.md)

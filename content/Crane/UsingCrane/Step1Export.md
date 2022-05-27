@@ -1,5 +1,5 @@
 ---
-title: "Step One: Export"
+title: "Step One: Export Resources"
 date: 2022-04-22T10:29:18-06:00
 draft: false
 ---
@@ -31,3 +31,5 @@ crane export -c conf.yaml --context demo
 # Note the difference is we are overriding "context" here with flag
 ```
 **Note:** There are multiple ways to input a command, precedence of which is `input from flags > input from config file > env variables > default values` (not all the flags can have a corresponding env variable). This behavior persists across all Crane CLI commands.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/UsingCrane/Step1Export.md)
