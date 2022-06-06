@@ -45,3 +45,5 @@ home = [ "HTML", "RSS", "JSON"]
   custom_css = ["css/foo.css", "css/bar.css"]
   # Change the title separator. Default to "::".
   titleSeparator = "-"
+  # Google Tag Manager
+  gtm_id = "GTM-TKPDMS3"
