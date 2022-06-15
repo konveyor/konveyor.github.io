@@ -5,7 +5,3 @@ draft: false
 ---
 
 Use this section to better understand the helpful Crane tools.
-* [Custom Plugins]()
-* [GitOps Integration]()
-* [Plugin Manager]()
-* [Tunnel API]()

@@ -4,9 +4,7 @@ date: 2022-05-05T10:51:42-06:00
 draft: false
 ---
 ---
-title: "Managing Applications"
-date: 2022-05-04T17:02:46-06:00
-draft: true
+Managing Applications
 ---
 Follow the procedures in this section to create, import, tag, and modify the applications in the Application inventory page of the Tackle web console.
 
