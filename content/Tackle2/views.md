@@ -1,7 +1,7 @@
 ---
 title: "Tackle 2.0 Views"
 date: 2022-06-14T14:59:53-06:00
-draft: true
+draft: false
 ---
 
 The latest version of Tackle has the Developers view and the new Architects view to support the three main roles of users:

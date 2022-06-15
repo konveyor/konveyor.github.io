@@ -1,7 +1,7 @@
 ---
 title: "Assessing and analyzing applications"
 date: 2022-06-14T14:59:11-06:00
-draft: true
+draft: false
 ---
 Tackle core functions are assessing and analyzing the applications for migration and are performed on the Application inventory page.
 

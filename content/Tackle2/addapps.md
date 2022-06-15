@@ -1,7 +1,7 @@
 ---
 title: "Adding applications"
 date: 2022-06-14T14:58:52-06:00
-draft: true
+draft: false
 ---
 
 Applications can be added to Tackle by creating new applications from scratch manually or by importing them.

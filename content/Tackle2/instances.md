@@ -1,7 +1,7 @@
 ---
 title: "Seeding Instances"
 date: 2022-06-14T14:59:46-06:00
-draft: true
+draft: false
 ---
 Tackle instances have key parameters that are configured in the Controls window prior to migration by the project architect and can be added and edited as needed.  
 ![](/Tackle2/Instances/ControlsMain.png)

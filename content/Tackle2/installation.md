@@ -1,7 +1,7 @@
 ---
 title: "Installing Tackle 2.0"
 date: 2022-06-14T14:59:30-06:00
-draft: true
+draft: false
 ---
 
 Follow the steps below to provision the Minikube cluster and install Tackle 2.0.  
