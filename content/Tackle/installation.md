@@ -1,5 +1,5 @@
 ---
-title: "Installing the Tackle Operator"
+title: "Installing the Tackle Operator 1.0"
 date: 2022-05-03T11:00:46-06:00
 draft: false
 ---
