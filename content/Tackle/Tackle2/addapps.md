@@ -85,3 +85,5 @@ Follow the steps below to import a .csv file provided by the customer containing
 11. Review the imported applications by clicking the arrow to the left of the check box to expand.
 
 **Important:** Rows accepted may not match the number of applications in the Application inventory list because some rows are dependencies.  To verify, check the record type column of the CSV file for applications defined as 1 and dependencies as 2.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/addapps.md)

@@ -182,3 +182,5 @@ This management module configures HTTP & HTTPS proxy settings and credentials.  
 * Proxy port
 * Authentication (optional)
     * Proxy credentials
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/views.md)

@@ -78,3 +78,5 @@ Follow the steps below to initiate the Tackle instance and set a custom resource
 3. Repeat this step until all components are Completed or Running.
 
 **Note:** This can take one to five minutes depending on the cluster resources.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/installation.md)
