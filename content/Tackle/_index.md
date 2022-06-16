@@ -1,11 +1,11 @@
 +++
-title = "Tackle 1.0"
+title = "Tackle 1.0 & 2.0"
 date = 2022-04-18T19:17:45-06:00
-weight = 3
+weight = 4
 chapter = true
-pre = "<b>3 </b>"
+pre = "<b>4 </b>"
 +++
 
-# Tackle 1.0
+# Tackle
 
-Use this section to better understand and use the Konveyor Tackle tool version 1.0.
+Use this section to better understand and use the Konveyor Tackle tool versions 1.0 and 2.0.
