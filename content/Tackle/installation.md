@@ -1,62 +1,82 @@
 ---
-title: "Installing the Tackle Operator 1.0"
-date: 2022-05-03T11:00:46-06:00
+title: "Installing Tackle 2.0"
+date: 2022-06-14T14:59:30-06:00
 draft: false
 ---
-Follow the procedures in this section to install Tackle.
 
-## Installing the Tackle Operator
-Follow the steps below to download and install the Tackle Operator on an Enterprise Kubernetes Platform cluster.
+Follow the steps below to provision the Minikube cluster and install Tackle 2.0.  
 
-#### Prerequisites
-* Cluster-admin privileges.
-
-#### Procedure
-
-1. Install the Tackle Operator:
-
-```
-$ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
-```
-The Tackle Operator is installed in the my-tackle-operator namespace by default.
-
-2. Verify the Tackle Operator installation by viewing its resources:
-
-```
-$ kubectl get all -n my-tackle-operator
-```
-## Installing the Tackle application
-Follow the steps below to install Tackle in a namespace by creating an instance of the Tackle application.
-
-#### Prerequisites
-* Tackle Operator installed on the cluster.
-* Project-admin privileges.
+## Provisioning Minikube
+Follow the steps below to provision Minikube for single users deploying Tackle on a workstation. These steps will configure Minikube and enable:
+* Ingress so the Tackle tool can publish outside of the Kubernetes cluster.
+* Operator lifecycle manager (OLM) addon. (OpenShift has OLM installed out of the box but Kubernetes does not.)
 
 #### Procedure
-1. Create an instance of the Tackle application, specifying its namespace:
+1. Provision the Minikube cluster with these recommended parameters.
 ```
-$ kubectl apply -n <namespace> -f https://raw.githubusercontent.com/konveyor/tackle-operator/main/src/main/resources/k8s/tackle/tackle.yaml
+[user@user ~]$ Minikube start -- driver=kvm3  -p <project name> --memory=10g
 ```
-**Note:** Multiple instances of the Tackle application can be created in the same namespace by specifying a unique name for each instance in the tackle.yaml file.
+2. Enable the ingress addon.
+```
+[user@user ~]$ Minikube addons enable ingress -p docs
+```
+3. Enable the operator lifecycle manager (OLM) addon.
+```
+[user@user ~]$ Minikube addons enable olm -p docs
+```
 
-2. Open the Kubernetes dashboard
-3. Click **Workloads** then **Deployments** to verify the installation.
+## Installing Tackle Operator
+Operators are a structural layer that manages resources deployed on Kubernetes (database, front end, back end) to automatically create a Tackle instance instead of doing it manually.
 
-## Logging into the Tackle web console
-Follow the steps below to log into the Tackle web console.
+### Requirements
+Tackle requires a total of 5 persistent volumes (PVs) used by different components to successfully deploy, 3 RWO volumes and 2 RWX volumes will be requested via PVCs.
 
-#### Prerequisites
-* Tackle application installed.
+|Name|Default Size|Access Mode|Description|
+|--|--|--|--|
+|hub database|5Gi|RWO|Hub DB|
+|hub bucket|100Gi|RWX|Hub file storage|
+|keycloak postgresql|1Gi|RWO|Keycloak backend DB|
+|pathfinder postgresql|1Gi|RWO|Pathfinder backend DB|
+|maven|100Gi|RWX|maven m2 repository|
+
+Follow the steps below to install the Tackle Operator in the my-tackle-operator namespace (default) on any Kubernetes distribution, including Minikube.
 
 #### Procedure
-1. Open  the Kubernetes dashboard.
-2. Click **Services** then **Ingresses**.
-3. Click the Endpoint of the tackle-sample ingress to launch the Tackle web console in a new browser window.
-4. Enter the following:
-* **tackle** in the **Username** or **Email** field
-* Set a password in the **Password** field.
-5. Click **Log in**.
+1. Install the Tackle Operator.
+```
+[user@user ~]$ $ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
+```
+2. Verify Tackle was installed.
+```
+[user@user ~]$ kubectl get pods -n my-tackle-operator
+```
+3. Repeat this step until konveyor-tackle-XXX and tackle-operator-XXX show 1/1 Running.
 
-**Important:** Change the default password of the tackle user.
+## Create the Tackle instance
+Follow the steps below to initiate the Tackle instance and set a custom resource (CR) with the tackle_hub.yaml file. CRs can be customized to meet the project needs.
+```
+    $ cat << EOF | kubectl apply -f -
+    kind: Tackle
+    apiVersion: tackle.konveyor.io/v1alpha1
+    metadata:
+      name: tackle
+      namespace: <your-tackle-namespace>
+    spec:
+    EOF
+```
+**Note:** For more information about altering the operator defaults, see the Tackle CR Settings section.
 
-[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/installation.md)
+#### Procedure
+1. Create the instance pointing to the CR file.
+```
+[user@user ~]$ Kubectl create -f tackle_hub.yaml -n my-tackle-operator
+```
+2. Verify the instance
+```
+[user@user ~]$ kubectl get pods -n my-tackle-operator
+```
+3. Repeat this step until all components are Completed or Running.
+
+**Note:** This can take one to five minutes depending on the cluster resources.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/installation.md)
