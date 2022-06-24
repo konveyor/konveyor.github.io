@@ -79,7 +79,7 @@ Follow the steps below to initiate the Tackle instance and set a custom resource
 
 **Note:** This can take one to five minutes depending on the cluster resources.
 
-## Logging into Tackle with auth enabled
+### Logging into Tackle with auth enabled
 The default auth enabled credentials are: admin/password
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/installation.md)

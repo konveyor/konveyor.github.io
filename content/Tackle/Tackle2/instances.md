@@ -37,7 +37,7 @@ Follow the steps below to create a new stakeholder group.  There are no default 
 #### Procedure
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Stakeholder groups** tab.
-3. Click the **Create new **button.
+3. Click the **Create new** button.
 ![](/Tackle2/Instances/NewStakeholderGroup.png)
 4. Enter the following information:
     * Name

@@ -17,9 +17,7 @@ The latest version of Tackle has the Developers view and the new Architects view
 
 ## Developer view
 The developer view is intended to be used by migrators and stakeholders and has three pages with different functionalities.
-* Application inventory
-* Reports
-* Controls
+![](/Tackle2/Views/DevMenu.png)
 
 ### Application inventory
 The Application inventory page manages the applications being migrated and is where the assessment and analysis processes are performed.
@@ -65,10 +63,10 @@ Additional functionality includes:
 
 ### Reports
 The Reports page provides an overview of the assessments and reviews for the entire application inventory.
-![](/Tackle2/Views/ReportsMain.png)
+![](/Tackle2/Views/DevReportsMain.png)
 The Reports page contains the following sections:
 
-* **Current landscape: **Displays all applications according to their risk levels.
+* **Current landscape:** Displays all applications according to their risk levels.
 * **Adoption candidate distribution:** Lists the assessed applications with the following columns:
 * Criticality is based on the Business criticality value of the review.
 * Priority is based on the Work priority value of the review.
@@ -77,8 +75,8 @@ The Reports page contains the following sections:
 
  By default, all applications are selected. You can clear some of the application check boxes to filter the report.
 
-* **Suggested adoption plan: **Displays a suggested adoption plan based on effort, priority, and dependencies.
-* **Identified risks: **Lists the severe risks identified in the assessments for all applications.
+* **Suggested adoption plan:** Displays a suggested adoption plan based on effort, priority, and dependencies.
+* **Identified risks:** Lists the severe risks identified in the assessments for all applications.
 
 ### Controls
 The Controls page is where the application parameters are managed by the architect or developers as the instance is configured and edited as the project progresses.  
@@ -92,17 +90,19 @@ The parameters include:
 
 ## Administrator view
 The administrator view is intended to be used by administrators to set up the Tackle instance environment.
-![](/Tackle2/Views/AdminView.png)
+![](/Tackle2/Views/AdminMenu.png)
 
 ### Credentials
 This management module enables administrators to create and manage credentials for access to private repositories.  It also allows for the architects to assign the credentials to applications without knowing their contents.
-![](/Tackle2/Views/CredentialsMainEmpty.png)
+![](/Tackle2/Views/CredMain.png)
 
 The credentials page displays the available credentials with an Edit and Delete buttons and the following fields:
 * Name
 * Description
 * Type
     * Source Control
+     * Username/Password
+     * Source Private Key/Passphrase
     * Maven Settings File
     * Proxy
 * Type specific information
@@ -116,7 +116,7 @@ Follow the steps below to create new credentials for a source control repository
 **Procedure**
 1. Click **Credentials** in the left menu of the **Administrator** view.
 2. Click the **Create new** button.
-![](/Tackle2/Views/NewCredentialSourceControl.png)
+![](/Tackle2/Views/NewCredSourceCUserP.png)
 3. Enter the following information.
     * Name
     * Description (Optional)
@@ -129,7 +129,7 @@ Follow the steps below to create new credentials for a source control repository
     * SCM Private Key/Passphrase
         * SCM Private Key
         * Private Key Passphrase (Hidden)
-6. Click **Save**.
+6. Click **Create**.
 
 Tackle validates the input and creates a new credential. SCM keys must be parsed and checked for validity. If the validation fails, an error message displaying “not a valid key/XML file” is displayed.
 
@@ -139,13 +139,13 @@ Follow the steps below to create new credentials for a Maven repository.
 **Procedure**
 1. Click **Credentials** in the left menu of the **Administrator** view.
 2. Click the **Create new** button.
-![](/Tackle2/Views/NewCredentialsMaven.png)
+![](/Tackle2/Views/NewCredMaven.png)
 3. Enter the following information.
     * Name
     * Description (Optional)
 4. Select **Maven Settings File** in the **Type** drop-down list.
 5. Upload the settings file.
-6. Click **Save**.
+6. Click **Create**.
 
 Tackle validates the input and creates a new credential. Maven settings.xml files must be parsed and checked for validity. If the validation fails, an error message displaying “not a valid key/XML file” is displayed.
 
@@ -155,7 +155,7 @@ Follow the steps below to create new credentials for a proxy repository.
 **Procedure**
 1. Click **Credentials** in the left menu of the **Administrator** view.
 2. Click the **Create new** button.
-![](/Tackle2/Views/NewCredentialsGeneric.png)
+![](/Tackle2/Views/NewCredProxy.png)
 3. Enter the following information.
     * Name
     * Description (Optional)
@@ -163,21 +163,25 @@ Follow the steps below to create new credentials for a proxy repository.
 5. Enter the following information.
     * Username
     * Password (Hidden)
-6. Click **Save**.
+6. Click **Create**.
 
 ### Repositories
 This management module configures the repositories used by Tackle with the following options.
+![](/Tackle2/Views/GitConfig.png)
 * Git
     * Consume insecure Git repositories
+![](/Tackle2/Views/SubvConfig.png)
 * Subversion
     * Consume insecure Subversion repositories
+![](/Tackle2/Views/MavenConfig.png)
 * Maven
-    * Repository size
+    * Manage repository size
     * Force update of dependencies
     * Consume insecure artifact repositories
 
 ### Proxy
 This management module configures HTTP & HTTPS proxy settings and credentials.  To configure the proxies click the radio button and enter the following information.
+![](/Tackle2/Views/ProxyConfig.png)
 * Proxy host
 * Proxy port
 * Authentication (optional)
