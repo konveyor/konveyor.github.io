@@ -21,7 +21,7 @@ The developer view is intended to be used by migrators and stakeholders and has 
 
 ### Application inventory
 The Application inventory page manages the applications being migrated and is where the assessment and analysis processes are performed.
-![](/Tackle2/Views/AppInvMainPopulated.png)
+![](/Tackle2/Views/AppInvMain.png)
 The application list provides a holistic view of the application portfolio using an extensible tagging model to classify application types.  The applications can be expanded to show more detailed information which can be edited and managed.
 
 This page has two tabs with different information and functionality: Assessment and Analysis.
