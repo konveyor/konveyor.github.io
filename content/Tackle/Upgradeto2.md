@@ -1,7 +1,7 @@
 ---
 title: "Upgrading from 1.2 to 2.0"
 date: 2022-06-29T10:53:45-06:00
-draft: true
+draft: false
 ---
 A CLI tool is available to upgrade Tackle 1.2 to 2.0 written in Python.
 

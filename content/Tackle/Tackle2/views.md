@@ -110,61 +110,6 @@ The credentials page displays the available credentials with an Edit and Delete 
 
 **Note:** Type specific credential information such as keys and passphrases will be hidden or shown as [Encrypted].
 
-#### Creating source control credentials
-Follow the steps below to create new credentials for a source control repository.
-
-**Procedure**
-1. Click **Credentials** in the left menu of the **Administrator** view.
-2. Click the **Create new** button.
-![](/Tackle2/Views/NewCredSourceCUserP.png)
-3. Enter the following information.
-    * Name
-    * Description (Optional)
-4. Select the **Source Control** in the **Type** drop-down list.
-5. Select the **credential type** in the **User Credentials** drop-down list and enter the requested information.
-    * Username/Password
-        * Username
-        * Password (Hidden)
-        * Create credentials
-    * SCM Private Key/Passphrase
-        * SCM Private Key
-        * Private Key Passphrase (Hidden)
-6. Click **Create**.
-
-Tackle validates the input and creates a new credential. SCM keys must be parsed and checked for validity. If the validation fails, an error message displaying “not a valid key/XML file” is displayed.
-
-#### Creating Maven settings file credentials
-Follow the steps below to create new credentials for a Maven repository.
-
-**Procedure**
-1. Click **Credentials** in the left menu of the **Administrator** view.
-2. Click the **Create new** button.
-![](/Tackle2/Views/NewCredMaven.png)
-3. Enter the following information.
-    * Name
-    * Description (Optional)
-4. Select **Maven Settings File** in the **Type** drop-down list.
-5. Upload the settings file.
-6. Click **Create**.
-
-Tackle validates the input and creates a new credential. Maven settings.xml files must be parsed and checked for validity. If the validation fails, an error message displaying “not a valid key/XML file” is displayed.
-
-#### Creating proxy credentials
-Follow the steps below to create new credentials for a proxy repository.
-
-**Procedure**
-1. Click **Credentials** in the left menu of the **Administrator** view.
-2. Click the **Create new** button.
-![](/Tackle2/Views/NewCredProxy.png)
-3. Enter the following information.
-    * Name
-    * Description (Optional)
-4. Select **Proxy** in the **Type** drop-down list.
-5. Enter the following information.
-    * Username
-    * Password (Hidden)
-6. Click **Create**.
-
 ### Repositories
 This management module configures the repositories used by Tackle with the following options.
 ![](/Tackle2/Views/GitConfig.png)
