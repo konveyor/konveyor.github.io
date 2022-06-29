@@ -34,7 +34,7 @@ Tackle stakeholders and defined by:
 ## Creating a new stakeholder group
 Follow the steps below to create a new stakeholder group.  There are no default stakeholder groups defined.
 
-#### Procedure
+**Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Stakeholder groups** tab.
 3. Click the **Create new** button.
@@ -48,7 +48,7 @@ Follow the steps below to create a new stakeholder group.  There are no default 
 ## Creating a new job function
 Tackle uses the job function attribute to classify stakeholders and provides a list of default values that can be expanded. Follow the steps below to create a new job function not included in the default list.
 
-#### Procedure
+**Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Job functions** tab.
 3. Click the **Create new** button.
@@ -59,7 +59,7 @@ Tackle uses the job function attribute to classify stakeholders and provides a l
 ## Creating a new stakeholder
 Follow the steps below to create a new migration project stakeholder.
 
-#### Procedure
+**Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Stakeholders** tab.
 3. Click the **Create new** button.
@@ -79,7 +79,7 @@ Tackle uses the business services attribute to define the departments within the
 ## Creating a new business service
 Follow the steps below to create a new business service. There are no default business services defined and must be created prior to creating applications.
 
-#### Procedure
+**Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Business services** tab.
 3. Click the **Create new** button.
@@ -93,7 +93,7 @@ Follow the steps below to create a new business service. There are no default bu
 ## Creating new tag types
 Tackle uses tags to classify applications in multiple categories. Follow the steps below to create a new tag type not included in the default list.
 
-#### Procedure
+**Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Tags** tab.
 3. Click the **Create tag type** button.
@@ -107,7 +107,7 @@ Tackle uses tags to classify applications in multiple categories. Follow the ste
 ### Creating new tags
 Follow the steps below to create a new tag not included in the default list.
 
-#### Procedure
+**Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Tags** tab.
 3. Click the **Create tag types** button.

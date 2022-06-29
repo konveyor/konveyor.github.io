@@ -9,7 +9,7 @@ Tackle core functions are assessing and analyzing the applications for migration
 ## Assessing applications
 Follow the steps below to facilitate discussion of application migration.
 
-#### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu in the **Development** view.
 ![](/Tackle2/AppAssessAnalyze/AnalysisSelect.png)
 2. Click the checkbox to the left of the application being assessed.
@@ -29,7 +29,7 @@ Follow the steps below to facilitate discussion of application migration.
 ### Applying assessments to other applications
 Follow the steps below to apply an application assessment to similar applications being migrated.
 
-### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu in the **Development** view.
 2. Click the checkbox of the application with the completed assessment to copy.
 ![](/Tackle2/AppAssessAnalyze/CopyAssessSelect.png)
@@ -42,7 +42,7 @@ Follow the steps below to apply an application assessment to similar application
 ## Running application analysis
 Follow the steps below to analyze an application for migration.
 
-#### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu in the **Development** view.
 2. Click the **Analysis** tab.
 3. Click the checkbox to the left of the application being analyzed.
@@ -97,7 +97,7 @@ Tackle relies on Kubernetes scheduling capabilities to determine how many analyz
 ### Reviewing the Analysis Report
 Follow the steps below to review the analysis report.  For more information see [Chapter 3. Reviewing the reports of the CLI Guide Migration Toolkit For Applications 5.3](https://access.redhat.com/documentation/en-us/migration_toolkit_for_applications/5.3/html-single/cli_guide/index#review_reports_cli-guide).
 
-#### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu in the **Development** view.
 2. Expand the application with a completed analysis.
 3. Click the **Report** link.

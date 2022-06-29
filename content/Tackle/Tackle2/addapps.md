@@ -19,7 +19,7 @@ Follow the steps below to add a new application to the inventory for assessment 
 
 **Note:** Before starting this procedure, it is helpful to set up business services and check tags and tag types and create additions as needed.
 
-#### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu of the **Developer** view.
 2. Click the **Create new** button.
 ![](/Tackle2/AddingApps/NewAppBasic.png)
@@ -48,7 +48,7 @@ Follow the steps below to add a new application to the inventory for assessment 
 ## Assigning application credentials
 Follow the steps below to assign credentials to one or more applications.
 
-#### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu of the **Developer** view.
 2. Click the **Analysis** tab.
 ![](/Tackle2/AddingApps/SelectManageCred.png)
@@ -63,7 +63,7 @@ Tackle allows users to import a spreadsheet of existing applications instead of 
 ### Downloading the application list CSV template.
 Follow the steps below to download the sample CSV template.
 
-#### Procedure
+**Procedure**
 1. Click **Application inventory** in the left menu of the **Developer** view.
 ![](/Tackle2/AddingApps/SelectMngImport.png)
 2. Click the menu kebab button to the right of the **Review** button.
@@ -76,7 +76,7 @@ Follow the steps below to import a .csv file provided by the customer containing
 
 **Note:** Importing will only add applications, it will not overwrite any existing ones.
 
-#### Procedure
+**Procedure**
 1. Review the import file for all the required information in the required format.
 2. Click **Application inventory** in the left menu of the **Developer** view.
 3. Click the menu kebab button to the right of the **Review** button.
