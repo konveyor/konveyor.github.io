@@ -16,7 +16,7 @@ Forklift operates using the functionality of multiple projects:
 * [Forklift Validation](https://github.com/konveyor/forklift-validation). The Forklift Validation service checks the virtual machines for possible issues before migration. Runs with Open Policy Agent.
 * [Forklift must-gather](https://github.com/konveyor/forklift-must-gather). Support tool for gathering information about the Forklift environment.
 
-#### Additional resources
+**Additional resources**
 * [Performance recommendations for migrating from VMware vSphere to OpenShift Virtualization.](https://access.redhat.com/articles/6242511)
 * [Performance recommendations for migrating from Red Hat Virtualization to OpenShift Virtualization.](https://access.redhat.com/articles/6380311)
 
@@ -35,7 +35,7 @@ Forklift operates in two stages, precopy and cutover.
 ### Precopy stage
 The VMs are not shut down during the precopy stage.  Instead the VM disks are copied incrementally using [changed block tracking (CBT)](https://kb.vmware.com/s/article/1020128) snapshots. The snapshots are created at one-hour intervals by default but can be changed by updating the forklift-controller deployment.
 
-**Important** CBT must be enabled for each source VM and each VM disk.
+> **Important** CBT must be enabled for each source VM and each VM disk.
 
 A VM can support up to 28 CBT snapshots. If the source VM has too many CBT snapshots and the Migration Controller service is not able to create a new snapshot, warm migration might fail. The Migration Controller service deletes each snapshot when it is no longer required.
 

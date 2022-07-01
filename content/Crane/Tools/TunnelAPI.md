@@ -9,14 +9,14 @@ An openvpn client on the on-premise cluster will connect to a server running on 
 
 A service created on the cloud cluster is used to expose the on-premise clusters API to MTC running on the cloud cluster.
 
-### Requirements
+## Requirements
 - The system used to create the VPN tunnel must have access and be logged in to both clusters.
 - It must be possible to create a load balancer on the cloud cluster.
 - An available namespace on each cluster to run the tunnel in not created in advance.
 
 **Note:** To connect multiple on-premise source clusters to the cloud cluster use a separate namespace for each.
 
-### api-tunnel options
+## api-tunnel options
 - **namespace:** The namespace used to launch the VPN tunnel in, defaults to openvpn
 - **destination-context:** The cloud destination cluster context where the openvpn server will be launched.
 - **destination-image:** The container image to use on the destination cluster. (Default: quay.io/konveyor/openvpn:latest)
@@ -38,17 +38,17 @@ crane tunnel-api --namespace openvpn-311 \
       --proxy-user foo \
       --proxy-pass bar
 ```
-### MTC Configuration
+## MTC Configuration
 When configuring the source cluster in MTC the API URL takes the form of `https://proxied-cluster.${namespace}.svc.cluster.local:8443`.
 
 **Optional:** Set the image registry for direct image migrations to `proxied-cluster.${namespace}.svc.cluster.local:5000`.
 
 Replace ``${namespace}`` with either `openvpn` or the specified namespace when running the command to set up the tunnel.
 
-### Demo
+## Demo
 [https://youtu.be/wrPVcZ4bP1M](https://youtu.be/wrPVcZ4bP1M)
 
-### Troubleshooting
+## Troubleshooting
 It may take 3 to 5 minutes after the setup to complete for the load balancer address to become resolvable. During this time the client will be unable to connect and establish a connection and the tunnel will not function.
 
 During this time, run `oc get pods` in the specified namespace for setup, and monitor the logs of the openvpn container to see the connection establish.

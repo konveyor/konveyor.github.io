@@ -9,14 +9,14 @@ Start, edit, review, and delete application assessments in the Application inven
 ## Starting an assessment
 Follow the steps below to start an application assessment on the Application inventory page of the Tackle web console.
 
-#### Procedure
+**Procedure**
 1. Start the Tackle web console
 2. Click **Application Inventory**.
 3. Select an application that does not have a Completed assessment status and click the **Assess** button in the toolbar.
 4. Select individual stakeholders or stakeholder groups and then click **Next**.
 5. Select responses to all questions on each page of the Application Assessment wizard and then click **Next**.
 
-**Important:** All questions are mandatory.
+> **Important:** All questions are mandatory.
 
 6. Click **Save** to save the assessment, or **Save and Review** to start the assessment review process.
 
@@ -25,11 +25,10 @@ The Assessment status of each assessed application is set to Completed.
 ## Editing an assessment
 Follow the steps below to take an application assessment on the Application inventory page of the Tackle web console.
 
-#### Prerequisites
-
+**Prerequisites**
 An application must have a Completed assessment status.
 
-#### Procedure
+**Procedure**
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Select an application that does not have a Completed assessment status and click the **Assess** button in the toolbar.
@@ -40,17 +39,17 @@ An application must have a Completed assessment status.
 ##Reviewing an assessment
 Follow the steps below to review an application assessment on the Application inventory page of the Tackle web console.
 
-#### Prerequisites
+**Prerequisites**
 
 An application must have a Completed assessment status and a Not started review status.
 
-#### Procedure
+**Procedure**
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Select an application with a Completed assessment status and a Not Started review status and click the **Review** button in the toolbar.
 4. Review the assessment in the Assessment summary section on the Review page.
 
-**Note:** The Assessment summary table contains a Risk column that indicates the severity of the risk associated with each response.
+> **Note:** The Assessment summary table contains a Risk column that indicates the severity of the risk associated with each response.
 
 5. Select a Proposed action and an Effort estimate.
 6. Set values for Business criticality and Work priority.
@@ -69,11 +68,11 @@ Follow the steps below to:
 * Copy an assessment or assessment and review from a single application and apply them to multiple applications on the Application inventory page of the Tackle web console.
 * Apply assessments and reviews to groups of related applications, for example, applications written in Java or belonging to the same business service.
 
-#### Prerequisites
+** Prerequisites
 
 An application must have a Completed assessment status or Completed assessment and review statuses, depending on whether an assessment or an assessment and review is being copied.
 
-#### Procedure
+**Procedure**
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Click the **Options** menu kebab beside an application with a Completed assessment status or Completed assessment and Review statuses.
@@ -92,11 +91,11 @@ The selected applications are set to a Completed assessment status or Completed 
 ## Deleting an assessment
 Follow the steps below to delete an application assessment on the Application inventory page of the Tackle web console. Deleting an assessment deletes its review.
 
-#### Prerequisites
+**Prerequisites**
 
 An application must have a Completed assessment status.
 
-#### Procedure
+**Procedure**
 1. Open the Tackle web console.
 2. Click **Application Inventory**.
 3. Click he **Options** menu kebab beside an application with a Completed assessment status and select **Discard** assessment.

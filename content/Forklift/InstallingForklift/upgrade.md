@@ -5,11 +5,11 @@ draft: false
 ---
 Follow the steps below to upgrade the Forklift Operator using the OKD web console.
 
-**Important:** Do not skip a release when upgrading.  For example, upgrade 2.0 to 2.1 and then 2.1 to 2.2.
+> **Important:** Do not skip a release when upgrading.  For example, upgrade 2.0 to 2.1 and then 2.1 to 2.2.
 
 If upgrading from 2.2 to 2.3, see the [### Forklift 2.2 to 2.3 Upgrade Notes](#Forklift-2.2-to-2.3-Upgrade-Notes) section after the procedure
 
-## Procedure
+**Procedure**
 1. Open the OKD web console.
 2. Click **Operators**, **Installed Operators**, **Migration Tookit for Virtualization Operator**, then **Subscription**.
 3. Change the update channel to the correct release.
@@ -30,7 +30,7 @@ $ kubectl delete pod -n openshift-marketplace <catalog_source_pod>
 ```
 The **Upgrade status** changes from **Up to date** to **Upgrade available**.
 
-**Note:** Update approval settings on the Subscriptions tab:
+> **Note:** Update approval settings on the Subscriptions tab:
 * **Automatic:** Starts upgrades automatically.
 * **Manual** Forces approval to start the upgrade. See [Manually approving a pending Operator upgrade](https://docs.okd.io/latest/operators/admin/olm-upgrading-operators.html#olm-approving-pending-upgrade_olm-upgrading-operators) in the OKD documentation.
 

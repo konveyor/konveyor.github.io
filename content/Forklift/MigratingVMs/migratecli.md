@@ -8,13 +8,13 @@ Follow the steps below to migrate virtual machines (VMs) to KubeVirt using the c
 * A name for cluster-scoped CRs
 * A name and a namespace for namespace-scoped CRs
 
-## Prerequisites
+**Prerequisites**
 * Must be logged in as a user with cluster-admin privileges.
 * **VMware only:**
  * Must have the vCenter SHA-1 fingerprint.
  * Must create a VMware Virtual Disk Development Kit (VDDK) image in a secure registry that is accessible to all clusters.
 
-## Procedure
+**Procedure**
 1. Create a Secret manifest for the source provider credentials:
 ```
 $ cat << EOF | kubectl apply -f -
@@ -253,7 +253,7 @@ $ kubectl get migration/<migration> -n konveyor-forklift -o yaml
 ## Obtaining the SHA-1 fingerprint of a vCenter host
 Obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.
 
-### Procedure
+**Procedure**
 1. Run the following command:
 ```
 $ openssl s_client \
@@ -270,9 +270,12 @@ Example output:
 01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67
 ```
 ## Canceling a migration
-Follow the steps below to cancel an entire migration or individual virtual machines (VMs) while a migration is in progress from the command line interface (CLI).
+Forklift functionality cancel cancel an entire migration or individual virtual machines (VMs) while a migration is in progress from the command line interface (CLI).
 
 ### Canceling an entire migration
+Follow the steps below to cancel an entire migration.
+
+**Procedure**
 1. Delete the Migration CR:
 ```
 $ kubectl delete migration <migration> -n konveyor-forklift (1)
@@ -281,6 +284,9 @@ The explanations below refer to the callouts in the sample code above.
 * (1) Specify the name of the Migration CR.
 
 ### Canceling individual VMs migration
+Follow the steps below to cancel migrating an individual VM.
+
+**Procedure**
 1. Add the individual VMs to the spec.cancel block of the Migration manifest:
 ```
 $ cat << EOF | kubectl apply -f -

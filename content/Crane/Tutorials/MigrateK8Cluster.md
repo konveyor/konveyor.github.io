@@ -3,8 +3,6 @@ title: "Migrating a Kubernetes cluster"
 date: 2022-04-14T15:14:19-06:00
 draft: false
 ---
-## Migrating a Kubernetes cluster
-
 This tutorial is an example of how to use the Konveyor tool Crane to migrate an application (inventory) from the source Kubernetes cluster (src) to the destination cluster (dest).
 
 Refer to the Crane Documentation for more detailed information.
@@ -49,7 +47,7 @@ Refer to the Crane Documentation for more detailed information.
 ```
     > $ tree export
 ```
-**Note:** These files cannot be imported into another cluster because of the existing IP addresses, timestamps, etc. which should not be pushed to git. View this data using the cat command.
+> **Note:** These files cannot be imported into another cluster because of the existing IP addresses, timestamps, etc. which should not be pushed to git. View this data using the cat command.
 
 When the application is migrated, this information must be updated to the new cluster.
 
@@ -57,7 +55,7 @@ When the application is migrated, this information must be updated to the new cl
 ```
     > $ crane transform list-plugins
 ```
-***Note:*** This example uses the Kubernetes plugin. Use the crane plugin-manager list command to view available plugins to install and translate the manifest into OpenShift for example.
+> **Note:** This example uses the Kubernetes plugin. Use the crane plugin-manager list command to view available plugins to install and translate the manifest into OpenShift for example.
 
 11. View available options that can be used to change the manifests before pushing to git.
 ```
@@ -103,7 +101,7 @@ When the application is migrated, this information must be updated to the new cl
 ```
     > $ crane transfer-pvc --source-context=src \ --pvc-name=postgres-pv-claim --destination-context=dest
 ```
-***Tip:*** Perform the migration while the application is running and then again during a maintenance window when the application has been shut down to only migrate over the delta between the migrations.
+**Tip:** Perform the migration while the application is running and then again during a maintenance window when the application has been shut down to only migrate over the delta between the migrations.
 22. List the contents of the demo directory.
 ```
     > $ ls

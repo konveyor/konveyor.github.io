@@ -10,7 +10,7 @@ Tackle web console provides the following services:
 * Reports
 * Controls
 
-### Application inventory
+## Application inventory
 The Application inventory page can perform the following tasks:
 * Manage application portfolios.
 * Define and manage application dependencies.
@@ -23,7 +23,7 @@ The applications are assessed on the Application inventory page which helps dete
 * Replatforming
 * Refactoring
 
-#### Reviews
+## Reviews
 Review a completed assessment on the Application inventory page where the following information is collected from each reviewer:
 
 * **Proposed action:** Best alternative for modernizing and migrating the application.

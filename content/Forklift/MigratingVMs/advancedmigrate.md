@@ -7,15 +7,15 @@ draft: false
 ## Changing precopy intervals for warm migration
 Follow the steps below to change the snapshot interval by patching the ForkliftController custom resource (CR).
 
-### Procedure
-Patch the ForkliftController CR:
+**Procedure**
+* Patch the ForkliftController CR:
 ```
 $ kubectl patch forkliftcontroller/<forklift-controller> -n konveyor-forklift -p '{"spec": {"controller_precopy_interval": <60>}}' --type=merge (1)
 ```
 The explanation below refers to the callout in the sample code above.
 * (1) Specify the precopy interval in minutes. The default value is 60.
 
-**Note:** The forklift-controller pod does not need to be restarted.
+> **Note:** The forklift-controller pod does not need to be restarted.
 
 ## Creating custom rules for the Validation service
 The Validation service uses Open Policy Agent (OPA) policy rules to check the suitability of each virtual machine (VM) for migration. The Validation service generates a list of concerns for each VM, which are stored in the Provider Inventory service as VM attributes. The web console displays the concerns for each VM in the provider inventory.
@@ -54,7 +54,7 @@ Before creating a custom rule, follow the steps below to check the default rules
 
 **Example:** If a default rule contains the line default valid_input = false and a custom rule that contains the line default valid_input = true is created, the Validation service will not start.
 
-### Procedure
+**Procedure**
 1. Connect to the terminal of the Validation pod:
 ```
 $ kubectl rsh <validation_pod>
@@ -76,7 +76,7 @@ Follow the steps below to retrieve the Inventory service JSON by sending an Inve
 
 Create a validation rule based on any attribute in the "input" key, for example, input.snapshot.kind.
 
-### Procedure
+**Procedure**
 1. Retrieve the Inventory service route:
 ```
 $ kubectl get route <inventory_service> -n konveyor-forklift
@@ -460,7 +460,7 @@ Create a Rego query, based on this attribute, and add it to the forklift-validat
 ```
 `count(input.numaNodeAffinity) != 0`
 ```
-### Procedure
+**Procedure**
 1. Create a config map CR according to the following example:
 ```
 $ cat << EOF | kubectl apply -f -
@@ -532,14 +532,14 @@ The explanations below refer to the callouts in the sample code above.
 * (2) Specify the API end point URL, for example, https://<vCenter_host>/sdk for vSphere or https://<{rhv-short}_engine_host>/ovirt-engine/api/ for oVirt.
 * (3) Specify the name of the provider Secret CR.
 
-**Important:** Update the rules version after creating a custom rule so that the Inventory service detects the changes and validates the VMs.
+> **Important:** Update the rules version after creating a custom rule so that the Inventory service detects the changes and validates the VMs.
 
 ## Updating the inventory rules version
 Follow the steps below to update the inventory rules version each time the rules are updated so that the Provider Inventory service detects the changes and triggers the Validation service.
 
 The rules version is recorded in a rules_version.rego file for each provider.
 
-### Procedure
+**Procedure**
 1. Retrieve the current rules version:
 ```
 $ GET https://forklift-validation/v1/data/io/konveyor/forklift/<provider>/rules_version (1)

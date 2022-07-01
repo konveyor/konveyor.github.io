@@ -6,7 +6,7 @@ draft: false
 
 Follow the steps below to cancel the migration of some or all virtual machines (VMs) while a migration plan is in progress by using the Forklift web console.
 
-### Procedure
+**Procedure**
 1. Click **Migration Plans**.
 2. Click the name of a running migration plan to view the migration details.
 3. Select one or more VMs and click **Cancel**.
@@ -14,7 +14,7 @@ Follow the steps below to cancel the migration of some or all virtual machines (
 
 The status of the VM shows canceled in the Migration details by VM list. The unmigrated and the migrated virtual machines are not affected.
 
-#### Restarting
+### Restarting
 Restart a canceled migration by clicking **Restart** beside the migration plan on the Migration plans page.
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/MigratingVMs/cancelmigrate.md)

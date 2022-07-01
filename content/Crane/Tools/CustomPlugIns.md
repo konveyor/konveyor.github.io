@@ -5,7 +5,7 @@ draft: false
 ---
 This document covers how to write a plugin binary using crane-lib. It requires:
 
-### Procedure
+**Procedure**
 
 1. Go to the development environment setup. (Optionally, an overview of the crane toolkit.)
 

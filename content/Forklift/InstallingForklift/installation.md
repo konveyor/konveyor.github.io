@@ -9,16 +9,16 @@ The Forklift Operator can be installed using the OKD web console or the command 
 ## Installing the Forklift Operator using the OKD web console
 Follow the steps below to install the Forklift Operator by using the OKD web console.
 
-### Prerequisites
+**Prerequisites**
 * OKD 4.10 installed.
 * KubeVirt Operator installed.
 
-### Procedure
+**Procedure**
 1. Log in with cluster-admin permissions.
 2. OPen the OKD web console, click **Operators**, then **OperatorHub**.
 3. Use the Filter by keyword field to search for forklift-operator.
 
-**Note:** The Forklift Operator is a Community Operator. Red Hat does not support Community Operators.
+> **Note:** The Forklift Operator is a Community Operator. Red Hat does not support Community Operators.
 
 4. Click **Migration Tookit for Virtualization Operator** and then click **Install.
 5. Click **Install** on the Install Operator page.
@@ -38,11 +38,11 @@ The URL for the forklift-ui service that opens the login page for the Forklift w
 ## Installing the Forklift Operator from the command line interface
 Follow the steps below to install the Forklift Operator from the command line interface (CLI).
 
-### Prerequisites
+**Prerequisites**
 * OKD 4.10 installed.
 * KubeVirt Operator installed.
 
-### Procedure
+**Procedure**
 
 1. Log in with cluster-admin permissions.
 2. Create the konveyor-forklift project:
@@ -122,11 +122,11 @@ https://virt-konveyor-forklift.apps.cluster.openshift.com.
 ## Getting the Forklift web console URL Using OKD
 Follow the steps below to retrieve the Forklift web console URL at any time using the OKD web console.
 
-### Prerequisites
+**Prerequisites**
 * KubeVirt Operator installed.
 * Forklift Operator installed.
 
-### Procedure
+**Procedure**
 1. Log in with cluster-admin privileges.
 2. Log in to the OKD web console.
 3. Click **Networking** then **Routes**.
@@ -150,6 +150,6 @@ Example output:
 ```
 https://virt-konveyor-forklift.apps.cluster.openshift.com.
 ```
-2. launch a browser and navigate to the Forklift web console.
+2. Launch a browser and navigate to the Forklift web console.
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/InstallingForklift/installation.md)

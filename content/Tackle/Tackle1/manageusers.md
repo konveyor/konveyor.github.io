@@ -9,11 +9,11 @@ Follow the procedures in this section to  manage Tackle users and passwords usin
 ## Accessing the Keycloak admin console
 A Keycloak admin user is created when Tackle is installed. The admin username and password are needed to log in to the Keycloak admin console. The credentials are stored in the tackle-keycloak secret.
 
-#### Prerequisites
+**Prerequisites**
 
 Cluster-admin privileges.
 
-#### Procedure
+**Procedure**
 1. Run the following command to obtain the admin credentials:
 ```
 $ kubectl get secret tackle-keycloak -o go-template='{{range $k,$v := .data}}{{printf "%s: " $k}}{{if not $v}}{{$v}}{{else}}{{$v | base64decode}}{{end}}{{"\n"}}{{end}}'
@@ -27,12 +27,12 @@ ADMIN_USERNAME: admin
 ## Changing the default password
 Follow the steps below to change the default password of the tackle user.
 
-#### Prerequisites
+**Prerequisites**
 
 * Cluster-admin privileges
 * Keycloak admin user name and password.
 
-#### Procedure
+**Procedure**
 1. Log in to the Keycloak admin console at **https://<www.example.com>/auth** and specify the **Tackle cluster URL**.
 2. Locate the tackle user in the Tackle realm. See [Searching for users](https://www.keycloak.org/docs/latest/server_admin/index.html#searching-for-users) in the Keycloak documentation.
 3. Update the tackle user’s password. See [User Credentials](https://www.keycloak.org/docs/latest/server_admin/index.html#_user-credentials).
@@ -42,12 +42,12 @@ Follow the steps below to change the default password of the tackle user.
 ## Adding users
 Follow the steps below to add users by using the Keycloak admin console.
 
-#### Prerequisites
+**Prerequisites**
 
 * Cluster-admin privileges
 * Keycloak admin user name and password.
 
-#### Procedure
+**Procedure**
 1. Log in to the Keycloak admin console at **https://<www.example.com>/auth** and specify the **Tackle cluster URL**.
 Create a new user in the Tackle realm. See [Creating a new user](https://www.keycloak.org/docs/latest/server_admin/index.html#_create-new-user) in the Keycloak documentation.
 2. Create a password for the new user. See [Creating a password](https://www.keycloak.org/docs/latest/server_admin/index.html#creating-a-password-for-the-user) for the user.

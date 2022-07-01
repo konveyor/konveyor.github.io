@@ -11,7 +11,7 @@ Follow the steps below to provision Minikube for single users deploying Tackle o
 * Ingress so the Tackle tool can publish outside of the Kubernetes cluster.
 * Operator lifecycle manager (OLM) addon. (OpenShift has OLM installed out of the box but Kubernetes does not.)
 
-#### Procedure
+**Procedure**
 1. Provision the Minikube cluster with these recommended parameters.
 ```
 [user@user ~]$ Minikube start -- driver=kvm3  -p <project name> --memory=10g
@@ -28,7 +28,7 @@ Follow the steps below to provision Minikube for single users deploying Tackle o
 ## Installing Tackle Operator
 Operators are a structural layer that manages resources deployed on Kubernetes (database, front end, back end) to automatically create a Tackle instance instead of doing it manually.
 
-### Requirements
+**Requirements**
 Tackle requires a total of 5 persistent volumes (PVs) used by different components to successfully deploy, 3 RWO volumes and 2 RWX volumes will be requested via PVCs.
 
 |Name|Default Size|Access Mode|Description|
@@ -41,7 +41,7 @@ Tackle requires a total of 5 persistent volumes (PVs) used by different componen
 
 Follow the steps below to install the Tackle Operator in the my-tackle-operator namespace (default) on any Kubernetes distribution, including Minikube.
 
-#### Procedure
+**Procedure**
 1. Install the Tackle Operator.
 ```
 [user@user ~]$ $ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
@@ -64,9 +64,9 @@ Follow the steps below to initiate the Tackle instance and set a custom resource
     spec:
     EOF
 ```
-**Note:** For more information about altering the operator defaults, see the Tackle CR Settings section.
+> **Note:** For more information about altering the operator defaults, see the Tackle CR Settings section.
 
-#### Procedure
+**Procedure**
 1. Create the instance pointing to the CR file.
 ```
 [user@user ~]$ Kubectl create -f tackle_hub.yaml -n my-tackle-operator
@@ -77,7 +77,7 @@ Follow the steps below to initiate the Tackle instance and set a custom resource
 ```
 3. Repeat this step until all components are Completed or Running.
 
-**Note:** This can take one to five minutes depending on the cluster resources.
+> **Note:** This can take one to five minutes depending on the cluster resources.
 
 ### Logging into Tackle with auth enabled
 The default auth enabled credentials are: admin/password

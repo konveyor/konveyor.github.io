@@ -12,7 +12,7 @@ This tutorial is an example of how to mirror a simple, stateless [PHP Guestbook 
 - **4. Apply** the transformations using Crane Apply.
     - Apply application manifests to the destination cluster.
 
-### Prerequisites
+**Prerequisites**
 
 1. Create a source and destination Kubernetes cluster environment in minikube or Kind:
 
@@ -28,11 +28,11 @@ chmod +x kind-up.sh./kind-up.sh
 ```
 2. Install Crane using the [Installation Guide](https://crane-docs.konveyor.io/content/getting-started/installation/).
 
-**Important:** Read through [Kubernetes' documentation on accessing multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/). This document references **src** and **dest** contexts that refer to the clusters created using the minikube startup scripts above.
+> **Important:** Read through [Kubernetes' documentation on accessing multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/). This document references **src** and **dest** contexts that refer to the clusters created using the minikube startup scripts above.
 
 When working in the home environment, or use kind (`kind-src` and `kind-dest`), modify the commands below to reference the correct cluster context.
 
-### 1. Deploy the Guestbook application in the source cluster
+## 1. Deploy the Guestbook application in the source cluster
 
 Deploy the [Kubernetes' stateless guestbook application](https://kubernetes.io/docs/tutorials/stateless-application/guestbook/) and modify it to be consumable with [Kustomize](https://kustomize.io/) (Kubernetes native and template-free tool to manage application configuration). The guestbook application consists of:
 
@@ -44,6 +44,7 @@ kubectl --context src create namespace guestbook
 kubectl --context src --namespace guestbook apply -k github.com/konveyor/crane-runner/examples/resources/guestbook
 kubectl --context src --namespace guestbook wait --for=condition=ready pod --selector=app=guestbook --timeout=180s
 ```
+
 **Optional**
 
 Forward localhost traffic to the frontend of the Guestbook application to access Guestbook from a browser using `localhost:8080`:
@@ -51,7 +52,7 @@ Forward localhost traffic to the frontend of the Guestbook application to access
 kubectl --context src --namespace guestbook port-forward svc/frontend 8080:80
 ```
 
-### 2. Extract from the source cluster
+## 2. Extract from the source cluster
 
 Crane’s `export` command extracts all of the specified resources from the “source” cluster.
 ```
@@ -97,8 +98,9 @@ Crane Export is using a discovery client to see all of the API resources in the 
 
 Going forward these manifests will be working on the disk without impacting the active resources in the “source” cluster.
 
-### 3. Generate Transformations
-Crane’s `transform` command generates tranformations in the form of JSON patches and stores them on the disk in the transform directory (unless overridden using ``--transform-dir`).
+## 3. Generate Transformations
+Crane’s `transform` command generates tranformations in the form of JSON patches and stores them on the disk in the transform directory (unless overridden using `--transform-dir`).
+
 ```
 crane transform
 ```
@@ -154,7 +156,8 @@ optional-flags:
   add-annotations:
     custom-crane-annotation: "foo"
 ```
-### 4. Apply Transformations
+
+## 4. Apply Transformations
 
 The Crane Apply command takes the exported resources and  transformations and renders the results as YAML files that can be applied to another cluster.
 ```
@@ -177,16 +180,16 @@ The leftover data from the source cluster is removed from the final manifests to
 
 The resources are  effectively cluster agnostic  and ready to be kubectl applied to the chosen cluster or placed under version control to be later managed by GitOps and CI/CD pipelines.
 
-**Note:** Additional patches to add/remove/replace additional fields on the resources previously exported are available if optional flags are specified..
+> **Note:** Additional patches to add/remove/replace additional fields on the resources previously exported are available if optional flags are specified..
 
-#### Apply the manifests to the destination cluster
+### Apply the manifests to the destination cluster
 
 Apply the manifests prepared for the destination cluster using `kubectl` directly:
 ```
 kubectl --context dest create namespace guestbook
 kubectl --context dest --namespace guestbook --recursive=true apply -f ./output
 ```
-**Note:** To change the namespace,  use  [Kustomize](https://kustomize.io/).
+> **Note:** To change the namespace,  use  [Kustomize](https://kustomize.io/).
 ```
 cd output/resources/guestbook
 kustomize init --namespace custom-guestbook --autodetect
@@ -209,11 +212,11 @@ namespace: custom-guestbook
 ```
 After creating the custom-guestbook namespace, apply the kustomization.yaml with `kubectl apply -k`.
 
-### Next Steps
+## Next Steps
 - Read more about Crane.
 - Check out Crane Runner to perform application migrations inside Kubernetes.
 
-### Cleanup
+## Cleanup
 ```
 kubectl --context dest delete namespace guestbook
 ```

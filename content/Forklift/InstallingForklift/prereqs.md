@@ -16,7 +16,8 @@ Install compatible software versions with Forklift using the table below.
 
 ## Storage support and default modes
 Forklift uses the following default volume and access modes for supported storage.
-**Note:** The following settings must be applied if the KubeVirt storage does not support [dynamic provisioning](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/storage/dynamic-provisioning):
+
+> **Note:** The following settings must be applied if the KubeVirt storage does not support [dynamic provisioning](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/storage/dynamic-provisioning):
 * **Filesystem volume mode:** Slower than Block volume mode.
 * **ReadWriteOnce access mode:** Does not support live virtual machine migration.
 
@@ -93,21 +94,21 @@ The following prerequisites apply to VMware migrations:
 ## Creating a VDDK image
 Forklift uses the VMware Virtual Disk Development Kit (VDDK) SDK to transfer virtual disks from VMware vSphere. Follow the steps below to create the VDDK image.
 
-**Note:**
+> **Note:**
 The VDDK init image path is required to add a VMware source provider:
 
 1. Download the VMware Virtual Disk Development Kit (VDDK)
 2. uild a VDDK image.
 3. Push the VDDK image to the image registry.
 
-**Important:** Storing the VDDK image in a public registry might violate the VMware license terms.
+> **Important:** Storing the VDDK image in a public registry might violate the VMware license terms.
 
-### Prerequisites
+**Prerequisites**
 * [OKD image registry](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/registry/setting-up-and-configuring-the-registry#configuring-registry-storage-baremetal).
 * podman installed.
 * KubeVirt must be able to access an external registry if used.
 
-### Procedure
+**Procedure**
 1. Create and navigate to a temporary directory:
 ```
 Example output:
@@ -142,7 +143,7 @@ $ podman push <registry_route_or_server_path>/vddk:<tag>
 ## Obtaining the SHA-1 fingerprint of a vCenter host
 Follow the steps below to obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.
 
-### Procedure
+**Procedure**
 1. Run the following command:
 ```
 $ openssl s_client \
@@ -157,11 +158,11 @@ Example output:
 01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67
 Increasing the NFC service memory of an ESXi host
 ```
-**Note:** If more than 10 VMs are migrating from an ESXi host in the same migration plan, increase the NFC service memory of the host.
+> **Note:** If more than 10 VMs are migrating from an ESXi host in the same migration plan, increase the NFC service memory of the host.
 
 The migration will fail because the NFC service memory is limited to 10 parallel connections.
 
-### Procedure
+**Procedure**
 1. Log in to the ESXi host as root.
 2. Change the value of maxMemory to 1000000000 in /etc/vmware/hostd/config.xml:
 ```

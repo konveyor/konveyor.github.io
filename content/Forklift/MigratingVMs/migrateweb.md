@@ -9,7 +9,7 @@ Migrate virtual machines (VMs) to KubeVirt using the Forklift web console by per
 * Creating network and storage mapping
 * Creating and running a migration plan
 
-### Prerequisites
+**Prerequisites**
 * Ensure that all [Prerequisites](https://konveyor.github.io/forklift/installingforklift/prereqs/) are set.
 * VMware only: Create a [VMware Virtual Disk Development Kit (VDDK)](https://forklift-docs.konveyor.io/documentation/doc-Migration_Toolkit_for_Virtualization/master/index.html#creating-vddk-image_forklift) image.
 
@@ -20,10 +20,10 @@ Follow the procedures below to add VMware or oVirt source providers using the Fo
 ### Adding a VMware source provider
 Add a VMware source provider by using the Forklift web console.
 
-#### Prerequisites
+**Prerequisites**
 VMware Virtual Disk Development Kit (VDDK) image in a secure registry that is accessible to all clusters.
 
-#### Procedure
+**Procedure**
 1. Open the Forklift web console.
 2. Click **Providers**, then **Add provider**.
 3. Select VMware from the Type list.
@@ -42,10 +42,10 @@ The source provider appears in the list of providers.
 ### Adding an oVirt source provider
 Add an oVirt source provider by using the Forklift web console.
 
-#### Prerequisites
+**Prerequisites**
 CA certificate of the Engine.
 
-#### Procedure
+**Procedure**
 1. Open the Forklift web console.
 2. Click **Providers**, then **Add provider**.
 3. Select **Red Hat Virtualization** from the **Type** list.
@@ -63,22 +63,22 @@ The source provider appears in the list of providers.
 ## Selecting a migration network for a source provider
 Select a migration network in the Forklift web console for a source provider to reduce risk to the source environment and to improve performance.
 
-**Important:** Using the default network for migration can result in poor performance because the network might not have sufficient bandwidth which can have a negative effect on the source platform because the disk transfer operation might saturate the network.
+> **Important:** Using the default network for migration can result in poor performance because the network might not have sufficient bandwidth which can have a negative effect on the source platform because the disk transfer operation might saturate the network.
 
-### Prerequisites
+**Prerequisites**
 * The migration network must a minimum speed of 10 Gbps for disk transfer.
 * The migration network must be accessible to the KubeVirt nodes through the default gateway.
 * The source virtual disks are copied by a pod that is connected to the pod network of the target namespace.
 * The migration network must have jumbo frames enabled.
 
-### Procedure
+**Procedure**
 1. Open the Forklift web console.
 2. Click **Providers**, the the **oVirt8** or **VMware** tab.
 3. Click the **host number** in the **Hosts** column beside a provider to view a list of hosts.
 4. Select one or more hosts and click Select migration network.
 5. Select a Network.
 
-**Note:** Clear the selection by selecting the default network.
+> **Note:** Clear the selection by selecting the default network.
 
 6. Complete the following fields:
 
@@ -93,15 +93,15 @@ For oVirt:
 7. Click **Save**.
 8. Verify that the status of each host is Ready.
 
-**Note:** If a host status is not Ready, the host might be unreachable on the migration network or the credentials might be incorrect. Modify the host configuration and save the changes to correct.
+> **Note:** If a host status is not Ready, the host might be unreachable on the migration network or the credentials might be incorrect. Modify the host configuration and save the changes to correct.
 
 ## Adding a KubeVirt destination provider
 Add a KubeVirt destination provider to the Forklift web console in addition to the default KubeVirt destination provider, which is the provider where Forklift.
 
-## Prerequisites
+**Prerequisites**
 KubeVirt service account token with cluster-admin privileges.
 
-## Procedure
+**Procedure**
 1. Open the Forklift web console.
 2. Click **Providers**, the **Add provider**.
 3. Select **KubeVirt** from the **Type** list.
@@ -117,11 +117,11 @@ The provider appears in the list of providers.
 ## Selecting a migration network for a KubeVirt provider
 Select a default migration network for a KubeVirt provider in the Forklift web console to improve performance. The default migration network is used to transfer disks to the namespaces in which it is configured.
 
-**Note:** If a migration network is not selected, the default migration network is the pod network which might not be optimal for disk transfer.
+> **Note:** If a migration network is not selected, the default migration network is the pod network which might not be optimal for disk transfer.
 
 Override the default migration network of the provider by selecting a different network when creating a migration plan.
 
-### Procedure
+**Procedure**
 1. Open the Forklift web console.
 2. Click **Providers** then the **KubeVirt tab**.
 3. Select a provider and click **Select migration network**.
@@ -131,12 +131,12 @@ Override the default migration network of the provider by selecting a different 
 ## Creating a network mapping
 Create one or more network mappings  using the Forklift web console to map source networks to KubeVirt networks.
 
-### Prerequisites
+**Prerequisites**
 Source and target providers added to the web console.
 
-**Note:** If more than one source and target network are mapped, each additional KubeVirt network requires its own network attachment definition.
+> **Note:** If more than one source and target network are mapped, each additional KubeVirt network requires its own network attachment definition.
 
-### Procedure
+**Procedure**
 1. Click **Mappings**.
 2. Click the **Network tab** then click **Create mapping**.
 3. Complete the following fields:
@@ -148,7 +148,7 @@ Source and target providers added to the web console.
 
 4. **Optional:** Click **Add** to create additional network mappings or to map multiple source networks to a single target network.
 
-**Note:** If an additional network mapping is created, select the network attachment definition as the target network.
+> **Note:** If an additional network mapping is created, select the network attachment definition as the target network.
 
 5. Click Create.
 
@@ -157,11 +157,11 @@ The network mapping is displayed on the Network mappings screen.
 ## Creating a storage mapping
 Create a storage mapping  using the Forklift web console to map source data stores to KubeVirt storage classes.
 
-### Prerequisites
+**Prerequisites**
 * Source and target providers added to the web console.
 * Local and shared persistent storage that support VM migration.
 
-### Procedure
+**Procedure**
 1. Click **Mappings**.
 2. Click the **Storage tab** and then click **Create mapping**.
 3. Set the following parameters:
@@ -187,10 +187,10 @@ A migration plan allows virtual machines to be grouped and migrated together or 
 
 Configure a hook to run an Ansible playbook or custom container image during a specified stage of the migration plan.
 
-### Prerequisites
+**Prerequisites**
 If Forklift is not installed on the target cluster, add a target provider on the Providers page of the web console.
 
-### Procedure
+**Procedure**
 1. Open the web console.
 2. Click **Migration plans** then click **Create migration plan**.
 3. Complete the following fields:
@@ -210,12 +210,18 @@ If a migration transfer network is defined for the KubeVirt provider and if the 
 8. Select an existing network mapping or create a new network mapping.
 
 ### Creating a new network mapping
+Follow the steps below to create a network mapping.
+
+**Procedure**
 1. Select a target network for each source network.
 2. Optional: Select **Save mapping** to use again and enter a network mapping name.
 3. Click **Next**.
 4. Select an existing storage mapping or create a new storage mapping.
 
 ### Creating a new storage mapping
+Follow the steps below to create a storage mapping.
+
+**Procedure**
 1. Select a target storage class for each VMware data store or oVirt storage domain.
 2. Optional: Select Save mapping to use again and enter a storage mapping name.
 3. Click **Next**.
@@ -229,7 +235,7 @@ If a migration transfer network is defined for the KubeVirt provider and if the 
 * **Ansible playbook:** Browse to the Ansible playbook or paste it into the field.
 * **Custom container image:** Enter the image path: <registry_path>/<image_name>:<tag> to not use the default hook-runner image.
 
-**Important:** The registry must be accessible to the OKD cluster.
+> **Important:** The registry must be accessible to the OKD cluster.
 
 9. Click **Next**.
 10. Review the migration plan and click **Finish**.
@@ -241,18 +247,17 @@ The migration plan is saved in the migration plan list.
 ## Running a migration plan
 Run a migration plan and view its progress in the Forklift web console.
 
-### Prerequisites
+**Prerequisites**
 Valid migration plan.
 
-### Procedure
+**Procedure**
 1. Click Migration plans.
 
 The Migration plans list displays the source and target providers, the number of virtual machines (VMs) being migrated, and the status of the plan.
 
 2. Click **Start** beside a migration plan to start the migration.
 
-Warm migration only: When the precopy stage starts.
-
+>Warm migration only: When the precopy stage starts.
 1. Click Cutover to complete the migration.
 2. Expand a migration plan to view the migration details.
 
