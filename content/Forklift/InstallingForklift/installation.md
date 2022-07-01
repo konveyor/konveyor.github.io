@@ -10,6 +10,7 @@ The Forklift Operator can be installed using the OKD web console or the command 
 Follow the steps below to install the Forklift Operator by using the OKD web console.
 
 **Prerequisites**
+
 * OKD 4.10 installed.
 * KubeVirt Operator installed.
 
@@ -39,6 +40,7 @@ The URL for the forklift-ui service that opens the login page for the Forklift w
 Follow the steps below to install the Forklift Operator from the command line interface (CLI).
 
 **Prerequisites**
+
 * OKD 4.10 installed.
 * KubeVirt Operator installed.
 
@@ -123,6 +125,7 @@ https://virt-konveyor-forklift.apps.cluster.openshift.com.
 Follow the steps below to retrieve the Forklift web console URL at any time using the OKD web console.
 
 **Prerequisites**
+
 * KubeVirt Operator installed.
 * Forklift Operator installed.
 

@@ -11,7 +11,7 @@ A Keycloak admin user is created when Tackle is installed. The admin username an
 
 **Prerequisites**
 
-Cluster-admin privileges.
+* Cluster-admin privileges.
 
 **Procedure**
 1. Run the following command to obtain the admin credentials:

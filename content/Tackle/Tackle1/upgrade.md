@@ -10,11 +10,11 @@ Follow the steps below to manually upgrade an instance of the Tackle application
 
 **Prerequisites**
 
-Project administrator privileges.
+* Project administrator privileges.
 
 **Procedure**
 
-Specify the namespace and the Tackle instance name for each step.
+> **Important:** Specify the namespace and the Tackle instance name for each step.
 
 1. Update the Keycloak deployment of the Tackle instance:
 ```
@@ -47,11 +47,11 @@ Follow the steps below to manually upgrade an instance of the Tackle application
 
 **Prerequisites**
 
-Project administrator privileges.
+* Project administrator privileges.
 
 **Procedure**
 
-Specify the namespace and the Tackle instance name for each step.
+> **Important:** Specify the namespace and the Tackle instance name for each step.
 
 1. Update the Keycloak deployment of the Tackle instance:
 

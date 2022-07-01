@@ -9,7 +9,8 @@ Uninstall Forklift using the OKD web console or the command line interface (CLI)
 Follow the steps below to uninstall Forklift using the OKD web console to delete the konveyor-forklift project and custom resource definitions (CRDs).
 
 **Prerequisites**
-Log in as a user with cluster-admin privileges.
+
+* Log in as a user with cluster-admin privileges.
 
 **Procedure**
 1. Click **Home** and then **Projects**.
@@ -24,7 +25,8 @@ Log in as a user with cluster-admin privileges.
 Follow the steps below to uninstall Forklift using the command line interface (CLI) by deleting the konveyor-forklift project and the forklift.konveyor.io custom resource definitions (CRDs).
 
 **Prerequisites**
-Log in as a user with cluster-admin privileges.
+
+* Log in as a user with cluster-admin privileges.
 
 **Procedure**
 1. Delete the project:

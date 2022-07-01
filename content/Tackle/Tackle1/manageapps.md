@@ -65,7 +65,8 @@ All other fields are empty.  See the CSV example below.
 |1|Imported-HR|||Human Resources|Go live scheduled for Q3|Finance and HR|Operating System|RHEL 8|Database|PostgreSQL|Language|Python|
 
 **Prerequisites**
-Valid CSV file.
+
+* Valid CSV file.
 
 Specified business services, tag types, and tags created in the web console.
 
@@ -108,7 +109,7 @@ Follow the steps below to update the business service assigned to an application
 
 **Prerequisites**
 
-The business service must exist on the Controls page.
+* The business service must exist on the Controls page.
 
 **Procedure**
 1. Open the Tackle web console.

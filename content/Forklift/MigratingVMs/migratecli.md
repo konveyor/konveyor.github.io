@@ -9,6 +9,7 @@ Follow the steps below to migrate virtual machines (VMs) to KubeVirt using the c
 * A name and a namespace for namespace-scoped CRs
 
 **Prerequisites**
+
 * Must be logged in as a user with cluster-admin privileges.
 * **VMware only:**
  * Must have the vCenter SHA-1 fingerprint.

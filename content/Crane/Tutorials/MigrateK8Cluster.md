@@ -7,7 +7,7 @@ This tutorial is an example of how to use the Konveyor tool Crane to migrate an 
 
 Refer to the Crane Documentation for more detailed information.
 
-**Note:** In addition to migrating with Crane, it is helpful to push the application to git so it can be automatically deployed to any cluster in the future. This demo includes those steps.
+> **Note:** In addition to migrating with Crane, it is helpful to push the application to git so it can be automatically deployed to any cluster in the future. This demo includes those steps.
 
 1. View details of the destination and source clusters.
 ```

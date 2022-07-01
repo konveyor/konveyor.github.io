@@ -104,6 +104,7 @@ The VDDK init image path is required to add a VMware source provider:
 > **Important:** Storing the VDDK image in a public registry might violate the VMware license terms.
 
 **Prerequisites**
+
 * [OKD image registry](https://access.redhat.com/documentation/en-us/openshift_container_platform/4.10/html/registry/setting-up-and-configuring-the-registry#configuring-registry-storage-baremetal).
 * podman installed.
 * KubeVirt must be able to access an external registry if used.

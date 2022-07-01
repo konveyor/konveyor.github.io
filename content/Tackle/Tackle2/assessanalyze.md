@@ -89,7 +89,7 @@ Follow the steps below to analyze an application for migration.
 
 Analysis status will show Scheduled as it downloads the image for the container to execute. When that is complete, it will show In-progress until complete.
 
-**Note:** The analysis will take minutes to hours to run depending on the size of the application and the cluster capacity and resources.
+> **Note:** The analysis will take minutes to hours to run depending on the size of the application and the cluster capacity and resources.
 
 Tackle relies on Kubernetes scheduling capabilities to determine how many analyzer instances are created based on cluster capacity. If several applications are selected for analysis, by default, only one analyzer can be provisioned at a time.  With more cluster capacity, more analysis processes can be executed in parallel.
 19. Expand the application and click the **Report** link to the right of Analysis when completed.
