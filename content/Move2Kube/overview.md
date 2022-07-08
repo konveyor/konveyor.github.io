@@ -1,7 +1,7 @@
 ---
 title: "Overview"
 date: 2022-07-08T14:41:25-06:00
-draft: true
+draft: false
 ---
 The Move2Kube tool helps application owners migrate legacy workloads to run on Kubernetes clusters, and automate application deployments along the way. It analyzes source files like Docker Compose files, Cloud Foundry manifest files, and even source code to generate Kubernetes deployment files including object yaml files, Helm charts, and operators.
 

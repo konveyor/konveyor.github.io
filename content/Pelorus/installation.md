@@ -1,7 +1,7 @@
 ---
 title: "Installation"
 date: 2022-07-07T13:49:33-06:00
-draft: true
+draft: false
 ---
 
 **Prerequisites**

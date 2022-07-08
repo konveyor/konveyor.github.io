@@ -1,7 +1,7 @@
 ---
 title: "Configuration the Pelorus stack"
 date: 2022-07-07T17:20:01-06:00
-draft: true
+draft: false
 ---
 The Pelorus stack (Prometheus, Grafana, Thanos, etc.) is configured by changing the `values.yaml` file that is passed to Helm.
 
