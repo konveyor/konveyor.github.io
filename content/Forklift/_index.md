@@ -5,7 +5,5 @@ weight = 2
 chapter = true
 pre = "<b>2 </b>"
 +++
-
 # Forklift
-
 Use this section to better understand and use the Konveyor Forklift tool.

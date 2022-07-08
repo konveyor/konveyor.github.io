@@ -7,5 +7,4 @@ pre = "<b>4 </b>"
 +++
 
 # Tackle
-
-Use this section to better understand and use the Konveyor Tackle tool versions 1.0 and 2.0.
+Use this section to better understand and use the Konveyor Tackle tool.

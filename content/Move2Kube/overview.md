@@ -1,10 +1,10 @@
 ---
-title: "Move2Kube overview"
-date: 2022-05-23T18:00:01+05:30
-draft: false
-
+title: "Overview"
+date: 2022-07-08T14:41:25-06:00
+draft: true
 ---
-The Move2Kube tool helps application owners migrate legacy workloads to run on Kubernetes clusters, and automate application deployments along the way.
+The Move2Kube tool helps application owners migrate legacy workloads to run on Kubernetes clusters, and automate application deployments along the way. It analyzes source files like Docker Compose files, Cloud Foundry manifest files, and even source code to generate Kubernetes deployment files including object yaml files, Helm charts, and operators.
+
 Move2Kube has a very modular architecture, making it easy to extend it's functionality for a large variety of migration use-cases.
 
 The project includes a few tools:
@@ -14,3 +14,5 @@ The project includes a few tools:
 - [move2kube-transformers](https://github.com/konveyor/move2kube-transformers): Collection of useful transformers for extending Move2Kube's functionality. Built by the Konveyor community based on experience from performing migrations for clients.
 
 For more information, documentation and tutorials, please visit [https://move2kube.konveyor.io/](https://move2kube.konveyor.io/)
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/overview.md)
