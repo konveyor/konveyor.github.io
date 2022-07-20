@@ -38,7 +38,7 @@ Pelorus uses Helm's [chart-testing](https://github.com/helm/chart-testing) tool 
 ## Updating the chart versions
 When any Helm charts are updated, we need to bump the version number for a seemless upgrade experience. We have provided scripts that can test when a version bump is needed and do the bumping for you.
 
-**Procdure**
+**Procedure**
 
 1. Ensure the development environment is set up with make dev-env.
 2. Run make chart-lint to lint the charts, including checking the version number.

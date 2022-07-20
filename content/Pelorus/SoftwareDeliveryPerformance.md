@@ -1,7 +1,7 @@
 ---
 title: "Outcome: Software Delivery Performance"
 date: 2022-07-14T13:54:43-06:00
-draft: true
+draft: false
 ---
 Software Delivery Performance is a measure of an organization's ability to effectively deliver software-based products they have built for their customers. It measures four factors that provide a balanced perspective that take both speed to market and stability measures into account. Tracking Software Delivery Performance over time provides IT organizations with data to make smarter investments in their internal tools and processes to optimize their delivery processes based on the types of products they are delivering. The outcomes provides a bridge between development, operations, and leadership while allowing them to better communicate how proposed work on infrastructure improvements or process developments are in line with the overall vision and financial goals of the organization at large.
 
@@ -14,12 +14,12 @@ The Pelorus Software Delivery Performance dashboard tracks the four primary meas
 * Mean Time to Restore
 * Change Failure Rate
 
- > **Note:** For more information about Software Delivery Performance, check out the book [Accelerate](https://itrevolution.com/accelerate-book/) by Forsgren, Kim and Humble.
+ > **Note:** For more information about Software Delivery Performance, check out the book [Accelerate](https://itrevolution.com/book/accelerate/) by Forsgren, Kim and Humble.
 
 ## Measures
 ![](/Pelorus/ExpRelDiag.png)
 
-### Lead Time for Change
+### Lead time for change
 Product delivery lead time to change is the time it takes to go from code committed to code successfully running in production. Shorter lead times enable faster feedback on what we are building, and encourages smaller batch sizes to increase flow.
 
 **Formula**
@@ -42,7 +42,7 @@ The exporters are only responsible for gathering data about individual events. B
 
 The dashboard then displays these metrics over the given time ranges, and provides comparisons between the current and previous time range.
 
-### Deployment Frequency
+### Deployment frequency
 Deployment frequency is how often the organization deploys code to production. This measure serves as a proxy for measuring batch size, which can be difficult to directly measure and compare across different contexts.
 
 **Formula**
@@ -57,7 +57,7 @@ The [deploy time exporter](https://github.com/konveyor/pelorus/tree/master/expor
 
 The dashboard then just tracks a `count_over_time()` of the individual `deploy_time` metrics for the time range selected in the dashboard. It also provides a comparison to the previous time range.
 
-### Mean Time to Restore
+### Mean time to restore
 Mean time to restore is how long it takes to restore service when a service incident occurs.
 
 **Formula**
@@ -77,7 +77,7 @@ The exporters are only responsible for gathering data about individual events. B
 
 The dashboard then displays this information for a given time range, and compares that number to the previous time range.
 
-### Change Failure Rate
+### Change failure rate
 Change failure rate is a key quality metric that measures what percentage of changes to production fail. It is crucial to have alignment on what constitutes a failure. The recommended definition is a change that either results in degraded service or subsequently requires remediation.
 
 **Formula**

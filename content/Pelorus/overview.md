@@ -11,7 +11,7 @@ Pelorus helps IT organizations measure their impact on the overall performance o
 
 For more information see the [Pelorus documentation site](https://pelorus.readthedocs.io/en/latest/).
 
-## Pelorus Architecture
+## Pelorus architecture
 The following diagram shows the basic architecture, components, and traffic flows in the Pelorus ecosystem.
 
 ![](/Pelorus/PelorusArchComp.png)
@@ -34,10 +34,10 @@ Prometheus monitors and stores time-series data and Grafana provides dashboard v
 #### Thanos
 Thanos is a sub-set of Prometheus components that provide high availability and long term data storage. Thanos gives Pelorus dashboards the ability to look back over months or years of organizational data.
 
-### Pelorus Exporters
+### Pelorus exporters
 Exporters are Prometheus bot that gathers and exposes data. Pelorus uses the exporter framework to build integrations with common IT systems to gather the relevant dashboard data.
 
-## Multi-Cluster Architecture (Production)
+## Multi-cluster architecture (production)
 Pelorus typically needs to be installed across multiple Kubernetes clusters in production environments. In most cases, the key clusters are the Development cluster where builds are happening, and Production.
 
 Below is an example of Pelorus Multi-Cluster architecture.

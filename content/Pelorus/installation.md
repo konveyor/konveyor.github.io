@@ -13,7 +13,7 @@ The following are required to deploy Pelorus:
 * jq
 * git
 
-## Initial Deployment
+## Initial deployment
 Pelorus gets installed using three Helm charts. The first deploys the required Pelorus operators, the second deploys the core Pelorus stack, and the third deploys the exporters that gather the data.
 
 The tool is installed into the `Pelorus` namespace by default.
@@ -49,7 +49,7 @@ See the [Configuration Guide](https://pelorus.readthedocs.io/en/latest/Configura
 ## Customizing Pelorus
 See [Configuring the Pelorus Stack](https://pelorus.readthedocs.io/en/latest/Configuration/) for a complete list of possible configuration items. The following sections describe the most commonly supported Pelorus deployment customizations.
 
-### Configure Long Term Storage
+### Configure long term storage
 > **Note:** This customization is recommended
 
 The Pelorus chart supports deploying a Thanos instance for long term storage and can use any S3 bucket provider. The following is an example of configuring a values.yaml file for NooBaa with the local S3 service name.
@@ -77,7 +77,7 @@ By default, this tool pulls in data from the cluster in which it is running. The
 
 Exporters for the desired metrics in each of the clusters which metrics will be evaluated must be defined. The main cluster's Grafana dashboard will display a combined view of the metrics collected in the shared S3 bucket via Thanos.
 
-## Configure Development Cluster
+## Configuring the development cluster
 The development configuration uses the same AWS S3 bucket and tracks commits and failure resolutions to development.
 ```
 apiVersion: v1
@@ -124,7 +124,7 @@ exporters:
     - pelorus-config
     - failuretime-config
 ```
-## Configure Production Cluster.
+## Configuring the production cluster
 The produciton configuration uses same AWS S3 bucket and tracks deployments to production.
 ```
 bucket_access_point: s3.us-east-2.amazonaws.com
@@ -146,7 +146,7 @@ exporters:
     - pelorus-config
     - deploytime-config
 ```
-## Uninstalling
+## Uninstalling Pelorus
 Removing Pelorus is done using these two commands.
 ```
 helm uninstall pelorus --namespace pelorus

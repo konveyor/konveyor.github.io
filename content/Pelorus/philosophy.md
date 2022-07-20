@@ -1,7 +1,7 @@
 ---
 title: "Our Philosophy"
 date: 2022-07-12T11:44:23-06:00
-draft: true
+draft: false
 ---
 
 Studies have shown that elite digital organizations tend to outperform their peers in software delivery and operational performance, but very few of them are actually measuring their software delivery and operational performance in a meaningful way, despite the evidence that shows how this performance leads to higher organizational performance.  Even fewer are using that information to learn and continuously improve their organization.

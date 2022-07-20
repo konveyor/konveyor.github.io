@@ -1,7 +1,7 @@
 ---
 title: "Pelorus Upstream Support"
 date: 2022-07-14T15:17:32-06:00
-draft: true
+draft: false
 ---
 The Pelorus engineering team will provide best-effort level support for Pelorus on the currently latest and the latest previous released versions of Openshift. More specifically if the latest released version of Openshift is 4.10, the engineering team will accept issues written for OpenShift 4.10 and 4.9.
 

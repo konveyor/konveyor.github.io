@@ -9,8 +9,10 @@ Pelorus dashboards show Key Performance Indicators (KPIs) that measure various B
 ## Terminology
 
 **Exporter**
-Exporters enable Pelorus to customize data points to capture metrics from various providers.
-e.g. Deploy time exporter, Commit time exporter, Failure exporter
+Exporters enable Pelorus to customize data points to capture metrics from various providers including:
+* Deploy Time Exporter
+* Commit Time Exporter
+* Failure Time Exporter
 
 **Provider**
 The source from which exporters automate collection of data points (metrics).

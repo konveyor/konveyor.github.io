@@ -8,7 +8,7 @@ The Pelorus stack (Prometheus, Grafana, Thanos, etc.) is configured by changing 
 oc apply -f `myclusterconfigs/pelorus/configmaps
 helm upgrade pelorus charts/pelorus --namespace pelorus --values myclusterconfigs/pelorus/values.yaml
 ```
-
+## Configuring exporters
 The following configurations may be made through the `values.yaml` file:
 
 |Variable|Required|Explanation|Default Value|
@@ -134,12 +134,12 @@ oc create secret generic snow-secret \
 --from-literal=APP_FIELD=<Custom app label field> \
 -n pelorus
 ```
-### Committing the Time Exporter
+## Configuring the Commit Time Exporter
 The Commit Time Exporter finds relevant builds in OpenShift and associates a commit from the build's source code repository with a container image built from that commit. It captures a timestamp for the commit and the resulting image hash so the Deploy Time Exporter can associate that image with a production deployment.
 
 > **Important:** All builds associated with a particular application must be labelled with the same `app.kubernetes.io/name=&lt;app_name>` label.
 
-#### Annotated binary (local) source build support
+### Annotated binary (local) source build support
 The Commit Time Exporter may be used in conjunction with builds where values required to gather commit time from the source repository are missing. In this case, each build is required to be annotated with two values allowing the Commit Time Exporter to calculate metric from the Build.
 
 Annotate build with the following commands:
@@ -152,7 +152,7 @@ Custom annotation names may also be configured using ConfigMap Data Values.
 
 > **Note:** The requirement to label the build with `app.kubernetes.io/name=&lt;app_name>` for the annotated Builds applies.
 
-#### Instance configuration
+### Instance configuration
 ```
 exporters:
   instances:
@@ -164,7 +164,7 @@ exporters:
     - pelorus-config
     - committime-config
 ```
-#### ConfigMap data values
+### ConfigMap data values
 This exporter provides several configuration options, passed via `pelorus-config` and `committime-config` variables. User may define own ConfigMaps and pass to the committime exporter in a similar way.
 
 |Variable|Required|Explanation|Default Value|
@@ -179,12 +179,12 @@ This exporter provides several configuration options, passed via `pelorus-config
 |<code>COMMIT_HASH_ANNOTATION</code>|no|Annotation name associated with the Build from which hash is used to calculate commit time|<code>io.openshift.build.commit.id</code>|
 |<code>COMMIT_REPO_URL_ANNOTATION</code>|no|Annotation name associated with the Build from which GIT repository URL is used to calculate commit time|<code>io.openshift.build.source-location</code>|
 
-### Deploying the Time Exporter
+## Configuring the Deploy Time Exporter
 The Deploy Time Exporter captures the timestamp of a deployment in a production environment.
 
 > **Important:** All deployments associated with a particular application must be labelled with the same `app.kubernetes.io/name=&lt;app_name>` label.
 
-#### Instance configuration
+### Instance configuration
 
 ```
 exporters:
@@ -196,7 +196,7 @@ exporters:
     - deploytime-config
 ```
 
-#### ConfigMap Data Values Exporter
+### ConfigMap Data Values Exporter
 The ConfigMap Data Values Exporter provides several configuration options that are passed using `pelorus-config` and `deploytime-config` variables. Users can define custom ConfigMaps and pass them to the committime exporter in a similar way.
 
 |Variable|Required|Explanation|Default Value|
@@ -207,7 +207,7 @@ The ConfigMap Data Values Exporter provides several configuration options that a
 |<code>NAMESPACES</code>|no|Restricts the set of namespaces from which metrics will be collected. ex: <code>myapp-ns-dev,otherapp-ci</code>|unset; scans all namespaces|
 |<code>PELORUS_DEFAULT_KEYWORD</code>|no|ConfigMap default keyword. If specified it's used in other data values to indicate "Default Value" should be used|<code>default</code>|
 
-### Failure Time Exporter
+## Configuring the Failure Time Exporter
 The Failure Time Exporter captures the timestamp of a failure in a production environment and when it is resolved.
 
 Failure Time Exporter may be deployed with one of three backends: JIRA, GithHub Issues, and ServiceNow. One clusters' namespace can have multiple instances of the Failure Time Exporter for each backend and/or watched projects.
@@ -216,7 +216,7 @@ Each of the backend requires specific [configuration](https://pelorus.readthedoc
 
 > **Important:** All GitHub Issues and JIRA backends issues associated with a particular application must be labelled with the same `app.kubernetes.io/name=&lt;app_name>` label, or custom label if it was configured via `APP_LABEL`.
 
-#### Instance Config Jira Exporter
+### Instance Config Jira
 The Instance Config JIRA Exporter expects a specific workflow be used when the issue needs to be `Resolved` with `resolutiondate` and all the relevant issues to be a `Bug` with the `Highest` priority with the `app.kubernetes.io/name=&lt;app_name>` label.
 
 This exporter can be customized to orgaizational needs by configuring `JIRA_JQL_SEARCH_QUERY`, `JIRA_RESOLVED_STATUS` and `APP_LABEL` options. Please refer to the [Failure Exporter ConfigMap Data Values](https://pelorus.readthedocs.io/en/latest/Configuration/#failureconfigmap).
@@ -243,7 +243,7 @@ exporters:
     - pelorus-config
     - failuretime-github-config
 ```
-#### ConfigMap data values
+### ConfigMap data values
 This exporter provides several configuration options, passed via `pelorus-config` and `failuretime-config` variables. User may define own ConfigMaps and pass to the committime exporter in a similar way.
 
 |Variable|Required|Explanation|Default Value|
