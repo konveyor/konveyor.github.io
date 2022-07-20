@@ -3,7 +3,11 @@ title: "Configuration the Pelorus stack"
 date: 2022-07-07T17:20:01-06:00
 draft: false
 ---
-The Pelorus stack (Prometheus, Grafana, Thanos, etc.) is configured by changing the `values.yaml` file that is passed to Helm.
+The Pelorus stack (Prometheus, Grafana, Thanos, etc.) is configured by changing the `values.yaml` file that is passed to Helm. The recommended practice is to make a copy of the one [values.yaml](https://github.com/konveyor/pelorus/blob/master/charts/pelorus/values.yaml) file and [charts/pelorus/configmaps/](https://github.com/konveyor/pelorus/tree/master/charts/pelorus/configmaps) directory, and store in in your own configuration repo for safe keeping, and updating. Once established, you can make configuration changes by updating your `charts/pelorus/configmaps` files with `values.yaml` and applying the changes like so:
+```
+oc apply -f `myclusterconfigs/pelorus/configmaps
+helm upgrade pelorus charts/pelorus --namespace pelorus --values myclusterconfigs/pelorus/values.yaml
+```
 
 The following configurations may be made through the `values.yaml` file:
 
@@ -23,7 +27,7 @@ oc apply -f `myclusterconfigs/pelorus/configmaps
 helm upgrade pelorus charts/pelorus --namespace pelorus --values myclusterconfigs/pelorus/values.yaml
 ```
 
-## **Configuring Exporters**
+## **Configuring exporters**
 The _exporter_ data collection application pulls data from various tools and platforms so it can be consumed by Pelorus dashboards. Each exporter gets deployed individually alongside the core Pelorus stack.
 
 There are currently three _exporter_ types which need to be specified using  `exporters.instances.exporter_type` value:
@@ -90,7 +94,7 @@ data:
   NAMESPACES: "default"    # ""
 ```
 
-### Authentication to Remote Services
+### Authentication to remote services
 Pelorus exporters make use of `personal access tokens` when authentication is required. It is recommended to configure the Pelorus exporters with authentication using the `TOKEN` key to avoid connection rate limiting and access restrictions.
 
 See [Github Personal Access Tokens](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token) for more information about personal access tokens.
@@ -135,7 +139,7 @@ The Commit Time Exporter finds relevant builds in OpenShift and associates a com
 
 > **Important:** All builds associated with a particular application must be labelled with the same `app.kubernetes.io/name=&lt;app_name>` label.
 
-#### Annotated Binary (local) source build support
+#### Annotated binary (local) source build support
 The Commit Time Exporter may be used in conjunction with builds where values required to gather commit time from the source repository are missing. In this case, each build is required to be annotated with two values allowing the Commit Time Exporter to calculate metric from the Build.
 
 Annotate build with the following commands:
@@ -148,7 +152,7 @@ Custom annotation names may also be configured using ConfigMap Data Values.
 
 > **Note:** The requirement to label the build with `app.kubernetes.io/name=&lt;app_name>` for the annotated Builds applies.
 
-#### Instance Config
+#### Instance configuration
 ```
 exporters:
   instances:
@@ -160,7 +164,7 @@ exporters:
     - pelorus-config
     - committime-config
 ```
-#### **ConfigMap Data Values**
+#### ConfigMap data values
 This exporter provides several configuration options, passed via `pelorus-config` and `committime-config` variables. User may define own ConfigMaps and pass to the committime exporter in a similar way.
 
 |Variable|Required|Explanation|Default Value|
@@ -175,12 +179,12 @@ This exporter provides several configuration options, passed via `pelorus-config
 |<code>COMMIT_HASH_ANNOTATION</code>|no|Annotation name associated with the Build from which hash is used to calculate commit time|<code>io.openshift.build.commit.id</code>|
 |<code>COMMIT_REPO_URL_ANNOTATION</code>|no|Annotation name associated with the Build from which GIT repository URL is used to calculate commit time|<code>io.openshift.build.source-location</code>|
 
-### Deploy Time Exporter
+### Deploying the Time Exporter
 The Deploy Time Exporter captures the timestamp of a deployment in a production environment.
 
 > **Important:** All deployments associated with a particular application must be labelled with the same `app.kubernetes.io/name=&lt;app_name>` label.
 
-#### Instance Config
+#### Instance configuration
 
 ```
 exporters:
@@ -227,7 +231,7 @@ exporters:
     - pelorus-config
     - failuretime-config
 ```
-#### **Instance Config Github**
+#### Instance Config Github
 ```
 exporters:
   instances:
@@ -239,7 +243,7 @@ exporters:
     - pelorus-config
     - failuretime-github-config
 ```
-#### **ConfigMap Data Values**
+#### ConfigMap data values
 This exporter provides several configuration options, passed via `pelorus-config` and `failuretime-config` variables. User may define own ConfigMaps and pass to the committime exporter in a similar way.
 
 |Variable|Required|Explanation|Default Value|
