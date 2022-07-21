@@ -9,10 +9,10 @@ Software Delivery Performance is a measure of an organization's ability to effec
 
 The Pelorus Software Delivery Performance dashboard tracks the four primary measures of software delivery:
 
-* Lead Time for Change
-* Deployment Frequency
-* Mean Time to Restore
-* Change Failure Rate
+* [Lead time for change](https://konveyor.github.io/pelorus/softwaredeliveryperformance/#lead-time-for-change)
+* [Deployment frequency](https://konveyor.github.io/pelorus/softwaredeliveryperformance/#deployment-frequency)
+* [Mean time to restore](https://konveyor.github.io/pelorus/softwaredeliveryperformance/#mean-time-to-restore)
+* [Change failure rate](https://konveyor.github.io/pelorus/softwaredeliveryperformance/#change-failure-rate)
 
  > **Note:** For more information about Software Delivery Performance, check out the book [Accelerate](https://itrevolution.com/book/accelerate/) by Forsgren, Kim and Humble.
 
