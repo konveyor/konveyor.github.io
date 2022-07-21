@@ -1,7 +1,7 @@
 ---
 title: "Pelorus demonstration"
 date: 2022-07-14T14:27:25-06:00
-draft: false
+draft: true
 ---
 ## Assumptions
 * oc, helm command line tools are installed
@@ -249,7 +249,7 @@ Check the logs of exporter pod. An "idle" state might look like the following:
 
 ![](/Pelorus/Demo/pelorus-dashboard-idle-data.png)
 
-## Setting mean time to restore and change failure rate
+## Setting Mean Time to Restore and Change Failure Rate
 Configuring these settings is done in two steps:
 * Create and resolve bugs in Github issues that exercise Pelorus metrics
 * View the changes to the `Mean Time to Restore` and `Change Failure Rate` metrics.
@@ -307,7 +307,7 @@ helm upgrade pelorus charts/pelorus --namespace pelorus --values /var/tmp/values
 curl $(oc get route -n pelorus failure-exporter -o=template='http://{{.spec.host | printf "%s\n"}}')
 ```
 
-## Github Issues
+## Github issues
 Pelorus uses two tags to determine if a Github issue is associated with the todolist-mongo application and includes the default `bug` tag. Pelorus requires that all issues associated with a particular application be labeled with the app.kubernetes.io/name= label by default. This works the same way as the deployment configuration.
 
 **Procedure**

@@ -1,7 +1,7 @@
 ---
 title: "Pelorus Development Guide"
 date: 2022-07-14T15:16:11-06:00
-draft: false
+draft: true
 ---
 
 Contributing to Pelorus is appreciated and encouraged. Use this guide to get up and running. There are three main Pelorus development tracks to consider.
@@ -15,10 +15,10 @@ This is where we take the collected raw data and turn it into actionable, visual
 **Exporter Development**
 This track is focused around the development of custom [Prometheus exporters](https://prometheus.io/docs/instrumenting/writing_exporters/) to gather information to calculate our core metrics. Python development experience is required.
 
-## Contributing to Deployment Automation
+## Deployment automation
 [Helm](https://helm.sh/) is used to provide an automated deployment and configuration experience for Pelorus. We are always working to cover more and more complex use cases with our Helm charts. In order to be able to effectively contribute to these charts, you will need a cluster that satisfies all of the installation prerequisites for Pelorus.
 
-See the [Installation section](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/installation.md) for more details.
+See [Installation (https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/installation.md) for more details.
 
 Currently there are two charts:
 
@@ -35,7 +35,7 @@ Currently there are two charts:
 
 Pelorus uses Helm's [chart-testing tool](https://github.com/helm/chart-testing) to ensure quality and consistency in the chart. When making updates to one of the charts, ensure that the chart still passes lint testing using `make chart-lint`. The most common linting failure is forgetting to bump the `version` field in the `Chart.yaml`. See below for instructions on updating the version.
 
-## Updating the chart versions
+### Updating the chart versions
 When any Helm charts are updated, we need to bump the version number for a seemless upgrade experience. We have provided scripts that can test when a version bump is needed and do the bumping for you.
 
 **Procedure**
@@ -56,8 +56,8 @@ or bump specific charts with shell script:
 $ ./scripts/bump-version CHART_PATH [ CHART_PATH ...]
 ```
 
-## Dashboard Development
-Pelorus is continually working to enhance and bugfix the dashboards. Doing so requires a complete Pelorus stack, including all exporters required to populate a given dashboard. See the [Dashboards section](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/dashboard.md) for more information.
+## Dashboard development
+Pelorus is continually working to enhance and bugfix the dashboards. Doing so requires a complete Pelorus stack, including all exporters required to populate a given dashboard. See [Dashboards](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/dashboard.md) for more information.
 
 For effective dashboard development, you will likely need at least two browser windows open, one with Grafana, and another with Prometheus for testing queries. Since our dashboards are imported to Grafana via the Grafana Operator, they get imported in read-only mode. Because of this, you will need to make a copy of it for development purposes.
 
@@ -123,7 +123,7 @@ $ oc get secrets -n pelorus grafana-admin-credentials -o jsonpath='{.data.GF_SEC
 
 7. Commit your changes and open a PR.
 
-## Exporter Development
+## Exporter development
 A Pelorus exporter is simply a [Prometheus exporter](https://prometheus.io/docs/instrumenting/writing_exporters/). While they can technically be written in many languages, Pelorus' are written in Python using the [Prometheus Python client library](https://github.com/prometheus/client_python). We chose Python because it seems to be the most popular programming language for operations teams.
 
 ### Exporter directory layout
@@ -142,7 +142,7 @@ The following is a recommended directory structure for a Pelorus exporter `<NAME
     └── tests
         └── test_<NAME>.py
 ```
-## Python Dev Environment Setup and and Repo Setup
+### Python development environment setup and and repo setup
 Install Python (version >= 3.9 but < 3.11) after cloning the repo. Running `make dev-env` should be enough to get started.
 
 This will:
@@ -154,7 +154,7 @@ This will:
 * set up git hooks for formatting and linting checks
 * configure git blame to ignore large revisions that just changed formatting
 
-### IDE Setup (VSCode)
+### IDE setup (VSCode)
 Most developers use Visual Studio Code for Python development. The following extensions for VSCode are useful. Each can be installed by hitting `Ctrl+P` and pasting the commands below.
 
 **Procedure**
@@ -218,9 +218,9 @@ ext install ms-python.python
     ]
 }
 ```
-For more information, see the [Debugging](https://code.visualstudio.com/docs/editor/debugging) doc in VSCode.
+For more information, see the [Debugging](https://code.visualstudio.com/docs/editor/debugging) document in VSCode.
 
-## Running exporters locally
+### Running exporters locally
 Follow the steps below to run an exporter on a local machine.
 
 **Procedure**
@@ -233,7 +233,7 @@ make dev-env
 ```
 . .venv/bin/activate
 ```
-3. Set any environment variables required (or desired) for the given exporter ([see Configuration exporters](https://konveyor.github.io/pelorus/configuration/#configuring-exporters) for supported variables).
+3. Set any environment variables required (or desired) for the given exporter see ([Configuring exporters](https://konveyor.github.io/pelorus/configuration/#configuring-exporters) for supported variables).
 ```
 export LOG_LEVEL=debug
 export TOKEN=xxxx
@@ -281,12 +281,13 @@ gh pr checkout 535
 # > konveyor/pelorus
 ```
 
-### Making Dashboard Changes
+### Making dashboard changes
 Follow the steps below to make changes to the dashboard.
 
 > **Note:**: In most cases you can deploy changes to an existing deployment to retain existing data.
 
 **Procedure**
+
 1. [Checkout](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/DevGuide.md) the PR on top of your fork.
 2. [Install Pelorus](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/installation.md) from checked out fork/branch.
 3. Log into Grafana via the grafana route.
@@ -297,8 +298,10 @@ oc get route grafana-route -n pelorus
 
 > **Note:** Eventually Pelorus would like to have some Selenium tests in place to validate dashboards. If you have skills in this area let us know.
 
-### Exporter Changes
+### Exporter changes
 Each PR runs exporter tests in the CI systems, however those changes can be tested locally in a very similar way they run in the CLI. Follow the steps below to export the changes.
+
+**Procedure**
 
 1. [Checkout](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/DevGuide.md) the PR on top of your fork.
 
@@ -348,7 +351,7 @@ echo $?
 
 Pelorus is in the process of refactoring our Helm charts so that they can be tested more automatically using [helm chart-testing](https://github.com/helm/chart-testing). Some general guidelines are outlined in the [CoP Helm testing strategy](https://redhat-cop.github.io/ci/linting-testing-helm-charts.html).
 
-## Release Management Process
+## Release management process
 The following steps are a walkthrough of the process to create and manage versioned releases of Pelorus. Pelorus release versions follow SemVer versioning conventions. Change of the version is managed via Makefile.
 
 **Procedure**

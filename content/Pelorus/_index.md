@@ -9,4 +9,4 @@ pre = "<b>5 </b>"
 # Pelorus
 Use this section to better understand and use the Konveyor Pelorus tool.
 
-For more information, documentation and demos, please visit the [Pelorus documentation site](https://pelorus.readthedocs.io/en/latest/).
+Coming soon...

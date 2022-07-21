@@ -1,7 +1,7 @@
 ---
 title: "Outcome: Software Delivery Performance"
 date: 2022-07-14T13:54:43-06:00
-draft: false
+draft: true
 ---
 Software Delivery Performance is a measure of an organization's ability to effectively deliver software-based products they have built for their customers. It measures four factors that provide a balanced perspective that take both speed to market and stability measures into account. Tracking Software Delivery Performance over time provides IT organizations with data to make smarter investments in their internal tools and processes to optimize their delivery processes based on the types of products they are delivering. The outcomes provides a bridge between development, operations, and leadership while allowing them to better communicate how proposed work on infrastructure improvements or process developments are in line with the overall vision and financial goals of the organization at large.
 

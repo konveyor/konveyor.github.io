@@ -1,7 +1,7 @@
 ---
 title: "Installation"
 date: 2022-07-07T13:49:33-06:00
-draft: false
+draft: true
 ---
 
 **Prerequisites**
@@ -39,12 +39,12 @@ The following are deployed:
     * A `Grafana` instance
     * A `ServiceMonitor` instance for scraping the Pelorus exporters
     * A `GrafanaDatasource` pointing to Prometheus
-    * A set of `GrafanaDashboards`. See the [dashboards documentation](https://pelorus.readthedocs.io/en/latest/Dashboards/) for more details.
+    * A set of `GrafanaDashboards`. See [Dashboards](https://pelorus.readthedocs.io/en/latest/Dashboards/) for more details.
 * The following exporters:Deploy Time
 
 Additional configuration is required to deploy other exporters.
 
-See the [Configuration Guide](https://pelorus.readthedocs.io/en/latest/Configuration/) for more information on exporters.
+See [Configuration](https://pelorus.readthedocs.io/en/latest/Configuration/) for more information on exporters.
 
 ## Customizing Pelorus
 See [Configuring the Pelorus Stack](https://pelorus.readthedocs.io/en/latest/Configuration/) for a complete list of possible configuration items. The following sections describe the most commonly supported Pelorus deployment customizations.
@@ -72,7 +72,7 @@ helm upgrade pelorus charts/deploy --namespace pelorus --values values.yaml
 
  [MinIO](https://min.io/) is a recommended free, open source object storage provider. Follow the [MinIO quickstart](https://pelorus.readthedocs.io/en/latest/MinIO/) to host an instance on OpenShift and configure it for Pelorus.
 
-## Deploying Across Multiple Clusters
+## Deploying across multiple clusters
 By default, this tool pulls in data from the cluster in which it is running. The tool also supports collecting data across mulitple OpenShift clusters. In order to do this, the Thanos sidecar must be configured to read from a shared S3 bucket accross clusters. See [Pelorus Multi-Cluster Architecture](https://pelorus.readthedocs.io/en/latest/Architecture/) for details.
 
 Exporters for the desired metrics in each of the clusters which metrics will be evaluated must be defined. The main cluster's Grafana dashboard will display a combined view of the metrics collected in the shared S3 bucket via Thanos.
@@ -152,6 +152,4 @@ Removing Pelorus is done using these two commands.
 helm uninstall pelorus --namespace pelorus
 helm uninstall operators --namespace pelorus
 ```
-For more information see the [Pelorus documentation site](https://pelorus.readthedocs.io/en/latest/).
-
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/installation.md)

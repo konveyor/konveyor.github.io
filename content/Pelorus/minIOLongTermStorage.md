@@ -1,7 +1,7 @@
 ---
 title: "MinIO and Pelorus Quickstart"
 date: 2022-07-14T15:14:55-06:00
-draft: false
+draft: true
 ---
 
 Deploy MinIO on OpenShift and then configuring Pelorus to consume it as a [long term storage solution](https://konveyor.github.io/pelorus/installation#configure-long-term-storage) in two steps:

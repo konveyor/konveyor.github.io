@@ -1,7 +1,7 @@
 ---
 title: "Our Philosophy"
 date: 2022-07-12T11:44:23-06:00
-draft: false
+draft: true
 ---
 
 Studies have shown that elite digital organizations tend to outperform their peers in software delivery and operational performance, but very few of them are actually measuring their software delivery and operational performance in a meaningful way, despite the evidence that shows how this performance leads to higher organizational performance.  Even fewer are using that information to learn and continuously improve their organization.
@@ -10,7 +10,7 @@ As software delivery and operational performance has a proven correlation to org
 
 Pelorus helps IT organizations use business value-based metrics to understand how technology-related investments impact organizational performance and provides specific tools and guidance to help improve those metrics.
 
-## The Problem Today
+## The problem today
 Most of the context around IT work IT is easily hidden today. At an implementation level, engineers are working towards code deployments, changes to server configuration, network and firewall updates -- all of which are critically important to the success of an organization. Any specific implementation details are generalized through summary reporting to anyone outside the work. Even if a Director or VP were to walk to an engineer's desk and ask to see the result of a task that was just delivered, the information would rarely be meaningful to them. This gap exists across every vertical and horizontal relationship between business stakeholders, IT engineers, managers and leaders.
 
 Pelorus' goal is for everyone in an organization to be able to effectively communicate the value of their work by relating them to Bridge Outcomes.
@@ -21,8 +21,8 @@ This is the problem Pelorus intends to solve.
 
 The true complexity of this problem becomes more obvious when we realize that not only do we have to master passing invisible work across multiple teams, but often, we have to either aggregate or break down the work so that it makes sense to different audiences within IT--all of whom think in varying scopes of time. To talk about this, we leverage the 5 Elements model below.
 
-## The 5 Elements of IT
-The 5 Elements of IT is a conceptual model that hypothesizes that any given IT organization is made up of, at a minimum, five very distinct functions. These Five Elements need to work together in balance to deliver the organization's needs. It also theorizes that many common areas of pain or dysfunction can be traced back to communication gaps or breakdowns between at least two of the Five Elements.
+## The Five Elements of IT
+The Five Elements of IT is a conceptual model that hypothesizes that any given IT organization is made up of, at a minimum, five very distinct functions. These Five Elements need to work together in balance to deliver the organization's needs. It also theorizes that many common areas of pain or dysfunction can be traced back to communication gaps or breakdowns between at least two of the Five Elements.
 
 |Element|Capability|How they can fail|Time frame|
 |--|--|--|--|

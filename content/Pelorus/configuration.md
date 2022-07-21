@@ -1,14 +1,14 @@
 ---
-title: "Configuration the Pelorus stack"
+title: "Configuring the Pelorus stack"
 date: 2022-07-07T17:20:01-06:00
-draft: false
+draft: true
 ---
 The Pelorus stack (Prometheus, Grafana, Thanos, etc.) is configured by changing the `values.yaml` file that is passed to Helm. The recommended practice is to make a copy of the one [values.yaml](https://github.com/konveyor/pelorus/blob/master/charts/pelorus/values.yaml) file and [charts/pelorus/configmaps/](https://github.com/konveyor/pelorus/tree/master/charts/pelorus/configmaps) directory, and store in in your own configuration repo for safe keeping, and updating. Once established, you can make configuration changes by updating your `charts/pelorus/configmaps` files with `values.yaml` and applying the changes like so:
 ```
 oc apply -f `myclusterconfigs/pelorus/configmaps
 helm upgrade pelorus charts/pelorus --namespace pelorus --values myclusterconfigs/pelorus/values.yaml
 ```
-## Configuring exporters
+## Configurations
 The following configurations may be made through the `values.yaml` file:
 
 |Variable|Required|Explanation|Default Value|
@@ -27,7 +27,7 @@ oc apply -f `myclusterconfigs/pelorus/configmaps
 helm upgrade pelorus charts/pelorus --namespace pelorus --values myclusterconfigs/pelorus/values.yaml
 ```
 
-## **Configuring exporters**
+## Configuring exporters
 The _exporter_ data collection application pulls data from various tools and platforms so it can be consumed by Pelorus dashboards. Each exporter gets deployed individually alongside the core Pelorus stack.
 
 There are currently three _exporter_ types which need to be specified using  `exporters.instances.exporter_type` value:
@@ -216,7 +216,7 @@ Each of the backend requires specific [configuration](https://pelorus.readthedoc
 
 > **Important:** All GitHub Issues and JIRA backends issues associated with a particular application must be labelled with the same `app.kubernetes.io/name=&lt;app_name>` label, or custom label if it was configured via `APP_LABEL`.
 
-### Instance Config Jira
+### Instance Config Jira Exporter
 The Instance Config JIRA Exporter expects a specific workflow be used when the issue needs to be `Resolved` with `resolutiondate` and all the relevant issues to be a `Bug` with the `Highest` priority with the `app.kubernetes.io/name=&lt;app_name>` label.
 
 This exporter can be customized to orgaizational needs by configuring `JIRA_JQL_SEARCH_QUERY`, `JIRA_RESOLVED_STATUS` and `APP_LABEL` options. Please refer to the [Failure Exporter ConfigMap Data Values](https://pelorus.readthedocs.io/en/latest/Configuration/#failureconfigmap).
@@ -298,7 +298,5 @@ A custom field can be configured with the following steps:
 2. In the upper left menu, click **Configure**, then **Form Layout**.
 3. Create a new field (String, Table or reference a List).
 4. Verify the APP_FIELD name using the API Explorer.
-
-For more information see the [Pelorus documentation site](https://pelorus.readthedocs.io/en/latest/).
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/configuration.md)

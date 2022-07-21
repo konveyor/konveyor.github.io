@@ -1,7 +1,7 @@
 ---
 title: "Dashboards"
 date: 2022-07-12T11:36:14-06:00
-draft: false
+draft: true
 ---
 
 Pelorus dashboards show Key Performance Indicators (KPIs) that measure various Bridge Outcomes. Learn what we measure and why on the [Our Philosophy](https://github.com/konveyor/konveyor.github.io/blob/main/content/Pelorus/philosophy.md) page.
