@@ -3,7 +3,7 @@ title: "Overview"
 date: 2022-07-08T14:37:53-06:00
 draft: false
 ---
-Tackle is a collection of tools that support the modernization and migration of applications to Kubernetes. These tools assess applications to determine which option is the appropriate migration strategy for each application:
+Tackle is a collection of tools that support modernizing and migrating applications to Kubernetes. These tools assess applications to determine which option is the appropriate migration strategy for each application:
 * Rehosting
 * Replatforming
 * Refactoring
