@@ -3,7 +3,7 @@ title: "Overview"
 date: 2022-07-08T14:32:29-06:00
 draft: false
 ---
-The Crane tool helps application owners migrate Kubernetes workloads and their state between clusters, remove environment-specific configuration, and automate application deployments along the way.
+The Crane tool helps application owners migrate Kubernetes workloads and their states between clusters, remove environment-specific configuration, and automate application deployments along the way.
 
 The process uses a few tools:
 
