@@ -4,25 +4,25 @@ date: 2022-06-14T14:59:30-06:00
 draft: false
 ---
 
-Follow the steps below to provision the Minikube cluster and install Tackle 2.0.  
+Follow the steps below to provision the minikube cluster and install Tackle 2.0.  
 
 ## Provisioning Minikube
-Follow the steps below to provision Minikube for single users deploying Tackle on a workstation. These steps will configure Minikube and enable:
+Follow the steps below to provision minikube for single users deploying Tackle on a workstation. These steps will configure minikube and enable:
 * Ingress so the Tackle tool can publish outside of the Kubernetes cluster.
 * Operator lifecycle manager (OLM) addon. (OpenShift has OLM installed out of the box but Kubernetes does not.)
 
 **Procedure**
-1. Provision the Minikube cluster with these recommended parameters.
+1. Provision the minikube cluster with these recommended parameters. Replace `<profile name>` with your choice of minikube profile name.
 ```
-[user@user ~]$ Minikube start -- driver=kvm3  -p <project name> --memory=10g
+[user@user ~]$ minikube start --memory=10g -p <profile name>
 ```
 2. Enable the ingress addon.
 ```
-[user@user ~]$ Minikube addons enable ingress -p docs
+[user@user ~]$ minikube addons enable ingress -p <profile name>
 ```
-3. Enable the operator lifecycle manager (OLM) addon.
+3. Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
 ```
-[user@user ~]$ Minikube addons enable olm -p docs
+[user@user ~]$ curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.21.2/install.sh | bash -s v0.21.2
 ```
 
 ## Installing Tackle Operator
@@ -39,12 +39,12 @@ Tackle requires a total of 5 persistent volumes (PVs) used by different componen
 |pathfinder postgresql|1Gi|RWO|Pathfinder backend DB|
 |maven|100Gi|RWX|maven m2 repository|
 
-Follow the steps below to install the Tackle Operator in the my-tackle-operator namespace (default) on any Kubernetes distribution, including Minikube.
+Follow the steps below to install the Tackle Operator in the my-tackle-operator namespace (default) on any Kubernetes distribution, including minikube.
 
 **Procedure**
 1. Install the Tackle Operator.
 ```
-[user@user ~]$ $ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
+[user@user ~]$ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
 ```
 2. Verify Tackle was installed.
 ```
@@ -54,22 +54,18 @@ Follow the steps below to install the Tackle Operator in the my-tackle-operator 
 
 ## Create the Tackle instance
 Follow the steps below to initiate the Tackle instance and set a custom resource (CR) with the tackle_hub.yaml file. CRs can be customized to meet the project needs.
-```
-    $ cat << EOF | kubectl apply -f -
-    kind: Tackle
-    apiVersion: tackle.konveyor.io/v1alpha1
-    metadata:
-      name: tackle
-      namespace: <your-tackle-namespace>
-    spec:
-    EOF
-```
-> **Note:** For more information about altering the operator defaults, see the Tackle CR Settings section.
 
 **Procedure**
 1. Create the instance pointing to the CR file.
 ```
-[user@user ~]$ Kubectl create -f tackle_hub.yaml -n my-tackle-operator
+[user@user ~]$ cat << EOF | kubectl apply -f -
+kind: Tackle
+apiVersion: tackle.konveyor.io/v1alpha1
+metadata:
+  name: tackle
+  namespace: my-tackle-operator
+spec:
+EOF
 ```
 2. Verify the instance
 ```
@@ -79,7 +75,18 @@ Follow the steps below to initiate the Tackle instance and set a custom resource
 
 > **Note:** This can take one to five minutes depending on the cluster resources.
 
-### Logging into Tackle with auth enabled
-The default auth enabled credentials are: admin/password
+## Logging in to Tackle Web Console
+Follow the steps below to log into the Tackle web console.
+
+**Procedure**
+1. Access the minikube dashboard. This will enable the dashboard add-on, and open the proxy in the default web browser.
+```
+[user@user ~]$ minikube dashboard -p <profile name>
+```
+2. Ensure the top dropdown namespace selector is set to the `my-tackle-operator`
+3. Click **Service** then **Ingresses**
+4. Click the endpoint IP for the `tackle` ingress ingress to launch the Tackle web console in a new browser window.
+> **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
+6. The default auth enabled credentials are: `admin`/`password`
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/installation.md)
