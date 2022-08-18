@@ -37,14 +37,14 @@ Follow the steps below to download and install the Tackle Operator on an Enterpr
 1. Install the Tackle Operator:
 
 ```
-$ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
+[user@user ~]$ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
 ```
 The Tackle Operator is installed in the `my-tackle-operator` namespace by default.
 
 2. Verify the Tackle Operator installation by viewing its resources:
 
 ```
-$ kubectl get all -n my-tackle-operator
+[user@user ~]$ kubectl get all -n my-tackle-operator
 ```
 
 ## Installing the Tackle application
@@ -58,7 +58,7 @@ Follow the steps below to install Tackle in a namespace by creating an instance 
 **Procedure**
 1. Create an instance of the Tackle application, specifying its namespace:
 ```
-$ kubectl apply -f https://raw.githubusercontent.com/konveyor/tackle-operator/main/src/main/resources/k8s/tackle/tackle.yaml -n <namespace>
+[user@user ~]$ kubectl apply -f https://raw.githubusercontent.com/konveyor/tackle-operator/main/src/main/resources/k8s/tackle/tackle.yaml -n <namespace>
 ```
 > **Note:** Multiple instances of the Tackle application can be created in the same namespace by specifying a unique name for each instance in the tackle.yaml file.
 
