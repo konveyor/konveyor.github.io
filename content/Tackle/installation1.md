@@ -30,7 +30,7 @@ Follow the steps below to download and install the Tackle Operator on an Enterpr
 
 **Prerequisites**
 
-* Cluster-admin privileges. This can be minikube
+* Cluster-admin privileges. This can be minikube.
 
 **Procedure**
 
@@ -62,7 +62,7 @@ Follow the steps below to install Tackle in a namespace by creating an instance 
 ```
 > **Note:** Multiple instances of the Tackle application can be created in the same namespace by specifying a unique name for each instance in the tackle.yaml file.
 
-2. Verify the instance
+2. Verify the instance.
 ```
 [user@user ~]$ kubectl get pods -n <namespace>
 ```
