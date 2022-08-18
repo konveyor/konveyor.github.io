@@ -89,4 +89,4 @@ Follow the steps below to log into the Tackle web console.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
 6. The default auth enabled credentials are: `admin`/`password`
 
-[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/installation.md)
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/installation.md)
