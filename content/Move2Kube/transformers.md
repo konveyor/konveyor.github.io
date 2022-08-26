@@ -4,7 +4,7 @@ date: 2022-08-05T10:42:32-06:00
 draft: true
 ---
 
-Move2Kube uses a suite of transformers to achieve object modifications. To customize the output artifacts generated for a specific input, these transformers can be configured or new custom transformers can be created to achieve the required result. Transformer behavior and configuration is determined by the Transformer Class it uses. Though all the transformer classes are equal internally in Move2Kube, from a usage perspective, they are classified into three categories.
+Move2Kube uses a suite of transformers to modify objects. To customize the output artifacts generated for a specific input, these transformers can be configured or new custom transformers can be created to achieve the required result. Transformer behavior and configuration is determined by the Transformer Class it uses. Though all the transformer classes are equal internally in Move2Kube, from a usage perspective, they are classified into three categories.
 
 1. [Purpose Built](/transformers/purpose-built) - Has a specific job and the customization allows for changing the parameters/configuration required for performing the specific job. Ex: `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, etc..
 2. [External](/transformers/external) - Allows you to write custom transformers performing any behavior. It exposes the internal functions of the transformer class through different interfaces to be implemented by the transformer externally. Ex: `Starlark`, `Executable`

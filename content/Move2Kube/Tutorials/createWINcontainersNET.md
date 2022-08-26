@@ -4,7 +4,7 @@ date: 2022-08-04T19:12:22-06:00
 draft: true
 ---
 
-In this tutorial, we will learn how containerize .NET applications developed for 4.x versions of .NET framework using windows containers and deploy them to Kubernetes cluster using Move2Kube. Here, we are going to use the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
+In this tutorial, we will learn how containerize .NET applications developed for 4.x versions of .NET framework using Windows containers and deploy them to Kubernetes cluster using Move2Kube. Here, we are going to use the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
 
 ## Prerequisites
 

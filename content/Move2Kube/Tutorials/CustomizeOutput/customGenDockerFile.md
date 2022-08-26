@@ -4,7 +4,7 @@ date: 2022-08-04T19:21:31-06:00
 draft: true
 ---
 
-In this tutorial we will make Move2Kube, add custom Dockerfile, and a custom file.
+In this tutorial we will make Move2Kube add custom Dockerfile, and a custom file.
 
 1. Create an empty workspace directory named `workspace` and make it the current working directory. Assume all commands are executed within this directory.
   ```console

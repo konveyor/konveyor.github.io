@@ -4,13 +4,7 @@ date: 2022-08-04T19:09:22-06:00
 draft: true
 ---
 
----
-layout: default
-title: Tutorials
-permalink: /tutorials
-nav_order: 3
-has_children: true
----
+
 
 # Tutorials
 

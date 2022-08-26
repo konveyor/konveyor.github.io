@@ -9,7 +9,7 @@ nav_order: 3
 
 > **Note:** This is an optional step. If you are not familiar with Cloud Foundry or you do not want to collect information from your running app, skip to [Customizing the output](/tutorials/customizing-the-output).
 
-To analyze our running application in Cloud Foundry (CF), the Move2Kube CLI tool provides a command called `collect`. As the name suggests, the `collect` command collects information about applications running in the cloud.
+To analyze the running application in Cloud Foundry (CF), the Move2Kube CLI tool provides a command called `collect`. As the name suggests, the `collect` command collects information about applications running in the cloud.
 
 - For collecting information from a CF running instance, you might require `cf` CLI for logging into Cloud Foundry. If you want to target a specific Kubernetes cluster for your yamls, you will need either `oc`, and `kubectl` to collect information about the target cluster.
 

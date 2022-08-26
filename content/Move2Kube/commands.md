@@ -3,7 +3,7 @@ title: "Commands"
 date: 2022-08-05T11:13:15-06:00
 draft: true
 ---
-Move2Kube creates all the resources required for deploying applications into Kubernetes including containerization and Kubernetes resources. It supports translating from Docker swarm/Docker-compose, Cloud Foundry, and other non-containerized applications. If the application does not use any of those or is not containerized, it can still be transformed by Move2Kube.
+Move2Kube creates all resources required for deploying applications into Kubernetes including containerization and Kubernetes resources. It supports translating from Docker swarm/Docker-compose, Cloud Foundry, and other non-containerized applications. If the application does not use any of those or is not containerized, it can still be transformed by Move2Kube.
 
 For more documentation and support, visit https://move2kube.konveyor.io/.
 

@@ -21,7 +21,7 @@ In this tutorial we will see how we can transform a set of sample applications t
     django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
     ```
 
-1. Run `move2kube plan -s language-platforms` to generate a plan file. The `-s` flag is used to specify a source directory as `language-platforms` because we want Move2Kube to analyze the source code inside the `language-platforms` directory and come up with a plan for transforming them to Kubernetes YAMLs.
+1. Run `move2kube plan -s language-platforms` to generate a plan file. The `-s` flag specifies a source directory as `language-platforms` because we want Move2Kube to analyze the source code inside the `language-platforms` directory and come up with a plan for transforming them to Kubernetes YAMLs.
     <details markdown="block">
     <summary markdown="block">
     ```console

@@ -4,7 +4,7 @@ date: 2022-08-16T17:21:40-06:00
 draft: true
 ---
 
-Move2Kube has a few concepts that are useful to understand when customizing output and this section covers the more important ones.
+Move2Kube has four concepts that are useful to understand when customizing output and this section covers the more important ones.
 
 > **Important:** If you have not followed the [tutorials](/tutorials/customizing-the-output), we recommend checking those out first, then coming back here to see each concept in more detail.
 

@@ -5,7 +5,7 @@ draft: true
 ---
 
 ---
-We start by planning the migration. During the plan phase Move2Kube will analyze the files in the source directory, detect what services exist, create a plan on how to containerize them using Dockerfiles, and transform them into Kubernetes deployments, services, ingress, etc.
+We start by planning the migration. During the plan phase, Move2Kube will analyze the files in the source directory, detect what services exist, create a plan on how to containerize them using Dockerfiles, and transform them into Kubernetes deployments, services, ingress, etc.
 
 In order to do the planning, Move2Kube has a large number of built-in transformers for different languages and platforms. Each transformer walks through the source directory from top to bottom and tries to find files that it recognizes. For example, a Golang transformer will try to find a `go.mod` file to detect a Golang project. Once it detects a directory containing a service, it will try to extract as much information from it as possible. Some of the information it tries to find are the service name, ports, environment variables, etc.
 

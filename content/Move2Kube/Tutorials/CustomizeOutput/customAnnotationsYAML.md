@@ -11,7 +11,7 @@ Move2Kube generates Kubernetes YAMLs based on the needs of the application, but 
   $ mkdir workspace && cd workspace
   ```
 
-1. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as input for this flow.
+1. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as the input for this flow.
   ```console
   $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos    
   $ ls src

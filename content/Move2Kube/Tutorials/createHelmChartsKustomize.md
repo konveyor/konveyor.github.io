@@ -4,7 +4,7 @@ date: 2022-08-04T19:13:10-06:00
 draft: true
 ---
 
-In this tutorial we will see how we can transform a set of Kubernetes YAMLs by parameterizing them.
+In this tutorial we will see how to transform a set of Kubernetes YAMLs by parameterizing them.
 We can use Move2Kube to generate parameterized Helm charts, Kustomize and Openshift Templates from the Kubernetes YAMLs.
 Move2Kube can also change the version of Kubernetes resources to target particular clusters.
 

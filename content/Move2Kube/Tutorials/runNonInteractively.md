@@ -3,7 +3,6 @@ title: "Running transforms non-interactively"
 date: 2022-08-04T19:10:32-06:00
 draft: true
 ---
----
 
 Move2Kube interacts with users through a series of questions during the transformation phase. After looking at the output, you may want to rerun it and give different answers to some of the questions. In order to avoid answering all of the same questions over and over, Move2Kube provides a simple configuration file.
 

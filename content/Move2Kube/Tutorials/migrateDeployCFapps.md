@@ -4,8 +4,6 @@ date: 2022-08-04T19:10:59-06:00
 draft: true
 ---
 
----
-
 This document steps through installing Move2Kube and using Move2Kube's the step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps using the data from [samples/cloud-foundry](https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry).
 
 ### Summary

@@ -9,4 +9,4 @@ pre = "<b>3 </b>"
 # Move2Kube
 Use this section to better understand and use the Konveyor Move2Kube tool.
 
-For more information, documentation and tutorials, please visit the [Move2Kube documentation site](https://move2kube.konveyor.io/)
+For more information, documentation, and tutorials, visit the [Move2Kube documentation site](https://move2kube.konveyor.io/)

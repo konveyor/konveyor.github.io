@@ -3,7 +3,7 @@ title: "Adding custom files and directories in custom locations"
 date: 2022-08-04T19:22:55-06:00
 draft: true
 ---
-Move2Kube allows custom template files to be added to directories of your choice. In this example, we illustrate this by adding a custom helm-chart.
+Move2Kube allows custom template files to be added to the directories of your choice. In this example, we illustrate this by adding a custom helm-chart.
 
 1. Start by creating an empty workspace directory say `workspace` and make it the current working directory. We will assume all commands are executed within this directory.
     ```console
