@@ -21,3 +21,6 @@ This repository contains documentation for projects under [Konveyor.io](http://k
 All changes which merge to 'main' will [trigger a GitHub Action](https://github.com/konveyor/konveyor.github.io/actions) to run that builds the hugo assets and publishes to the [gh-pages branch](https://github.com/konveyor/konveyor.github.io/tree/gh-pages) 
 
 The URL,[https://konveyor.github.io/](https://konveyor.github.io/) is configured to serve the web assets from the [gh-pages branch](https://github.com/konveyor/konveyor.github.io/tree/gh-pages)  
+
+## Code of Conduct
+Refer to Konveyor's Code of Conduct [here](https://github.com/konveyor/community/blob/main/CODE_OF_CONDUCT.md).
