@@ -1,5 +1,5 @@
 ---
-title: "Adding custom files and directories in custom locations"
+title: "Add custom files and directories in custom locations"
 date: 2022-08-04T19:22:55-06:00
 draft: true
 ---

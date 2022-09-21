@@ -1,5 +1,5 @@
 ---
-title: "Migrating and deploying .NET Core applications to Kubernetes"
+title: "Migrate and deploy .NET Core applications to Kubernetes"
 date: 2022-08-04T19:11:51-06:00
 draft: true
 ---

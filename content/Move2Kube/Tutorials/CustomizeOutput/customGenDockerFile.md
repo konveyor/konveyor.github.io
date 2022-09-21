@@ -1,5 +1,5 @@
 ---
-title: "Customizing generated Dockerfile and behavior of built-in transformer"
+title: "Customize generated Dockerfile and built-in transformer behavior"
 date: 2022-08-04T19:21:31-06:00
 draft: true
 ---
