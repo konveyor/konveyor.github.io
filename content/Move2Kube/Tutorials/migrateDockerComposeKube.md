@@ -1,5 +1,5 @@
 ---
-title: "Migrating from Docker Compose to Kubernetes"
+title: "Migrate from Docker Compose to Kubernetes"
 date: 2022-08-04T19:11:24-06:00
 draft: true
 ---

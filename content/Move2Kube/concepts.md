@@ -3,7 +3,6 @@ title: "Concepts"
 date: 2022-08-16T17:21:40-06:00
 draft: true
 ---
-
 Move2Kube has four concepts that are useful to understand when customizing output and this section covers the more important ones.
 
 > **Important:** If you have not followed the [tutorials](/tutorials/customizing-the-output), we recommend checking those out first, then coming back here to see each concept in more detail.
@@ -79,6 +78,7 @@ type TransformerSpec struct {
 }
 ```
 
+
 The example above shows the format of the transformer YAML file. For more information on the YAML format, see this [quick tutorial](https://www.redhat.com/en/topics/automation/what-is-yaml).   
 
 YAML files have four main fields with sub-fields that define them.
@@ -89,7 +89,7 @@ YAML files have four main fields with sub-fields that define them.
 - `kind` : `string` - Resource type contained in the YAML file which should be labeled `Transformer` for transformers.
 - `metadata` : `object` - Defines the transformer name and can set optional labels used to enable or disable the transformer.
     - `name` : `string` - Transformer name.
-    - `labels` : `object ([string]: string)` - Set of labels similar to Kubernetes used to enable/disable a set of transformers during both planning and tranformation phases. For more details run the `move2kube help transform` command.
+    - `labels` : `object ([string]: string)` - Set of labels similar to Kubernetes used to enable/disable a set of transformers during both planning and transformation phases. For more details run the `move2kube help transform` command.
 - `spec` : `object` - Main transformer data.
     - `class` : `string` - Mandatory field specifying which Move2Kube internal implementation to use for this transformer. Examples are: `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, `Executable`, `Starlark`, etc.
     - `isolated` : `boolean` - If true, the transformer will receive a full unmodified copy of the source directory. By default, transformers do not run in isolation but instead receive a temporary directory containing a copy of the source directory that has already been used by other transformers. If other transformers have created temporary files, all of those files will be visible to the transformer.
@@ -111,127 +111,125 @@ YAML files have four main fields with sub-fields that define them.
     - `templates` : `string` - Specifies the template directory. The default value is `templates`
     - `config` : `any` - Each transformer has a type/class specified by the `class` field which provides certain configuration options that can be configured here. For more details refer documentation for the transformer class being used. Example: [Parameterizer config](https://github.com/konveyor/move2kube/blob/023467328100472fc3ff36218af85b10573247f3/assets/built-in/transformers/kubernetes/parameterizer/transformer.yaml#L19-L18)
 
-### Other files/directories
-`templates` - If the `Template` type path mapping created by this transformer uses a relative path, it is considered to be relative to this directory. There can be other files/configs in the directory that are interpreted differently by each transformer class which then determines how the values are interpreted and executed.
+    ### Other files/directories
+    `templates` - If the `Template` type path mapping created by this transformer uses a relative path, it is considered to be relative to this directory. There can be other files/configs in the directory that are interpreted differently by each transformer class which then determines how the values are interpreted and executed.
 
-## Transformer Class
-The `Transformer Class` determines the code used for the internal execution of the transformer using the configuration in the `Transformer Yaml` and other config files to model its behavior. There are many transformer classes supported by Move2Kube, `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, `Executable`, `Starlark`, `Router`, etc. Most of them have a specific task, but some transformer classes like `Executable` and `Starlark` are customizable allowing users to write the entire logic of the transformer in the customization.
+    ## Transformer Class
+    The `Transformer Class` determines the code used for the internal execution of the transformer using the configuration in the `Transformer Yaml` and other config files to model its behavior. There are many transformer classes supported by Move2Kube, `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, `Executable`, `Starlark`, `Router`, etc. Most of them have a specific task, but some transformer classes like `Executable` and `Starlark` are customizable allowing users to write the entire logic of the transformer in the customization.
 
-### Transformer Class Internal Implementation
-[Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/transformer/transformer.go#L53-L60)
+    ### Transformer Class Internal Implementation
+    [Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/transformer/transformer.go#L53-L60)
 
-The transformer interface defines the transformer that modifies and converts files to IR representation.
-```
-type Transformer interface {
-    Init(tc transformertypes.Transformer, env *environment.Environment) (err error)
-    // GetConfig returns the transformer config
-    GetConfig() (transformertypes.Transformer, *environment.Environment)
-    DirectoryDetect(dir string) (services map[string][]transformertypes.Artifact, err error)
-    Transform(newArtifacts []transformertypes.Artifact, alreadySeenArtifacts []transformertypes.Artifact) ([]transformertypes.PathMapping, []transformertypes.Artifact, error)
-}
-```
-This example is the interface all transformers are expected to implement.
+    The transformer interface defines the transformer that modifies and converts files to IR representation.
+    ```
+    type Transformer interface {
+        Init(tc transformertypes.Transformer, env *environment.Environment) (err error)
+        // GetConfig returns the transformer config
+        GetConfig() (transformertypes.Transformer, *environment.Environment)
+        DirectoryDetect(dir string) (services map[string][]transformertypes.Artifact, err error)
+        Transform(newArtifacts []transformertypes.Artifact, alreadySeenArtifacts []transformertypes.Artifact) ([]transformertypes.PathMapping, []transformertypes.Artifact, error)
+    }
+    ```
+    This example is the interface all transformers are expected to implement.
 
-- `Transform`: The main function that needs to be implemented.
-- Use `DirectoryDetect` for custom behavior during the planning phase.
+    - `Transform`: The main function that needs to be implemented.
+    - Use `DirectoryDetect` for custom behavior during the planning phase.
 
-> **Important:** Set `directoryDetect` to a value other than `0` in the transformer YAML.
+    > **Important:** Set `directoryDetect` to a value other than `0` in the transformer YAML.
 
-- The `Init` and `GetConfig` functions are fixed and implemented by transformers built into Move2Kube. They cannot be implemented by custom transformers.
+    - The `Init` and `GetConfig` functions are fixed and implemented by transformers built into Move2Kube. They cannot be implemented by custom transformers.
 
-## Methods
-- `Init` : `(Transformer, Environment) -> (error)` - TODO
-- `GetConfig` : `(Transformer, Environment) -> ()` - TODO
-- `DirectoryDetect` : `(string) -> (object ([string]: []Artifact), error)`: This function is called during the planning phase and given the path of a directory containing the source files and then returns a list of artifacts listed in the plan-file generated by Move2Kube. It will also return an error if planning does not run correctly.
-    - Input is a string containing the path to a directory with source files which could be the source directory itself or a sub-directory based on the value of `directoryDetect` in the transformer YAML.
-        - A value of `-1` for `directoryDetect`: The function runs on the source directory and all of its sub-directories.
-        - A value of `0` for `directoryDetect`: The function is disabled entirely (it will not be run on any directories).
-        - A value of `1` for `directoryDetect`: The function runs only on the source directory but not on its sub-directories.
-    - The output is a list of artifacts which will be included in the plan-file.
-- `Transform` : `([]Artifact, []Artifact) -> ([]PathMapping, []Artifact, error)`: This function is called during the transformation phase and contains the code to perform the actual transformation and produce part of the Move2Kube output. The path mappings returned by this function cause changes to the Move2Kube output and the artifacts returned are passed to other transformers during the next iteration. It will also return an error if planning does not run correctly.
-    - The first input is a list of new artifacts produced during the previous iteration.
-    - The second input is a list of artifacts that the transformer has already seen.
-    - The first output is a list of path mappings.
+    ## Methods
+    - `Init` : `(Transformer, Environment) -> (error)` - TODO
+    - `GetConfig` : `(Transformer, Environment) -> ()` - TODO
+    - `DirectoryDetect` : `(string) -> (object ([string]: []Artifact), error)`: This function is called during the planning phase and given the path of a directory containing the source files and then returns a list of artifacts listed in the plan-file generated by Move2Kube. It will also return an error if planning does not run correctly.
+        - Input is a string containing the path to a directory with source files which could be the source directory itself or a sub-directory based on the value of `directoryDetect` in the transformer YAML.
+            - A value of `-1` for `directoryDetect`: The function runs on the source directory and all of its sub-directories.
+            - A value of `0` for `directoryDetect`: The function is disabled entirely (it will not be run on any directories).
+            - A value of `1` for `directoryDetect`: The function runs only on the source directory but not on its sub-directories.
+        - The output is a list of artifacts which will be included in the plan-file.
+    - `Transform` : `([]Artifact, []Artifact) -> ([]PathMapping, []Artifact, error)`: This function is called during the transformation phase and contains the code to perform the actual transformation and produce part of the Move2Kube output. The path mappings returned by this function cause changes to the Move2Kube output and the artifacts returned are passed to other transformers during the next iteration. It will also return an error if planning does not run correctly.
+        - The first input is a list of new artifacts produced during the previous iteration.
+        - The second input is a list of artifacts that the transformer has already seen.
+        - The first output is a list of path mappings.
 
-# Path Mapping
-Path mappings are a way for transformers to add files to the Move2Kube output directory. They can be used to generate new files, delete exiting files, modify the output directory structure, etc. Usually transformers deal with artifacts as they take them as input and output new artifacts, but does nothing to change the Move2Kube output since all transformers are run inside temporary directories.
+    # Path Mapping
+    Path mappings are a way for transformers to add files to the Move2Kube output directory. They can be used to generate new files, delete exiting files, modify the output directory structure, etc. Usually transformers deal with artifacts as they take them as input and output new artifacts, but does nothing to change the Move2Kube output since all transformers are run inside temporary directories.
 
-In order to affect the output directory, transformers need to return path mappings indicating the type of change to be made.
+    In order to affect the output directory, transformers need to return path mappings indicating the type of change to be made.
 
-For example: Consider a transformer that adds an annotation to Kubernetes Ingress YAML files. The transformer reads the file, adds the annotation, and then writes it back out. However this modified file is only present inside the temporary directory and does not appear in the output directory of Move2Kube. To copy this file over to the output directory, create a path mapping to return this from the transformer.:
-```json
-{
-    "type": "Source",
-    "sourcePath": "annotated-ingress.yaml",
-    "destinationPath": "deploy/yamls/ingress.yaml"
-}
-```
-Once the transformer is finished, Move2Kube will look at the path mapping the transformer returned and copy over the file to the output directory.
+    For example: Consider a transformer that adds an annotation to Kubernetes Ingress YAML files. The transformer reads the file, adds the annotation, and then writes it back out. However this modified file is only present inside the temporary directory and does not appear in the output directory of Move2Kube. To copy this file over to the output directory, create a path mapping to return this from the transformer.:
+    ```json
+    {
+        "type": "Source",
+        "sourcePath": "annotated-ingress.yaml",
+        "destinationPath": "deploy/yamls/ingress.yaml"
+    }
+    ```
+    Once the transformer is finished, Move2Kube will look at the path mapping the transformer returned and copy over the file to the output directory.
 
-The example above shows the simplest use case for path mappings, but they are capable of much more advanced uses. For example: the source file is a template and needs to be filled in before being copied to the output.
+    The example above shows the simplest use case for path mappings, but they are capable of much more advanced uses. For example: the source file is a template and needs to be filled in before being copied to the output.
 
-Another example is when the source and destination paths are template strings that need to be filled in order to get the actual paths.
+    Another example is when the source and destination paths are template strings that need to be filled in order to get the actual paths.
 
-## Different type of path mappings
-[Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/types/transformer/pathmapping.go#L19-L45)
+    ## Different type of path mappings
+    [Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/types/transformer/pathmapping.go#L19-L45)
 
-`PathMappingType` refers to the Path Mapping type.
-```
-type PathMappingType = string
+    `PathMappingType` refers to the Path Mapping type.
+    ```
+    type PathMappingType = string
 
-const (
-    // DefaultPathMappingType allows normal copy with overwrite
-    // TemplatePathMappingType allows copy of source to destination and applying of template
-    TemplatePathMappingType PathMappingType = "Template" // Source path when relative, is relative to yaml file location
-    // SourcePathMappingType allows for copying of source directory to another directory
-    SourcePathMappingType PathMappingType = "Source" // Source path becomes relative to source directory
-    // DeletePathMappingType allows for deleting of files or directories
-    DeletePathMappingType PathMappingType = "Delete" // Delete path becomes relative to source directory
-    // ModifiedSourcePathMappingType allows for copying of deltas wrt source
-    ModifiedSourcePathMappingType PathMappingType = "SourceDiff" // Source path becomes relative to source directory
-    // PathTemplatePathMappingType allows for path template registration
-    PathTemplatePathMappingType PathMappingType = "PathTemplate" // Path Template type
-    // SpecialTemplatePathMappingType allows copy of source to destination and applying of template with custom delimiter
-    SpecialTemplatePathMappingType PathMappingType = "SpecialTemplate" // Source path when relative, is relative to yaml file location
-)
-```
-PathMapping is the mapping between source and intermediate files and output files.
-```
-type PathMapping struct {
-    Type           PathMappingType `yaml:"type,omitempty" json:"type,omitempty"` // Default - Normal copy
-    SrcPath        string          `yaml:"sourcePath" json:"sourcePath" m2kpath:"normal"`
-    DestPath       string          `yaml:"destinationPath" json:"destinationPath" m2kpath:"normal"` // Relative to output directory
-    TemplateConfig interface{}     `yaml:"templateConfig" json:"templateConfig"`
-}
-```
+    const (
+        // DefaultPathMappingType allows normal copy with overwrite
+        // TemplatePathMappingType allows copy of source to destination and applying of template
+        TemplatePathMappingType PathMappingType = "Template" // Source path when relative, is relative to yaml file location
+        // SourcePathMappingType allows for copying of source directory to another directory
+        SourcePathMappingType PathMappingType = "Source" // Source path becomes relative to source directory
+        // DeletePathMappingType allows for deleting of files or directories
+        DeletePathMappingType PathMappingType = "Delete" // Delete path becomes relative to source directory
+        // ModifiedSourcePathMappingType allows for copying of deltas wrt source
+        ModifiedSourcePathMappingType PathMappingType = "SourceDiff" // Source path becomes relative to source directory
+        // PathTemplatePathMappingType allows for path template registration
+        PathTemplatePathMappingType PathMappingType = "PathTemplate" // Path Template type
+        // SpecialTemplatePathMappingType allows copy of source to destination and applying of template with custom delimiter
+        SpecialTemplatePathMappingType PathMappingType = "SpecialTemplate" // Source path when relative, is relative to yaml file location
+    )
+    ```
+    PathMapping is the mapping between source and intermediate files and output files.
+    ```
+    type PathMapping struct {
+        Type           PathMappingType `yaml:"type,omitempty" json:"type,omitempty"` // Default - Normal copy
+        SrcPath        string          `yaml:"sourcePath" json:"sourcePath" m2kpath:"normal"`
+        DestPath       string          `yaml:"destinationPath" json:"destinationPath" m2kpath:"normal"` // Relative to output directory
+        TemplateConfig interface{}     `yaml:"templateConfig" json:"templateConfig"`
+    }
+    ```
 
-There are seven different types of path mappings:
+    There are seven different types of path mappings:
 
-- `Default` - `sourcePath` must be an absolute path.
-`destinationPath` must be a relative path, relative to Move2Kube's output directory. This will copy the directory/file specified in `sourcePath` to `destinationPath`.
-- `Template` - `sourcePath` must be a relative path, relative to the templates directory of the transformer.
-`destinationPath` must be a relative path, relative to Move2Kube's output directory. This fills the template in the file given by `sourcePath` and copies the filled template to `destinationPath`. The values for filling the template are given in `templateConfig`.
-- `Source` - Same as `Default` path mapping except now the `sourcePath` can now be a relative path,
-relative to the temporary directory where the transformer is running.
-- `Delete` - `sourcePath` must be a relative path, relative to Move2Kube's output directory. The directory/file specified by `sourcePath` will be deleted.
-- `SourceDiff` - TODO
-- `PathTemplate` - The path itself becomes a template. `sourcePath` contains the template path. `templateConfig` can be used to set a name for this template path.
-- `SpecialTemplate` - Same as `Template` path mapping except now the template has a different syntax. The delimiters used in normal templates are `{% raw %}{{{% endraw %}` and `{% raw %}}}{% endraw %}`.
-
-> **Note:** In special templates, the delimiters are `<~` and `~>`. Same as before, the values for filling the template are provided in `templateConfig`.
+    - `Default` - `sourcePath` must be an absolute path.
+    `destinationPath` must be a relative path, relative to Move2Kube's output directory. This will copy the directory/file specified in `sourcePath` to `destinationPath`.
+    - `Template` - `sourcePath` must be a relative path, relative to the templates directory of the transformer.
+    `destinationPath` must be a relative path, relative to Move2Kube's output directory. This fills the template in the file given by `sourcePath` and copies the filled template to `destinationPath`. The values for filling the template are given in `templateConfig`.
+    - `Source` - Same as `Default` path mapping except now the `sourcePath` can now be a relative path,
+    relative to the temporary directory where the transformer is running.
+    - `Delete` - `sourcePath` must be a relative path, relative to Move2Kube's output directory. The directory/file specified by `sourcePath` will be deleted.
+    - `SourceDiff` - TODO
+    - `PathTemplate` - The path itself becomes a template. `sourcePath` contains the template path. `templateConfig` can be used to set a name for this template path.
+    - `SpecialTemplate` - Same as `Template` path mapping except now the template has a different syntax. The delimiters used in normal templates are `{{` and `}}`. In special templates, the delimiters are `<~` and `~>`. Same as before, the values for filling the template are provided in `templateConfig`.
 
 
-# Phases
-Move2Kube uses two key phases:
-* Planning
-* Transformation
+    # Phases
+    Move2Kube uses two key phases:
+    * Planning
+    * Transformation
 
-## Planning phase
-This phase starts by running the `move2kube plan -s path/to/source/directory` command. Move2Kube runs all the transformers that support the detect capability on the source directory to create a plan. The plan is written to a file called `m2k.plan` in YAML format which the transformation phase Move2Kube will use this plan to modify the source files into the desired output. The plan-file is human readable and can be edited manually to change the modifications performed during the transformation phase.
+    ## Planning phase
+    This phase starts by running the `move2kube plan -s path/to/source/directory` command. Move2Kube runs all the transformers that support the detect capability on the source directory to create a plan. The plan is written to a file called `m2k.plan` in YAML format which the transformation phase Move2Kube will use this plan to modify the source files into the desired output. The plan-file is human readable and can be edited manually to change the modifications performed during the transformation phase.
 
-The plan-file contains the list of detected services that Move2Kube found inside the source directory, including the path to the sub-directories/files where it detected information about those services. It also contains a list of all the built-in and external transformers that were detected which will be run during the transformation phase. Custom transformers can be written and provided during the plan phase to affect the contents of the plan file.
+    The plan-file contains the list of detected services that Move2Kube found inside the source directory, including the path to the sub-directories/files where it detected information about those services. It also contains a list of all the built-in and external transformers that were detected which will be run during the transformation phase. Custom transformers can be written and provided during the plan phase to affect the contents of the plan file.
 
-## Transformation phase
-This phase starts by running the `move2kube transform` command. Move2Kube evaluates which transformers to run in an iterative manner. Each iteration will evaluate the list of artifacts produced during the previous iteration and run all transformers that consume those artifact types. This continues until it hits an iteration where there are no more artifacts or transformers that consume those artifact types at which point the transformation phase is complete.
+    ## Transformation phase
+    This phase starts by running the `move2kube transform` command. Move2Kube evaluates which transformers to run in an iterative manner. Each iteration will evaluate the list of artifacts produced during the previous iteration and run all transformers that consume those artifact types. This continues until it hits an iteration where there are no more artifacts or transformers that consume those artifact types at which point the transformation phase is complete.
 
-The evaluated result of all [PathMappings](/concepts/path-mapping) is the output.
+    The evaluated result of all [PathMappings](/concepts/path-mapping) is the output.

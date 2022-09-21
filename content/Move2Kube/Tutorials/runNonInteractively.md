@@ -1,5 +1,5 @@
 ---
-title: "Running transforms non-interactively"
+title: "Run transforms non-interactively"
 date: 2022-08-04T19:10:32-06:00
 draft: true
 ---

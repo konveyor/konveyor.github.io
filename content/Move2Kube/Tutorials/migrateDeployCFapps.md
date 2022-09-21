@@ -1,5 +1,5 @@
 ---
-title: "Migrating and deploying Cloud Foundry applications to Kubernetes"
+title: "Migrate and deploy Cloud Foundry applications to Kubernetes"
 date: 2022-08-04T19:10:59-06:00
 draft: true
 ---

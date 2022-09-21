@@ -1,5 +1,5 @@
 ---
-title: "Adding custom annotations to Kubernetes YAMLs"
+title: "Add custom annotations to Kubernetes YAMLs"
 date: 2022-08-04T19:22:02-06:00
 draft: true
 ---

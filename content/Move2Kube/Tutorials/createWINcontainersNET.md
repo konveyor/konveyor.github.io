@@ -1,9 +1,9 @@
 ---
-title: "Creating windows containers for .NET applications (4.x .NET Framework) and deploying to Kubernetes"
+title: "Create and deploy Windows .NET containers"
 date: 2022-08-04T19:12:22-06:00
 draft: true
 ---
-
+## .NET applications in 4.x framework
 In this tutorial, we will learn how containerize .NET applications developed for 4.x versions of .NET framework using Windows containers and deploy them to Kubernetes cluster using Move2Kube. Here, we are going to use the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
 
 ## Prerequisites
