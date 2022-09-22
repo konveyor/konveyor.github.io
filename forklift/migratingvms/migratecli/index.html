@@ -1,0 +1,201 @@
+<!doctype html><html lang=en class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.103.1"><meta name=description content><link rel=icon href=/images/favicon.png type=image/png><title>Migrating virtual machines using the command line - Documentation for Konveyor projects</title><link href=/css/nucleus.css rel=stylesheet><link href=/css/fontawesome-all.min.css rel=stylesheet><link href=/css/hybrid.css rel=stylesheet><link href=/css/featherlight.min.css rel=stylesheet><link href=/css/perfect-scrollbar.min.css rel=stylesheet><link href=/css/auto-complete.css rel=stylesheet><link href=/css/atom-one-dark-reasonable.css rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=/css/tabs.css rel=stylesheet><link href=/css/hugo-theme.css rel=stylesheet><link href=/css/theme-konveyor.css rel=stylesheet><link href=/css/foo.css rel=stylesheet><link href=/css/bar.css rel=stylesheet><script src=/js/jquery-3.3.1.min.js></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style><script>var dataLayer=window.dataLayer=window.dataLayer||[];dataLayer.push({page:"Migrating virtual machines using the command line",fileUniqID:"2105a11265ec72c2323162df4f30b923"})</script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body data-url=/forklift/migratingvms/migratecli/><nav id=sidebar><div id=header-wrapper><div id=header><a id=logo href=/><img src=/images/konveyor_logo.png></img></a>
+<a href=https://github.com/konveyor/konveyor.github.io>Documentation source code</a></div><div class=searchbox><label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span></div><script type=text/javascript src=/js/lunr.min.js></script>
+<script type=text/javascript src=/js/auto-complete.js></script>
+<script type=text/javascript>var baseurl="http://konveyor.github.io/"</script><script type=text/javascript src=/js/search.js></script></div><div class=highlightable><ul class=topics><li data-nav-id=/crane/ title=Crane class=dd-item><a href=/crane/><b>1 </b>Crane</a><ul><li data-nav-id=/crane/overview/ title=Overview class=dd-item><a href=/crane/overview/>Overview</a></li><li data-nav-id=/crane/tutorials/ title=Tutorials class=dd-item><a href=/crane/tutorials/>Tutorials</a><ul><li data-nav-id=/crane/tutorials/statelessappmirror/ title="Stateless application mirror" class=dd-item><a href=/crane/tutorials/statelessappmirror/>Stateless application mirror</a></li><li data-nav-id=/crane/tutorials/migratek8cluster/ title="Migrating a Kubernetes cluster" class=dd-item><a href=/crane/tutorials/migratek8cluster/>Migrating a Kubernetes cluster</a></li></ul></li><li data-nav-id=/crane/tools/ title=Tools class=dd-item><a href=/crane/tools/>Tools</a><ul><li data-nav-id=/crane/tools/gitopsintegration/ title="Integrating GitOps" class=dd-item><a href=/crane/tools/gitopsintegration/>Integrating GitOps</a></li><li data-nav-id=/crane/tools/customplugins/ title="Developing custom plugins" class=dd-item><a href=/crane/tools/customplugins/>Developing custom plugins</a></li><li data-nav-id=/crane/tools/tunnelapi/ title="Tunnel API" class=dd-item><a href=/crane/tools/tunnelapi/>Tunnel API</a></li><li data-nav-id=/crane/tools/pluginmanager/ title="Plugin Manager" class=dd-item><a href=/crane/tools/pluginmanager/>Plugin Manager</a></li></ul></li><li data-nav-id=/crane/usingcrane/ title="Using Crane" class=dd-item><a href=/crane/usingcrane/>Using Crane</a><ul><li data-nav-id=/crane/usingcrane/step1export/ title="Step One: Export Resources" class=dd-item><a href=/crane/usingcrane/step1export/>Step One: Export Resources</a></li><li data-nav-id=/crane/usingcrane/step2transform/ title="Step Two: Transform Exports" class=dd-item><a href=/crane/usingcrane/step2transform/>Step Two: Transform Exports</a></li><li data-nav-id=/crane/usingcrane/step3apply/ title="Step Three: Apply Patches" class=dd-item><a href=/crane/usingcrane/step3apply/>Step Three: Apply Patches</a></li></ul></li><li data-nav-id=/crane/installation/ title="Installing Crane" class=dd-item><a href=/crane/installation/>Installing Crane</a></li></ul></li><li data-nav-id=/forklift/ title=Forklift class="dd-item
+parent"><a href=/forklift/><b>2 </b>Forklift</a><ul><li data-nav-id=/forklift/overview/ title=Overview class=dd-item><a href=/forklift/overview/>Overview</a></li><li data-nav-id=/forklift/migratingvms/ title="Migrating virtual machines" class="dd-item
+parent"><a href=/forklift/migratingvms/>Migrating virtual machines</a><ul><li data-nav-id=/forklift/migratingvms/migrateoptions/ title="Migration plan options" class=dd-item><a href=/forklift/migratingvms/migrateoptions/>Migration plan options</a></li><li data-nav-id=/forklift/migratingvms/migratecli/ title="Migrating virtual machines using the command line" class="dd-item active"><a href=/forklift/migratingvms/migratecli/>Migrating virtual machines using the command line</a></li><li data-nav-id=/forklift/migratingvms/migrateweb/ title="Migrating virtual machines using the web console" class=dd-item><a href=/forklift/migratingvms/migrateweb/>Migrating virtual machines using the web console</a></li><li data-nav-id=/forklift/migratingvms/cancelmigrate/ title="Canceling a migration" class=dd-item><a href=/forklift/migratingvms/cancelmigrate/>Canceling a migration</a></li><li data-nav-id=/forklift/migratingvms/advancedmigrate/ title="Advanced migration options" class=dd-item><a href=/forklift/migratingvms/advancedmigrate/>Advanced migration options</a></li></ul></li><li data-nav-id=/forklift/installingforklift/ title="Installing Forklift" class=dd-item><a href=/forklift/installingforklift/>Installing Forklift</a><ul><li data-nav-id=/forklift/installingforklift/upgrade/ title="Upgrading Forklift" class=dd-item><a href=/forklift/installingforklift/upgrade/>Upgrading Forklift</a></li><li data-nav-id=/forklift/installingforklift/uninstall/ title="Uninstalling Forklift" class=dd-item><a href=/forklift/installingforklift/uninstall/>Uninstalling Forklift</a></li><li data-nav-id=/forklift/installingforklift/installation/ title="Installing the Forklift Operator" class=dd-item><a href=/forklift/installingforklift/installation/>Installing the Forklift Operator</a></li><li data-nav-id=/forklift/installingforklift/prereqs/ title=Prerequisites class=dd-item><a href=/forklift/installingforklift/prereqs/>Prerequisites</a></li></ul></li></ul></li><li data-nav-id=/move2kube/ title=Move2Kube class=dd-item><a href=/move2kube/><b>3 </b>Move2Kube</a><ul><li data-nav-id=/move2kube/installation/ title=Installation class=dd-item><a href=/move2kube/installation/>Installation</a></li><li data-nav-id=/move2kube/overview/ title=Overview class=dd-item><a href=/move2kube/overview/>Overview</a></li></ul></li><li data-nav-id=/tackle/ title="Tackle 1.0 & 2.0" class=dd-item><a href=/tackle/><b>4 </b>Tackle 1.0 & 2.0</a><ul><li data-nav-id=/tackle/tackle1/ title="Tackle 1.0" class=dd-item><a href=/tackle/tackle1/><b>4.1 </b>Tackle 1.0</a><ul><li data-nav-id=/tackle/tackle1/upgrade/ title="Upgrading Tackle" class=dd-item><a href=/tackle/tackle1/upgrade/>Upgrading Tackle</a></li><li data-nav-id=/tackle/tackle1/webconsolesvcs/ title="Web Console Services" class=dd-item><a href=/tackle/tackle1/webconsolesvcs/>Web Console Services</a></li><li data-nav-id=/tackle/tackle1/manageusers/ title="Managing users and credentials" class=dd-item><a href=/tackle/tackle1/manageusers/>Managing users and credentials</a></li><li data-nav-id=/tackle/tackle1/manageassess/ title="Managing assessments" class=dd-item><a href=/tackle/tackle1/manageassess/>Managing assessments</a></li><li data-nav-id=/tackle/tackle1/manageapps/ title="Managing applications" class=dd-item><a href=/tackle/tackle1/manageapps/>Managing applications</a></li><li data-nav-id=/tackle/tackle1/additionaltools/ title="Additional tools" class=dd-item><a href=/tackle/tackle1/additionaltools/>Additional tools</a></li></ul></li><li data-nav-id=/tackle/tackle2/ title="Tackle 2.0" class=dd-item><a href=/tackle/tackle2/><b>4.2 </b>Tackle 2.0</a><ul><li data-nav-id=/tackle/tackle2/admintasks/ title="Administrator view tasks" class=dd-item><a href=/tackle/tackle2/admintasks/>Administrator view tasks</a></li><li data-nav-id=/tackle/tackle2/views/ title="Tackle 2.0 Views" class=dd-item><a href=/tackle/tackle2/views/>Tackle 2.0 Views</a></li><li data-nav-id=/tackle/tackle2/instances/ title="Seeding Instances" class=dd-item><a href=/tackle/tackle2/instances/>Seeding Instances</a></li><li data-nav-id=/tackle/tackle2/assessanalyze/ title="Assessing and analyzing applications" class=dd-item><a href=/tackle/tackle2/assessanalyze/>Assessing and analyzing applications</a></li><li data-nav-id=/tackle/tackle2/addapps/ title="Adding applications" class=dd-item><a href=/tackle/tackle2/addapps/>Adding applications</a></li></ul></li><li data-nav-id=/tackle/overview/ title=Overview class=dd-item><a href=/tackle/overview/>Overview</a></li><li data-nav-id=/tackle/upgradeto2/ title="Upgrading from 1.2 to 2.0" class=dd-item><a href=/tackle/upgradeto2/>Upgrading from 1.2 to 2.0</a></li><li data-nav-id=/tackle/installation/ title="Installing Tackle 2.0" class=dd-item><a href=/tackle/installation/>Installing Tackle 2.0</a></li><li data-nav-id=/tackle/installation1/ title="Installing Tackle 1.0" class=dd-item><a href=/tackle/installation1/>Installing Tackle 1.0</a></li></ul></li><li data-nav-id=/pelorus/ title=Pelorus class=dd-item><a href=/pelorus/><b>5 </b>Pelorus</a></li></ul><section id=footer><p>Built with <a href=https://github.com/matcornic/hugo-theme-learn><i class="fas fa-heart"></i></a> from <a href=https://getgrav.org>Grav</a> and <a href=https://gohugo.io/>Hugo</a></p></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i></a></span>
+<span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links>Migrating virtual machines using the command line</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><a href=#obtaining-the-sha-1-fingerprint-of-a-vcenter-host>Obtaining the SHA-1 fingerprint of a vCenter host</a></li><li><a href=#canceling-a-migration>Canceling a migration</a><ul><li><a href=#canceling-an-entire-migration>Canceling an entire migration</a></li><li><a href=#canceling-individual-vms-migration>Canceling individual VMs migration</a></li></ul></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Migrating virtual machines using the command line</h1><p>Follow the steps below to migrate virtual machines (VMs) to KubeVirt using the command line (CLI) by creating Forklift custom resources (CRs) and specifying:</p><ul><li>A name for cluster-scoped CRs</li><li>A name and a namespace for namespace-scoped CRs</li></ul><p><strong>Prerequisites</strong></p><ul><li>Must be logged in as a user with cluster-admin privileges.</li><li><strong>VMware only:</strong></li><li>Must have the vCenter SHA-1 fingerprint.</li><li>Must create a VMware Virtual Disk Development Kit (VDDK) image in a secure registry that is accessible to all clusters.</li></ul><p><strong>Procedure</strong></p><ol><li>Create a Secret manifest for the source provider credentials:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: &lt;secret&gt;
+  namespace: konveyor-forklift
+type: Opaque
+stringData:
+  user: &lt;user&gt; (1)
+  password: &lt;password&gt; (2)
+  cacert: | (3)
+    &lt;oVirt_ca_certificate&gt;
+  thumbprint: &lt;vcenter_fingerprint&gt; (4)
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify the vCenter user or the oVirt Engine user.</li><li>(2) Specify the user password.</li><li>(3) oVirt only: Specify the CA certificate of the Engine. Retrieve it at https://&lt;{rhv-short}_engine_host>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA.</li><li>(4) VMware only: Specify the vCenter SHA-1 fingerprint.</li></ul><ol start=2><li>Create a Provider manifest for the source provider:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Provider
+metadata:
+  name: &lt;provider&gt;
+  namespace: konveyor-forklift
+spec:
+  type: &lt;provider_type&gt; (1)
+  url: &lt;api_end_point&gt; (2)
+  settings:
+    vddkInitImage: &lt;registry_route_or_server_path&gt;/vddk: (3)
+  secret:
+    name: &lt;secret&gt; (4)
+    namespace: konveyor-forklift
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Allowed values are ovirt and vsphere.</li><li>(2) Specify the API end point URL, for example, https://&lt;vCenter_host>/sdk for vSphere or https://&lt;{rhv-short}_engine_host>/ovirt-engine/api/ for oVirt.</li><li>(3) VMware only: Specify the VDDK image created.</li><li>(4) Specify the name of provider Secret CR.</li></ul><ol start=3><li><strong>VMware only:</strong> Create a Host manifest:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Host
+metadata:
+  name: &lt;vmware_host&gt;
+  namespace: konveyor-forklift
+spec:
+  provider:
+    namespace: konveyor-forklift
+    name: &lt;source_provider&gt; (1)
+  id: &lt;source_host_mor&gt; (2)
+  ipAddress: &lt;source_network_ip&gt; (3)
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify the name of the VMware Provider CR.</li><li>(2) Specify the managed object reference (MOR) of the VMware host.</li><li>(3) Specify the IP address of the VMware migration network.</li></ul><ol start=4><li>Create a NetworkMap manifest to map the source and destination networks:</li></ol><pre tabindex=0><code>$  cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: NetworkMap
+metadata:
+  name: &lt;network_map&gt;
+  namespace: konveyor-forklift
+spec:
+  map:
+    - destination:
+        name: &lt;pod&gt;
+        namespace: konveyor-forklift
+        type: pod (1)
+      source: (2)
+        id: &lt;source_network_id&gt; (3)
+        name: &lt;source_network_name&gt;
+    - destination:
+        name: &lt;network_attachment_definition&gt; (4)
+        namespace: &lt;network_attachment_definition_namespace&gt; (5)
+        type: multus
+      source:
+        id: &lt;source_network_id&gt;
+        name: &lt;source_network_name&gt;
+  provider:
+    source:
+      name: &lt;source_provider&gt;
+      namespace: konveyor-forklift
+    destination:
+      name: &lt;destination_cluster&gt;
+      namespace: konveyor-forklift
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Allowed values are pod and multus.</li><li>(2) Use either the id or the name parameter to specify the source network.</li><li>(3) Specify the VMware network MOR or oVirt network UUID.</li><li>(4) Specify a network attachment definition for each additional KubeVirt network.</li><li>(5) Specify the namespace of the KubeVirt network attachment definition.</li></ul><ol start=5><li>Create a StorageMap manifest to map source and destination storage:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: StorageMap
+metadata:
+  name: &lt;storage_map&gt;
+  namespace: konveyor-forklift
+spec:
+  map:
+    - destination:
+        storageClass: &lt;storage_class&gt;
+        accessMode: &lt;access_mode&gt; (1)
+      source:
+        id: &lt;source_datastore&gt; (2)
+    - destination:
+        storageClass: &lt;storage_class&gt;
+        accessMode: &lt;access_mode&gt;
+      source:
+        id: &lt;source_datastore&gt;
+  provider:
+    source:
+      name: &lt;source_provider&gt;
+      namespace: konveyor-forklift
+    destination:
+      name: &lt;destination_cluster&gt;
+      namespace: konveyor-forklift
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Allowed values are ReadWriteOnce and ReadWriteMany.</li><li>(2) Specify the VMware data storage MOR or oVirt storage domain UUID, for example, f2737930-b567-451a-9ceb-2887f6207009.</li></ul><ol start=6><li><strong>Optional:</strong> Create a Hook manifest to run custom code on a VM during the phase specified in the Plan CR:</li></ol><pre tabindex=0><code>$  cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Hook
+metadata:
+  name: &lt;hook&gt;
+  namespace: konveyor-forklift
+spec:
+  image: quay.io/konveyor/hook-runner (1)
+  playbook: | (2)
+    LS0tCi0gbmFtZTogTWFpbgogIGhvc3RzOiBsb2NhbGhvc3QKICB0YXNrczoKICAtIG5hbWU6IExv
+    YWQgUGxhbgogICAgaW5jbHVkZV92YXJzOgogICAgICBmaWxlOiAiL3RtcC9ob29rL3BsYW4ueW1s
+    IgogICAgICBuYW1lOiBwbGFuCiAgLSBuYW1lOiBMb2FkIFdvcmtsb2FkCiAgICBpbmNsdWRlX3Zh
+    cnM6CiAgICAgIGZpbGU6ICIvdG1wL2hvb2svd29ya2xvYWQueW1sIgogICAgICBuYW1lOiB3b3Jr
+    bG9hZAoK
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Use the default hook-runner image or specify a custom image. A playbook does not need to be specified, if a custom image is.</li><li>(2) <strong>Optional:</strong> Base64-encoded Ansible playbook. The image must be hook-runner if a playbook is specified.</li></ul><ol start=7><li>Create a Plan manifest for the migration:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Plan
+metadata:
+  name: &lt;plan&gt; (1)
+  namespace: konveyor-forklift
+spec:
+  warm: true (2)
+  provider:
+    source:
+      name: &lt;source_provider&gt;
+      namespace: konveyor-forklift
+    destination:
+      name: &lt;destination_cluster&gt;
+      namespace: konveyor-forklift
+  map:
+    network: (3)
+      name: &lt;network_map&gt; (4)
+      namespace: konveyor-forklift
+    storage:
+      name: &lt;storage_map&gt; (5)
+      namespace: konveyor-forklift
+  targetNamespace: konveyor-forklift
+  vms: (6)
+    - id: &lt;source_vm&gt; (7)
+    - name: &lt;source_vm&gt;
+      hooks: (8)
+        - hook:
+            namespace: konveyor-forklift
+            name: &lt;hook&gt; (9)
+          step: &lt;step&gt; (10)
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify the name of the Plan CR.</li><li>(2) Specify whether the migration is warm or cold. Only the precopy stage will run in a warm migration if the cutover parameter in the Migration manifest value is not specified.</li><li>(3) Add multiple network mappings if needed.</li><li>(4) Specify the name of the NetworkMap CR.</li><li>(5) Specify the name of the StorageMap CR.</li><li>(6) Use either the id or the name parameter to specify the source VMs.</li><li>(7) Specify the VMware VM MOR or oVirt VM UUID.</li><li>(8) <strong>Optional:</strong> Specify up to two hooks for a VM. Each hook must run during a separate migration step.</li><li>(9) Specify the name of the Hook CR.</li><li>(10) Allowed values are PreHook, before the migation plan starts, or PostHook, after the migration is complete.</li></ul><ol start=8><li>Create a Migration manifest to run the Plan CR:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Migration
+metadata:
+  name: &lt;migration&gt; (1)
+  namespace: konveyor-forklift
+spec:
+  plan:
+    name: &lt;plan&gt; (2)
+    namespace: konveyor-forklift
+  cutover: &lt;cutover_time&gt; (3)
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify the name of the Migration CR.</li><li>(2) Specify the name of the Plan CR being run. The Migration CR creates a VirtualMachine CR for each VM that is migrated.</li><li>(3) <strong>Optional:</strong> Specify a cutover time according to the ISO 8601 format with the UTC time offset, for example, 2021-04-04T01:23:45.678+09:00.
+Multiple Migration CRs can be associated with a single Plan CR. If a migration does not complete, create a new Migration CR, without changing the Plan CR, to migrate the remaining VMs.</li></ul><ol start=9><li>Retrieve the Migration CR to monitor the progress of the migration:</li></ol><pre tabindex=0><code>$ kubectl get migration/&lt;migration&gt; -n konveyor-forklift -o yaml
+</code></pre><h2 id=obtaining-the-sha-1-fingerprint-of-a-vcenter-host>Obtaining the SHA-1 fingerprint of a vCenter host</h2><p>Obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.</p><p><strong>Procedure</strong></p><ol><li>Run the following command:</li></ol><pre tabindex=0><code>$ openssl s_client \
+    -connect &lt;vcenter_host&gt;:443 \ (1)
+    &lt; /dev/null 2&gt;/dev/null \
+    | openssl x509 -fingerprint -noout -in /dev/stdin \
+    | cut -d &#39;=&#39; -f 2
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify the IP address or FQDN of the vCenter host.</li></ul><p>Example output:</p><pre tabindex=0><code>01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67
+</code></pre><h2 id=canceling-a-migration>Canceling a migration</h2><p>Forklift functionality cancel cancel an entire migration or individual virtual machines (VMs) while a migration is in progress from the command line interface (CLI).</p><h3 id=canceling-an-entire-migration>Canceling an entire migration</h3><p>Follow the steps below to cancel an entire migration.</p><p><strong>Procedure</strong></p><ol><li>Delete the Migration CR:</li></ol><pre tabindex=0><code>$ kubectl delete migration &lt;migration&gt; -n konveyor-forklift (1)
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify the name of the Migration CR.</li></ul><h3 id=canceling-individual-vms-migration>Canceling individual VMs migration</h3><p>Follow the steps below to cancel migrating an individual VM.</p><p><strong>Procedure</strong></p><ol><li>Add the individual VMs to the spec.cancel block of the Migration manifest:</li></ol><pre tabindex=0><code>$ cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: forklift.konveyor.io/v1beta1
+kind: Migration
+metadata:
+  name: &lt;migration&gt;
+  namespace: konveyor-forklift
+...
+spec:
+  cancel:
+  - id: vm-102 (1)
+  - id: vm-203
+  - name: rhel8-vm
+EOF
+</code></pre><p>The explanations below refer to the callouts in the sample code above.</p><ul><li>(1) Specify a VM by using the id key or the name key.
+The value of the id key is the managed object reference, for a VMware VM, or the VM UUID, for a oVirt VM.</li></ul><ol start=2><li>Retrieve the Migration CR to monitor the progress of the remaining VMs:</li></ol><pre tabindex=0><code>$ kubectl get migration/&lt;migration&gt; -n konveyor-forklift -o yaml
+</code></pre><p><a href=https://github.com/konveyor/konveyor.github.io/blob/main/content/Forklift/MigratingVMs/migratecli.md>Source</a></p><footer class=footline></footer></div></div><div id=navigation></div></section><div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div><script src=/js/clipboard.min.js></script>
+<script src=/js/perfect-scrollbar.min.js></script>
+<script src=/js/perfect-scrollbar.jquery.min.js></script>
+<script src=/js/jquery.sticky.js></script>
+<script src=/js/featherlight.min.js></script>
+<script src=/js/highlight.pack.js></script>
+<script>hljs.initHighlightingOnLoad()</script><script src=/js/modernizr.custom-3.6.0.js></script>
+<script src=/js/learn.js></script>
+<script src=/js/hugo-learn.js></script>
+<script src=https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0})</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKPDMS3" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></body></html>
