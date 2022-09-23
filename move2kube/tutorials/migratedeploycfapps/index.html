@@ -1,0 +1,564 @@
+<!doctype html><html lang=en class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.104.0"><meta name=description content><link rel=icon href=/images/favicon.png type=image/png><title>Migrate and deploy Cloud Foundry applications to Kubernetes - Documentation for Konveyor projects</title><link href=/css/nucleus.css rel=stylesheet><link href=/css/fontawesome-all.min.css rel=stylesheet><link href=/css/hybrid.css rel=stylesheet><link href=/css/featherlight.min.css rel=stylesheet><link href=/css/perfect-scrollbar.min.css rel=stylesheet><link href=/css/auto-complete.css rel=stylesheet><link href=/css/atom-one-dark-reasonable.css rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=/css/tabs.css rel=stylesheet><link href=/css/hugo-theme.css rel=stylesheet><link href=/css/theme-konveyor.css rel=stylesheet><link href=/css/foo.css rel=stylesheet><link href=/css/bar.css rel=stylesheet><script src=/js/jquery-3.3.1.min.js></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style><script>var dataLayer=window.dataLayer=window.dataLayer||[];dataLayer.push({page:"Migrate and deploy Cloud Foundry applications to Kubernetes",fileUniqID:"5df7c3ee9af83597c8aca9a514b0705a"})</script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body data-url=/move2kube/tutorials/migratedeploycfapps/><nav id=sidebar><div id=header-wrapper><div id=header><a id=logo href=/><img src=/images/konveyor_logo.png></img></a>
+<a href=https://github.com/konveyor/konveyor.github.io>Documentation source code</a></div><div class=searchbox><label for=search-by><i class="fas fa-search"></i></label>
+<input data-search-input id=search-by type=search placeholder=Search...>
+<span data-search-clear><i class="fas fa-times"></i></span></div><script type=text/javascript src=/js/lunr.min.js></script>
+<script type=text/javascript src=/js/auto-complete.js></script>
+<script type=text/javascript>var baseurl="http://konveyor.github.io/"</script><script type=text/javascript src=/js/search.js></script></div><div class=highlightable><ul class=topics><li data-nav-id=/crane/ title=Crane class=dd-item><a href=/crane/><b>1 </b>Crane</a><ul><li data-nav-id=/crane/overview/ title=Overview class=dd-item><a href=/crane/overview/>Overview</a></li><li data-nav-id=/crane/tutorials/ title=Tutorials class=dd-item><a href=/crane/tutorials/>Tutorials</a><ul><li data-nav-id=/crane/tutorials/statelessappmirror/ title="Stateless application mirror" class=dd-item><a href=/crane/tutorials/statelessappmirror/>Stateless application mirror</a></li><li data-nav-id=/crane/tutorials/migratek8cluster/ title="Migrating a Kubernetes cluster" class=dd-item><a href=/crane/tutorials/migratek8cluster/>Migrating a Kubernetes cluster</a></li></ul></li><li data-nav-id=/crane/tools/ title=Tools class=dd-item><a href=/crane/tools/>Tools</a><ul><li data-nav-id=/crane/tools/gitopsintegration/ title="Integrating GitOps" class=dd-item><a href=/crane/tools/gitopsintegration/>Integrating GitOps</a></li><li data-nav-id=/crane/tools/customplugins/ title="Developing custom plugins" class=dd-item><a href=/crane/tools/customplugins/>Developing custom plugins</a></li><li data-nav-id=/crane/tools/tunnelapi/ title="Tunnel API" class=dd-item><a href=/crane/tools/tunnelapi/>Tunnel API</a></li><li data-nav-id=/crane/tools/pluginmanager/ title="Plugin Manager" class=dd-item><a href=/crane/tools/pluginmanager/>Plugin Manager</a></li></ul></li><li data-nav-id=/crane/usingcrane/ title="Using Crane" class=dd-item><a href=/crane/usingcrane/>Using Crane</a><ul><li data-nav-id=/crane/usingcrane/step1export/ title="Step One: Export Resources" class=dd-item><a href=/crane/usingcrane/step1export/>Step One: Export Resources</a></li><li data-nav-id=/crane/usingcrane/step2transform/ title="Step Two: Transform Exports" class=dd-item><a href=/crane/usingcrane/step2transform/>Step Two: Transform Exports</a></li><li data-nav-id=/crane/usingcrane/step3apply/ title="Step Three: Apply Patches" class=dd-item><a href=/crane/usingcrane/step3apply/>Step Three: Apply Patches</a></li></ul></li><li data-nav-id=/crane/installation/ title="Installing Crane" class=dd-item><a href=/crane/installation/>Installing Crane</a></li></ul></li><li data-nav-id=/forklift/ title=Forklift class=dd-item><a href=/forklift/><b>2 </b>Forklift</a><ul><li data-nav-id=/forklift/overview/ title=Overview class=dd-item><a href=/forklift/overview/>Overview</a></li><li data-nav-id=/forklift/migratingvms/ title="Migrating virtual machines" class=dd-item><a href=/forklift/migratingvms/>Migrating virtual machines</a><ul><li data-nav-id=/forklift/migratingvms/migrateoptions/ title="Migration plan options" class=dd-item><a href=/forklift/migratingvms/migrateoptions/>Migration plan options</a></li><li data-nav-id=/forklift/migratingvms/migratecli/ title="Migrating virtual machines using the command line" class=dd-item><a href=/forklift/migratingvms/migratecli/>Migrating virtual machines using the command line</a></li><li data-nav-id=/forklift/migratingvms/migrateweb/ title="Migrating virtual machines using the web console" class=dd-item><a href=/forklift/migratingvms/migrateweb/>Migrating virtual machines using the web console</a></li><li data-nav-id=/forklift/migratingvms/cancelmigrate/ title="Canceling a migration" class=dd-item><a href=/forklift/migratingvms/cancelmigrate/>Canceling a migration</a></li><li data-nav-id=/forklift/migratingvms/advancedmigrate/ title="Advanced migration options" class=dd-item><a href=/forklift/migratingvms/advancedmigrate/>Advanced migration options</a></li></ul></li><li data-nav-id=/forklift/installingforklift/ title="Installing Forklift" class=dd-item><a href=/forklift/installingforklift/>Installing Forklift</a><ul><li data-nav-id=/forklift/installingforklift/upgrade/ title="Upgrading Forklift" class=dd-item><a href=/forklift/installingforklift/upgrade/>Upgrading Forklift</a></li><li data-nav-id=/forklift/installingforklift/uninstall/ title="Uninstalling Forklift" class=dd-item><a href=/forklift/installingforklift/uninstall/>Uninstalling Forklift</a></li><li data-nav-id=/forklift/installingforklift/installation/ title="Installing the Forklift Operator" class=dd-item><a href=/forklift/installingforklift/installation/>Installing the Forklift Operator</a></li><li data-nav-id=/forklift/installingforklift/prereqs/ title=Prerequisites class=dd-item><a href=/forklift/installingforklift/prereqs/>Prerequisites</a></li></ul></li></ul></li><li data-nav-id=/move2kube/ title=Move2Kube class="dd-item
+parent"><a href=/move2kube/><b>3 </b>Move2Kube</a><ul><li data-nav-id=/move2kube/overview/ title=Overview class=dd-item><a href=/move2kube/overview/>Overview</a></li><li data-nav-id=/move2kube/concepts/ title=Concepts class=dd-item><a href=/move2kube/concepts/>Concepts</a></li><li data-nav-id=/move2kube/installation/ title=Installation class=dd-item><a href=/move2kube/installation/>Installation</a><ul><li data-nav-id=/move2kube/installation/installweb/ title="Web Interface" class=dd-item><a href=/move2kube/installation/installweb/>Web Interface</a></li><li data-nav-id=/move2kube/installation/installcli/ title="Command line tool" class=dd-item><a href=/move2kube/installation/installcli/>Command line tool</a></li></ul></li><li data-nav-id=/move2kube/commands/ title=Commands class=dd-item><a href=/move2kube/commands/>Commands</a></li><li data-nav-id=/move2kube/transformers/ title=Transformers class=dd-item><a href=/move2kube/transformers/>Transformers</a></li><li data-nav-id=/move2kube/tutorials/ title=Tutorials class="dd-item
+parent"><a href=/move2kube/tutorials/>Tutorials</a><ul><li data-nav-id=/move2kube/tutorials/usingcli/ title="Using Move2Kube CLI" class=dd-item><a href=/move2kube/tutorials/usingcli/>Using Move2Kube CLI</a></li><li data-nav-id=/move2kube/tutorials/usingui/ title="Using Move2Kube UI" class=dd-item><a href=/move2kube/tutorials/usingui/>Using Move2Kube UI</a></li><li data-nav-id=/move2kube/tutorials/cfappstok8/ title="Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes" class=dd-item><a href=/move2kube/tutorials/cfappstok8/>Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes</a><ul><li data-nav-id=/move2kube/tutorials/cfappstok8/1collect/ title="1. Collect" class=dd-item><a href=/move2kube/tutorials/cfappstok8/1collect/>1. Collect</a></li><li data-nav-id=/move2kube/tutorials/cfappstok8/2plan/ title="2. Plan" class=dd-item><a href=/move2kube/tutorials/cfappstok8/2plan/>2. Plan</a></li><li data-nav-id=/move2kube/tutorials/cfappstok8/3transform/ title="3. Transform" class=dd-item><a href=/move2kube/tutorials/cfappstok8/3transform/>3. Transform</a></li></ul></li><li data-nav-id=/move2kube/tutorials/customizeoutput/ title="Customizing the output" class=dd-item><a href=/move2kube/tutorials/customizeoutput/>Customizing the output</a><ul><li data-nav-id=/move2kube/tutorials/customizeoutput/addcustfiledir/ title="Add custom files and directories in custom locations" class=dd-item><a href=/move2kube/tutorials/customizeoutput/addcustfiledir/>Add custom files and directories in custom locations</a></li><li data-nav-id=/move2kube/tutorials/customizeoutput/paramcustomfieldshelm/ title="Parameterizing custom fields in Helm Chart, Kustomize, OC templates" class=dd-item><a href=/move2kube/tutorials/customizeoutput/paramcustomfieldshelm/>Parameterizing custom fields in Helm Chart, Kustomize, OC templates</a></li><li data-nav-id=/move2kube/tutorials/customizeoutput/customannotationsyaml/ title="Add custom annotations to Kubernetes YAMLs" class=dd-item><a href=/move2kube/tutorials/customizeoutput/customannotationsyaml/>Add custom annotations to Kubernetes YAMLs</a></li><li data-nav-id=/move2kube/tutorials/customizeoutput/customgendockerfile/ title="Customize generated Dockerfile and built-in transformer behavior" class=dd-item><a href=/move2kube/tutorials/customizeoutput/customgendockerfile/>Customize generated Dockerfile and built-in transformer behavior</a></li></ul></li><li data-nav-id=/move2kube/tutorials/customkubeyaml/ title="Customize Kubernetes YAMLs to target specific clusters" class=dd-item><a href=/move2kube/tutorials/customkubeyaml/>Customize Kubernetes YAMLs to target specific clusters</a></li><li data-nav-id=/move2kube/tutorials/createhelmchartskustomize/ title="Create Helm-charts, Kustomize overlays from Kubernetes Yamls" class=dd-item><a href=/move2kube/tutorials/createhelmchartskustomize/>Create Helm-charts, Kustomize overlays from Kubernetes Yamls</a></li><li data-nav-id=/move2kube/tutorials/createwincontainersnet/ title="Create and deploy Windows .NET containers" class=dd-item><a href=/move2kube/tutorials/createwincontainersnet/>Create and deploy Windows .NET containers</a></li><li data-nav-id=/move2kube/tutorials/migratedeploynetcore/ title="Migrate and deploy .NET Core applications to Kubernetes" class=dd-item><a href=/move2kube/tutorials/migratedeploynetcore/>Migrate and deploy .NET Core applications to Kubernetes</a></li><li data-nav-id=/move2kube/tutorials/migratedockercomposekube/ title="Migrate from Docker Compose to Kubernetes" class=dd-item><a href=/move2kube/tutorials/migratedockercomposekube/>Migrate from Docker Compose to Kubernetes</a></li><li data-nav-id=/move2kube/tutorials/migratedeploycfapps/ title="Migrate and deploy Cloud Foundry applications to Kubernetes" class="dd-item active"><a href=/move2kube/tutorials/migratedeploycfapps/>Migrate and deploy Cloud Foundry applications to Kubernetes</a></li><li data-nav-id=/move2kube/tutorials/runnoninteractively/ title="Run transforms non-interactively" class=dd-item><a href=/move2kube/tutorials/runnoninteractively/>Run transforms non-interactively</a></li></ul></li></ul></li><li data-nav-id=/tackle/ title="Tackle 1.0 & 2.0" class=dd-item><a href=/tackle/><b>4 </b>Tackle 1.0 & 2.0</a><ul><li data-nav-id=/tackle/tackle1/ title="Tackle 1.0" class=dd-item><a href=/tackle/tackle1/><b>4.1 </b>Tackle 1.0</a><ul><li data-nav-id=/tackle/tackle1/upgrade/ title="Upgrading Tackle" class=dd-item><a href=/tackle/tackle1/upgrade/>Upgrading Tackle</a></li><li data-nav-id=/tackle/tackle1/webconsolesvcs/ title="Web Console Services" class=dd-item><a href=/tackle/tackle1/webconsolesvcs/>Web Console Services</a></li><li data-nav-id=/tackle/tackle1/manageusers/ title="Managing users and credentials" class=dd-item><a href=/tackle/tackle1/manageusers/>Managing users and credentials</a></li><li data-nav-id=/tackle/tackle1/manageassess/ title="Managing assessments" class=dd-item><a href=/tackle/tackle1/manageassess/>Managing assessments</a></li><li data-nav-id=/tackle/tackle1/manageapps/ title="Managing applications" class=dd-item><a href=/tackle/tackle1/manageapps/>Managing applications</a></li><li data-nav-id=/tackle/tackle1/additionaltools/ title="Additional tools" class=dd-item><a href=/tackle/tackle1/additionaltools/>Additional tools</a></li></ul></li><li data-nav-id=/tackle/tackle2/ title="Tackle 2.0" class=dd-item><a href=/tackle/tackle2/><b>4.2 </b>Tackle 2.0</a><ul><li data-nav-id=/tackle/tackle2/admintasks/ title="Administrator view tasks" class=dd-item><a href=/tackle/tackle2/admintasks/>Administrator view tasks</a></li><li data-nav-id=/tackle/tackle2/views/ title="Tackle 2.0 Views" class=dd-item><a href=/tackle/tackle2/views/>Tackle 2.0 Views</a></li><li data-nav-id=/tackle/tackle2/instances/ title="Seeding Instances" class=dd-item><a href=/tackle/tackle2/instances/>Seeding Instances</a></li><li data-nav-id=/tackle/tackle2/assessanalyze/ title="Assessing and analyzing applications" class=dd-item><a href=/tackle/tackle2/assessanalyze/>Assessing and analyzing applications</a></li><li data-nav-id=/tackle/tackle2/addapps/ title="Adding applications" class=dd-item><a href=/tackle/tackle2/addapps/>Adding applications</a></li></ul></li><li data-nav-id=/tackle/overview/ title=Overview class=dd-item><a href=/tackle/overview/>Overview</a></li><li data-nav-id=/tackle/upgradeto2/ title="Upgrading from 1.2 to 2.0" class=dd-item><a href=/tackle/upgradeto2/>Upgrading from 1.2 to 2.0</a></li><li data-nav-id=/tackle/installation/ title="Installing Tackle 2.0" class=dd-item><a href=/tackle/installation/>Installing Tackle 2.0</a></li><li data-nav-id=/tackle/installation1/ title="Installing Tackle 1.0" class=dd-item><a href=/tackle/installation1/>Installing Tackle 1.0</a></li></ul></li></ul><section id=footer><p>Built with <a href=https://github.com/matcornic/hugo-theme-learn><i class="fas fa-heart"></i></a> from <a href=https://getgrav.org>Grav</a> and <a href=https://gohugo.io/>Hugo</a></p></section></div></nav><section id=body><div id=overlay></div><div class="padding highlightable"><div><div id=top-bar><div id=breadcrumbs itemscope itemtype=http://data-vocabulary.org/Breadcrumb><span id=sidebar-toggle-span><a href=# id=sidebar-toggle data-sidebar-toggle><i class="fas fa-bars"></i></a></span>
+<span id=toc-menu><i class="fas fa-list-alt"></i></span>
+<span class=links>Migrate and deploy Cloud Foundry applications to Kubernetes</span></div><div class=progress><div class=wrapper><nav id=TableOfContents><ul><li><ul><li><a href=#summary>Summary</a></li></ul></li><li><a href=#prerequisites>Prerequisites</a></li><li><a href=#generating-target-artifacts>Generating target artifacts</a></li><li><a href=#deploying-the-application-to-kubernetes-with-the-generated-target-artifacts>Deploying the application to Kubernetes with the generated target artifacts</a></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div></div></div></div><div id=head-tags></div><div id=body-inner><h1>Migrate and deploy Cloud Foundry applications to Kubernetes</h1><p>This document steps through installing Move2Kube and using Move2Kube&rsquo;s the step process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps using the data from <a href=https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry>samples/cloud-foundry</a>.</p><h3 id=summary>Summary</h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube transform -s cloud-foundry
+</span></span></code></pre></div><p>Move2Kube will automatically analyze all the artifacts in the cloud-foundry directory and transform and create all the artifacts required for deploying the application in Kubernetes.</p><h2 id=prerequisites>Prerequisites</h2><ul><li><p>A source directory which contains the source code files and/or the manifest.yml file of a Cloud Foundry application.</p><p>A sample of this is present in the <a href=https://github.com/konveyor/move2kube-demos>move2kube-demos</a> repository. In this tutorial, we will be using the <code>cloud-foundry</code> sample from this repository.</p></li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/cloud-foundry -r move2kube-demos
+</span></span></code></pre></div><p>View the structure inside the <code>./cloud-foundry</code> directory. The <code>cloud-foundry</code> directory contains the source code files and the manifest.yml file.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>  $ tree cloud-foundry
+</span></span><span style=display:flex><span>  cloud-foundry/
+</span></span><span style=display:flex><span>  ├── cfnodejsapp
+</span></span><span style=display:flex><span>  │   ├── main.js
+</span></span><span style=display:flex><span>  │   ├── manifest.yml
+</span></span><span style=display:flex><span>  │   ├── package-lock.json
+</span></span><span style=display:flex><span>  │   └── package.json
+</span></span><span style=display:flex><span>  └── m2k_collect
+</span></span><span style=display:flex><span>      └── cf
+</span></span><span style=display:flex><span>          └── cfapps.yaml
+</span></span></code></pre></div><ol><li><p>Install <a href=/installation>Move2Kube</a>.</p></li><li><p>Install a container runtime: <a href=https://www.docker.com/get-started>Docker</a> or <a href=https://podman.io/getting-started/installation>Podman</a>.</p></li><li><p>Install <a href=https://kubernetes.io/docs/tasks/tools/install-kubectl>Kubectl</a>.</p><p>To verify that dependencies were correctly installed you can run the below commands.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube version
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ docker version
+</span></span></code></pre></div><p>or</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ podman info
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ kubectl version
+</span></span></code></pre></div></li><li><p>Install the <a href=https://docs.cloudfoundry.org/cf-cli/install-go-cli.html>Cloud Foundry CLI</a>.</p></li></ol><p>To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, we will be using the source code inside the <code>cloud-foundry/cfnodejsapp</code> directory. If you want to try out Move2Kube on your CF application, then in place of our sample <code>cloud-foundry</code> directory, provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the <em>plan</em> phase.</p><p>Optional: We will deploy a simple NodeJS application into CF. If you have a running CF app already you may use that instead. Provision a CF app with the name <code>cfnodejsapp</code> using your cloud provider (Ex: <a href=https://cloud.ibm.com/>IBM Cloud</a>).</p><ol start=5><li><p>Make note of the API endpoint (API endpoints for the IBM Cloud Foundry service can be found <a href="https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-endpoints">here</a>).</p></li><li><p>Login to CF.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cf login -a &lt;YOUR CF API endpoint&gt;
+</span></span></code></pre></div></li><li><p>Deploy the sample application to Cloud Foundry. The source code of the sample application is present inside <code>./cloud-foundry/cfnodejsapp</code> folder.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cf push -f ./cloud-foundry/cfnodejsapp -p ./cloud-foundry/cfnodejsapp
+</span></span></code></pre></div></li><li><p>Visit the URL of the application (you can get this by running <code>cf apps</code>) to see it running.</p></li></ol><h2 id=generating-target-artifacts>Generating target artifacts</h2><p>Now that we have a running CF app we can transform it using Move2Kube&rsquo;s three stage process: <em>collect</em>, <em>plan</em> and <em>transform</em>. Run these steps from the directory where <code>cloud-foundry</code> directory is present:</p><ol><li>Optional: This step is required only if you are interested in metadata such as environment variables from a running instance. If you don&rsquo;t have a running app, you can use the m2k_collect directoy that comes with the sample.</li></ol><p>Collect some data about your running CF application. Limit the collection to only Cloud Foundry information using the <code>-a cf</code> annotation flag.</p><pre><code>```console
+$ cf login -a &lt;YOUR CF API endpoint&gt;
+$ move2kube collect -a cf
+INFO[0000] Begin collection                             
+INFO[0000] [*collector.CfAppsCollector] Begin collection
+INFO[0013] [*collector.CfAppsCollector] Done            
+INFO[0013] [*collector.CfServicesCollector] Begin collection
+INFO[0027] [*collector.CfServicesCollector] Done        
+INFO[0027] Collection done                              
+INFO[0027] Collect Output in [/Users/username/m2k_collect]. Copy this directory into the source directory to be used for planning.
+```
+</code></pre><p>The data we collected will be stored in a new directory called <code>./m2k_collect</code>.</p><pre><code>```console
+$ ls m2k_collect
+cf
+```
+</code></pre><p>The <code>./m2k_collect/cf</code> directory contains the yaml file which has the runtime information of the particular application being transformed including the buildpacks that are supported, the memory, the number of instances and the ports that are supported. If there are environment variables, it collects that information too.</p><pre><code>* Move the `./m2k_collect/cf` directory into the source directory `./cloud-foundry`.
+
+```console
+$ mv m2k_collect cloud-foundry/
+```
+</code></pre><ol start=2><li>Create a <em>plan</em> on how to transform your app to run on Kubernetes. In the <em>plan</em> phase, it is going to combine the runtime metadata (if present) with source artifacts and come up with a <em>plan</em>.</li></ol><p>Provide the path to the source directory (containing the source code and/or manifest files of CF application) using the <code>-s</code> flag.</p><pre><code>```console
+$ move2kube plan -s cloud-foundry
+INFO[0000] Loading Configuration                        
+INFO[0000] [*configuration.ClusterMDLoader] Loading configuration
+INFO[0000] [*configuration.ClusterMDLoader] Done        
+INFO[0000] Configuration loading done                   
+INFO[0000] Planning Transformation - Base Directory     
+INFO[0000] [DockerfileDetector] Planning transformation
+INFO[0000] [DockerfileDetector] Done                    
+INFO[0000] [ComposeAnalyser] Planning transformation    
+INFO[0000] [ComposeAnalyser] Done                       
+INFO[0000] [ZuulAnalyser] Planning transformation       
+INFO[0000] [ZuulAnalyser] Done                          
+INFO[0000] [CloudFoundry] Planning transformation       
+INFO[0000] Identified 1 namedservices and 0 unnamed transformer plans
+INFO[0000] [CloudFoundry] Done                          
+INFO[0000] [Base Directory] Identified 1 namedservices and 0 unnamed transformer plans
+INFO[0000] Transformation planning - Base Directory done
+INFO[0000] Planning Transformation - Directory Walk     
+INFO[0000] Identified 1 namedservices and 0 unnamed transformer plans in .
+INFO[0000] Transformation planning - Directory Walk done
+INFO[0000] [Directory Walk] Identified 1 namedservices and 0 unnamed transformer plans
+INFO[0000] [Named Services] Identified 1 namedservices  
+INFO[0000] No of services identified : 1                
+INFO[0000] Plan can be found at [/Users/username/m2k.plan].
+```
+</code></pre><p>Move2Kube has created a <em>m2k.plan</em> which is essentially a YAML file. View what is inside the <em>plan</em> file.</p><pre><code>```console
+$ cat m2k.plan
+```
+
+```yaml
+  apiVersion: move2kube.konveyor.io/v1alpha1
+  kind: Plan
+  metadata:
+    name: myproject
+  spec:
+    sourceDir: cloud-foundry
+    services:
+      cfnodejsapp:
+        - transformerName: CloudFoundry
+          paths:
+            CfManifest:
+              - cfnodejsapp/manifest.yml
+            CfRunningManifest:
+              - m2k_collect/cf/cfapps.yaml
+            ServiceDirPath:
+              - cfnodejsapp
+          configs:
+            CloudFoundryService:
+              serviceName: cfnodejsapp
+            ContainerizationOptions:
+              - Nodejs-Dockerfile
+        - transformerName: Nodejs-Dockerfile
+          paths:
+            ServiceDirPath:
+              - cfnodejsapp
+    transformers:
+      Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/buildconfig.yaml
+      CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/cloudfoundry.yaml
+      ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/clusterselector.yaml
+      ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/composeanalyser.yaml
+      ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/composegenerator.yaml
+      ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
+      DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
+      DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
+      DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
+      DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
+      EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
+      EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
+      Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/golang.yaml
+      Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/gradle.yaml
+      Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/jar.yaml
+      Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/jboss.yaml
+      Knative: m2kassets/built-in/transformers/kubernetes/knative/knative.yaml
+      Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/kubernetes.yaml
+      KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
+      Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/liberty.yaml
+      Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/maven.yaml
+      Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml
+      PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/php.yaml
+      Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/parameterizer.yaml
+      Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/python.yaml
+      ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/readmegenerator.yaml
+      Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/ruby.yaml
+      Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/rust.yaml
+      Tekton: m2kassets/built-in/transformers/kubernetes/tekton/tekton.yaml
+      Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
+      WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/war.yaml
+      WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
+      WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
+      WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
+      WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
+      ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
+```
+&lt;/details&gt;
+
+* Notice that Move2Kube has detected the `cfnodejsapp` service, which is the name of the sample CF application from its manifest.yml.
+* The plan file indicates the application can be transformed using the `CloudFoundry` or `Nodejs-Dockerfile` transformers.
+* Move2Kube can use the source artifacts `manifest.yaml` and also the runtime information from `cfapps.yaml` and combine all of them to do the transformation.
+</code></pre><ol start=3><li>Run <code>move2kube transform</code> on this <em>plan</em>.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ move2kube transform
+</span></span><span style=display:flex><span>    INFO[0000] Detected a plan file at path /Users/username/m2k.plan. Will transform using this plan.
+</span></span><span style=display:flex><span>    ? Select all transformer types that you are interested in:
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>    [Services that don&#39;t support any of the transformer types you are interested in will be ignored.]
+</span></span><span style=display:flex><span>        [Use arrows to move, space to select, &lt;right&gt; to all, &lt;left&gt; to none, type to filter]
+</span></span><span style=display:flex><span>      &gt; [✓]  Jboss
+</span></span><span style=display:flex><span>        [✓]  Kubernetes
+</span></span><span style=display:flex><span>        [✓]  Liberty
+</span></span><span style=display:flex><span>        [✓]  ZuulAnalyser
+</span></span><span style=display:flex><span>        [✓]  CloudFoundry
+</span></span><span style=display:flex><span>        [✓]  DockerfileParser
+</span></span><span style=display:flex><span>        [✓]  Golang-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  Gradle
+</span></span><span style=display:flex><span>        [✓]  Python-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  ReadMeGenerator
+</span></span><span style=display:flex><span>        [✓]  ContainerImagesPushScriptGenerator
+</span></span><span style=display:flex><span>        [✓]  DotNetCore-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  Parameterizer
+</span></span><span style=display:flex><span>        [✓]  Tekton
+</span></span><span style=display:flex><span>        [✓]  WinSLWebApp-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  Buildconfig
+</span></span><span style=display:flex><span>        [✓]  ClusterSelector
+</span></span><span style=display:flex><span>        [✓]  ComposeAnalyser
+</span></span><span style=display:flex><span>        [✓]  PHP-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  Ruby-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  WinConsoleApp-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  DockerfileImageBuildScript
+</span></span><span style=display:flex><span>        [✓]  EarRouter
+</span></span><span style=display:flex><span>        [✓]  Rust-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  Tomcat
+</span></span><span style=display:flex><span>        [✓]  WarAnalyser
+</span></span><span style=display:flex><span>        [✓]  EarAnalyser
+</span></span><span style=display:flex><span>        [✓]  Knative
+</span></span><span style=display:flex><span>        [✓]  Maven
+</span></span><span style=display:flex><span>        [✓]  WinWebApp-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  ComposeGenerator
+</span></span><span style=display:flex><span>        [✓]  Jar
+</span></span><span style=display:flex><span>        [✓]  DockerfileDetector
+</span></span><span style=display:flex><span>        [✓]  KubernetesVersionChanger
+</span></span><span style=display:flex><span>        [✓]  Nodejs-Dockerfile
+</span></span><span style=display:flex><span>        [✓]  WarRouter
+</span></span></code></pre></div><ol start=4><li>Accept the default by pressing the <code>return</code> or <code>enter</code> key.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    Jboss, Kubernetes, Liberty, ZuulAnalyser, CloudFoundry, DockerfileParser, Golang-Dockerfile, Gradle, Python-Dockerfile, ReadMeGenerator, ContainerImagesPushScriptGenerator, DotNetCore-Dockerfile, Parameterizer, Tekton, WinSLWebApp-Dockerfile, Buildconfig, ClusterSelector, ComposeAnalyser, PHP-Dockerfile, Ruby-Dockerfile, WinConsoleApp-Dockerfile, DockerfileImageBuildScript, EarRouter, Rust-Dockerfile, Tomcat, WarAnalyser, EarAnalyser, Knative, Maven, WinWebApp-Dockerfile, ComposeGenerator, Jar, DockerfileDetector, KubernetesVersionChanger, Nodejs-Dockerfile, WarRouter
+</span></span><span style=display:flex><span>    ? Select all services that are needed:
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>    [The services unselected here will be ignored.]
+</span></span><span style=display:flex><span>    [Use arrows to move, space to select, &lt;right&gt; to all, &lt;left&gt; to none, type to filter]
+</span></span><span style=display:flex><span>    &gt; [✓]  cfnodejsapp
+</span></span></code></pre></div><ol start=5><li>Select the <code>cfnodejsapp</code> service.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>     cfnodejsapp
+</span></span><span style=display:flex><span>    INFO[0275] Starting Plan Transformation                 
+</span></span><span style=display:flex><span>    INFO[0275] Iteration 1                                  
+</span></span><span style=display:flex><span>    INFO[0275] Iteration 2 - 1 artifacts to process         
+</span></span><span style=display:flex><span>    INFO[0275] Transformer CloudFoundry processing 1 artifacts
+</span></span><span style=display:flex><span>    INFO[0275] Transformer ZuulAnalyser processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[0275] Transformer ZuulAnalyser Done                
+</span></span><span style=display:flex><span>    INFO[0275] Transformer CloudFoundry Done                
+</span></span><span style=display:flex><span>    INFO[0275] Created 0 pathMappings and 3 artifacts. Total Path Mappings : 0. Total Artifacts : 1.
+</span></span><span style=display:flex><span>    INFO[0275] Iteration 3 - 3 artifacts to process         
+</span></span><span style=display:flex><span>    INFO[0275] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    ? Choose the cluster type:
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>    [Choose the cluster type you would like to target]
+</span></span><span style=display:flex><span>      [Use arrows to move, type to filter]
+</span></span><span style=display:flex><span>    &gt; Kubernetes
+</span></span><span style=display:flex><span>      Openshift
+</span></span><span style=display:flex><span>      AWS-EKS
+</span></span><span style=display:flex><span>      Azure-AKS
+</span></span><span style=display:flex><span>      GCP-GKE
+</span></span><span style=display:flex><span>      IBM-IKS
+</span></span><span style=display:flex><span>      IBM-Openshift
+</span></span></code></pre></div><p>Now, it asks to select the cluster type you want to deploy to. Here, we select the <code>Kubernetes</code> cluster type.</p><pre><code>```console
+Kubernetes
+INFO[0351] Transformer ClusterSelector Done             
+INFO[0351] Transformer Kubernetes processing 2 artifacts
+
+? What URL/path should we expose the service cfnodejsapp's 8080 port on?
+Hints:
+[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+ (/cfnodejsapp)
+```
+</code></pre><ol start=6><li>Accpet the default by pressing the <code>return</code> or <code>enter</code> key.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    /cfnodejsapp
+</span></span><span style=display:flex><span>    ? Provide the minimum number of replicas each service should have
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>    [If the value is 0 pods won&#39;t be started by default]
+</span></span><span style=display:flex><span>      (2)
+</span></span></code></pre></div><p>Let&rsquo;s go ahead with the default answer again, which means 2 replicas for each service.</p><pre><code>```console
+2
+? Enter the URL of the image registry :
+Hints:
+[You can always change it later by changing the yamls.]
+  [Use arrows to move, type to filter]
+  Other (specify custom option)
+  index.docker.io
+&gt; quay.io
+  us.icr.io
+```
+</code></pre><ol start=7><li>Select <code>quay.io</code> as the image registry host. Select &lsquo;Other&rsquo; if your registry name is not here.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    quay.io
+</span></span><span style=display:flex><span>    ? Enter the namespace where the new images should be pushed :  
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>     [Ex : myproject]
+</span></span><span style=display:flex><span>     (myproject) m2k-tutorial
+</span></span></code></pre></div><ol start=8><li>Input the namespace under which you want to deploy- m2k-tutorial. (Say, you have namespace <code>m2k-tutorial</code> in quay.io)</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    m2k-tutorial
+</span></span><span style=display:flex><span>    ? [quay.io] What type of container registry login do you want to use?
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>     [Docker login from config mode, will use the default config from your local machine.]
+</span></span><span style=display:flex><span>      [Use arrows to move, type to filter]
+</span></span><span style=display:flex><span>      Use existing pull secret
+</span></span><span style=display:flex><span>    &gt; No authentication
+</span></span><span style=display:flex><span>      UserName/Password
+</span></span></code></pre></div><ol start=9><li>Select the container registry login type.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    No authentication
+</span></span><span style=display:flex><span>    INFO[0841] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[0841] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[0841] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[0841] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 2. Total Artifacts : 3.
+</span></span><span style=display:flex><span>    INFO[0841] Transformer Knative Done                     
+</span></span><span style=display:flex><span>    INFO[0841] Transformer Tekton processing 2 artifacts    
+</span></span><span style=display:flex><span>    INFO[0841] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[0841] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[0841] Generating Tekton pipeline for CI/CD         
+</span></span><span style=display:flex><span>    INFO[0841] No remote git repos detected. You might want to configure the git repository links manually.
+</span></span><span style=display:flex><span>    ? Provide the ingress host domain
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>     [Ingress host domain is part of service URL]
+</span></span><span style=display:flex><span>     (myproject.com) my-cluster-ingress-host-domain.com
+</span></span></code></pre></div><ol start=10><li>Grab the ingress hosting domain from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster you are fetching from.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    ? Provide the TLS secret for ingress
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>     [Leave empty to use http]
+</span></span></code></pre></div><ol start=11><li>Accept the by-default TLS secret by pressing the &lsquo;return&rsquo; key.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    INFO[1094] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1094] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1094] Generating Tekton pipeline for CI/CD         
+</span></span><span style=display:flex><span>    INFO[1094] No remote git repos detected. You might want to configure the git repository links manually.
+</span></span><span style=display:flex><span>    INFO[1094] Created 20 pathMappings and 2 artifacts. Total Path Mappings : 22. Total Artifacts : 3.
+</span></span><span style=display:flex><span>    INFO[1094] Transformer Tekton Done                      
+</span></span><span style=display:flex><span>    INFO[1094] Transformer Buildconfig processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1094] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1094] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1094] Created 0 pathMappings and 0 artifacts. Total Path Mappings : 22. Total Artifacts : 3.
+</span></span><span style=display:flex><span>    INFO[1094] Transformer Buildconfig Done                 
+</span></span><span style=display:flex><span>    INFO[1094] Transformer ComposeGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1094] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1094] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1094] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1094] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1094] Created 2 pathMappings and 0 artifacts. Total Path Mappings : 24. Total Artifacts : 3.
+</span></span><span style=display:flex><span>    INFO[1094] Transformer ComposeGenerator Done            
+</span></span><span style=display:flex><span>    INFO[1094] Transformer Kubernetes processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1094] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1094] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1094] Total transformed objects : 3                
+</span></span><span style=display:flex><span>    INFO[1094] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1094] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1094] Total transformed objects : 3                
+</span></span><span style=display:flex><span>    INFO[1094] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 26. Total Artifacts : 3.
+</span></span><span style=display:flex><span>    INFO[1094] Transformer Kubernetes Done                  
+</span></span><span style=display:flex><span>    INFO[1094] Transformer Nodejs-Dockerfile processing 1 artifacts
+</span></span><span style=display:flex><span>    ? Select port to be exposed for the service cfnodejsapp :
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>    [Select Other if you want to expose the service cfnodejsapp to some other port]
+</span></span><span style=display:flex><span>      [Use arrows to move, type to filter]
+</span></span><span style=display:flex><span>    &gt; 8080
+</span></span><span style=display:flex><span>      Other (specify custom option)
+</span></span></code></pre></div><ol start=12><li>Select the port to expose the <code>cfnodejsapp</code> service.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    8080
+</span></span><span style=display:flex><span>    INFO[1184] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 28. Total Artifacts : 3.
+</span></span><span style=display:flex><span>    INFO[1184] Transformer Nodejs-Dockerfile Done           
+</span></span><span style=display:flex><span>    INFO[1184] Iteration 4                                  
+</span></span><span style=display:flex><span>    INFO[1184] Transformer ReadMeGenerator processing 4 artifacts
+</span></span><span style=display:flex><span>    INFO[1184] Created 1 pathMappings and 0 artifacts. Total Path Mappings : 29. Total Artifacts : 11.
+</span></span><span style=display:flex><span>    INFO[1184] Transformer ReadMeGenerator Done             
+</span></span><span style=display:flex><span>    INFO[1184] Transformer DockerfileImageBuildScript processing 2 artifacts
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    ? Select the container runtime to use :
+</span></span><span style=display:flex><span>    Hints:
+</span></span><span style=display:flex><span>    [The container runtime selected will be used in the scripts]
+</span></span><span style=display:flex><span>      [Use arrows to move, type to filter]
+</span></span><span style=display:flex><span>    &gt; docker
+</span></span><span style=display:flex><span>      podman
+</span></span></code></pre></div><ol start=13><li>Select the container runtime to use.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>     docker
+</span></span><span style=display:flex><span>    INFO[1184] Created 1 pathMappings and 2 artifacts. Total Path Mappings : 30. Total Artifacts : 11.
+</span></span><span style=display:flex><span>    INFO[1184] Transformer DockerfileImageBuildScript Done  
+</span></span><span style=display:flex><span>    INFO[1184] Transformer DockerfileParser processing 1 artifacts
+</span></span><span style=display:flex><span>    INFO[1184] Created 0 pathMappings and 1 artifacts. Total Path Mappings : 30. Total Artifacts : 11.
+</span></span><span style=display:flex><span>    INFO[1184] Transformer DockerfileParser Done            
+</span></span><span style=display:flex><span>    INFO[1184] Transformer Parameterizer processing 4 artifacts
+</span></span><span style=display:flex><span>    INFO[1184] Created 12 pathMappings and 0 artifacts. Total Path Mappings : 42. Total Artifacts : 11.
+</span></span><span style=display:flex><span>    INFO[1184] Transformer Parameterizer Done               
+</span></span><span style=display:flex><span>    INFO[1184] Iteration 5                                  
+</span></span><span style=display:flex><span>    INFO[1184] Transformer Tekton processing 2 artifacts    
+</span></span><span style=display:flex><span>    INFO[1184] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1184] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1184] Generating Tekton pipeline for CI/CD         
+</span></span><span style=display:flex><span>    INFO[1184] No remote git repos detected. You might want to configure the git repository links manually.
+</span></span><span style=display:flex><span>    INFO[1184] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1184] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1184] Generating Tekton pipeline for CI/CD         
+</span></span><span style=display:flex><span>    INFO[1184] No remote git repos detected. You might want to configure the git repository links manually.
+</span></span><span style=display:flex><span>    INFO[1184] Created 20 pathMappings and 2 artifacts. Total Path Mappings : 62. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1184] Transformer Tekton Done                      
+</span></span><span style=display:flex><span>    INFO[1184] Transformer Buildconfig processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1184] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Created 0 pathMappings and 0 artifacts. Total Path Mappings : 62. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Buildconfig Done                 
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ComposeGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1185] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Created 2 pathMappings and 0 artifacts. Total Path Mappings : 64. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ComposeGenerator Done            
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1185] Created 1 pathMappings and 1 artifacts. Total Path Mappings : 65. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ContainerImagesPushScriptGenerator Done
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Kubernetes processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1185] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Total transformed objects : 3                
+</span></span><span style=display:flex><span>    INFO[1185] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Total transformed objects : 3                
+</span></span><span style=display:flex><span>    INFO[1185] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 67. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Kubernetes Done                  
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ContainerImagesBuildScriptGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>    INFO[1185] Created 2 pathMappings and 1 artifacts. Total Path Mappings : 69. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ContainerImagesBuildScriptGenerator Done
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Knative processing 2 artifacts   
+</span></span><span style=display:flex><span>    INFO[1185] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Begin Optimization                           
+</span></span><span style=display:flex><span>    INFO[1185] Optimization done                            
+</span></span><span style=display:flex><span>    INFO[1185] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 71. Total Artifacts : 14.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Knative Done                     
+</span></span><span style=display:flex><span>    INFO[1185] Iteration 6                                  
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Parameterizer processing 4 artifacts
+</span></span><span style=display:flex><span>    INFO[1185] Created 12 pathMappings and 0 artifacts. Total Path Mappings : 83. Total Artifacts : 22.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer Parameterizer Done               
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ReadMeGenerator processing 6 artifacts
+</span></span><span style=display:flex><span>    INFO[1185] Created 1 pathMappings and 0 artifacts. Total Path Mappings : 84. Total Artifacts : 22.
+</span></span><span style=display:flex><span>    INFO[1185] Transformer ReadMeGenerator Done             
+</span></span><span style=display:flex><span>    INFO[1185] Plan Transformation done                     
+</span></span><span style=display:flex><span>    INFO[1185] Transformed target artifacts can be found at [/Users/username/github/move2kube-demos/samples/myproject].
+</span></span></code></pre></div><p>The transformation is successful and the target artifacts can be found inside the <code>./myproject</code> directory. The structure of the <em>./myproject</em> directory can be seen by running:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$  tree myproject
+</span></span><span style=display:flex><span>myproject/
+</span></span><span style=display:flex><span>├── Readme.md
+</span></span><span style=display:flex><span>├── deploy
+</span></span><span style=display:flex><span>│   ├── cicd
+</span></span><span style=display:flex><span>│   │   ├── tekton
+</span></span><span style=display:flex><span>│   │   │   ├── cfnodejsapp-vcapasenv-secret.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>│   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   └── tekton-parameterized
+</span></span><span style=display:flex><span>│   │       ├── helm-chart
+</span></span><span style=display:flex><span>│   │       │   └── myproject
+</span></span><span style=display:flex><span>│   │       │       ├── Chart.yaml
+</span></span><span style=display:flex><span>│   │       │       └── templates
+</span></span><span style=display:flex><span>│   │       │           ├── cfnodejsapp-vcapasenv-secret.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>│   │       │           ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>│   │       │           └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │       ├── kustomize
+</span></span><span style=display:flex><span>│   │       │   └── base
+</span></span><span style=display:flex><span>│   │       │       ├── cfnodejsapp-vcapasenv-secret.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── kustomization.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>│   │       │       ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>│   │       │       └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │       └── openshift-template
+</span></span><span style=display:flex><span>│   │           └── template.yaml
+</span></span><span style=display:flex><span>│   ├── compose
+</span></span><span style=display:flex><span>│   │   └── docker-compose.yaml
+</span></span><span style=display:flex><span>│   ├── knative
+</span></span><span style=display:flex><span>│   │   └── cfnodejsapp-service.yaml
+</span></span><span style=display:flex><span>│   ├── knative-parameterized
+</span></span><span style=display:flex><span>│   │   ├── helm-chart
+</span></span><span style=display:flex><span>│   │   │   └── myproject
+</span></span><span style=display:flex><span>│   │   │       ├── Chart.yaml
+</span></span><span style=display:flex><span>│   │   │       └── templates
+</span></span><span style=display:flex><span>│   │   │           └── cfnodejsapp-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── kustomize
+</span></span><span style=display:flex><span>│   │   │   └── base
+</span></span><span style=display:flex><span>│   │   │       ├── cfnodejsapp-service.yaml
+</span></span><span style=display:flex><span>│   │   │       └── kustomization.yaml
+</span></span><span style=display:flex><span>│   │   └── openshift-template
+</span></span><span style=display:flex><span>│   │       └── template.yaml
+</span></span><span style=display:flex><span>│   ├── yamls
+</span></span><span style=display:flex><span>│   │   ├── cfnodejsapp-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── cfnodejsapp-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── cfnodejsapp-vcapasenv-secret.yaml
+</span></span><span style=display:flex><span>│   │   └── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   └── yamls-parameterized
+</span></span><span style=display:flex><span>│       ├── helm-chart
+</span></span><span style=display:flex><span>│       │   └── myproject
+</span></span><span style=display:flex><span>│       │       ├── Chart.yaml
+</span></span><span style=display:flex><span>│       │       ├── templates
+</span></span><span style=display:flex><span>│       │       │   ├── cfnodejsapp-deployment.yaml
+</span></span><span style=display:flex><span>│       │       │   ├── cfnodejsapp-service.yaml
+</span></span><span style=display:flex><span>│       │       │   ├── cfnodejsapp-vcapasenv-secret.yaml
+</span></span><span style=display:flex><span>│       │       │   └── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│       │       ├── values-dev.yaml
+</span></span><span style=display:flex><span>│       │       ├── values-prod.yaml
+</span></span><span style=display:flex><span>│       │       └── values-staging.yaml
+</span></span><span style=display:flex><span>│       ├── kustomize
+</span></span><span style=display:flex><span>│       │   ├── base
+</span></span><span style=display:flex><span>│       │   │   ├── cfnodejsapp-deployment.yaml
+</span></span><span style=display:flex><span>│       │   │   ├── cfnodejsapp-service.yaml
+</span></span><span style=display:flex><span>│       │   │   ├── cfnodejsapp-vcapasenv-secret.yaml
+</span></span><span style=display:flex><span>│       │   │   ├── kustomization.yaml
+</span></span><span style=display:flex><span>│       │   │   └── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│       │   └── overlays
+</span></span><span style=display:flex><span>│       │       ├── dev
+</span></span><span style=display:flex><span>│       │       │   ├── apps-v1-deployment-cfnodejsapp.yaml
+</span></span><span style=display:flex><span>│       │       │   └── kustomization.yaml
+</span></span><span style=display:flex><span>│       │       ├── prod
+</span></span><span style=display:flex><span>│       │       │   ├── apps-v1-deployment-cfnodejsapp.yaml
+</span></span><span style=display:flex><span>│       │       │   └── kustomization.yaml
+</span></span><span style=display:flex><span>│       │       └── staging
+</span></span><span style=display:flex><span>│       │           ├── apps-v1-deployment-cfnodejsapp.yaml
+</span></span><span style=display:flex><span>│       │           └── kustomization.yaml
+</span></span><span style=display:flex><span>│       └── openshift-template
+</span></span><span style=display:flex><span>│           ├── parameters-dev.yaml
+</span></span><span style=display:flex><span>│           ├── parameters-prod.yaml
+</span></span><span style=display:flex><span>│           ├── parameters-staging.yaml
+</span></span><span style=display:flex><span>│           └── template.yaml
+</span></span><span style=display:flex><span>├── scripts
+</span></span><span style=display:flex><span>│   ├── builddockerimages.bat
+</span></span><span style=display:flex><span>│   ├── builddockerimages.sh
+</span></span><span style=display:flex><span>│   ├── pushimages.bat
+</span></span><span style=display:flex><span>│   └── pushimages.sh
+</span></span><span style=display:flex><span>└── source
+</span></span><span style=display:flex><span>    ├── cfnodejsapp
+</span></span><span style=display:flex><span>    │   ├── Dockerfile
+</span></span><span style=display:flex><span>    │   ├── main.js
+</span></span><span style=display:flex><span>    │   ├── manifest.yml
+</span></span><span style=display:flex><span>    │   ├── package-lock.json
+</span></span><span style=display:flex><span>    │   └── package.json
+</span></span><span style=display:flex><span>    └── m2k_collect
+</span></span><span style=display:flex><span>        └── cf
+</span></span><span style=display:flex><span>            └── cfapps.yaml
+</span></span></code></pre></div><p>Move2Kube has created all the deployment artifacts present inside the <em>./myproject</em> directory.</p><h2 id=deploying-the-application-to-kubernetes-with-the-generated-target-artifacts>Deploying the application to Kubernetes with the generated target artifacts</h2><ol><li>Open the <em>./myproject</em> directory.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>     $ cd myproject/
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>     $ ls
+</span></span><span style=display:flex><span>     Readme.md deploy    scripts   source
+</span></span></code></pre></div><ol start=2><li>Run the <em>builddockerimages.sh</em> script inside the <code>./myproject/scripts</code> directory.</li></ol><blockquote><p><strong>Note:</strong> This step may take some time to complete.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ cd scripts
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ ./builddockerimages.sh
+</span></span><span style=display:flex><span>    [+] Building 7.1s (8/8) FINISHED                             
+</span></span><span style=display:flex><span>    =&gt; [internal] load build definition from Dockerfile    0.1s
+</span></span><span style=display:flex><span>    =&gt; =&gt; transferring dockerfile: 37B                     0.0s
+</span></span><span style=display:flex><span>    =&gt; [internal] load .dockerignore                       0.0s
+</span></span><span style=display:flex><span>    =&gt; =&gt; transferring context: 2B                         0.0s
+</span></span><span style=display:flex><span>    =&gt; [internal] load metadata for registry.access.redha  2.7s
+</span></span><span style=display:flex><span>    =&gt; [internal] load build context                       0.0s
+</span></span><span style=display:flex><span>    =&gt; =&gt; transferring context: 354B                       0.0s
+</span></span><span style=display:flex><span>    =&gt; CACHED [1/3] FROM registry.access.redhat.com/ubi8/  0.0s
+</span></span><span style=display:flex><span>    =&gt; [2/3] COPY . .                                      0.1s
+</span></span><span style=display:flex><span>    =&gt; [3/3] RUN npm install                               4.0s
+</span></span><span style=display:flex><span>    =&gt; exporting to image                                  0.1s
+</span></span><span style=display:flex><span>    =&gt; =&gt; exporting layers                                 0.0s
+</span></span><span style=display:flex><span>    =&gt; =&gt; writing image sha256:7bd59bff8763073644bd68cd3f  0.0s
+</span></span><span style=display:flex><span>    =&gt; =&gt; naming to docker.io/library/cfnodejsapp          0.0s
+</span></span><span style=display:flex><span>    /Users/username/github/move2kube-demos/samples/myproject
+</span></span><span style=display:flex><span>    done
+</span></span></code></pre></div><ol start=3><li>Run the <em>pushimages.sh</em> script to push the applications images to the registry specified during the <em>transform</em> phase. For this step, you are required to log in to your Docker registry.</li></ol><ul><li><p>To log in to <code>quay.io</code> run <code>docker login quay.io</code>.</p></li><li><p>To log in to IBM Cloud <code>us.icr.io</code> registry refer <a href="https://cloud.ibm.com/docs/Registry?topic=Registry-registry_access#registry_access_apikey_auth_docker">here</a>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ ./pushimages.sh
+</span></span><span style=display:flex><span>Using default tag: latest
+</span></span><span style=display:flex><span>The push refers to repository [quay.io/m2k-tutorial/cfnodejsapp]
+</span></span><span style=display:flex><span>d98785f949ff: Layer already exists
+</span></span><span style=display:flex><span>2234a0b938d7: Layer already exists
+</span></span><span style=display:flex><span>967d006c4be4: Layer already exists
+</span></span><span style=display:flex><span>90c628b74ee4: Layer already exists
+</span></span><span style=display:flex><span>e7f8a4365a01: Layer already exists
+</span></span><span style=display:flex><span>a7be0896acef: Layer already exists
+</span></span><span style=display:flex><span>73eb3b4bebc5: Layer already exists
+</span></span><span style=display:flex><span>latest: digest: sha256:75283b09042b1454567b5e99d6d99374daad07fe46ee6843ace7dca29f085fd7 size: 1789
+</span></span></code></pre></div></li></ul><blockquote><p><strong>Note:</strong> If you have pushed the image repository to <code>quay.io</code>, open the Repository&rsquo;s Visibility in <a href=https://quay.io>quay.io</a> <code>cfnodejsapp</code> repository&rsquo;s Settings, select whether you want the repository <code>cfnodejsapp</code> to be public or private so that it can be properly accessed by the Kubernetes cluster.</p></blockquote><ol start=4><li>Deploy the application with <em>kubectl apply</em> command using the YAML files Move2Kube created inside the <code>./myproject/deploy/yamls</code> directory.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ cd ..
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    $ kubectl apply -f deploy/yamls
+</span></span><span style=display:flex><span>    deployment.apps/cfnodejsapp created
+</span></span><span style=display:flex><span>    service/cfnodejsapp created
+</span></span><span style=display:flex><span>    ingress.networking.k8s.io/myproject created
+</span></span></code></pre></div><p>The application is now accessible on the cluster.</p><ol start=5><li>Check the pods status by running:</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ kubectl get pods
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    NAME                           READY   STATUS    RESTARTS   AGE
+</span></span><span style=display:flex><span>    cfnodejsapp-58d777bd44-8ct2m   1/1     Running   0          7s
+</span></span><span style=display:flex><span>    cfnodejsapp-58d777bd44-hq6lf   1/1     Running   0          7s
+</span></span></code></pre></div><ol start=6><li>View the ingress to see the URL where the app has been deployed to.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ kubectl get ingress myproject
+</span></span></code></pre></div><h2 id=conclusion>Conclusion</h2><p>That is a simple way to combine multiple types of information like runtime, source, and cluster, and do a holistic transformation of your Cloud Foundry app to Kubernetes.</p><footer class=footline></footer></div></div><div id=navigation></div></section><div style=left:-1000px;overflow:scroll;position:absolute;top:-1000px;border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px><div style=border:none;box-sizing:content-box;height:200px;margin:0;padding:0;width:200px></div></div><script src=/js/clipboard.min.js></script>
+<script src=/js/perfect-scrollbar.min.js></script>
+<script src=/js/perfect-scrollbar.jquery.min.js></script>
+<script src=/js/jquery.sticky.js></script>
+<script src=/js/featherlight.min.js></script>
+<script src=/js/highlight.pack.js></script>
+<script>hljs.initHighlightingOnLoad()</script><script src=/js/modernizr.custom-3.6.0.js></script>
+<script src=/js/learn.js></script>
+<script src=/js/hugo-learn.js></script>
+<script src=https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js></script>
+<script>mermaid.initialize({startOnLoad:!0})</script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKPDMS3" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></body></html>
