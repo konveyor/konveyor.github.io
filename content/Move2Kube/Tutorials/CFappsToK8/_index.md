@@ -1,7 +1,7 @@
 ---
 title: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 date: 2022-08-12T12:06:32-06:00
-draft: true
+draft: false
 ---
 In this tutorial we will go through the entire workflow of migratinging a Cloud Foundry application with several micro-services to run on Kubernetes.
 

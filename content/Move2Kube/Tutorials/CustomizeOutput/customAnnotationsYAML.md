@@ -1,7 +1,7 @@
 ---
 title: "Add custom annotations to Kubernetes YAMLs"
 date: 2022-08-04T19:22:02-06:00
-draft: true
+draft: false
 ---
 
 Move2Kube generates Kubernetes YAMLs based on the needs of the application, but there might be situations where you might require specific fields to be different in the output. In this example, we illustrate how we can add an annotation to the Ingress YAML specifying an ingress class.

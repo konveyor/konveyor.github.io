@@ -1,7 +1,7 @@
 ---
 title: "Create Helm-charts, Kustomize overlays from Kubernetes Yamls"
 date: 2022-08-04T19:13:10-06:00
-draft: true
+draft: false
 ---
 
 In this tutorial we will see how to transform a set of Kubernetes YAMLs by parameterizing them.

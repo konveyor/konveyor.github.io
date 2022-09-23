@@ -1,7 +1,7 @@
 ---
 title: "3. Transform"
 date: 2022-08-12T12:08:16-06:00
-draft: true
+draft: false
 permalink: /tutorials/migration-workflow/collect
 parent: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 grand_parent: Tutorials

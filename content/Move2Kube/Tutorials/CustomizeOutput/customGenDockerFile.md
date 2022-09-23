@@ -1,7 +1,7 @@
 ---
 title: "Customize generated Dockerfile and built-in transformer behavior"
 date: 2022-08-04T19:21:31-06:00
-draft: true
+draft: false
 ---
 
 In this tutorial we will make Move2Kube add custom Dockerfile, and a custom file.

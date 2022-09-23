@@ -1,7 +1,7 @@
 ---
 title: "Command line tool"
 date: 2022-08-03T15:23:12-06:00
-draft: true
+draft: false
 ---
 ## Installing on Linux / MacOS / Windows WSL (Recommended):
 

@@ -1,7 +1,7 @@
 ---
 title: "Web Interface"
 date: 2022-08-03T15:23:24-06:00
-draft: true
+draft: false
 ---
 Minikube can be installed using Docker or Podman web interfaces.
 

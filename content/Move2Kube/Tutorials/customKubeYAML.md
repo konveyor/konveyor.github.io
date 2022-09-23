@@ -1,7 +1,7 @@
 ---
 title: "Customize Kubernetes YAMLs to target specific clusters"
 date: 2022-08-04T19:13:38-06:00
-draft: true
+draft: false
 ---
 Move2Kube already supports targeting across multiple clusters includig: Kubernetes, Openshift, IBM-IKS, IBM-Openshift, Azure-EKS, Azure-AKS and GCP-GKS. There might be situations where you require generating Kubernetes YAMLs to target a particular cluster. In this tutorial we will see how we can use Konveyor Move2Kube to change the versions of existing Kubernetes resources to target a particular cluster. Move2Kube can also be customized to generate Kubernetes YAMLS deployable on a particular cluster.
 

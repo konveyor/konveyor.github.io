@@ -1,7 +1,7 @@
 ---
 title: "Using Move2Kube UI"
 date: 2022-08-04T19:10:11-06:00
-draft: true
+draft: false
 weight: 4
 ---
 Similar to the command line tool, the Move2Kube Web-UI can also perform the transformation with all the capabilities that are in the command line tool. This document explains the steps to bring up the UI and backend using Docker and use it for transformation.

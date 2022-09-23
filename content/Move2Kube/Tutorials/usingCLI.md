@@ -1,7 +1,7 @@
 ---
 title: "Using Move2Kube CLI"
 date: 2022-08-04T19:09:57-06:00
-draft: true
+draft: false
 weight: 3
 ---
 In this tutorial we will see how we can transform a set of sample applications to run on Kubernetes. We will use the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, and build scripts for each application. We will then build the container images and deploy them to a cluster.

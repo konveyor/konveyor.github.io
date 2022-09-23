@@ -1,7 +1,7 @@
 ---
 title: "Concepts"
 date: 2022-08-16T17:21:40-06:00
-draft: true
+draft: false
 weight: 2
 ---
 Move2Kube has four concepts that are useful to understand when customizing output and this section covers the more important ones.

@@ -1,6 +1,7 @@
 ---
 layout: default
 title: "1. Collect"
+draft: false
 permalink: /tutorials/migration-workflow/collect
 parent: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 grand_parent: Tutorials

@@ -1,7 +1,7 @@
 ---
 title: "Add custom files and directories in custom locations"
 date: 2022-08-04T19:22:55-06:00
-draft: true
+draft: false
 ---
 Move2Kube allows custom template files to be added to the directories of your choice. In this example, we illustrate this by adding a custom helm-chart.
 
