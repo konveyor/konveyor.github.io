@@ -5,6 +5,6 @@ draft: true
 ---
 
 
-Below we can see some of the source platforms that Move2Kube supports.
+These are some of the source platforms that Move2Kube supports.
 
-![](/Move2Kube/Tutorials/TutorialsOverview.png)
+

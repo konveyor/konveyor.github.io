@@ -7,22 +7,22 @@ draft: true
 Move2Kube generates Kubernetes YAMLs based on the needs of the application, but there might be situations where you might require specific fields to be different in the output. In this example, we illustrate how we can add an annotation to the Ingress YAML specifying an ingress class.
 
 1. Create an empty workspace directory mamed `workspace` and make it the current working directory. Assume all commands are executed within this directory.
-  ```console
-  $ mkdir workspace && cd workspace
-  ```
+```console
+$ mkdir workspace && cd workspace
+```
 
-1. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as the input for this flow.
-  ```console
-  $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos    
-  $ ls src
-  README.md		config-utils		customers	docs			frontend		gateway			orders
-  ```
+2. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as the input for this flow.
+```console
+$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
+$ ls src
+README.md		config-utils		customers	docs			frontend		gateway			orders
+```
 
-1. Run Move2Kube **without** any customization and the output ingress does not have any annotation. Once done, delete the `myproject` directory.
-  ```console
-  $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls/myproject-ingress.yaml && rm -rf myproject
-  ```
-  ```yaml
+3. Run Move2Kube **without** any customization and the output ingress does not have any annotation. Once done, delete the `myproject` directory.
+```console
+$ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls/myproject-ingress.yaml && rm -rf myproject
+```
+```yaml
   apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
@@ -30,23 +30,23 @@ Move2Kube generates Kubernetes YAMLs based on the needs of the application, but 
     labels:
       move2kube.konveyor.io/service: myproject
     name: myproject
-  ```
+```
 
-1. Get the Starlark based custom transformer [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation) and copy it into the `customizations` sub-directory.
-  ```console
-  $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-kubernetes-annotation -r move2kube-transformers -o customizations
-  ```
+4. Get the Starlark based custom transformer [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation) and copy it into the `customizations` sub-directory.
+```console
+$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-kubernetes-annotation -r move2kube-transformers -o customizations
+```
 
-1. Transform using this customization and specify the customization using the `-c` flag.
-  ```console
-  $ move2kube transform -s src/ -c customizations/ --qa-skip
-  ```
+5. Transform using this customization and specify the customization using the `-c` flag.
+```console
+$ move2kube transform -s src/ -c customizations/ --qa-skip
+```
 
 Once the output is generated, we can observe from the snippet of the ingress file (`myproject/deploy/yamls/myproject-ingress.yaml`) that there is an annotation for the ingress class added (`kubernetes.io/ingress.class: haproxy`):
-  ```console
-  $ cat myproject/deploy/yamls/myproject-ingress.yaml
-  ```
-  ```yaml
+```console
+$ cat myproject/deploy/yamls/myproject-ingress.yaml
+```
+```yaml
   apiVersion: networking.k8s.io/v1
   kind: Ingress
   metadata:
@@ -56,20 +56,20 @@ Once the output is generated, we can observe from the snippet of the ingress fil
     labels:
       move2kube.konveyor.io/service: myproject
     name: myproject
-  ```
+```
 
 ## Anatomy of ingress annotator transformer
 
 This custom transformer uses a configuration YAML (`ingress-annotator.yaml`) and a Starlark script (`ingress-annotator.star`) to add an annotation to the ingress YAML. The contents of custom transformer are as shown below:
-  ```console
-  $ ls customizations/add-custom-kubernetes-annotation
-  ingress-annotator.star  ingress-annotator.yaml
-  ```
+```console
+$ ls customizations/add-custom-kubernetes-annotation
+ingress-annotator.star  ingress-annotator.yaml
+```
 The configuration YAML specifies that the custom transformer consumes and produces a Kubernetes YAML artifact type as shown in the `consumes` and `produces` section.
-  ```console
-  $ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.yaml
-  ```
-  ```yaml
+```console
+$ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.yaml
+```
+```yaml
   apiVersion: move2kube.konveyor.io/v1alpha1
   kind: Transformer
   metadata:
@@ -88,13 +88,13 @@ The configuration YAML specifies that the custom transformer consumes and produc
         disabled: false
     config:
       starFile: "ingress-annotator.star"
-  ```
+```
 
 The code of the Starlark script is shown below. At a high-level, the code requires only the `transform()` function as it acts upon any Kubernetes YAML generated within Move2Kube. The `transform()` function loops through every YAML generated for every detected service, checks whether it is an ingress YAML, and if so adds the annotation. The path mappings are meant to persist these changes.
-  ```console
-  $ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.star
-  ```
-  ```python
+```console
+$ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.star
+```
+```python
   {% raw %}def transform(new_artifacts, old_artifacts):
       pathMappings = []
       artifacts = []
@@ -129,8 +129,8 @@ The code of the Starlark script is shown below. At a high-level, the code requir
                       'destinationPath': "{{ ." + pathTemplateName + " }}"})
 
       return {'pathMappings': pathMappings, 'artifacts': artifacts}{% endraw %}
-  ```
+```
 
 This tutorial can be replicated in the UI by uploading the zip file of the custom transformer as a `customization`. You can get the zip of the source and customization by adding a `-z` to the end of the commands used in steps 2 and 4.
 
-The next step is [parameterizing custom fields in Helm Chart, Kustomize, and OC Templates](/tutorials/customizing-the-output/custom-parameterization-of-helm-charts-kustomize-octemplates).
+The next step is parameterizing custom fields in Helm Chart, Kustomize, and OC Templates.

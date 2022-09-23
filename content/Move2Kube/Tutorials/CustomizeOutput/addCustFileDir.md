@@ -6,30 +6,30 @@ draft: true
 Move2Kube allows custom template files to be added to the directories of your choice. In this example, we illustrate this by adding a custom helm-chart.
 
 1. Start by creating an empty workspace directory say `workspace` and make it the current working directory. We will assume all commands are executed within this directory.
-    ```console
-    $ mkdir workspace && cd workspace
-    ```
+```console
+$ mkdir workspace && cd workspace
+```
 
-1. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as input for this flow.
-    ```console
-    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos  
-    $ ls src
-    README.md		config-utils		customers	docs			frontend		gateway			orders
-    ```
+2. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as input for this flow.
+```console
+$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos  
+$ ls src
+README.md		config-utils		customers	docs			frontend		gateway			orders
+```
 In this project, all the apps have a pom.xml file. We will use a custom transformer to place a helm chart created from a template into each of those project directories.
 
-1. Use the Starlark based custom transformer located [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations). We copy it into the `customizations` sub-directory.
-    ```console
-    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-files-directories-in-custom-locations -r move2kube-transformers -o customizations
-    ```
+3. Use the Starlark based custom transformer located [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations). We copy it into the `customizations` sub-directory.
+```console
+$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-files-directories-in-custom-locations -r move2kube-transformers -o customizations
+```
 
-1. Transform using this customization and specify the customization using the `-c` flag.
-    ```console
-    $ move2kube transform -s src/ -c customizations/ --qa-skip
-    ```
+4. Transform using this customization and specify the customization using the `-c` flag.
+```console
+$ move2kube transform -s src/ -c customizations/ --qa-skip
+```
 
 Once the output is generated, we can observe one helm-chart was generated for each service and placed within the service directory. Also, note that every helm-chart project is named after the service it is meant for. The contents are shown below for reference:
-    ```
+```
     {% raw %}
         $ tree myproject
             myproject/
@@ -161,9 +161,9 @@ Once the output is generated, we can observe one helm-chart was generated for ea
                             ├── application-test.properties
                             └── bootstrap.properties
     {% endraw %}
-    ```
+```
 
-## Anatomy of transformer in `add-custom-files-directories-in-custom-locations`
+## Anatomy of transformer in add-custom-files-directories-in-custom-locations
 
 This custom transformer is more advanced compared to previous cases. It uses a Starlark script (`customhelmchartgen.star`) and several templatization features to achieve the per-service helm-chart requirement. Notice the `{% raw %}{{\ .ServiceName\ }}{% endraw %}` template in the file names of custom helm-chart template in the `templates` sub-directory. The contents of the `add-custom-files-directories-in-custom-locations` custom transformer are shown below:
 ```

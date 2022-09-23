@@ -7,7 +7,7 @@ Move2Kube already supports targeting across multiple clusters includig: Kubernet
 
 ## Prerequisites
 
-1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli).
+1. Install the Move2Kube CLI tool.
 
 1. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
 
@@ -58,29 +58,29 @@ The `customizations/custom-cluster-selector/transformer.yaml` is the transformer
   apiVersion: move2kube.konveyor.io/v1alpha1
   kind: Transformer
   metadata:
-name: CustomClusterSelector
-labels:
-  move2kube.konveyor.io/built-in: true
-  move2kube.konveyor.io/kubernetesclusterselector: true
+    name: CustomClusterSelector
+    labels:
+      move2kube.konveyor.io/built-in: true
+      move2kube.konveyor.io/kubernetesclusterselector: true
   spec:
-class: "ClusterSelectorTransformer"
-directoryDetect:
-  levels: 0
-consumes:
-  IR:
-merge: true
-mode: OnDemandPassThrough
-  KubernetesOrgYamlsInSource:
-merge: false
-mode: OnDemandPassThrough
-produces:
-  IR:
-disabled: false
-  KubernetesOrgYamlsInSource:
-disabled: false
-override:
-matchLabels:
-  move2kube.konveyor.io/name: ClusterSelector
+    class: "ClusterSelectorTransformer"
+    directoryDetect:
+      levels: 0
+    consumes:
+      IR:
+        merge: true
+        mode: OnDemandPassThrough
+      KubernetesOrgYamlsInSource:
+        merge: false
+        mode: OnDemandPassThrough
+    produces:
+      IR:
+        disabled: false
+      KubernetesOrgYamlsInSource:
+        disabled: false
+    override:
+      matchLabels:
+        move2kube.konveyor.io/name: ClusterSelector
 ```
 
 To check what information did `move2kube collect -a k8s` collected for us, let's see the content inside the [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml).
@@ -94,227 +94,222 @@ apiVersion: move2kube.konveyor.io/v1alpha1
 kind: ClusterMetadata
 metadata:
   name: my-kubernetes-cluster
-.......
-apiVersion: move2kube.konveyor.io/v1alpha1
-kind: ClusterMetadata
-metadata:
-  name: my-kubernetes-cluster
 spec:
   storageClasses:
+    - default
+    - ibmc-file-bronze
+    - ibmc-file-bronze-gid
+    - ibmc-file-custom
+    - ibmc-file-gold
 ```
-{{%expand "Click to see the rest of the plan yaml."%}}
+{{%expand "Click to see the rest of the yaml."%}}
 ```yaml
-- default
-- ibmc-file-bronze
-- ibmc-file-bronze-gid
-- ibmc-file-custom
-- ibmc-file-gold
 - ibmc-file-gold-gid
-- ibmc-file-retain-bronze
-- ibmc-file-retain-custom
-- ibmc-file-retain-gold
-- ibmc-file-retain-silver
-- ibmc-file-silver
-- ibmc-file-silver-gid
-  apiKindVersionMap:
-APIService:
-  - apiregistration.k8s.io/v1
-BGPConfiguration:
-  - crd.projectcalico.org/v1
-BGPPeer:
-  - crd.projectcalico.org/v1
-Binding:
-  - v1
-BlockAffinity:
-  - crd.projectcalico.org/v1
-CSIDriver:
-  - storage.k8s.io/v1
-CSINode:
-  - storage.k8s.io/v1
-CSIStorageCapacity:
-  - storage.k8s.io/v1beta1
-CatalogSource:
-  - operators.coreos.com/v1alpha1
-CertificateSigningRequest:
-  - certificates.k8s.io/v1
-ClusterInformation:
-  - crd.projectcalico.org/v1
-ClusterRole:
-  - rbac.authorization.k8s.io/v1
-ClusterRoleBinding:
-  - rbac.authorization.k8s.io/v1
-ClusterServiceVersion:
-  - operators.coreos.com/v1alpha1
-ComponentStatus:
-  - v1
-ConfigMap:
-  - v1
-ControllerRevision:
-  - apps/v1
-CronJob:
-  - batch/v1
-  - batch/v1beta1
-CustomResourceDefinition:
-  - apiextensions.k8s.io/v1
-DaemonSet:
-  - apps/v1
-Deployment:
-  - apps/v1
-EndpointSlice:
-  - discovery.k8s.io/v1
-  - discovery.k8s.io/v1beta1
-Endpoints:
-  - v1
-Event:
-  - events.k8s.io/v1
-  - events.k8s.io/v1beta1
-  - v1
-Eviction:
-  - v1
-FelixConfiguration:
-  - crd.projectcalico.org/v1
-FlowSchema:
-  - flowcontrol.apiserver.k8s.io/v1beta1
-GlobalNetworkPolicy:
-  - crd.projectcalico.org/v1
-GlobalNetworkSet:
-  - crd.projectcalico.org/v1
-GuestBook:
-  - webapp.metamagical.dev/v1
-HorizontalPodAutoscaler:
-  - autoscaling/v1
-  - autoscaling/v2beta1
-  - autoscaling/v2beta2
-HostEndpoint:
-  - crd.projectcalico.org/v1
-IPAMBlock:
-  - crd.projectcalico.org/v1
-IPAMConfig:
-  - crd.projectcalico.org/v1
-IPAMHandle:
-  - crd.projectcalico.org/v1
-IPPool:
-  - crd.projectcalico.org/v1
-Ingress:
-  - networking.k8s.io/v1
-IngressClass:
-  - networking.k8s.io/v1
-InstallPlan:
-  - operators.coreos.com/v1alpha1
-Job:
-  - batch/v1
-KubeControllersConfiguration:
-  - crd.projectcalico.org/v1
-Lease:
-  - coordination.k8s.io/v1
-LimitRange:
-  - v1
-LocalSubjectAccessReview:
-  - authorization.k8s.io/v1
-MutatingWebhookConfiguration:
-  - admissionregistration.k8s.io/v1
-Namespace:
-  - v1
-NetworkPolicy:
-  - networking.k8s.io/v1
-  - crd.projectcalico.org/v1
-NetworkSet:
-  - crd.projectcalico.org/v1
-Node:
-  - v1
-NodeMetrics:
-  - metrics.k8s.io/v1beta1
-NodeProxyOptions:
-  - v1
-Operator:
-  - operators.coreos.com/v1
-OperatorGroup:
-  - operators.coreos.com/v1
-  - operators.coreos.com/v1alpha2
-PersistentVolume:
-  - v1
-PersistentVolumeClaim:
-  - v1
-Pod:
-  - v1
-PodAttachOptions:
-  - v1
-PodDisruptionBudget:
-  - policy/v1
-  - policy/v1beta1
-PodExecOptions:
-  - v1
-PodMetrics:
-  - metrics.k8s.io/v1beta1
-PodPortForwardOptions:
-  - v1
-PodProxyOptions:
-  - v1
-PodSecurityPolicy:
-  - policy/v1beta1
-PodTemplate:
-  - v1
-PriorityClass:
-  - scheduling.k8s.io/v1
-PriorityLevelConfiguration:
-  - flowcontrol.apiserver.k8s.io/v1beta1
-RBACSync:
-  - ibm.com/v1alpha1
-Redis:
-  - webapp.metamagical.dev/v1
-ReplicaSet:
-  - apps/v1
-ReplicationController:
-  - v1
-ResourceQuota:
-  - v1
-Role:
-  - rbac.authorization.k8s.io/v1
-RoleBinding:
-  - rbac.authorization.k8s.io/v1
-RuntimeClass:
-  - node.k8s.io/v1
-  - node.k8s.io/v1beta1
-Scale:
-  - apps/v1
-  - v1
-Secret:
-  - v1
-SelfSubjectAccessReview:
-  - authorization.k8s.io/v1
-SelfSubjectRulesReview:
-  - authorization.k8s.io/v1
-Service:
-  - v1
-ServiceAccount:
-  - v1
-ServiceProxyOptions:
-  - v1
-StatefulSet:
-  - apps/v1
-StorageClass:
-  - storage.k8s.io/v1
-SubjectAccessReview:
-  - authorization.k8s.io/v1
-Subscription:
-  - operators.coreos.com/v1alpha1
-TokenRequest:
-  - v1
-TokenReview:
-  - authentication.k8s.io/v1
-ValidatingWebhookConfiguration:
-  - admissionregistration.k8s.io/v1
-VolumeAttachment:
-  - storage.k8s.io/v1
-VolumeSnapshot:
-  - snapshot.storage.k8s.io/v1
-  - snapshot.storage.k8s.io/v1beta1
-VolumeSnapshotClass:
-  - snapshot.storage.k8s.io/v1
-  - snapshot.storage.k8s.io/v1beta1
-VolumeSnapshotContent:
-  - snapshot.storage.k8s.io/v1
-  - snapshot.storage.k8s.io/v1beta1
+     - ibmc-file-retain-bronze
+     - ibmc-file-retain-custom
+     - ibmc-file-retain-gold
+     - ibmc-file-retain-silver
+     - ibmc-file-silver
+     - ibmc-file-silver-gid
+   apiKindVersionMap:
+     APIService:
+       - apiregistration.k8s.io/v1
+     BGPConfiguration:
+       - crd.projectcalico.org/v1
+     BGPPeer:
+       - crd.projectcalico.org/v1
+     Binding:
+       - v1
+     BlockAffinity:
+       - crd.projectcalico.org/v1
+     CSIDriver:
+       - storage.k8s.io/v1
+     CSINode:
+       - storage.k8s.io/v1
+     CSIStorageCapacity:
+       - storage.k8s.io/v1beta1
+     CatalogSource:
+       - operators.coreos.com/v1alpha1
+     CertificateSigningRequest:
+       - certificates.k8s.io/v1
+     ClusterInformation:
+       - crd.projectcalico.org/v1
+     ClusterRole:
+       - rbac.authorization.k8s.io/v1
+     ClusterRoleBinding:
+       - rbac.authorization.k8s.io/v1
+     ClusterServiceVersion:
+       - operators.coreos.com/v1alpha1
+     ComponentStatus:
+       - v1
+     ConfigMap:
+       - v1
+     ControllerRevision:
+       - apps/v1
+     CronJob:
+       - batch/v1
+       - batch/v1beta1
+     CustomResourceDefinition:
+       - apiextensions.k8s.io/v1
+     DaemonSet:
+       - apps/v1
+     Deployment:
+       - apps/v1
+     EndpointSlice:
+       - discovery.k8s.io/v1
+       - discovery.k8s.io/v1beta1
+     Endpoints:
+       - v1
+     Event:
+       - events.k8s.io/v1
+       - events.k8s.io/v1beta1
+       - v1
+     Eviction:
+       - v1
+     FelixConfiguration:
+       - crd.projectcalico.org/v1
+     FlowSchema:
+       - flowcontrol.apiserver.k8s.io/v1beta1
+     GlobalNetworkPolicy:
+       - crd.projectcalico.org/v1
+     GlobalNetworkSet:
+       - crd.projectcalico.org/v1
+     GuestBook:
+       - webapp.metamagical.dev/v1
+     HorizontalPodAutoscaler:
+       - autoscaling/v1
+       - autoscaling/v2beta1
+       - autoscaling/v2beta2
+     HostEndpoint:
+       - crd.projectcalico.org/v1
+     IPAMBlock:
+       - crd.projectcalico.org/v1
+     IPAMConfig:
+       - crd.projectcalico.org/v1
+     IPAMHandle:
+       - crd.projectcalico.org/v1
+     IPPool:
+       - crd.projectcalico.org/v1
+     Ingress:
+       - networking.k8s.io/v1
+     IngressClass:
+       - networking.k8s.io/v1
+     InstallPlan:
+       - operators.coreos.com/v1alpha1
+     Job:
+       - batch/v1
+     KubeControllersConfiguration:
+       - crd.projectcalico.org/v1
+     Lease:
+       - coordination.k8s.io/v1
+     LimitRange:
+       - v1
+     LocalSubjectAccessReview:
+       - authorization.k8s.io/v1
+     MutatingWebhookConfiguration:
+       - admissionregistration.k8s.io/v1
+     Namespace:
+       - v1
+     NetworkPolicy:
+       - networking.k8s.io/v1
+       - crd.projectcalico.org/v1
+     NetworkSet:
+       - crd.projectcalico.org/v1
+     Node:
+       - v1
+     NodeMetrics:
+       - metrics.k8s.io/v1beta1
+     NodeProxyOptions:
+       - v1
+     Operator:
+       - operators.coreos.com/v1
+     OperatorGroup:
+       - operators.coreos.com/v1
+       - operators.coreos.com/v1alpha2
+     PersistentVolume:
+       - v1
+     PersistentVolumeClaim:
+       - v1
+     Pod:
+       - v1
+     PodAttachOptions:
+       - v1
+     PodDisruptionBudget:
+       - policy/v1
+       - policy/v1beta1
+     PodExecOptions:
+       - v1
+     PodMetrics:
+       - metrics.k8s.io/v1beta1
+     PodPortForwardOptions:
+       - v1
+     PodProxyOptions:
+       - v1
+     PodSecurityPolicy:
+       - policy/v1beta1
+     PodTemplate:
+       - v1
+     PriorityClass:
+       - scheduling.k8s.io/v1
+     PriorityLevelConfiguration:
+       - flowcontrol.apiserver.k8s.io/v1beta1
+     RBACSync:
+       - ibm.com/v1alpha1
+     Redis:
+       - webapp.metamagical.dev/v1
+     ReplicaSet:
+       - apps/v1
+     ReplicationController:
+       - v1
+     ResourceQuota:
+       - v1
+     Role:
+       - rbac.authorization.k8s.io/v1
+     RoleBinding:
+       - rbac.authorization.k8s.io/v1
+     RuntimeClass:
+       - node.k8s.io/v1
+       - node.k8s.io/v1beta1
+     Scale:
+       - apps/v1
+       - v1
+     Secret:
+       - v1
+     SelfSubjectAccessReview:
+       - authorization.k8s.io/v1
+     SelfSubjectRulesReview:
+       - authorization.k8s.io/v1
+     Service:
+       - v1
+     ServiceAccount:
+       - v1
+     ServiceProxyOptions:
+       - v1
+     StatefulSet:
+       - apps/v1
+     StorageClass:
+       - storage.k8s.io/v1
+     SubjectAccessReview:
+       - authorization.k8s.io/v1
+     Subscription:
+       - operators.coreos.com/v1alpha1
+     TokenRequest:
+       - v1
+     TokenReview:
+       - authentication.k8s.io/v1
+     ValidatingWebhookConfiguration:
+       - admissionregistration.k8s.io/v1
+     VolumeAttachment:
+       - storage.k8s.io/v1
+     VolumeSnapshot:
+       - snapshot.storage.k8s.io/v1
+       - snapshot.storage.k8s.io/v1beta1
+     VolumeSnapshotClass:
+       - snapshot.storage.k8s.io/v1
+       - snapshot.storage.k8s.io/v1beta1
+     VolumeSnapshotContent:
+       - snapshot.storage.k8s.io/v1
+       - snapshot.storage.k8s.io/v1beta1
 ```
 {{% /expand%}}
 
@@ -366,70 +361,69 @@ metadata:
 spec:
   sourceDir: kubernetes-to-kubernetes
   customizationsDir: custom-cluster-selector
-......
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Plan
 metadata:
+   name: myproject
 ```
-{{%expand "Click to see the rest of the plan yaml."%}}
+{{%expand "Click to see the rest of the yaml."%}}
 
 ```yaml
-  name: myproject
-spec:
-  sourceDir: kubernetes-to-kubernetes
-  customizationsDir: custom-cluster-selector
-  services:
-move2kube-transformers:
-  - transformerName: Parameterizer
-paths:
-  KubernetesYamls:
-- .
-  ServiceDirPath:
-- .
-  - transformerName: KubernetesVersionChanger
-type: KubernetesOrgYamlsInSource
-paths:
-  KubernetesYamls:
-- .
-  ServiceDirPath:
-- .
-  transformers:
-Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml
-CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/transformer.yaml
-ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/transformer.yaml
-ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/transformer.yaml
-ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimagespushscript/transformer.yaml
-CustomClusterSelector: m2kassets/custom/transformer.yaml
-DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/transformer.yaml
-DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/transformer.yaml
-DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/transformer.yaml
-DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/transformer.yaml
-EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/transformer.yaml
-EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/transformer.yaml
-Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/transformer.yaml
-Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/transformer.yaml
-Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/transformer.yaml
-Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/transformer.yaml
-Knative: m2kassets/built-in/transformers/kubernetes/knative/transformer.yaml
-Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/transformer.yaml
-KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/transformer.yaml
-Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/transformer.yaml
-Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/transformer.yaml
-Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml
-PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/transformer.yaml
-Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/transformer.yaml
-Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/transformer.yaml
-ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/transformer.yaml
-Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/transformer.yaml
-Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/transformer.yaml
-Tekton: m2kassets/built-in/transformers/kubernetes/tekton/transformer.yaml
-Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/transformer.yaml
-WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/transformer.yaml
-WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/transformer.yaml
-WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/transformer.yaml
-WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml
-WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
-ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
+ spec:
+   sourceDir: kubernetes-to-kubernetes
+   customizationsDir: custom-cluster-selector
+   services:
+     move2kube-transformers:
+       - transformerName: Parameterizer
+         paths:
+           KubernetesYamls:
+             - .
+           ServiceDirPath:
+             - .
+       - transformerName: KubernetesVersionChanger
+         type: KubernetesOrgYamlsInSource
+         paths:
+           KubernetesYamls:
+             - .
+           ServiceDirPath:
+             - .
+   transformers:
+     Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml
+     CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/transformer.yaml
+     ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/transformer.yaml
+     ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/transformer.yaml
+     ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimagespushscript/transformer.yaml
+     CustomClusterSelector: m2kassets/custom/transformer.yaml
+     DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/transformer.yaml
+     DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/transformer.yaml
+     DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/transformer.yaml
+     DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/transformer.yaml
+     EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/transformer.yaml
+     EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/transformer.yaml
+     Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/transformer.yaml
+     Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/transformer.yaml
+     Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/transformer.yaml
+     Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/transformer.yaml
+     Knative: m2kassets/built-in/transformers/kubernetes/knative/transformer.yaml
+     Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/transformer.yaml
+     KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/transformer.yaml
+     Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/transformer.yaml
+     Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/transformer.yaml
+     Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml
+     PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/transformer.yaml
+     Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/transformer.yaml
+     Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/transformer.yaml
+     ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/transformer.yaml
+     Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/transformer.yaml
+     Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/transformer.yaml
+     Tekton: m2kassets/built-in/transformers/kubernetes/tekton/transformer.yaml
+     Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/transformer.yaml
+     WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/transformer.yaml
+     WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/transformer.yaml
+     WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/transformer.yaml
+     WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml
+     WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
+     ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
 ```
 {{% /expand%}}
 
@@ -546,67 +540,67 @@ INFO[0393] Transformed target artifacts can be found at [/Users/user/myproject].
 
 The full structure of the output directory can be seen by executing the `tree` command.
 
-  ```console
+```console
   $ tree myproject/
-  myproject
+   myproject
   └── source
-  ├── kubernetes-to-kubernetes-versionchanged
-  │   ├── api-deployment.yaml
-  │   ├── api-service.yaml
-  │   ├── redis-deployment.yaml
-  │   ├── redis-service.yaml
-  │   ├── web-deployment.yaml
-  │   ├── web-ingress.yaml
-  │   └── web-service.yaml
-  └── kubernetes-to-kubernetes-versionchanged-parameterized
-  ├── helm-chart
-  │   └── move2kube-transformers
-  │   ├── Chart.yaml
-  │   ├── templates
-  │   │   ├── api-deployment.yaml
-  │   │   ├── api-service.yaml
-  │   │   ├── redis-deployment.yaml
-  │   │   ├── redis-service.yaml
-  │   │   ├── web-deployment.yaml
-  │   │   ├── web-ingress.yaml
-  │   │   └── web-service.yaml
-  │   ├── values-dev.yaml
-  │   ├── values-prod.yaml
-  │   └── values-staging.yaml
-  ├── kustomize
-  │   ├── base
-  │   │   ├── api-deployment.yaml
-  │   │   ├── api-service.yaml
-  │   │   ├── kustomization.yaml
-  │   │   ├── redis-deployment.yaml
-  │   │   ├── redis-service.yaml
-  │   │   ├── web-deployment.yaml
-  │   │   ├── web-ingress.yaml
-  │   │   └── web-service.yaml
-  │   └── overlays
-  │   ├── dev
-  │   │   ├── apps-v1-deployment-api.yaml
-  │   │   ├── apps-v1-deployment-redis.yaml
-  │   │   ├── apps-v1-deployment-web.yaml
-  │   │   └── kustomization.yaml
-  │   ├── prod
-  │   │   ├── apps-v1-deployment-api.yaml
-  │   │   ├── apps-v1-deployment-redis.yaml
-  │   │   ├── apps-v1-deployment-web.yaml
-  │   │   └── kustomization.yaml
-  │   └── staging
-  │   ├── apps-v1-deployment-api.yaml
-  │   ├── apps-v1-deployment-redis.yaml
-  │   ├── apps-v1-deployment-web.yaml
-  │   └── kustomization.yaml
-  └── openshift-template
-  ├── parameters-dev.yaml
-  ├── parameters-prod.yaml
-  ├── parameters-staging.yaml
-  └── template.yaml
+      ├── kubernetes-to-kubernetes-versionchanged
+      │   ├── api-deployment.yaml
+      │   ├── api-service.yaml
+      │   ├── redis-deployment.yaml
+      │   ├── redis-service.yaml
+      │   ├── web-deployment.yaml
+      │   ├── web-ingress.yaml
+      │   └── web-service.yaml
+      └── kubernetes-to-kubernetes-versionchanged-parameterized
+          ├── helm-chart
+          │   └── move2kube-transformers
+          │       ├── Chart.yaml
+          │       ├── templates
+          │       │   ├── api-deployment.yaml
+          │       │   ├── api-service.yaml
+          │       │   ├── redis-deployment.yaml
+          │       │   ├── redis-service.yaml
+          │       │   ├── web-deployment.yaml
+          │       │   ├── web-ingress.yaml
+          │       │   └── web-service.yaml
+          │       ├── values-dev.yaml
+          │       ├── values-prod.yaml
+          │       └── values-staging.yaml
+          ├── kustomize
+          │   ├── base
+          │   │   ├── api-deployment.yaml
+          │   │   ├── api-service.yaml
+          │   │   ├── kustomization.yaml
+          │   │   ├── redis-deployment.yaml
+          │   │   ├── redis-service.yaml
+          │   │   ├── web-deployment.yaml
+          │   │   ├── web-ingress.yaml
+          │   │   └── web-service.yaml
+          │   └── overlays
+          │       ├── dev
+          │       │   ├── apps-v1-deployment-api.yaml
+          │       │   ├── apps-v1-deployment-redis.yaml
+          │       │   ├── apps-v1-deployment-web.yaml
+          │       │   └── kustomization.yaml
+          │       ├── prod
+          │       │   ├── apps-v1-deployment-api.yaml
+          │       │   ├── apps-v1-deployment-redis.yaml
+          │       │   ├── apps-v1-deployment-web.yaml
+          │       │   └── kustomization.yaml
+          │       └── staging
+          │           ├── apps-v1-deployment-api.yaml
+          │           ├── apps-v1-deployment-redis.yaml
+          │           ├── apps-v1-deployment-web.yaml
+          │           └── kustomization.yaml
+          └── openshift-template
+              ├── parameters-dev.yaml
+              ├── parameters-prod.yaml
+              ├── parameters-staging.yaml
+              └── template.yaml
 
   13 directories, 42 files
-  ```
+```
 
 The `myproject/source/kubernetes-to-kubernetes-versionchanged` directory has the new  Kubernetes YAMLs (deployment/service/ingress/etc.) which are tailored to meet the target cluster requirements.
 
@@ -616,7 +610,7 @@ Some other things we can observe:
 - The Kustomize YAMLs in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/kustomize` directory.
 - The Openshift Template in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/openshift-template` directory.
 
-For more details on how to customize the parameterization look at the [documentation](/transformers/purpose-built/parameterizer).
+For more details on how to customize the parameterization look at the documentation.
 
 ## Conclusion
 

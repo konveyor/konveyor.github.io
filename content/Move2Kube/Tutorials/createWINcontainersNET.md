@@ -14,11 +14,11 @@ In this tutorial, we will learn how containerize .NET applications developed for
 
 1. Download the `samples/wcfservice` sample from [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository.
 
-    ```console
-    $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/wcfservice -r move2kube-demos
-    ```
+```console
+$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/wcfservice -r move2kube-demos
+```
 
-   ```console
+```console
    $ tree -L 2 wcfservice/
     wcfservice/
     ├── wcfservice
@@ -31,7 +31,7 @@ In this tutorial, we will learn how containerize .NET applications developed for
     └── wcfservice.sln
 
     2 directories, 6 files
-   ```
+```
 
 ## Generating target artifacts
 
@@ -39,30 +39,31 @@ We will be using a two stage process for the transformation: *plan* and *transfo
 
 1. First create a *plan* of how to transform the applications to run on Kubernetes. In the *plan* phase, Move2Kube is going to go through the source artifacts and come up with a *plan*.
 
-    ```console
-    $ move2kube plan -s wcfservice
-    INFO[0000] Configuration loading done                   
-    INFO[0000] Planning Transformation - Base Directory     
-    INFO[0000] [CloudFoundry] Planning transformation       
-    INFO[0000] [CloudFoundry] Done                          
-    INFO[0000] [DockerfileDetector] Planning transformation
-    INFO[0000] [DockerfileDetector] Done                    
-    INFO[0000] [ComposeAnalyser] Planning transformation    
-    INFO[0000] [ComposeAnalyser] Done                       
-    INFO[0000] [Base Directory] Identified 0 named services and 0 to-be-named services
-    INFO[0000] Transformation planning - Base Directory done
-    INFO[0000] Planning Transformation - Directory Walk     
-    INFO[0000] Identified 1 named services and 0 to-be-named services in .
-    WARN[0000] Unable to find compatible ASP.NET Core target framework  hence skipping.
-    INFO[0000] Transformation planning - Directory Walk done
-    INFO[0000] [Directory Walk] Identified 1 named services and 0 to-be-named services
-    INFO[0000] [Named Services] Identified 1 named services
-    INFO[0000] No of services identified : 1                
-    INFO[0000] Plan can be found at [/Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/m2k.plan].
-    ```
+```console
+$ move2kube plan -s wcfservice
+INFO[0000] Configuration loading done   
+INFO[0000] Planning Transformation - Base Directory 
+INFO[0000] [CloudFoundry] Planning transformation   
+INFO[0000] [CloudFoundry] Done  
+INFO[0000] [DockerfileDetector] Planning transformation
+INFO[0000] [DockerfileDetector] Done
+INFO[0000] [ComposeAnalyser] Planning transformation
+INFO[0000] [ComposeAnalyser] Done   
+INFO[0000] [Base Directory] Identified 0 named services and 0 to-be-named services
+INFO[0000] Transformation planning - Base Directory done
+INFO[0000] Planning Transformation - Directory Walk 
+INFO[0000] Identified 1 named services and 0 to-be-named services in .
+WARN[0000] Unable to find compatible ASP.NET Core target framework  hence skipping.
+INFO[0000] Transformation planning - Directory Walk done
+INFO[0000] [Directory Walk] Identified 1 named services and 0 to-be-named services
+INFO[0000] [Named Services] Identified 1 named services
+INFO[0000] No of services identified : 1
+INFO[0000] Plan can be found at [/Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/m2k.plan].
+```
 
-    * Move2Kube has created a *m2k.plan* which is essentially a YAML file. See what is inside the *plan* file.
-    ```yaml
+* Move2Kube has created a *m2k.plan* which is essentially a YAML file. See what is inside the *plan* file.
+
+```yaml
         apiVersion: move2kube.konveyor.io/v1alpha1
         kind: Plan
         metadata:
@@ -74,6 +75,9 @@ We will be using a two stage process for the transformation: *plan* and *transfo
             - transformerName: WinConsoleApp-Dockerfile
                 paths:
                 AppConfigFilePathList:
+```
+{{%expand "Click to see the rest of the yaml."%}}
+```
                     - wcfservice/App.config
                 ServiceDirPath:
                     - .
@@ -114,223 +118,224 @@ We will be using a two stage process for the transformation: *plan* and *transfo
             WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml
             WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
             ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
-    ```
+```
+{{% /expand%}}
 
-    * In the *plan*, notice that Move2Kube has detected the WCF services (`wcfservice`) and the relative path of the detected `/App.config`.
-    * The *plan* file indicates that the applications can be transformed using Move2Kube's built-in `WinConsoleApp-Dockerfile` transformer.
+* In the *plan*, notice that Move2Kube has detected the WCF services (`wcfservice`) and the relative path of the detected `/App.config`.
+* The *plan* file indicates that the applications can be transformed using Move2Kube's built-in `WinConsoleApp-Dockerfile` transformer.
 
 2. Invoke `move2kube transform` on this *plan*.
 
-    ```console
-    $ move2kube transform
-    INFO[0000] Detected a plan file at path /Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/m2k.plan. Will transform using this plan.
-    ? Select all transformer types that you are interested in:
-    ID: move2kube.transformers.types
-    Hints:
-    [Services that don't support any of the transformer types you are interested in will be ignored.]
-    [Use arrows to move, space to select, <right> to all, <left> to none, type to filter]
-    [✓]  PHP-Dockerfile
-    [✓]  Gradle
-    [✓]  Kubernetes
-    [✓]  Knative
-    [✓]  Nodejs-Dockerfile
-    [✓]  Tekton
-    [✓]  ZuulAnalyser
-    [✓]  ComposeAnalyser
-    [✓]  Jar
-    [✓]  Liberty
-    [✓]  Python-Dockerfile
-    [✓]  ContainerImagesPushScriptGenerator
-    [✓]  Jboss
-    [✓]  Parameterizer
-    [✓]  WinSLWebApp-Dockerfile
-    [✓]  Buildconfig
-    [✓]  CloudFoundry
-    [✓]  Ruby-Dockerfile
-    [✓]  WinWebApp-Dockerfile
-    [✓]  DockerfileDetector
-    [✓]  Golang-Dockerfile
-    [✓]  WinConsoleApp-Dockerfile
-    [✓]  EarAnalyser
-    [✓]  KubernetesVersionChanger
-    [✓]  Maven
-    [✓]  ClusterSelector
-    [✓]  EarRouter
-    [✓]  DockerfileParser
-    [✓]  DotNetCore-Dockerfile
-    [✓]  ReadMeGenerator
-    [✓]  Rust-Dockerfile
-    [✓]  Tomcat
-    [✓]  WarAnalyser
-    [✓]  ComposeGenerator
-    [✓]  DockerfileImageBuildScript
-    [✓]  WarRouter
-    ```
+```console
+$ move2kube transform
+INFO[0000] Detected a plan file at path /Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/m2k.plan. Will transform using this plan.
+? Select all transformer types that you are interested in:
+ID: move2kube.transformers.types
+Hints:
+[Services that don't support any of the transformer types you are interested in will be ignored.]
+[Use arrows to move, space to select, <right> to all, <left> to none, type to filter]
+[✓]  PHP-Dockerfile
+[✓]  Gradle
+[✓]  Kubernetes
+[✓]  Knative
+[✓]  Nodejs-Dockerfile
+[✓]  Tekton
+[✓]  ZuulAnalyser
+[✓]  ComposeAnalyser
+[✓]  Jar
+[✓]  Liberty
+[✓]  Python-Dockerfile
+[✓]  ContainerImagesPushScriptGenerator
+[✓]  Jboss
+[✓]  Parameterizer
+[✓]  WinSLWebApp-Dockerfile
+[✓]  Buildconfig
+[✓]  CloudFoundry
+[✓]  Ruby-Dockerfile
+[✓]  WinWebApp-Dockerfile
+[✓]  DockerfileDetector
+[✓]  Golang-Dockerfile
+[✓]  WinConsoleApp-Dockerfile
+[✓]  EarAnalyser
+[✓]  KubernetesVersionChanger
+[✓]  Maven
+[✓]  ClusterSelector
+[✓]  EarRouter
+[✓]  DockerfileParser
+[✓]  DotNetCore-Dockerfile
+[✓]  ReadMeGenerator
+[✓]  Rust-Dockerfile
+[✓]  Tomcat
+[✓]  WarAnalyser
+[✓]  ComposeGenerator
+[✓]  DockerfileImageBuildScript
+[✓]  WarRouter
+```
 
-1. Accept the default by pressing `return` or `enter` key.
+3. Accept the default by pressing `return` or `enter` key.
 
-    ```console
-    Hints:
-    [Services that don't support any of the transformer types you are interested in will be ignored.]
-    PHP-Dockerfile, Gradle, Kubernetes, Knative, Nodejs-Dockerfile, Tekton, ZuulAnalyser, ComposeAnalyser, Jar, Liberty, Python-Dockerfile, ContainerImagesPushScriptGenerator, Jboss, Parameterizer, WinSLWebApp-Dockerfile, Buildconfig, CloudFoundry, Ruby-Dockerfile, WinWebApp-Dockerfile, DockerfileDetector, Golang-Dockerfile, WinConsoleApp-Dockerfile, EarAnalyser, KubernetesVersionChanger, Maven, ClusterSelector, EarRouter, DockerfileParser, DotNetCore-Dockerfile, ReadMeGenerator, Rust-Dockerfile, Tomcat, WarAnalyser, ComposeGenerator, DockerfileImageBuildScript, WarRouter
-    ? Select all services that are needed:
-    ID: move2kube.services.[].enable
-    Hints:
-    [The services unselected here will be ignored.]
-      [Use arrows to move, space to select, <right> to all, <left> to none, type to filter]
-      [✓]  wcfservice
-    ```
+```console
+Hints:
+[Services that don't support any of the transformer types you are interested in will be ignored.]
+PHP-Dockerfile, Gradle, Kubernetes, Knative, Nodejs-Dockerfile, Tekton, ZuulAnalyser, ComposeAnalyser, Jar, Liberty, Python-Dockerfile, ContainerImagesPushScriptGenerator, Jboss, Parameterizer, WinSLWebApp-Dockerfile, Buildconfig, CloudFoundry, Ruby-Dockerfile, WinWebApp-Dockerfile, DockerfileDetector, Golang-Dockerfile, WinConsoleApp-Dockerfile, EarAnalyser, KubernetesVersionChanger, Maven, ClusterSelector, EarRouter, DockerfileParser, DotNetCore-Dockerfile, ReadMeGenerator, Rust-Dockerfile, Tomcat, WarAnalyser, ComposeGenerator, DockerfileImageBuildScript, WarRouter
+? Select all services that are needed:
+ID: move2kube.services.[].enable
+Hints:
+[The services unselected here will be ignored.]
+  [Use arrows to move, space to select, <right> to all, <left> to none, type to filter]
+  [✓]  wcfservice
+```
 
-1. Select all the services.
+4. Select all the services.
 
-    ```console
-    ? Select all services that are needed:
-    ID: move2kube.services.[].enable
-    Hints:
-    [The services unselected here will be ignored.]
-    wcfservice
-    INFO[0233] Starting Plan Transformation                 
-    INFO[0233] Iteration 1                                  
-    INFO[0233] Iteration 2 - 1 artifacts to process         
-    INFO[0233] Transformer WinConsoleApp-Dockerfile processing 1 artifacts
-    INFO[0233] Transformer WinConsoleApp-Dockerfile Done    
-    INFO[0233] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 2. Total Artifacts : 1.
-    INFO[0233] Iteration 3 - 2 artifacts to process         
-    INFO[0233] Transformer DockerfileParser processing 1 artifacts
-    WARN[0233] Unable to find ports in Dockerfile : /var/folders/45/5wf_qgcs06gd_xpg6rzvbx0r0000gn/T/move2kube2980808479/environment-DockerfileParser-1624209065/2318519572/source/Dockerfile. Using default port
-    INFO[0233] Transformer ZuulAnalyser processing 2 artifacts
-    INFO[0233] Transformer ZuulAnalyser Done                
-    INFO[0233] Transformer DockerfileParser Done            
-    INFO[0233] Transformer DockerfileImageBuildScript processing 2 artifacts
-    ? Select the container runtime to use :
-    ID: move2kube.containerruntime
-    Hints:
-    [The container runtime selected will be used in the scripts]
-      [Use arrows to move, type to filter]
-    > docker
-      podman
-    ```
+```console
+? Select all services that are needed:
+ID: move2kube.services.[].enable
+Hints:
+[The services unselected here will be ignored.]
+wcfservice
+INFO[0233] Starting Plan Transformation 
+INFO[0233] Iteration 1  
+INFO[0233] Iteration 2 - 1 artifacts to process 
+INFO[0233] Transformer WinConsoleApp-Dockerfile processing 1 artifacts
+INFO[0233] Transformer WinConsoleApp-Dockerfile Done
+INFO[0233] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 2. Total Artifacts : 1.
+INFO[0233] Iteration 3 - 2 artifacts to process 
+INFO[0233] Transformer DockerfileParser processing 1 artifacts
+WARN[0233] Unable to find ports in Dockerfile : /var/folders/45/5wf_qgcs06gd_xpg6rzvbx0r0000gn/T/move2kube2980808479/environment-DockerfileParser-1624209065/2318519572/source/Dockerfile. Using default port
+INFO[0233] Transformer ZuulAnalyser processing 2 artifacts
+INFO[0233] Transformer ZuulAnalyser Done
+INFO[0233] Transformer DockerfileParser Done
+INFO[0233] Transformer DockerfileImageBuildScript processing 2 artifacts
+? Select the container runtime to use :
+ID: move2kube.containerruntime
+Hints:
+[The container runtime selected will be used in the scripts]
+  [Use arrows to move, type to filter]
+> docker
+  podman
+```
 
-1. Select runtime of choice. In this case, we select `docker`.
+5. Select runtime of choice. In this case, we select `docker`.
 
 > **Note:** At this point, the default port `8080` is detected and the user is prompted whether to expose this port.
 
-    ```console
-    INFO[0346] Transformer DockerfileImageBuildScript Done  
-    INFO[0346] Created 1 pathMappings and 4 artifacts. Total Path Mappings : 3. Total Artifacts : 3.
-    INFO[0346] Iteration 4 - 4 artifacts to process         
-    INFO[0346] Transformer ComposeGenerator processing 2 artifacts
-    ? What URL/path should we expose the service wcfservice's 8080 port on?
-    ID: move2kube.services."wcfservice"."8080".urlpath
-    Hints:
-    [Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
-    (/wcfservice) wcfservice
-    ```
+```console
+INFO[0346] Transformer DockerfileImageBuildScript Done  
+INFO[0346] Created 1 pathMappings and 4 artifacts. Total Path Mappings : 3. Total Artifacts : 3.
+INFO[0346] Iteration 4 - 4 artifacts to process 
+INFO[0346] Transformer ComposeGenerator processing 2 artifacts
+? What URL/path should we expose the service wcfservice's 8080 port on?
+ID: move2kube.services."wcfservice"."8080".urlpath
+Hints:
+[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+(/wcfservice) wcfservice
+```
 
-1. Leave out the leading `/` to use the first part `wcfservice` as subdomain (as specified in the *Hints*).
+6. Leave out the leading `/` to use the first part `wcfservice` as subdomain (as specified in the *Hints*).
 
-    ```console
-    wcfservice
-    ? Provide the minimum number of replicas each service should have
-    ID: move2kube.minreplicas
-    Hints:
-    [If the value is 0 pods won't be started by default]
-    (2)
-    ```
+```console
+wcfservice
+? Provide the minimum number of replicas each service should have
+ID: move2kube.minreplicas
+Hints:
+[If the value is 0 pods won't be started by default]
+(2)
+```
 
-1. Accept the default answer for two replicas for the given service.
+7. Accept the default answer for two replicas for the given service.
 
-    ```console
-    2
-    ? Enter the URL of the image registry :
-    Hints:
-    [You can always change it later by changing the yamls.]
-      [Use arrows to move, type to filter]
-      Other (specify custom option)
-      index.docker.io
-    > quay.io
-      us.icr.io
-    ```
+```console
+2
+? Enter the URL of the image registry :
+Hints:
+[You can always change it later by changing the yamls.]
+  [Use arrows to move, type to filter]
+  Other (specify custom option)
+  index.docker.io
+> quay.io
+  us.icr.io
+```
 
-1. Enter `quay.io` for the image registry host. Select 'Other' if your registry name is not here.
+8. Enter `quay.io` for the image registry host. Select 'Other' if your registry name is not here.
 
-    ```console
-    quay.io
-    ? Enter the namespace where the new images should be pushed :  
-    Hints:
-     [Ex : myproject]
-     (myproject) m2k-tutorial
-    ```
+```console
+quay.io
+? Enter the namespace where the new images should be pushed :  
+Hints:
+ [Ex : myproject]
+ (myproject) m2k-tutorial
+```
 
-    ```console
-     No authentication
-    INFO[0793] Transformer ComposeGenerator Done            
-    INFO[0793] Transformer ClusterSelector processing 2 artifacts
-    ? Choose the cluster type:
-    ID: move2kube.target.clustertype
-    Hints:
-    [Choose the cluster type you would like to target]
-        [Use arrows to move, type to filter]
-        Openshift
-        AWS-EKS
-        Azure-AKS
-        GCP-GKE
-        IBM-IKS
-        IBM-Openshift
-        > Kubernetes
-    ```
+```console
+ No authentication
+INFO[0793] Transformer ComposeGenerator Done
+INFO[0793] Transformer ClusterSelector processing 2 artifacts
+? Choose the cluster type:
+ID: move2kube.target.clustertype
+Hints:
+[Choose the cluster type you would like to target]
+    [Use arrows to move, type to filter]
+    Openshift
+    AWS-EKS
+    Azure-AKS
+    GCP-GKE
+    IBM-IKS
+    IBM-Openshift
+    > Kubernetes
+```
 
-1. Select the `Kubernetes` cluster type to deploy to.
+9. Select the `Kubernetes` cluster type to deploy to.
 
-    ```console
-      Kubernetes
-    INFO[0863] Transformer ClusterSelector Done             
-    INFO[0863] Transformer Knative processing 2 artifacts   
-    INFO[0863] Transformer Knative Done                     
-    INFO[0863] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
-    INFO[0863] Transformer ContainerImagesPushScriptGenerator Done
-    INFO[0863] Transformer ClusterSelector processing 2 artifacts
-    INFO[0863] Transformer ClusterSelector Done             
-    INFO[0863] Transformer Buildconfig processing 2 artifacts
-    INFO[0863] Transformer Buildconfig Done                 
-    INFO[0863] Transformer ClusterSelector processing 2 artifacts
-    INFO[0863] Transformer ClusterSelector Done             
-    INFO[0863] Transformer Kubernetes processing 2 artifacts
-    ? Provide the ingress host domain
-    ID: move2kube.target.ingress.host
-    Hints:
-    [Ingress host domain is part of service URL]
-        my-cluster-ingress-host-domain.com
-    ```
+```console
+  Kubernetes
+INFO[0863] Transformer ClusterSelector Done 
+INFO[0863] Transformer Knative processing 2 artifacts   
+INFO[0863] Transformer Knative Done 
+INFO[0863] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
+INFO[0863] Transformer ContainerImagesPushScriptGenerator Done
+INFO[0863] Transformer ClusterSelector processing 2 artifacts
+INFO[0863] Transformer ClusterSelector Done 
+INFO[0863] Transformer Buildconfig processing 2 artifacts
+INFO[0863] Transformer Buildconfig Done 
+INFO[0863] Transformer ClusterSelector processing 2 artifacts
+INFO[0863] Transformer ClusterSelector Done 
+INFO[0863] Transformer Kubernetes processing 2 artifacts
+? Provide the ingress host domain
+ID: move2kube.target.ingress.host
+Hints:
+[Ingress host domain is part of service URL]
+    my-cluster-ingress-host-domain.com
+```
 
-1. Indicate the ingress hosting domain. It can be grabbed from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster you are fetching from.
+10. Indicate the ingress hosting domain. It can be grabbed from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster you are fetching from.
 
-    ```console
-     my-cluster-ingress-host-domain.com
-    ? Provide the TLS secret for ingress
-    ID: move2kube.target.ingress.tls
-    Hints:
-    [Leave empty to use http]
+```console
+ my-cluster-ingress-host-domain.com
+? Provide the TLS secret for ingress
+ID: move2kube.target.ingress.tls
+Hints:
+[Leave empty to use http]
 
-    ```
+```
 
-1. Accept the by-default for the TLS secret by pressing the 'return' key.
+12. Accept the by-default for the TLS secret by pressing the 'return' key.
 
-    ```console
-    INFO[0934] Transformer Kubernetes Done                  
-    INFO[0934] Transformer ClusterSelector processing 2 artifacts
-    INFO[0934] Transformer ClusterSelector Done             
-    INFO[0934] Transformer Tekton processing 2 artifacts    
-    INFO[0934] Transformer Tekton Done                      
-    INFO[0934] Created 27 pathMappings and 7 artifacts. Total Path Mappings : 30. Total Artifacts : 7.
-    INFO[0934] Iteration 5 - 7 artifacts to process         
-    INFO[0934] Transformer Parameterizer processing 4 artifacts
-    INFO[0934] Transformer Parameterizer Done               
-    INFO[0934] Transformer ReadMeGenerator processing 5 artifacts
-    INFO[0934] Transformer ReadMeGenerator Done             
-    INFO[0935] Plan Transformation done                     
-    INFO[0935] Transformed target artifacts can be found at [/Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/myproject].
-    ```
+```console
+INFO[0934] Transformer Kubernetes Done  
+INFO[0934] Transformer ClusterSelector processing 2 artifacts
+INFO[0934] Transformer ClusterSelector Done 
+INFO[0934] Transformer Tekton processing 2 artifacts
+INFO[0934] Transformer Tekton Done  
+INFO[0934] Created 27 pathMappings and 7 artifacts. Total Path Mappings : 30. Total Artifacts : 7.
+INFO[0934] Iteration 5 - 7 artifacts to process 
+INFO[0934] Transformer Parameterizer processing 4 artifacts
+INFO[0934] Transformer Parameterizer Done   
+INFO[0934] Transformer ReadMeGenerator processing 5 artifacts
+INFO[0934] Transformer ReadMeGenerator Done 
+INFO[0935] Plan Transformation done 
+INFO[0935] Transformed target artifacts can be found at [/Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/myproject].
+```
 
 The transformation is successful and the target artifacts can be found inside the `./myproject` directory. The overview of the structure of the *./myproject* directory can be seen by executing the below command.
 
@@ -385,31 +390,31 @@ There are two main differences in Move2Kube Windows application transformations.
 1.  First difference is in the deployment YAML of Windows container images (see `myproject/deploy/yamls/wcfservice-deployment.yaml` in the above example) . The `nodeSelector` and `tolerations` ensure that the image is instantiated on a Windows node in the Kubernetes cluster.
 ```
 nodeSelector:
-    kubernetes.io/os: windows
+kubernetes.io/os: windows
 restartPolicy: Always
 schedulerName: default-scheduler
 securityContext: {}
 terminationGracePeriodSeconds: 30
 tolerations:
 - effect: NoSchedule
-    key: os
-    value: Windows
+key: os
+value: Windows
 ```
 2. Second difference is in the Dockerfile (see `myproject/source/Dockerfile` in the above example) for the Windows service as shown below. The `FROM` instruction refers to Windows container images and the `--platform` indicates that these images have to be built for a Windows platform.
 ```yaml
-    FROM --platform=windows/amd64 mcr.microsoft.com/dotnet/framework/sdk:4.8 As builder
-    WORKDIR /app
-    COPY . .
-    RUN msbuild /p:Configuration=Release /p:OutputPath=/app/output
+FROM --platform=windows/amd64 mcr.microsoft.com/dotnet/framework/sdk:4.8 As builder
+WORKDIR /app
+COPY . .
+RUN msbuild /p:Configuration=Release /p:OutputPath=/app/output
 
-    FROM --platform=windows/amd64 mcr.microsoft.com/dotnet/framework/runtime:4.8
-    WORKDIR /app
-    COPY --from=builder /app/output/ .
-    CMD wcfservice.exe
+FROM --platform=windows/amd64 mcr.microsoft.com/dotnet/framework/runtime:4.8
+WORKDIR /app
+COPY --from=builder /app/output/ .
+CMD wcfservice.exe
 ```
 
 ## Deploying the application to Kubernetes with the generated target artifacts
-The steps involved to deploy a Windows application is the same as any other application except the container images have to be built on a Windows machine with Docker Desktop set to [Windows container mode](https://docs.docker.com/desktop/windows/#switch-between-windows-and-linux-containers). Refer to [.NET core deployment section](/tutorials/netcore) for details.
+The steps involved to deploy a Windows application is the same as any other application except the container images have to be built on a Windows machine with Docker Desktop set to [Windows container mode](https://docs.docker.com/desktop/windows/#switch-between-windows-and-linux-containers). Refer to .NET core deployment section for details.
 
 ## Conclusion
 

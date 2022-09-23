@@ -9,7 +9,7 @@ We can use Move2Kube to generate parameterized Helm charts, Kustomize and Opensh
 Move2Kube can also change the version of Kubernetes resources to target particular clusters.
 
 **Prerequisites**
-* [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli) is installed
+* Move2Kube CLI tool is installed
 * Use a [kubernetes-to-kubernetes](https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes) sample. The `kubernetes-to-kubernetes` directory has some Kubernetes YAMLs that deploy a web app with multiple services. There are three services: a frontend website in PHP, a backend API in Node.JS, and a cache service using Redis.
 
 **Procedure**
@@ -55,70 +55,65 @@ $ cat m2k.plan
 Notice that Move2Kube has detected all the different services, one for each web app.
 
 ```yaml
-apiVersion: move2kube.konveyor.io/v1alpha1
-kind: Plan
-metadata:
-  name: myproject
-spec:
-  sourceDir: kubernetes-to-kubernetes
-  services:
-myproject:
-  - transformerName: KubernetesVersionChanger
-type: KubernetesOrgYamlsInSource
-paths:
+aapiVersion: move2kube.konveyor.io/v1alpha1
+ kind: Plan
+ metadata:
+   name: myproject
+ spec:
+   sourceDir: kubernetes-to-kubernetes
+   services:
+     myproject:
+       - transformerName: KubernetesVersionChanger
+         type: KubernetesOrgYamlsInSource
+         paths:
+           KubernetesYamls:
+             - .
+           ServiceDirPath:
+             - .
+       - transformerName: Parameterizer
+         paths:
+           KubernetesYamls:
+             - .
+           ServiceDirPath:
+             - .
+   transformers:
+     Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/buildconfig.yaml
+     CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/cloudfoundry.yaml
+     ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/clusterselector.yaml
+     ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/composeanalyser.yaml
+     ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/composegenerator.yaml
+     ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
+     DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
+     DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
+     DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
+     DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
+     EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
+     EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
+     Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/golang.yaml
+     Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/gradle.yaml
+     Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/jar.yaml
+     Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/jboss.yaml
+     Knative: m2kassets/built-in/transformers/kubernetes/knative/knative.yaml
+     Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/kubernetes.yaml
+     KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
+     Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/liberty.yaml
+     Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/maven.yaml
+     Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml
+     PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/php.yaml
+     Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/parameterizer.yaml
+     Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/python.yaml
+     ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/readmegenerator.yaml
+     Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/ruby.yaml
+     Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/rust.yaml
+     Tekton: m2kassets/built-in/transformers/kubernetes/tekton/tekton.yaml
+     Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
+     WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/war.yaml
+     WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
+     WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
+     WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
+     WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
+     ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
 ```
-{{%expand "Click to see the rest of the plan yaml."%}}
-
-```yaml
-  KubernetesYamls:
-- .
-  ServiceDirPath:
-- .
-  - transformerName: Parameterizer
-paths:
-  KubernetesYamls:
-- .
-  ServiceDirPath:
-- .
-  transformers:
-Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/buildconfig.yaml
-CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/cloudfoundry.yaml
-ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/clusterselector.yaml
-ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/composeanalyser.yaml
-ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/composegenerator.yaml
-ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml
-DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml
-DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml
-DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml
-DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml
-EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/ear.yaml
-EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml
-Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/golang.yaml
-Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/gradle.yaml
-Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/jar.yaml
-Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/jboss.yaml
-Knative: m2kassets/built-in/transformers/kubernetes/knative/knative.yaml
-Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/kubernetes.yaml
-KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml
-Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/liberty.yaml
-Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/maven.yaml
-Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml
-PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/php.yaml
-Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/parameterizer.yaml
-Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/python.yaml
-ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/readmegenerator.yaml
-Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/ruby.yaml
-Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/rust.yaml
-Tekton: m2kassets/built-in/transformers/kubernetes/tekton/tekton.yaml
-Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml
-WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/war.yaml
-WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml
-WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml
-WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml
-WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
-ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
-```
-{{% /expand%}}
 
 4. Run the transformation using `move2kube transform`.
 
@@ -157,9 +152,6 @@ INFO[0006] Transformer Parameterizer Done
 INFO[0006] Plan Transformation done
 INFO[0006] Transformed target artifacts can be found at [/home/user/myproject].
 ```
-
-{{% /expand%}}
-
 5. When the questions are complete, wait a few minutes for it to finish processing and view it has generated a directory called `myproject`.
 The name of the output directory is the same as the project name (by default `myproject`). The project name be changed using the `-n` flag.
 
@@ -176,71 +168,67 @@ The applications can now be deployed to Kubernetes using these generated artifac
 ## Exploring the output
 
 The full structure of the output directory can be seen by executing the `tree` command.
-  ```console
+```console
   $ cd myproject/
   $ tree
   .
-  └── source
-  ├── kubernetes-to-kubernetes-versionchanged
-  │   ├── api-deployment.yaml
-  │   ├── api-service.yaml
-  │   ├── redis-deployment.yaml
-  │   ├── redis-service.yaml
-  │   ├── web-deployment.yaml
-  │   ├── web-ingress.yaml
-```
-{{%expand "Click to see the rest of the tree."%}}
-```console
-  │   └── web-service.yaml
-  └── kubernetes-to-kubernetes-versionchanged-parameterized
-  ├── helm-chart
-  │   └── myproject
-  │   ├── Chart.yaml
-  │   ├── templates
-  │   │   ├── api-deployment.yaml
-  │   │   ├── api-service.yaml
-  │   │   ├── redis-deployment.yaml
-  │   │   ├── redis-service.yaml
-  │   │   ├── web-deployment.yaml
-  │   │   ├── web-ingress.yaml
-  │   │   └── web-service.yaml
-  │   ├── values-dev.yaml
-  │   ├── values-prod.yaml
-  │   └── values-staging.yaml
-  ├── kustomize
-  │   ├── base
-  │   │   ├── api-deployment.yaml
-  │   │   ├── api-service.yaml
-  │   │   ├── kustomization.yaml
-  │   │   ├── redis-deployment.yaml
-  │   │   ├── redis-service.yaml
-  │   │   ├── web-deployment.yaml
-  │   │   ├── web-ingress.yaml
-  │   │   └── web-service.yaml
-  │   └── overlays
-  │   ├── dev
-  │   │   ├── apps-v1-deployment-api.yaml
-  │   │   ├── apps-v1-deployment-redis.yaml
-  │   │   ├── apps-v1-deployment-web.yaml
-  │   │   └── kustomization.yaml
-  │   ├── prod
-  │   │   ├── apps-v1-deployment-api.yaml
-  │   │   ├── apps-v1-deployment-redis.yaml
-  │   │   ├── apps-v1-deployment-web.yaml
-  │   │   └── kustomization.yaml
-  │   └── staging
-  │   ├── apps-v1-deployment-api.yaml
-  │   ├── apps-v1-deployment-redis.yaml
-  │   ├── apps-v1-deployment-web.yaml
-  │   └── kustomization.yaml
-  └── openshift-template
-  ├── parameters-dev.yaml
-  ├── parameters-prod.yaml
-  ├── parameters-staging.yaml
-  └── template.yaml
+   └── source
+      ├── kubernetes-to-kubernetes-versionchanged
+      │   ├── api-deployment.yaml
+      │   ├── api-service.yaml
+      │   ├── redis-deployment.yaml
+      │   ├── redis-service.yaml
+      │   ├── web-deployment.yaml
+      │   ├── web-ingress.yaml
+      │   └── web-service.yaml
+      └── kubernetes-to-kubernetes-versionchanged-parameterized
+          ├── helm-chart
+          │   └── myproject
+          │       ├── Chart.yaml
+          │       ├── templates
+          │       │   ├── api-deployment.yaml
+          │       │   ├── api-service.yaml
+          │       │   ├── redis-deployment.yaml
+          │       │   ├── redis-service.yaml
+          │       │   ├── web-deployment.yaml
+          │       │   ├── web-ingress.yaml
+          │       │   └── web-service.yaml
+          │       ├── values-dev.yaml
+          │       ├── values-prod.yaml
+          │       └── values-staging.yaml
+          ├── kustomize
+          │   ├── base
+          │   │   ├── api-deployment.yaml
+          │   │   ├── api-service.yaml
+          │   │   ├── kustomization.yaml
+          │   │   ├── redis-deployment.yaml
+          │   │   ├── redis-service.yaml
+          │   │   ├── web-deployment.yaml
+          │   │   ├── web-ingress.yaml
+          │   │   └── web-service.yaml
+          │   └── overlays
+          │       ├── dev
+          │       │   ├── apps-v1-deployment-api.yaml
+          │       │   ├── apps-v1-deployment-redis.yaml
+          │       │   ├── apps-v1-deployment-web.yaml
+          │       │   └── kustomization.yaml
+          │       ├── prod
+          │       │   ├── apps-v1-deployment-api.yaml
+          │       │   ├── apps-v1-deployment-redis.yaml
+          │       │   ├── apps-v1-deployment-web.yaml
+          │       │   └── kustomization.yaml
+          │       └── staging
+          │           ├── apps-v1-deployment-api.yaml
+          │           ├── apps-v1-deployment-redis.yaml
+          │           ├── apps-v1-deployment-web.yaml
+          │           └── kustomization.yaml
+          └── openshift-template
+              ├── parameters-dev.yaml
+              ├── parameters-prod.yaml
+              ├── parameters-staging.yaml
+              └── template.yaml
   13 directories, 42 files
-  ```
-{{% /expand%}}
+```
 
 Some things to observe:
 - The Helm chart in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/helm-chart` directory.

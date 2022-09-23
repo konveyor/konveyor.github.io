@@ -14,4 +14,4 @@ This application consists of five different services:
 - **Orders:** Manages everything related to orders. (Written using Spring Boot and PostGreSQL for the database.)
 - **Inventory:** Manages everything related to products. (Written using Spring Boot and PostGreSQL for the database.)
 
-We will go through the workflow for containerizing this application using Move2Kube to get it running on Kubernetes. This tutorial is split into sections to make it easy to skip around.
+This tutorial will go through the workflow for containerizing this application using Move2Kube to get it running on Kubernetes. This tutorial is split into sections to make it easy to skip around.

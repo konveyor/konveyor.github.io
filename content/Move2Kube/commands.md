@@ -5,30 +5,27 @@ draft: true
 ---
 Move2Kube creates all resources required for deploying applications into Kubernetes including containerization and Kubernetes resources. It supports translating from Docker swarm/Docker-compose, Cloud Foundry, and other non-containerized applications. If the application does not use any of those or is not containerized, it can still be transformed by Move2Kube.
 
-For more documentation and support, visit https://move2kube.konveyor.io/.
-
-> **Note:** Command options
-Use these commands to view the options available in Move2Kube.
->```
+> **Note:** Use these commands to view the options available in Move2Kube.
+```
   -h, --help               help for move2kube
       --log-file string    File to store the logs in. By default it only prints to console.
       --log-level string   Set logging levels. (default "info")
->```
+```
 
-## Move2Kube commands
+### Move2Kube commands
 There are four phases of the Move2Kube processes that are created, configured, and run using four commands and their options:
-* [Move2Kube collect](/commands/collect) - Collects and processes metadata from multiple sources.
-* [Move2Kube plan](/commands/plan) - Plans the deployment of an application into Kubernetes.
-* [Move2Kube transform](/commands/transform) - Transforms the application using the results of Move2Kube plan stage.
-* [Move2Kube version](/commands/version) - Assigns the application version information.
+* Move2Kube collect - Collects and processes metadata from multiple sources.
+* Move2Kube plan - Plans the deployment of an application into Kubernetes.
+* Move2Kube transform - Transforms the application using the results of Move2Kube plan stage.
+* Move2Kube version - Assigns the application version information.
 
-# Move2Kube collect command
+## Move2Kube collect command
 Move2Kube collects metadata from multiple sources (cluster, image repo etc.), then filters and summarizes them into a YAML.
 ```
 move2kube collect [flags]
 ```
 
-## Collect options
+### Collect options
 Move2Kube provides the following options for collecting.
 ```
   -a, --annotations string   Specify annotations to select collector subset.
@@ -37,19 +34,19 @@ Move2Kube provides the following options for collecting.
   -s, --source string        Specify source directory for the artifacts to be considered while collecting.
 ```
 
-### Options inherited from parent commands
+#### Options inherited from parent commands
 ```
       --log-file string    File to store the logs in. By default it only prints to console.
       --log-level string   Set logging levels. (default "info")
 ```
 
-# Move2Kube plan
+## Move2Kube plan
 Move2Kube discovers and creates a plan-file based on an input directory built after running the collect command.
 ```
 move2kube plan [flags]
 ```
 
-## Plan options
+### Plan options
 Move2Kube provides the following options for planning.
 ```
   -f, --config strings                Specify config file locations.
@@ -64,19 +61,19 @@ Move2Kube provides the following options for planning.
   -t, --transformer-selector string   Specify the transformer selector.
 ```
 
-### Options inherited from parent commands
+#### Options inherited from parent commands
 ```
       --log-file string    File to store the logs in. By default it only prints to console.
       --log-level string   Set logging levels. (default "info")
 ```
 
-# Move2Kube transform
+## Move2Kube transform
 Transform functionality modifies artifacts using the Move2Kube plan-file.
 ```
 move2kube transform [flags]
 ```
 
-## Transform options
+### Transform options
 Move2Kube provides the following options for transform.
 ```
   -f, --config strings                Specify config file locations.
@@ -98,26 +95,26 @@ Move2Kube provides the following options for transform.
   -t, --transformer-selector string   Specify the transformer selector.
 ```
 
-### Options inherited from parent commands
+#### Options inherited from parent commands
 ```
       --log-file string    File to store the logs in. By default it only prints to console.
       --log-level string   Set logging levels. (default "info")
 ```
 
-# Move2Kube version
+## Move2Kube version
 Version functionality prints the application version information.
 ```
 move2kube version [flags]
 ```
 
-## Version options
+### Version options
 Move2Kube provides the following options for versioning.
 ```
   -h, --help   help for version
   -l, --long   Print the version details.
 ```
 
-### Options inherited from parent commands
+#### Options inherited from parent commands
 ```
       --log-file string    File to store the logs in. By default it only prints to console.
       --log-level string   Set logging levels. (default "info")

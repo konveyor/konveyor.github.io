@@ -18,17 +18,17 @@ $ move2kube transform --config path/to/m2kconfig.yaml
 ## Running a tranform non-interactively
 
 1. Download the language platforms sample. Each directory contains a simple web application written in different languages.
-    ```console
+```console
     $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/language-platforms -r move2kube-demos
 
     $ ls language-platforms
     django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
-    ```
+```
 
 > **Important:** If you already have a `m2kconfig.yaml` from a previous run, skip the next step.
 
-1. Run the plan and transform on the `language-platforms` source, answer all the questions as appropriate.
-    ```console
+2. Run the plan and transform on the `language-platforms` source, answer all the questions as appropriate.
+```console
     $ ls
     language-platforms
     $ move2kube plan -s language-platforms
@@ -41,26 +41,18 @@ $ move2kube transform --config path/to/m2kconfig.yaml
     ...
     INFO[0095] Plan Transformation done
     INFO[0095] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
-    ```
+```
 
-1. View the `m2kconfig.yaml` file in the output.
+3. View the `m2kconfig.yaml` file in the output.
 
-    ```console
+```console
     $ ls
     m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	language-platforms
     $ cat m2kconfig.yaml
-    ```
+```
     Your `m2kconfig.yaml` might look different depending on what questions were asked and what answers you gave.
-    <details markdown="block">
-    <summary markdown="block">
-    ```yaml
-    # click to see the full yaml
-    move2kube:
-      containerruntime: docker
-    .......
-    ```
-    </summary>
-    ```yaml
+    
+```yaml
     move2kube:
       containerruntime: docker
       minreplicas: "2"
@@ -163,24 +155,15 @@ $ move2kube transform --config path/to/m2kconfig.yaml
           - Jboss
           - Knative
       transformerselector: ""
-    ```
-    </details>
+```
 
 The config file only contains the answers we provided to the questions. We can better understand the config file by looking at its companion file `m2kqacache.yaml`
 
-    ```console
+```console
     $ cat m2kqacache.yaml
     ```
-    <details markdown="block">
-    <summary markdown="block">
-    ```yaml
-    # click to see the full yaml
-    apiVersion: move2kube.konveyor.io/v1alpha1
-    kind: QACache
-    .......
-    ```
-    </summary>
-    ```yaml
+
+```yaml
     apiVersion: move2kube.konveyor.io/v1alpha1
     kind: QACache
     spec:
@@ -607,8 +590,7 @@ The config file only contains the answers we provided to the questions. We can b
             - Add :L for Load Balancer service type
           default: /java-gradle
           answer: /java-gradle
-    ```
-    </details>
+```
 
 The cache file contains both the questions and the answers along with additional information about each question, such as the default answer, the type of the question, the question IDs, any hints that were provided, etc.
 
@@ -616,18 +598,18 @@ The config file stores the answer to a question under the key specified by the q
 
 For example, the question `What URL/path should we expose the service java-maven's 9080 port on?` has the id `move2kube.services."java-maven"."9080".urlpath`.
 So we find the answer in the config file `/java-maven` stored as:
-    ```yaml
+```yaml
     move2kube:
       services:
         java-maven:
           "9080":
             urlpath: /java-maven
-    ```
+```
 Every time Move2Kube goes to ask a question, it first checks the config file to see if it has already been answered using the question's ID. If the ID is not present in the config file, Move2Kube will usually ask the user for the answer meaning we can provide the answer to any question by storing it in the config file.
 
-1. Run the transform again with the generated config file.
+4. Run the transform again with the generated config file.
 
-    ```console
+```console
     $ mv myproject old # rename the output directory from the previous run to avoid conflicts
     $ ls
     m2k.plan	m2kconfig.yaml	m2kqacache.yaml	old		language-platforms
@@ -639,5 +621,5 @@ Every time Move2Kube goes to ask a question, it first checks the config file to 
     INFO[0007] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
     $ ls
     m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	old		language-platforms
-    ```
+```
 This time Move2Kube didn't ask any questions because we provided all of the answers by editing the config file directly to change the answer to a question. We can also remove some of the answers from the config file if we want Move2Kube to ask us those questions again. This gives us a nice way to iterate quickly, as well as a way to run Move2Kube non-interatively.

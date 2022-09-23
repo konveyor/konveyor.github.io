@@ -1,5 +1,5 @@
 ---
-title: "Move2Kube command line tool"
+title: "Command line tool"
 date: 2022-08-03T15:23:12-06:00
 draft: true
 ---
@@ -9,7 +9,7 @@ The easiest way to install Move2Kube is to download the pre-built binaries for L
 
 **Procedure**
 
-1. Install Move2Kube.
+1. Install Move2Kube with one of the following options.
 
 * Latest stable version:
 
@@ -34,13 +34,14 @@ BLEEDING_EDGE='true' bash <(curl https://raw.githubusercontent.com/konveyor/move
 USE_SUDO=false bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ````
 
-**Options**
+2. Consider setting the following options.
+
 * The script installs to /usr/local/bin by default. To install to a different directory:
 
 ```
 MOVE2KUBE_INSTALL_DIR=/my/new/install/dir bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ```
-* Consider making the installation directory in the PATH to run Move2Kube as move2kube instead of /my/new/install/dir/move2kube.
+* Make the installation directory in the PATH to run Move2Kube as move2kube instead of /my/new/install/dir/move2kube.
 * Combine the above two environment variables to install without sudo and install to a different directory.
 
 ```

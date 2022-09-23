@@ -2,12 +2,13 @@
 title: "Concepts"
 date: 2022-08-16T17:21:40-06:00
 draft: true
+weight: 2
 ---
 Move2Kube has four concepts that are useful to understand when customizing output and this section covers the more important ones.
 
-> **Important:** If you have not followed the [tutorials](/tutorials/customizing-the-output), we recommend checking those out first, then coming back here to see each concept in more detail.
+> **Important:** If you have not followed the tutorials, we recommend checking those out first, then coming back here to see each concept in more detail.
 
-# Artifacts
+## Artifacts
 [Source code](https://github.com/konveyor/move2kube/blob/6448624d79c37809417c05e34fcb3b2456952bcb/types/transformer/artifact.go#L37-L45)
 
 Artifacts represent the application objects that can be passed between transformers.
@@ -21,7 +22,7 @@ type Artifact struct {
 	Configs map[ConfigType]interface{} `yaml:"configs,omitempty" json:"config,omitempty"` // Could be IR or template config or any custom configuration
 }
 ```
-## Artifact fields
+### Artifact fields
 Each artifact is an object with fields that need to be understood in order to write transformers effectively.
 
 - `name` : `string` - Name of the artifact.
@@ -40,15 +41,15 @@ Each artifact is an object with fields that need to be understood in order to wr
         - [types/transformer/artifacts/java.go#L49-L75](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/types/transformer/artifacts/java.go#L49-L75)
         - [types/transformer/artifacts/gradle.go#L24-L27](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/types/transformer/artifacts/gradle.go#L24-L27)
 
-# Transformers
-Move2Kube uses transformers to modify input into the desired output form. Each transformer consumes [artifacts](/concepts/artifact) as input and returns outputs artifacts and [PathMappings](/concepts/path-mapping).
+## Transformers
+Move2Kube uses transformers to modify input into the desired output form. Each transformer consumes artifacts as input and returns outputs artifacts and PathMappings.
 
 The artifacts allow multiple transformers to be chained together to achieve an end to end transformation and the PathMappings are used for persisting the changes in the file system. Some transformers have detection capability to go through the source directories to identify one it understands and creates new artifacts to start the process.
 
-## Transformer directories
-Each transformer generally has its own directory with all the configuration parameters required for that transformer whether it is a ([built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) or [external transformer](https://github.com/konveyor/move2kube-transformers). The transformer YAML is the most important part of the definition because it specifies its behavior. It also can have a `templates` directory for template files to be used by the transformer, and other files/configurations that are specific to each transformer.
+### Transformer directories
+Each transformer generally has its own directory with all the configuration parameters required for that transformer whether it is a [built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) or [external transformer](https://github.com/konveyor/move2kube-transformers). The transformer YAML is the most important part of the definition because it specifies its behavior. It also can have a `templates` directory for template files to be used by the transformer, and other files/configurations that are specific to each transformer.
 
-## Transformer YAML
+### Transformer YAML
 [Source code](https://github.com/konveyor/move2kube/blob/6448624d79c37809417c05e34fcb3b2456952bcb/types/transformer/transformer.go#L27-L49)
 
 Transformers define the definition of the Cloud Foundry (CF) runtime instance app file.
@@ -111,13 +112,13 @@ YAML files have four main fields with sub-fields that define them.
     - `templates` : `string` - Specifies the template directory. The default value is `templates`
     - `config` : `any` - Each transformer has a type/class specified by the `class` field which provides certain configuration options that can be configured here. For more details refer documentation for the transformer class being used. Example: [Parameterizer config](https://github.com/konveyor/move2kube/blob/023467328100472fc3ff36218af85b10573247f3/assets/built-in/transformers/kubernetes/parameterizer/transformer.yaml#L19-L18)
 
-    ### Other files/directories
+    #### Other files/directories
     `templates` - If the `Template` type path mapping created by this transformer uses a relative path, it is considered to be relative to this directory. There can be other files/configs in the directory that are interpreted differently by each transformer class which then determines how the values are interpreted and executed.
 
-    ## Transformer Class
+    ### Transformer Class
     The `Transformer Class` determines the code used for the internal execution of the transformer using the configuration in the `Transformer Yaml` and other config files to model its behavior. There are many transformer classes supported by Move2Kube, `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, `Executable`, `Starlark`, `Router`, etc. Most of them have a specific task, but some transformer classes like `Executable` and `Starlark` are customizable allowing users to write the entire logic of the transformer in the customization.
 
-    ### Transformer Class Internal Implementation
+    #### Transformer Class Internal Implementation
     [Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/transformer/transformer.go#L53-L60)
 
     The transformer interface defines the transformer that modifies and converts files to IR representation.
@@ -139,7 +140,7 @@ YAML files have four main fields with sub-fields that define them.
 
     - The `Init` and `GetConfig` functions are fixed and implemented by transformers built into Move2Kube. They cannot be implemented by custom transformers.
 
-    ## Methods
+    ### Methods
     - `Init` : `(Transformer, Environment) -> (error)` - TODO
     - `GetConfig` : `(Transformer, Environment) -> ()` - TODO
     - `DirectoryDetect` : `(string) -> (object ([string]: []Artifact), error)`: This function is called during the planning phase and given the path of a directory containing the source files and then returns a list of artifacts listed in the plan-file generated by Move2Kube. It will also return an error if planning does not run correctly.
@@ -153,7 +154,7 @@ YAML files have four main fields with sub-fields that define them.
         - The second input is a list of artifacts that the transformer has already seen.
         - The first output is a list of path mappings.
 
-    # Path Mapping
+    ## Path Mapping
     Path mappings are a way for transformers to add files to the Move2Kube output directory. They can be used to generate new files, delete exiting files, modify the output directory structure, etc. Usually transformers deal with artifacts as they take them as input and output new artifacts, but does nothing to change the Move2Kube output since all transformers are run inside temporary directories.
 
     In order to affect the output directory, transformers need to return path mappings indicating the type of change to be made.
@@ -172,7 +173,7 @@ YAML files have four main fields with sub-fields that define them.
 
     Another example is when the source and destination paths are template strings that need to be filled in order to get the actual paths.
 
-    ## Different type of path mappings
+    ### Different type of path mappings
     [Source code](https://github.com/konveyor/move2kube/blob/dcf8793a889c0a8f9f4423e9e9ee3a95003c6bcc/types/transformer/pathmapping.go#L19-L45)
 
     `PathMappingType` refers to the Path Mapping type.
@@ -219,17 +220,17 @@ YAML files have four main fields with sub-fields that define them.
     - `SpecialTemplate` - Same as `Template` path mapping except now the template has a different syntax. The delimiters used in normal templates are `{{` and `}}`. In special templates, the delimiters are `<~` and `~>`. Same as before, the values for filling the template are provided in `templateConfig`.
 
 
-    # Phases
+    ## Phases
     Move2Kube uses two key phases:
     * Planning
     * Transformation
 
-    ## Planning phase
+    ### Planning phase
     This phase starts by running the `move2kube plan -s path/to/source/directory` command. Move2Kube runs all the transformers that support the detect capability on the source directory to create a plan. The plan is written to a file called `m2k.plan` in YAML format which the transformation phase Move2Kube will use this plan to modify the source files into the desired output. The plan-file is human readable and can be edited manually to change the modifications performed during the transformation phase.
 
     The plan-file contains the list of detected services that Move2Kube found inside the source directory, including the path to the sub-directories/files where it detected information about those services. It also contains a list of all the built-in and external transformers that were detected which will be run during the transformation phase. Custom transformers can be written and provided during the plan phase to affect the contents of the plan file.
 
-    ## Transformation phase
+    ### Transformation phase
     This phase starts by running the `move2kube transform` command. Move2Kube evaluates which transformers to run in an iterative manner. Each iteration will evaluate the list of artifacts produced during the previous iteration and run all transformers that consume those artifact types. This continues until it hits an iteration where there are no more artifacts or transformers that consume those artifact types at which point the transformation phase is complete.
 
-    The evaluated result of all [PathMappings](/concepts/path-mapping) is the output.
+    The evaluated result of all PathMappings is the output.

@@ -2,12 +2,13 @@
 title: "Using Move2Kube CLI"
 date: 2022-08-04T19:09:57-06:00
 draft: true
+weight: 3
 ---
 In this tutorial we will see how we can transform a set of sample applications to run on Kubernetes. We will use the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, and build scripts for each application. We will then build the container images and deploy them to a cluster.
 
 ## Prerequisites
 
-1. Install the [Move2Kube CLI tool](https://move2kube.konveyor.io/installation/cli).
+1. Install the Move2Kube CLI tool.
 
 1. We will use [language-platforms](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample. The `language-platforms` directory has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which need to be containerized and deployed to Kubernetes.
 
@@ -57,6 +58,7 @@ INFO[0000] No of services identified : 11
 INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
 ```
 
+{{% /expand%}}
 
 3. Look at the plan file we generated in YAML format. Notice Move2Kube has detected all the different services, one for each web app.
 
@@ -64,9 +66,8 @@ INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
 $ ls
 language-platforms	language-platforms.zip	m2k.plan
 $ cat m2k.plan
-apiVersion: move2kube.konveyor.io/v1alpha1
-kind: Plan
-......
+```
+```yaml
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Plan
 metadata:
@@ -75,8 +76,8 @@ spec:
   sourceDir: language-platforms
   services:
 ```
-{{%expand "Click to see the rest of the plan yaml."%}}
-```
+{{%expand "Click to see the rest of the yaml."%}}
+```yaml
 golang:
   - transformerName: Golang-Dockerfile
 paths:
@@ -998,21 +999,16 @@ Password:
 The apps should be available at the URLs below:
 
 * golang - [http://localhost/golang](http://localhost/golang)
-  * [golang](../../assets/images/cli-workflow/golang.png)
 
 * nodejs - [http://localhost/nodejs](http://localhost/nodejs)
-  * [nodejs](../../assets/images/cli-workflow/nodejs.png)
 
 * python - [http://localhost/myproject-python](http://localhost/myproject-python)
-  * [python](../../assets/images/cli-workflow/python.png)
 
 * ruby - [http://localhost/ruby](http://localhost/ruby)
-  * [ruby](../../assets/images/cli-workflow/ruby.png)
 
 * rust - [http://localhost/rust](http://localhost/rust)
-  * [rust](../../assets/images/cli-workflow/rust.png)
 
 
 ## Conclusion
 
-You can have a very diverse source environment like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) sample, which has multiple apps in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. If you don't like working with the terminal there is a [Move2Kube UI tool](https://move2kube.konveyor.io/tutorials/ui) which has all the same features as the CLI.
+You can have a very diverse source environment like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) sample, which has multiple apps in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. If you don't like working with the terminal there is a Move2Kube UI tool which has all the same features as the CLI.

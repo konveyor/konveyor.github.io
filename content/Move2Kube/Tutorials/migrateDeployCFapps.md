@@ -19,13 +19,13 @@ Move2Kube will automatically analyze all the artifacts in the cloud-foundry dire
 * A source directory which contains the source code files and/or the manifest.yml file of a Cloud Foundry application.
 
    A sample of this is present in the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository. In this tutorial, we will be using the `cloud-foundry` sample from this repository.
-    ```console
+```console
     $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/cloud-foundry -r move2kube-demos
-    ```
+```
 
    View the structure inside the `./cloud-foundry` directory. The `cloud-foundry` directory contains the source code files and the manifest.yml file.
 
-   ```console
+```console
   $ tree cloud-foundry
   cloud-foundry/
   ├── cfnodejsapp
@@ -36,11 +36,11 @@ Move2Kube will automatically analyze all the artifacts in the cloud-foundry dire
   └── m2k_collect
       └── cf
           └── cfapps.yaml
-   ```
+```
 
 1. Install [Move2Kube](/installation).
 
-1. Install a container runtime: [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation).
+2. Install a container runtime: [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation).
 
 1. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
 
@@ -64,18 +64,21 @@ Move2Kube will automatically analyze all the artifacts in the cloud-foundry dire
 To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, we will be using the source code inside the `cloud-foundry/cfnodejsapp` directory. If you want to try out Move2Kube on your CF application, then in place of our sample `cloud-foundry` directory, provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the *plan* phase.
 
 Optional: We will deploy a simple NodeJS application into CF. If you have a running CF app already you may use that instead. Provision a CF app with the name `cfnodejsapp` using your cloud provider (Ex: [IBM Cloud](https://cloud.ibm.com/)).
-   1. Make note of the API endpoint (API endpoints for the IBM Cloud Foundry service can be found [here](https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-endpoints)).
-   1. Login to CF.
+
+   5. Make note of the API endpoint (API endpoints for the IBM Cloud Foundry service can be found [here](https://cloud.ibm.com/docs/cloud-foundry-public?topic=cloud-foundry-public-endpoints)).
+
+   6. Login to CF.
        ```console
        $ cf login -a <YOUR CF API endpoint>
        ```
-   1. Deploy the sample application to Cloud Foundry. The source code of the sample application is present inside `./cloud-foundry/cfnodejsapp` folder.
+
+   7. Deploy the sample application to Cloud Foundry. The source code of the sample application is present inside `./cloud-foundry/cfnodejsapp` folder.
 
        ```console
        $ cf push -f ./cloud-foundry/cfnodejsapp -p ./cloud-foundry/cfnodejsapp
        ```
 
-   1. Visit the URL of the application (you can get this by running `cf apps`) to see it running.
+   8. Visit the URL of the application (you can get this by running `cf apps`) to see it running.
 
 
 ## Generating target artifacts
@@ -149,15 +152,7 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
     ```console
     $ cat m2k.plan
     ```
-    <details markdown="block">
-    <summary markdown="block">
-    ```yaml
-    # click to see the full plan yaml
-    apiVersion: move2kube.konveyor.io/v1alpha1
-    kind: Plan
-    .......
-    ```
-    </summary>
+
     ```yaml
       apiVersion: move2kube.konveyor.io/v1alpha1
       kind: Plan
@@ -230,7 +225,7 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
 
 3. Run `move2kube transform` on this *plan*.
 
-    ```console
+```console
     $ move2kube transform
     INFO[0000] Detected a plan file at path /Users/username/m2k.plan. Will transform using this plan.
     ? Select all transformer types that you are interested in:
@@ -273,22 +268,22 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
         [✓]  KubernetesVersionChanger
         [✓]  Nodejs-Dockerfile
         [✓]  WarRouter
-    ```
+```
 
-1. Accept the default by pressing the `return` or `enter` key.
+4. Accept the default by pressing the `return` or `enter` key.
 
-    ```console
+```console
     Jboss, Kubernetes, Liberty, ZuulAnalyser, CloudFoundry, DockerfileParser, Golang-Dockerfile, Gradle, Python-Dockerfile, ReadMeGenerator, ContainerImagesPushScriptGenerator, DotNetCore-Dockerfile, Parameterizer, Tekton, WinSLWebApp-Dockerfile, Buildconfig, ClusterSelector, ComposeAnalyser, PHP-Dockerfile, Ruby-Dockerfile, WinConsoleApp-Dockerfile, DockerfileImageBuildScript, EarRouter, Rust-Dockerfile, Tomcat, WarAnalyser, EarAnalyser, Knative, Maven, WinWebApp-Dockerfile, ComposeGenerator, Jar, DockerfileDetector, KubernetesVersionChanger, Nodejs-Dockerfile, WarRouter
     ? Select all services that are needed:
     Hints:
     [The services unselected here will be ignored.]
     [Use arrows to move, space to select, <right> to all, <left> to none, type to filter]
     > [✓]  cfnodejsapp
-    ```
+```
 
-1. Select the `cfnodejsapp` service.
+5. Select the `cfnodejsapp` service.
 
-    ```console
+```console
      cfnodejsapp
     INFO[0275] Starting Plan Transformation                 
     INFO[0275] Iteration 1                                  
@@ -312,9 +307,9 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
       GCP-GKE
       IBM-IKS
       IBM-Openshift
-    ```
+```
 
-    * Now, it asks to select the cluster type you want to deploy to. Here, we select the `Kubernetes` cluster type.
+Now, it asks to select the cluster type you want to deploy to. Here, we select the `Kubernetes` cluster type.
 
     ```console
     Kubernetes
@@ -327,17 +322,17 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
      (/cfnodejsapp)
     ```
 
-1. Accpet the default by pressing the `return` or `enter` key.
+6. Accpet the default by pressing the `return` or `enter` key.
 
-    ```console
+```console
     /cfnodejsapp
     ? Provide the minimum number of replicas each service should have
     Hints:
     [If the value is 0 pods won't be started by default]
       (2)
-    ```
+```
 
-    * Let's go ahead with the default answer again, which means 2 replicas for each service.
+Let's go ahead with the default answer again, which means 2 replicas for each service.
 
     ```console
     2
@@ -351,19 +346,19 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
       us.icr.io
     ```
 
-1. Select `quay.io` as the image registry host. Select 'Other' if your registry name is not here.
+7. Select `quay.io` as the image registry host. Select 'Other' if your registry name is not here.
 
-    ```console
+```console
     quay.io
     ? Enter the namespace where the new images should be pushed :  
     Hints:
      [Ex : myproject]
      (myproject) m2k-tutorial
-    ```
+```
 
-    * Input the namespace under which you want to deploy- m2k-tutorial. (Say, you have namespace `m2k-tutorial` in quay.io)
+8. Input the namespace under which you want to deploy- m2k-tutorial. (Say, you have namespace `m2k-tutorial` in quay.io)
 
-    ```console
+```console
     m2k-tutorial
     ? [quay.io] What type of container registry login do you want to use?
     Hints:
@@ -372,11 +367,11 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
       Use existing pull secret
     > No authentication
       UserName/Password
-    ```
+```
 
-    * Select the container registry login type.
+9. Select the container registry login type.
 
-    ```console
+```console
     No authentication
     INFO[0841] Optimization done                            
     INFO[0841] Begin Optimization                           
@@ -392,20 +387,19 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
     Hints:
      [Ingress host domain is part of service URL]
      (myproject.com) my-cluster-ingress-host-domain.com
-    ```
+```
 
-1. Grab the ingress hosting domain from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster you are fetching from.
+10. Grab the ingress hosting domain from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster you are fetching from.
 
-    ```console
+```console
     ? Provide the TLS secret for ingress
     Hints:
      [Leave empty to use http]
+```
 
-    ```
+11. Accept the by-default TLS secret by pressing the 'return' key.
 
-1. Accept the by-default TLS secret by pressing the 'return' key.
-
-    ```console
+```console
 
     INFO[1094] Begin Optimization                           
     INFO[1094] Optimization done                            
@@ -441,11 +435,11 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
       [Use arrows to move, type to filter]
     > 8080
       Other (specify custom option)
-    ```
+```
 
-1. Select the port to expose the `cfnodejsapp` service.
+12. Select the port to expose the `cfnodejsapp` service.
 
-    ```console
+```console
     8080
     INFO[1184] Created 2 pathMappings and 2 artifacts. Total Path Mappings : 28. Total Artifacts : 3.
     INFO[1184] Transformer Nodejs-Dockerfile Done           
@@ -461,11 +455,11 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
       [Use arrows to move, type to filter]
     > docker
       podman
-    ```
+```
 
-1. Select the container runtime to use.
+13. Select the container runtime to use.
 
-    ```console
+```console
      docker
     INFO[1184] Created 1 pathMappings and 2 artifacts. Total Path Mappings : 30. Total Artifacts : 11.
     INFO[1184] Transformer DockerfileImageBuildScript Done  
@@ -530,18 +524,9 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. View what i
     INFO[1185] Transformer ReadMeGenerator Done             
     INFO[1185] Plan Transformation done                     
     INFO[1185] Transformed target artifacts can be found at [/Users/username/github/move2kube-demos/samples/myproject].
-    ```
-
-The transformation is successful and the target artifacts can be found inside the `./myproject` directory. The structure of the *./myproject* directory can be seen by running:
-
-<details markdown="block">
-<summary markdown="block">
-```console
-# click to see the output
-$  tree myproject
 ```
 
-</summary>
+The transformation is successful and the target artifacts can be found inside the `./myproject` directory. The structure of the *./myproject* directory can be seen by running:
 
 ```console
 $  tree myproject
@@ -664,7 +649,6 @@ myproject/
         └── cf
             └── cfapps.yaml
 ```
-</details>
 
 Move2Kube has created all the deployment artifacts present inside the *./myproject* directory.
 
@@ -672,23 +656,23 @@ Move2Kube has created all the deployment artifacts present inside the *./myproje
 
 1. Open the *./myproject* directory.
 
-     ```console
+```console
      $ cd myproject/
 
      $ ls
      Readme.md deploy    scripts   source
-     ```
+```
 
 
 2. Run the *builddockerimages.sh* script inside the `./myproject/scripts` directory.
 
 > **Note:** This step may take some time to complete.
 
-    ```console
+```console
     $ cd scripts
-    ```
+```
 
-    ```console
+```console
     $ ./builddockerimages.sh
     [+] Building 7.1s (8/8) FINISHED                             
     => [internal] load build definition from Dockerfile    0.1s
@@ -707,7 +691,7 @@ Move2Kube has created all the deployment artifacts present inside the *./myproje
     => => naming to docker.io/library/cfnodejsapp          0.0s
     /Users/username/github/move2kube-demos/samples/myproject
     done
-    ```
+```
 
 
 3. Run the *pushimages.sh* script to push the applications images to the registry specified during the *transform* phase. For this step, you are required to log in to your Docker registry.
@@ -733,35 +717,31 @@ Move2Kube has created all the deployment artifacts present inside the *./myproje
 
 4. Deploy the application with *kubectl apply* command using the YAML files Move2Kube created inside the `./myproject/deploy/yamls` directory.
 
-    ```console
+```console
     $ cd ..
 
     $ kubectl apply -f deploy/yamls
     deployment.apps/cfnodejsapp created
     service/cfnodejsapp created
     ingress.networking.k8s.io/myproject created
-    ```
+```
 
 The application is now accessible on the cluster.
 
-1. Check the pods status by running:
+5. Check the pods status by running:
 
-    ```console
+```console
     $ kubectl get pods
 
     NAME                           READY   STATUS    RESTARTS   AGE
     cfnodejsapp-58d777bd44-8ct2m   1/1     Running   0          7s
     cfnodejsapp-58d777bd44-hq6lf   1/1     Running   0          7s
-    ``
-1. View the ingress to see the URL where the app has been deployed to.
+```
+6. View the ingress to see the URL where the app has been deployed to.
 
-    ```console
+```console
     $ kubectl get ingress myproject
-    ```
-
-    cfnodejsapp
-    ![cfnodejsapp](../../assets/images/samples/cloud-foundry/cloud-foundry-app.png)
-
+```
 ## Conclusion
 
 That is a simple way to combine multiple types of information like runtime, source, and cluster, and do a holistic transformation of your Cloud Foundry app to Kubernetes.
