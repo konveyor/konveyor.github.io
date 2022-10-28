@@ -84,7 +84,7 @@ Follow the steps below to configure a Git repository.
 Follow the steps below to configure a Subversion repository.
 1. Click **Repositories** and then **Subversion** in the left menu of the **Administrator** view.
 ![](/Tackle2/Views/SubvConfig.png)
-2. Click the **Consume insecure Git repositories** toggle switch to enable.
+2. Click the **Consume insecure Subversion repositories** toggle switch to enable.
 Subversion
 
 ### Configuring Maven repositories
