@@ -1,5 +1,5 @@
 ---
-title: "Upgrading from 1.2 to 2.0"
+title: "Upgrading to 2.0"
 date: 2022-06-29T10:53:45-06:00
 draft: false
 ---
@@ -73,12 +73,12 @@ cd hack/tool
 # Main Tackle 2 endpoint and credentials
 url: https://tackle-konveyor-tackle.apps.cluster.local
 username: admin
-password:
+password: Passw0rd!
 # Tackle 1.2 endpoint and credentials, e.g. to dump data and migrate to Tackle2
 tackle1:
   url: https://tackle-tackle.apps.mta01.cluster.local
   username: tackle
-  password:
+  password: password
 ```
 4. Run the tackle tool.
 ```

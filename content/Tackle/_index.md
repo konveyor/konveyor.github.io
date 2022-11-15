@@ -1,5 +1,5 @@
 +++
-title = "Tackle 1.0 & 2.0"
+title = "Tackle"
 date = 2022-04-18T19:17:45-06:00
 weight = 4
 chapter = true

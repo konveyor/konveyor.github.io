@@ -1,5 +1,5 @@
 ---
-title: "Tackle 2.0 Views"
+title: "Views"
 date: 2022-06-14T14:59:53-06:00
 draft: false
 ---

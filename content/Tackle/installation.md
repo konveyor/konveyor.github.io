@@ -1,5 +1,5 @@
 ---
-title: "Installing Tackle 2.0"
+title: "Installing Tackle"
 date: 2022-06-14T14:59:30-06:00
 draft: false
 ---
