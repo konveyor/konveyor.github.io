@@ -104,13 +104,13 @@ Tackle uses tags to classify applications in multiple categories. Follow the ste
     * Color
 5. Click the **Create** button.
 
-### Creating new tags
+## Creating new tags
 Follow the steps below to create a new tag not included in the default list.
 
 **Procedure**
 1. Click **Controls** in the left menu of the **Developer** view.
 2. Click the **Tags** tab.
-3. Click the **Create tag types** button.
+3. Click the **Create tag** button.
 ![](/Tackle2/Instances/NewTag.png)
 4. Enter the following information:
     * Name
