@@ -17,7 +17,7 @@ Tackle applications are defined by manually entered and pre-defined attributes:
 ## Creating a new application
 Follow the steps below to add a new application to the inventory for assessment and analysis.
 
-**Note:** Before starting this procedure, it is helpful to set up business services and check tags and tag types and create additions as needed.
+**Note:** Before starting this procedure, it is helpful to set up business services, check tags and tag types, and create additions as needed.
 
 **Procedure**
 1. Click **Application inventory** in the left menu of the **Developer** view.
@@ -88,4 +88,4 @@ Follow the steps below to import a .csv file provided by the customer containing
 
 **Important:** Rows accepted may not match the number of applications in the Application inventory list because some rows are dependencies.  To verify, check the record type column of the CSV file for applications defined as 1 and dependencies as 2.
 
-[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/Tackle2/addapps.md)
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/addApps.md)
