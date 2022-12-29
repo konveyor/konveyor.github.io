@@ -10,7 +10,7 @@ parent"><a href=/crane/><b>1 </b>Crane</a><ul><li data-nav-id=/crane/tutorials/ 
 jq -r &#34;.assets[] | select(.name | contains(\&#34;&lt;arch&gt;-&lt;os&gt;\&#34;)) | .browser_download_url&#34; | wget -i-
 chmod +x &lt;binary&gt;
 cp &lt;binary&gt; /usr/bin/crane
-</code></pre><blockquote><p><strong>Important:</strong> Crane currently supports three architectures:</p><ul><li>amd64-linux</li><li>amd64-darwin</li><li>arm64-darwin</li></ul></blockquote><ol start=2><li>Run one of the following commands to download the latest version of Crane for the architecture.</li></ol><p><strong>amd64-linux.</strong></p><pre tabindex=0><code>curl -sL https://api.github.com/repos/konveyor/crane/releases/latest |
+</code></pre><blockquote><p><strong>Important:</strong> Crane currently supports three architectures:</p><ul><li>amd64-linux</li><li>amd64-darwin</li><li>arm64-darwin</li></ul></blockquote><ol start=2><li>Run one of the following commands to download the latest version of Crane for the architecture:</li></ol><p><strong>amd64-linux.</strong></p><pre tabindex=0><code>curl -sL https://api.github.com/repos/konveyor/crane/releases/latest |
 jq -r &#34;.assets[] | select(.name | contains(\&#34;amd64-linux\&#34;)) |
 .browser_download_url&#34; | wget -i-
 </code></pre><p><strong>amd64-darwin.</strong></p><pre tabindex=0><code>curl -sL https://api.github.com/repos/konveyor/crane/releases/latest |
