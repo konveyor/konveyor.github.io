@@ -3,7 +3,7 @@ title: "Developing custom plugins"
 date: 2022-04-14T15:22:29-06:00
 draft: false
 ---
-This document covers how to write a plugin binary using crane-lib. It requires:
+Custom plugin binaries can be written using 'crane-lib'.
 
 **Procedure**
 
@@ -45,11 +45,11 @@ func main() {
 	return resp, nil
 }
 ```
-The json is passed in using stdin is a `transform.PluginRequest` which consists of an inline unstructured object and an optional `Extras` map containing additional flags. Without any `Extras` the format is identical to the json output from a `kubectl get -o json` call.
+The JSON is passed in using stdin is a `transform.PluginRequest` which consists of an inline unstructured object and an optional `Extras` map containing additional flags. Without any `Extras` the format is identical to the JSON output from a `kubectl get -o json` call.
 
 When adding extra parameters, a map field “extras” is added at the top level (parallel to “apiVersion”, “kind”, etc.).
 
-Version the plugin development output by passing in the JSOC object on stdin manually during development.  For example, if the code above  is compiled and run with the following json as input, the output will be `{"version": "v1"}`.
+Version the plugin development output by passing in the JSOC object on stdin manually during development.  For example, if the code above  is compiled and run with the following JSON as input, the output will be `{"version": "v1"}`.
 ```
 ./my-plugin
 {
@@ -127,8 +127,8 @@ Version the plugin development output by passing in the JSOC object on stdin man
    }
 }
 ```
-When the plugin is ready to be tested, put it in a directory and run with the crane cli command.
+When the plugin is ready to be tested, put it in a directory and run with the Crane CLI command.
 
-More accurate detail can be found [here] (https://github.com/konveyor/crane-lib/blob/main/transform/binary-plugin/README.md).
+More accurate detail can be found [here](https://github.com/konveyor/crane-lib/blob/main/transform/binary-plugin/README.md).
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Tools/CustomPlugIns.md)

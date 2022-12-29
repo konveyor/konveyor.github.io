@@ -43,31 +43,30 @@ This command removes the foo plugin from the `plugin-dir/managed` dir.
 crane plugin-manager remove foo -p plugin-dir
 ```
 > **Note:** The `plugin-manager` command operates in the `<plugin-dir>/managed` directory.
-Whenever the flag `-p, plugin-dir` is used with `plugin-manager`, the utility operates in the `managed` places folder in ``<plugin-dir>``.
+Whenever the flag `-p, plugin-dir` is used with `plugin-manager`, the utility operates in the `managed` places folder in ``<plugin-dir>``. 
 
-For example:  `plugin-manager add` places the plugin binary within `<plugin-dir>/managed`, `plugin-manager` removes the binary from `<plugin-dir>/managed`, and `plugin-manager list --installed` uses the path `<plugin-dir>/managed` to list installed plugins.
+> For example:  `plugin-manager add` places the plugin binary within `<plugin-dir>/managed`, `plugin-manager` removes the binary from `<plugin-dir>/managed`, and `plugin-manager list --installed` uses the path `<plugin-dir>/managed` to list installed plugins.
 
 ## Manual plugin management
-Currently only two plugins are available with more plugins available soon.
 
 Available plugins:
--[Kubernetes](https://github.com/konveyor/crane-lib/tree/main/transform/kubernetes) (build into crane-lib)
--[OpenShift](https://github.com/konveyor/crane-plugin-openshift).
+* [Kubernetes](https://github.com/konveyor/crane-lib/tree/main/transform/kubernetes) (build into crane-lib)
+* [OpenShift](https://github.com/konveyor/crane-plugin-openshift)
 
-These plugins can be added to the desired plugin directory. (The default directory is `plugin` where `crane` is installed.)
+These plugins can be added to the desired plugin directory. The default directory is `plugin` where `crane` is installed.
 
-> **Important:** The Kubernetes plugin is built into the crane-lib and is not to be added manually or otherwise.
+> **Important:** The Kubernetes plugin is built into the crane-lib and should not to be added manually or otherwise.
 
 To install the plugins:
 
-Download the binary of the plugin from the release and place it in the `plugin` directory.
+1. Download the binary of the plugin from the release and place it in the `plugin` directory.
 ```
 curl -sL https://api.github.com/repos/konveyor/crane-plugin-<plugin-name>/releases/latest |
 jq -r ".assets[] | select(.name | contains(\"<arch>-<os>\")) | .browser_download_url" | wget -i-
 chmod +x <binary>
 cp <binary> /bin/usr/crane/plugins/<plugin-name>
 ```
-Build the binary locally and place it in the`plugin` directory.
+2. Build the binary locally and place it in the`plugin` directory.
 ```
 cd $GOPATH
 git clone https://github.com/konveyor/crane-plugin-<plugin-name>.git
@@ -75,6 +74,6 @@ cd crane-plugin-<plugin-name>
 go build -f <plugin-name> .
 cp <plugin> /bin/usr/crane/plugins/<plugin-name>
 ```
-> **Note:** Adding plugins available in the plugin repo manually is not advisable as long as it can be added using`plugin-manager`. For custom plugins or testing plugins under development, manual management is necessary.
+> **Note:** Adding plugins available in the plugin repo manually is not advised if it can be added using`plugin-manager`. For custom plugins or testing plugins under development, manual management is necessary.
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Crane/Tools/PlugInManager.md)

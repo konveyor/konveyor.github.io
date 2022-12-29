@@ -48,6 +48,7 @@ The following prerequisites apply to all migrations:
 
 ## Ports
 Use the following port parameters for migration.
+
 ### VMware VSphere
 The firewalls must enable traffic over the following required network ports for migrating from VMware vSphere.
 
@@ -85,7 +86,7 @@ The following prerequisites apply to oVirt migrations:
 ```
 ### VMware prerequisites
 The following prerequisites apply to VMware migrations:
-* Install [VMware Tools](https://docs.vmware.com/en/VMware-Workstation-Pro/index.html) must be installon all source virtual machines (VMs).
+* Install [VMware Tools](https://docs.vmware.com/en/VMware-Workstation-Pro/index.html) must include installon of all source virtual machines (VMs).
 * If running a warm migration, [changed block tracking (CBT)](https://kb.vmware.com/s/article/1020128) on the VMs and on the VM disks must be enabled.
 * Create a VMware Virtual Disk Development Kit (VDDK) image.
 * Obtain the SHA-1 fingerprint of the vCenter host.
@@ -98,7 +99,7 @@ Forklift uses the VMware Virtual Disk Development Kit (VDDK) SDK to transfer vir
 The VDDK init image path is required to add a VMware source provider:
 
 1. Download the VMware Virtual Disk Development Kit (VDDK)
-2. uild a VDDK image.
+2. Build a VDDK image.
 3. Push the VDDK image to the image registry.
 
 > **Important:** Storing the VDDK image in a public registry might violate the VMware license terms.
@@ -139,9 +140,10 @@ $ podman build . -t <registry_route_or_server_path>/vddk:<tag>
 ```
 $ podman push <registry_route_or_server_path>/vddk:<tag>
 ```
-9. Ensure that the image is accessible to the KubeVirt environment.
+9. Verify the image is accessible to the KubeVirt environment.
 
 ## Obtaining the SHA-1 fingerprint of a vCenter host
+
 Follow the steps below to obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.
 
 **Procedure**
@@ -159,9 +161,7 @@ Example output:
 01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67
 Increasing the NFC service memory of an ESXi host
 ```
-> **Note:** If more than 10 VMs are migrating from an ESXi host in the same migration plan, increase the NFC service memory of the host.
-
-The migration will fail because the NFC service memory is limited to 10 parallel connections.
+> **Note:** If more than 10 VMs are migrating from an ESXi host in the same migration plan, increase the NFC service memory of the host. The migration will fail because the NFC service memory is limited to 10 parallel connections.
 
 **Procedure**
 1. Log in to the ESXi host as root.

@@ -5,18 +5,19 @@ draft: false
 ---
 
 Follow the steps below to migrate virtual machines (VMs) to KubeVirt using the command line (CLI) by creating Forklift custom resources (CRs) and specifying:
-* A name for cluster-scoped CRs
-* A name and a namespace for namespace-scoped CRs
+* A name for cluster-scoped CRs.
+* A name and a namespace for namespace-scoped CRs.
 
 **Prerequisites**
 
 * Must be logged in as a user with cluster-admin privileges.
+
 * **VMware only:**
- * Must have the vCenter SHA-1 fingerprint.
- * Must create a VMware Virtual Disk Development Kit (VDDK) image in a secure registry that is accessible to all clusters.
+  * Must have the vCenter SHA-1 fingerprint.
+  * Must create a VMware Virtual Disk Development Kit (VDDK) image in a secure registry that is accessible to all clusters.
 
 **Procedure**
-1. Create a Secret manifest for the source provider credentials:
+1. Create a secret manifest for the source provider credentials:
 ```
 $ cat << EOF | kubectl apply -f -
 apiVersion: v1
@@ -39,7 +40,7 @@ The explanations below refer to the callouts in the sample code above.
 * (3) oVirt only: Specify the CA certificate of the Engine. Retrieve it at https://<{rhv-short}_engine_host>/ovirt-engine/services/pki-resource?resource=ca-certificate&format=X509-PEM-CA.
 * (4) VMware only: Specify the vCenter SHA-1 fingerprint.
 
-2. Create a Provider manifest for the source provider:
+2. Create a provider manifest for the source provider:
 ```
 $ cat << EOF | kubectl apply -f -
 apiVersion: forklift.konveyor.io/v1beta1
@@ -157,7 +158,7 @@ The explanations below refer to the callouts in the sample code above.
 * (1) Allowed values are ReadWriteOnce and ReadWriteMany.
 * (2) Specify the VMware data storage MOR or oVirt storage domain UUID, for example, f2737930-b567-451a-9ceb-2887f6207009.
 
-6. **Optional:** Create a Hook manifest to run custom code on a VM during the phase specified in the Plan CR:
+6. **Optional:** Create a hook manifest to run custom code on a VM during the phase specified in the Plan CR:
 ```
 $  cat << EOF | kubectl apply -f -
 apiVersion: forklift.konveyor.io/v1beta1
@@ -176,7 +177,7 @@ spec:
 EOF
 ```
 The explanations below refer to the callouts in the sample code above.
-* (1) Use the default hook-runner image or specify a custom image. A playbook does not need to be specified, if a custom image is.
+* (1) Use the default hook-runner image or specify a custom image. A playbook does not need to be specified if a custom image is.
 * (2) **Optional:** Base64-encoded Ansible playbook. The image must be hook-runner if a playbook is specified.
 
 7. Create a Plan manifest for the migration:
@@ -224,9 +225,9 @@ The explanations below refer to the callouts in the sample code above.
 * (7) Specify the VMware VM MOR or oVirt VM UUID.
 * (8) **Optional:** Specify up to two hooks for a VM. Each hook must run during a separate migration step.
 * (9) Specify the name of the Hook CR.
-* (10) Allowed values are PreHook, before the migation plan starts, or PostHook, after the migration is complete.
+* (10) Allowed values are PreHook before the migation plan starts, or PostHook after the migration is complete.
 
-8. Create a Migration manifest to run the Plan CR:
+8. Create a migration manifest to run the Plan CR:
 ```
 $ cat << EOF | kubectl apply -f -
 apiVersion: forklift.konveyor.io/v1beta1
@@ -244,8 +245,7 @@ EOF
 The explanations below refer to the callouts in the sample code above.
 * (1) Specify the name of the Migration CR.
 * (2) Specify the name of the Plan CR being run. The Migration CR creates a VirtualMachine CR for each VM that is migrated.
-* (3) **Optional:** Specify a cutover time according to the ISO 8601 format with the UTC time offset, for example, 2021-04-04T01:23:45.678+09:00.
-Multiple Migration CRs can be associated with a single Plan CR. If a migration does not complete, create a new Migration CR, without changing the Plan CR, to migrate the remaining VMs.
+* (3) **Optional:** Specify a cutover time according to the ISO 8601 format with the UTC time offset, for example, 2021-04-04T01:23:45.678+09:00. Multiple Migration CRs can be associated with a single Plan CR. If a migration does not complete, create a new Migration CR, without changing the Plan CR, to migrate the remaining VMs.
 
 9. Retrieve the Migration CR to monitor the progress of the migration:
 ```
@@ -263,7 +263,7 @@ $ openssl s_client \
     | openssl x509 -fingerprint -noout -in /dev/stdin \
     | cut -d '=' -f 2
 ```
-The explanations below refer to the callouts in the sample code above.
+The explanation below refers to the callouts in the sample code above.
 * (1) Specify the IP address or FQDN of the vCenter host.
 
 Example output:
@@ -271,7 +271,7 @@ Example output:
 01:23:45:67:89:AB:CD:EF:01:23:45:67:89:AB:CD:EF:01:23:45:67
 ```
 ## Canceling a migration
-Forklift functionality cancel cancel an entire migration or individual virtual machines (VMs) while a migration is in progress from the command line interface (CLI).
+Forklift functionality can cancel an entire migration or individual virtual machines (VMs) while a migration is in progress from the command line interface (CLI).
 
 ### Canceling an entire migration
 Follow the steps below to cancel an entire migration.
@@ -281,7 +281,7 @@ Follow the steps below to cancel an entire migration.
 ```
 $ kubectl delete migration <migration> -n konveyor-forklift (1)
 ```
-The explanations below refer to the callouts in the sample code above.
+The explanation below refers to the callouts in the sample code above.
 * (1) Specify the name of the Migration CR.
 
 ### Canceling individual VMs migration
@@ -304,7 +304,7 @@ spec:
   - name: rhel8-vm
 EOF
 ```
-The explanations below refer to the callouts in the sample code above.
+The explanation below refers to the callouts in the sample code above.
 * (1) Specify a VM by using the id key or the name key.
 The value of the id key is the managed object reference, for a VMware VM, or the VM UUID, for a oVirt VM.
 

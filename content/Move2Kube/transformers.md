@@ -6,9 +6,9 @@ draft: false
 
 Move2Kube uses a suite of transformers to modify objects. To customize the output artifacts generated for a specific input, these transformers can be configured or new custom transformers can be created to achieve the required result. Transformer behavior and configuration is determined by the Transformer Class it uses. Though all the transformer classes are equal internally in Move2Kube, from a usage perspective, they are classified into three categories.
 
-1. Purpose Built - Has a specific job and the customization allows for changing the parameters/configuration required for performing the specific job. Ex: `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, etc..
-2. External - Allows you to write custom transformers performing any behavior. It exposes the internal functions of the transformer class through different interfaces to be implemented by the transformer externally. Ex: `Starlark`, `Executable`
-3. Special - These classes allow special behaviors. Ex: `Router`
+- Purpose Built - Has a specific job and the customization allows for changing the parameters/configuration required for performing the specific job. Ex: `Kubernetes`, `Parameterizer`, `GolangDockerfileGenerator`, etc..
+- External - Allows you to write custom transformers performing any behavior. It exposes the internal functions of the transformer class through different interfaces to be implemented by the transformer externally. Ex: `Starlark`, `Executable`
+- Special - These classes allow special behaviors. Ex: `Router`
 
 ## Purpose Built
 These transformer classes do a specific job, and the customization allows for changing the parameters/configuration required for performing the specific job.
@@ -82,7 +82,7 @@ Notice the parameterizer YAML follows the same conventions as Kubernetes YAMLs.
     - `name` : `string` - Name of the parameterizer.
 - `spec` : `object`
     - `parameterizers` : `array[object]` - List of parameterizer objects.
-        - `target` : `string` - Sets the field to parameterize. The syntax is same as `yq` dot notation which is explained in more detail in a later section.
+        - `target` : `string` - Sets the field to parameterize. The syntax is the same as `yq` dot notation which is explained in more detail in a later section.
         - `template` : `string` - Specifies how the field should get its value. For example: `"${common.replicas}"` means the generated Helm chart which contains the `values.yaml` there is the `common` field, and inside it `replicas` as shown below.
             ```console
             $ cat values.yaml
@@ -93,7 +93,7 @@ Notice the parameterizer YAML follows the same conventions as Kubernetes YAMLs.
             ```
             The value of this field will be the same as the value in the original YAML, but it can be overriden using the `default` parameter.
 
-        - `default` : `any` can be used to override the default value for the field being parameterized. For example: if the original value of `spec.replicas` was `2`, then the `values.yaml` would look like this:
+        - `default` : `any` Can be used to override the default value for the field being parameterized. For example: if the original value of `spec.replicas` was `2`, then the `values.yaml` would look like this:
             ```console
             $ cat values.yaml
             ```
@@ -114,7 +114,7 @@ Notice the parameterizer YAML follows the same conventions as Kubernetes YAMLs.
               `apiVersion` : `string` - Only parameterizers Kubernetes YAMLs that match this `apiVersion` field. A regex can be specified.
               `name` : `string` - Only parameterizes Kubernetes YAMLs that have the same `metadata.name` field. A regex can be specified.
               `envs` : `array[string]` - Only apply this parameterization when targeting one of the environments listed here.
-        - `parameters` : `array[object]` - This can be used to specify defaults for each parameter inside the `template`.
+        - `parameters` : `array[object]` - Can be used to specify defaults for each parameter inside the `template`.
             - `name` : `string` - Name of a parameter inside the `template`.
             - `default` : `string` - Default value for this parameter.
 
@@ -161,7 +161,7 @@ Deployment:
                             - image: 'my-repo.com/my-namespace/my-image-name:my-image-tag'
 ```
 
-This may not be enough and may want to parameterize the container image registry URL, registry namespace, image name, and image tag separately.
+This may not be enough and may need to parameterize the container image registry URL, registry namespace, image name, and image tag separately.
 
 To do this use:
 ```yaml
@@ -189,7 +189,7 @@ spec:
 ```
 
 ##### Example 3
-This is an even more complicated scenario continuing from example 2 that adds a dynamic key in our `values.yaml`.
+This is an even more complicated scenario continuing from Example 2 that adds a dynamic key in our `values.yaml`.
 
 To do this use the `[]` square brackets and `$` dollar sign syntax:
 ```yaml
@@ -233,6 +233,6 @@ See examples of using this transform class [here](https://github.com/konveyor/mo
 These classes allow special behaviors.
 
 ### Router
-The Router transformer direct an artifact to one of the eligible transformers, like choosing the server for a WAR file.
+The Router transformer directs an artifact to one of the eligible transformers, like choosing the server for a WAR file.
 
 [WarRouter](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/dockerfilegenerator/java/warrouter) and [EarRouter](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/dockerfilegenerator/java/earrouter) are examples of using this transformer class.

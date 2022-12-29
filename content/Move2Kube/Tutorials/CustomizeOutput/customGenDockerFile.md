@@ -4,7 +4,7 @@ date: 2022-08-04T19:21:31-06:00
 draft: false
 ---
 
-In this tutorial we will make Move2Kube add custom Dockerfile, and a custom file.
+In this tutorial, Move2Kube will add a custom Dockerfile, and a custom file.
 
 1. Create an empty workspace directory named `workspace` and make it the current working directory. Assume all commands are executed within this directory.
 ```console
@@ -19,9 +19,9 @@ README.md		config-utils		customers	docs			frontend		gateway			orders
 ```
 
 3. Run Move2Kube **without** any customization.
-- If the `Dockerfile` is generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-12` as the base image.
-- There are no scripts named `start-nodejs.sh` in the `frontend` service directory.
-- The Kubernetes YAMLs are generated in `myproject/deploy/yamls` directory.
+* If the `Dockerfile` is generated for the `frontend` app, it uses `registry.access.redhat.com/ubi8/nodejs-12` as the base image.
+* There are no scripts named `start-nodejs.sh` in the `frontend` service directory.
+* The Kubernetes YAMLs are generated in `myproject/deploy/yamls` directory.
 
 ```console
 $ move2kube transform -s src/ --qa-skip && ls myproject/source/frontend && cat myproject/source/frontend/Dockerfile && ls myproject/deploy && rm -rf myproject
@@ -37,10 +37,10 @@ CMD npm run start
 cicd			compose			knative			knative-parameterized	yamls			yamls-parameterized
 ```
 
-For this tutorial we want to change:
-- The base image of the Dockerfile generated for Node.js from `registry.access.redhat.com/ubi8/nodejs-12` to `quay.io/konveyor/nodejs-12`.
-- Add a new script named `start-nodejs.sh` in the Node.js app directories along with the Dockerfile in the `frontend` directory.
-- Change the location of Kubernetes YAMLs from `myproject/deploy/yamls` to `myproject/yamls-elsewhere`.
+The next steps will:
+* The base image of the Dockerfile generated for Node.js from `registry.access.redhat.com/ubi8/nodejs-12` to `quay.io/konveyor/nodejs-12`.
+* Add a new script named `start-nodejs.sh` in the Node.js app directories along with the Dockerfile in the `frontend` directory.
+* Change the location of Kubernetes YAMLs from `myproject/deploy/yamls` to `myproject/yamls-elsewhere`.
 
 4. Use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-change-built-in-behavior) of the [Node.js built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/dockerfilegenerator/nodejs) and the [Kubernetes built-in transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/kubernetes/kubernetes) to achieve this. Copy [it](https://github.com/konveyor/move2kube-transformers/tree/main/custom-dockerfile-change-built-in-behavior) into the `customizations` sub-directory.
 ```console
@@ -48,14 +48,16 @@ $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d custom-
 ```
 
 5. Transform using this customization and specify the customization using the `-c` flag.
+
 ```console
 $ move2kube transform -s src/ -c customizations/ --qa-skip
 ```
 
-Once the output is generated, we can observe:
-- The Dockerfile generated for the `frontend` app contains the custom base image.
-- A new file named `start-nodejs.sh` was generated in the `frontend` directory.
-- The Kubernetes YAMLs are now generated in `myproject/yamls-elsewhere` directory and the parameterized YAMLs are also in `myproject/yamls-elsewhere-parameterized` directory.
+Once the output is generated, note the following:
+* The Dockerfile generated for the `frontend` app contains the custom base image.
+* A new file named `start-nodejs.sh` was generated in the `frontend` directory.
+* The Kubernetes YAMLs are now generated in `myproject/yamls-elsewhere` directory and the parameterized YAMLs are also in `myproject/yamls-elsewhere-parameterized` directory.
+
 ```console
 $ ls myproject/source/frontend
 Dockerfile		README.md		dr-surge.js		manifest.yml		package-lock.json	server.js		start-nodejs.sh		stylePaths.js		tsconfig.json		webpack.dev.js LICENSE		__mocks__		jest.config.js		nodemon.json		package.json		src			stories			test-setup.js		webpack.common.js	webpack.prod.js
@@ -74,6 +76,7 @@ Readme.md			deploy				scripts				source				yamls-elsewhere			yamls-elsewhere-par
 
 The two customized transformers in the directory are `nodejs` and `kubernetes`.
 The contents of `custom-dockerfile-custom-files` are shown below:
+
 ```console
   $ tree customizations
   customizations
@@ -86,11 +89,12 @@ The contents of `custom-dockerfile-custom-files` are shown below:
               ├── Dockerfile
               └── start-nodejs.sh
 ```
-To custom configure a built-in transformer, copy the [built-in transformer's configuration directory](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) from `move2kube` source, change the configurations, and use it as a customization. You can make it override the built-in transformer using the `override` config in the yaml.
+
+To custom configure a built-in transformer, copy the [built-in transformer's configuration directory](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers) from the `move2kube` source, change the configurations, use it as a customization, and make it override the built-in transformer using the `override` config in the yaml.
 
 In this case, change the Dockerfile template, add a script, and change the transformer configuration YAML.
 
-1. To change the template, we have added our custom template in `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the built-in transformer](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except we are using a custom base image and a custom `CMD` here.
+1. To change the template, we have added our custom template in `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the built-in transformer](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except it is a custom base image and a custom `CMD`.
 ```
 {% raw %}$ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile
 FROM quay.io/konveyor/nodejs-12
@@ -104,14 +108,16 @@ CMD sh start-nodejs.sh{% endraw %}
 ```
 
 2. Add `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/start-nodejs.sh`.
+
 ```console
 $ ls customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/
 Dockerfile	start-nodejs.sh
 ```
 
 3. The `transformer.yaml` is the transformer configuration with [two changes](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml) compared to the built-in transformer:
-- The name of our custom transformer is `Nodejs-CustomFiles` (see `name` field in the `metadata` section).
-- We are also specifying an `override` section which is asking Move2Kube to disable the transformer named `Nodejs-Dockerfile` if it is present.
+- The custom transformer name is `Nodejs-CustomFiles` (see `name` field in the `metadata` section).
+- Specify an `override` section which is asking Move2Kube to disable the transformer named `Nodejs-Dockerfile` if it is present.
+
 ```console
 $ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/nodejs.yaml
 ```
@@ -143,6 +149,7 @@ $ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/nodejs.ya
 ```
 
 4. In the `kubernetes` transformer, change the name and override the config. Also change the default behavior of the transformer, which is to put the Kubernetes yamls in `deploy/yamls` directory by changing the `spec.config.outputPath` to `yamls-elsewhere`.
+
 ```console
 $ cat customizations/custom-dockerfile-change-built-in-behavior/kubernetes/kubernetes.yaml
 ```

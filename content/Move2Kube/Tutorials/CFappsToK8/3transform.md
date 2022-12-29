@@ -10,21 +10,21 @@ weight: 3
 
 Now we can run the transformation according to the plan file generated in the previous step. The transformation phase runs all of the transformers again, but this time the transformers will use the plan to generate the output files.
 
-During this process, the transformers might run into situations where it requires some more information to generate the output. In order to get this information, it will ask the user some questions. The questions range from yes/no, to multiple choice, to string input. Most questions will have a default answer.
+During this process, the transformers might run into situations where it requires some more information to generate the output. In order to get this information, it will ask the user some questions. The questions range from yes/no, to multiple choice, to string input and most will have a default answer.
 
 Example: Some of the questions Move2Kube will ask is about the type of container registry where you want to push the images to. It also needs to know the registry namespace and any authentication necessary for pulling images from that registry.
 
-If you want to skip the QA, use the `--qa-skip` flag to accept the default answers. However rather than skipping the questions, use a config file that contains all of the answers using the `--config` flag.
+If you want to skip the QA, use the `--qa-skip` flag to accept the default answers. However, a config file that contains all of the answers using the `--config` flag can be used instead of skipping.
 
 After the transformation is finished, all the answers are written to a config file called `m2kconfig.yaml` which can be used for later transformations.
 
-The transformation phase produces all the necessary output files including the Dockerfiles, build scripts for containerizing various services and Kubernetes deployment, and the service and ingress YAMLs necessary for deploying our application to a Kubernetes cluster.
+The transformation phase produces all the necessary output files including the Dockerfiles, build scripts for containerizing various services and Kubernetes deployment, and the service and ingress YAMLs necessary for deploying the application to a Kubernetes cluster.
 
 Move2Kube also generates the CI/CD pipeline and parameterized versions of all the Kubernetes YAMLs (Helm chart, Kustomize YAMLs, Openshift templates, etc.) for various environments (dev, staging, prod, etc.).
 
 ## Prerequisites
 
-* Perform the Plan step before this procedure.
+Perform the Plan step before this procedure.
 
 ## Transforming using the CLI
 
@@ -38,11 +38,12 @@ If you want to avoid the question answers during transformation, you can use thi
 $ move2kube transform --config m2kconfig.yaml
 ```
 2. Answer all the questions as appropriate. For most questions accept the default answers. Some questions to watch out for are:
-- A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in or by editing the plan file.
-- Move2Kube has detected the Maven profiles for each of the Java services. If you are deploying to MiniKube, select the `dev-inmemorydb` profile. Similar questions for the SpringBoot profiles.
-- The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
-- The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
-- We will select `ClusterIP` to only expose the `order` `customers` `inventory` and `gateway` services inside the cluster. We will choose `Ingress` and `/` as the path to expose the `frontend` service. This way only the `frontend` will be exposed outside the cluster through the ingress.
+
+- A spurious service called `config-utils` was detected by one of the transformers can be deselected when asked to select the services or by editing the plan file.
+- Move2Kube has detected the Maven profiles for each of the Java services. Select the `dev-inmemorydb` profile to deploy to MiniKube. There will be similar questions for the SpringBoot profiles.
+- The container registry and namespace to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
+- The ingress hostname and ingress TLS secret. If deploying to MiniKube, give `localhost` as the ingress host and leave the TLS secret blank.
+- Select `ClusterIP` to only expose the `order` `customers` `inventory` and `gateway` services inside the cluster. Choose `Ingress` and `/` as the path to expose the `frontend` service. This way only the `frontend` will be exposed outside the cluster through the ingress.
 
 
 ```console
@@ -206,7 +207,7 @@ Hints:
 ? [quay.io] What type of container registry login do you want to use?
 ID: move2kube.target.imageregistry.logintype
 Hints:
-[Docker login from config mode, will use the default config from your local machine.]
+[Docker login from config mode, will use the default config from the local machine.]
  No authentication
 INFO[0051] Transformer Buildconfig Done 
 INFO[0051] Transformer ComposeGenerator processing 2 artifacts
@@ -291,7 +292,7 @@ INFO[0069] Transformed target artifacts can be found at [/Users/user/Desktop/tut
 ## Transforming using the UI
 Continue from the previous step in the UI.
 
-1. Scroll down from the **Plan** section **Outputs** section.
+1. Scroll down from the **Plan** section to the **Outputs** section.
 
 ```consle
 spec:
@@ -316,14 +317,15 @@ spec:
 
 A form to ask the user questions to guide the transformation opens.
 
-3. Answer all the questions as appropriate. For most questions we can go with the default answers. Some questions to watch out for are:
-- A spurious service called `config-utils` was detected by one of the transformers. We can deselect it when we are asked to select the services we are interested in or by editing the plan file.
-- Move2Kube has detected the Maven profiles for each of the Java services. Since we are deploying to a cluster (like MiniKube), select the `prod-externaldb` profile. There are similar questions for the SpringBoot profiles.
-- The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.)
-- The ingress hostname and ingress TLS secret. If you are deploying to MiniKube, use `localhost` as the ingress host and leave the TLS secret blank.
-- We will select `ClusterIP` to only expose the `order` `customers` `inventory` and `gateway` services inside the cluster. Choose `Ingress` and `/` as the path to expose the `frontend` service. This way only the `frontend` will be exposed outside the cluster through the Ingress.
+3. Answer all the questions as appropriate. For most questions accept the default answers. Some questions to watch out for are:
 
-4. Click the **Next** button to continue going through the questions and finally to run the tranformation.
+* A spurious service called `config-utils` was detected by one of the transformers can be deselected when asked to select the services or by editing the plan file.
+* Move2Kube has detected the Maven profiles for each of the Java services. Select the `dev-inmemorydb` profile to deploy to MiniKube. There will be similar questions for the SpringBoot profiles.
+* The container registry and namespace to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
+* The ingress hostname and ingress TLS secret. If deploying to MiniKube, give `localhost` as the ingress host and leave the TLS secret blank.
+* Select `ClusterIP` to only expose the `order` `customers` `inventory` and `gateway` services inside the cluster. Choose `Ingress` and `/` as the path to expose the `frontend` service. This way only the `frontend` will be exposed outside the cluster through the ingress.
+
+4. Click the **Next** button to continue going through the questions and then run the tranformation.
 
 Move2Kube processes the transformation and the output appears.
 
@@ -333,7 +335,7 @@ Move2Kube processes the transformation and the output appears.
 
 For a sample output of what Move2Kube generates for this enterprise app, see [this](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app/output)
 
-Now that we have generated the output, we can run the scripts inside the `scripts` directory.
+After the output has generated, run the scripts inside the `scripts` directory.
 
 1. Run the `builddockerimages.sh` script to build all the container images for each service using the Dockerfiles that were generated.
 ```
@@ -344,14 +346,14 @@ $ ./builddockerimages.sh
 ```
 $ ./pushimages.sh
 ```
-3. Because we selected the `prod-externaldb` profile, deploy the database using the yamls given [here](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app/database)
+3. Because the `prod-externaldb` profile was selected, deploy the database using the YAMLs located [here](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app/database).
 ```
 $ cd ..
 $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/database -r move2kube-demos
 $ minikube start --memory 8192 --cpus 2 # do this only if you are deploying to Minikube
 $ kubectl apply -f database/
 ```
-4. Deploy the Kubernetes yamls that Move2Kube generated to our cluster
+4. Deploy the Kubernetes YAMLs that Move2Kube generated to the cluster
 ```
 $ kubectl apply -f deploy/yamls
 ```
@@ -359,18 +361,18 @@ The application is now running on the cluster.
 
 5. Get the URL where the app has been deployed to, using `kubectl get ingress myproject -o yaml`  
 
-> **Note:** If you deployed to Minikube, enable the ingress addon and start `minikube tunnel` to access the ingress on `localhost`.
+> **Note:** If deployed to Minikube, enable the ingress addon and start `minikube tunnel` to access the ingress on `localhost`.
 
 ```console
 $ minikube addons enable ingress
-💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
+💡  After the addon is enabled, please run "minikube tunnel" and the ingress resources would be available at "127.0.0.1"
 ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
 ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
 ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
 🔎  Verifying ingress addon...
 🌟  The 'ingress' addon is enabled
 $ minikube addons enable ingress-dns
-💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
+💡  After the addon is enabled, please run "minikube tunnel" and the ingress resources would be available at "127.0.0.1"
 ▪ Using image gcr.io/k8s-minikube/minikube-ingress-dns:0.0.2
 🌟  The 'ingress-dns' addon is enabled
 $ minikube tunnel
@@ -385,4 +387,11 @@ The app is now available on [http://localhost](http://localhost).
 
 ### Customizing the output
 
-After inspecting the output that Move2Kube produced you might see some things you want to change. For example, you might want to change the base image used in the Dockerfiles, add some annotations to the Ingress YAML, maybe change the output directory structure, change which values are parameterized in the Helm chart, generate some new files, etc. For all these user specific requirements and more, use customizations.
+After inspecting the output that Move2Kube produced some changes might be necessary. For example:
+* Changing the base image used in the Dockerfiles.
+* Adding some annotations to the Ingress YAML.
+* Changing the output directory structure.
+* Changing which values are parameterized in the Helm chart.
+* Generating some new files, etc. 
+
+For all these user specific requirements and more, use customizations.

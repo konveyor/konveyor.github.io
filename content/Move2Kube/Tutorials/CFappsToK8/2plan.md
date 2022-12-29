@@ -13,11 +13,15 @@ We start by planning the migration. During the plan phase, Move2Kube will analyz
 
 In order to do the planning, Move2Kube has a large number of built-in transformers for different languages and platforms. Each transformer walks through the source directory from top to bottom and tries to find files that it recognizes. For example, a Golang transformer will try to find a `go.mod` file to detect a Golang project. Once it detects a directory containing a service, it will try to extract as much information from it as possible. Some of the information it tries to find are the service name, ports, environment variables, etc.
 
+The plan file can be created using the CLI or through the UI. When complete, the plan file contains all the transformers that Move2Kube detected and ran. These transformers will be run again during the transformation phase.  
+
+The plan file also contains all the services that Move2Kube was able to detect. The service name comes from the transformer that detected that service. We can edit this plan before we move on to the transformation phase. For now we will leave it as is.
+
 This information is stored in YAML format in a plan file called `m2k.plan` which is used later during the transformation phase. We can edit this file to enable/disable transformers, add/remove detected services, etc.
 
 ## Prerequisites
 
-We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app. Download it using the below command.
+Download the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) using the command below.
 
 ```console
 $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos
@@ -248,15 +252,11 @@ transformers:
 ```
 {{% /expand%}}
 
-The plan file contains all the transformers that Move2Kube detected and ran. These transformers will be run again during the transformation phase.  
-
-The plan file also contains all the services that Move2Kube was able to detect. The service name comes from the transformer that detected that service. We can edit this plan before we move on to the transformation phase. For now we will leave it as is.
-
-Next step: Transform
+Next step: Transform to generate the output needed to deploy our app to Kubernetes.
 
 ## Planning using the UI
 
-1. Open the UI:
+1. Open the UI.
 ```console
 $ docker run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.1
 INFO[0000] Starting Move2Kube API server at port: 8080
@@ -265,10 +265,10 @@ INFO[0000] Starting Move2Kube API server at port: 8080
 3. Create a new project.
 4. Scroll down to the **project inputs** section and then upload the source directory and the collected information zip files.
 
-Optional: If you have collected cloud foundry runtime metadata using the `move2kube collect` command you can create a zip file and upload that as well. Make sure to upload it as `sources`.
+Optional: If you have collected Cloud Foundry runtime metadata using the `move2kube collect` command you can create a zip file and upload that as well. Make sure to upload it as `sources`.
 
 5. Scroll down to the **planning** section and click **Start Planning**.
 
 > **Note** Planning takes a few minutes.
 
-Now that we have generated a plan file we can move on to the Transform phase which generates the output we need to deploy our app to Kubernetes.
+Next step: Transform to generate the output needed to deploy our app to Kubernetes.

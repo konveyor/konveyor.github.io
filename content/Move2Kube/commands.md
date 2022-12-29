@@ -16,7 +16,7 @@ Move2Kube creates all resources required for deploying applications into Kuberne
 There are four phases of the Move2Kube processes that are created, configured, and run using four commands and their options:
 * Move2Kube collect - Collects and processes metadata from multiple sources.
 * Move2Kube plan - Plans the deployment of an application into Kubernetes.
-* Move2Kube transform - Transforms the application using the results of Move2Kube plan stage.
+* Move2Kube transform - Transforms the application using the results of the Move2Kube plan stage.
 * Move2Kube version - Assigns the application version information.
 
 ## Move2Kube collect command
@@ -29,14 +29,14 @@ move2kube collect [flags]
 Move2Kube provides the following options for collecting.
 ```
   -a, --annotations string   Specify annotations to select collector subset.
-  -h, --help                 help for collect
-  -o, --output string        Specify output directory for collect. (default ".")
-  -s, --source string        Specify source directory for the artifacts to be considered while collecting.
+  -h, --help                 Help for the collect command.
+  -o, --output string        Specify the output directory for collect. (default ".").
+  -s, --source string        Specify the source directory for the artifacts to be considered while collecting.
 ```
 
 #### Options inherited from parent commands
 ```
-      --log-file string    File to store the logs in. By default it only prints to console.
+      --log-file string    File to store the logs. By default it only prints to console.
       --log-level string   Set logging levels. (default "info")
 ```
 
@@ -50,9 +50,9 @@ move2kube plan [flags]
 Move2Kube provides the following options for planning.
 ```
   -f, --config strings                Specify config file locations.
-  -c, --customizations string         Specify directory where customizations are stored.
+  -c, --customizations string         Specify the directory where customizations are stored.
       --disable-local-execution       Allow files to be executed locally.
-  -h, --help                          help for plan
+  -h, --help                          Help for the plan command.
   -n, --name string                   Specify the project name. (default "myproject")
   -p, --plan string                   Specify a file path to save plan to. (default "m2k.plan")
       --preset strings                Specify preset config to use.
@@ -80,18 +80,18 @@ Move2Kube provides the following options for transform.
       --config-out string             Specify config file output location. (default ".")
   -c, --customizations string         Specify directory where customizations are stored.
       --disable-local-execution       Allow files to be executed locally.
-  -h, --help                          help for transform
+  -h, --help                          Help for the transform command.
       --ignore-env                    Ignore data from local machine.
   -n, --name string                   Specify the project name. (default "myproject")
   -o, --output string                 Path for output. Default will be directory with the project name. (default ".")
-      --overwrite                     Overwrite the output directory if it exists. By default we don't overwrite.
+      --overwrite                     Overwrite the output directory if it exists. By default it does not overwrite.
   -p, --plan string                   Specify a plan file to execute. (default "m2k.plan")
       --preset strings                Specify preset config to use.
       --qa-cache-out string           Specify cache file output location. (default ".")
       --qa-persist-passwords          Stores passwords too in the config.
-      --qa-skip                       Enable/disable the default answers to questions posed in QA Cli sub-system. If disabled, you will have to answer the questions posed by QA during interaction.
+      --qa-skip                       Enable/disable the default answers to questions posed in QA Cli sub-system.
       --set-config stringArray        Specify config key-value pairs.
-  -s, --source string                 Specify source directory to transform. If you already have a m2k.plan then this will override the sourceDir value specified in that plan.
+  -s, --source string                 Specify source directory to transform. If there already is a m2k.plan then this will override the sourceDir value specified in that plan.
   -t, --transformer-selector string   Specify the transformer selector.
 ```
 
@@ -110,7 +110,7 @@ move2kube version [flags]
 ### Version options
 Move2Kube provides the following options for versioning.
 ```
-  -h, --help   help for version
+  -h, --help   Help for version command.
   -l, --long   Print the version details.
 ```
 

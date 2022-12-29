@@ -15,7 +15,7 @@ Migrate virtual machines (VMs) to KubeVirt using the Forklift web console by per
 * VMware only: Create a [VMware Virtual Disk Development Kit (VDDK)](https://forklift-docs.konveyor.io/documentation/doc-Migration_Toolkit_for_Virtualization/master/index.html#creating-vddk-image_forklift) image.
 
 
-### Adding source providers
+## Adding source providers
 Follow the procedures below to add VMware or oVirt source providers using the Forklift web console.
 
 ### Adding a VMware source provider
@@ -28,13 +28,13 @@ Add a VMware source provider by using the Forklift web console.
 **Procedure**
 1. Open the Forklift web console.
 2. Click **Providers**, then **Add provider**.
-3. Select VMware from the Type list.
+3. Select **VMware** from the **Type** list.
 4. Fill in the following fields:
-* **Name:** Name to display in the list of providers
-* **Hostname or IP address:** vCenter host name or IP address
-* **Username:** vCenter user, for example, user@vsphere.local
-* **Password:** vCenter user password
-* **VDDK init image:** VDDKInitImage path
+    * **Name:** Name to display in the list of providers
+    * **Hostname or IP address:** vCenter host name or IP address
+    * **Username:** vCenter user, for example, user@vsphere.local
+    * **Password:** vCenter user password
+    * **VDDK init image:** VDDKInitImage path
 5. Click **Verify certificate**.
 6. Select the **I trust the authenticity of this certificate** checkbox.
 7. Click **Add** to add and save the provider.
@@ -53,7 +53,7 @@ Add an oVirt source provider by using the Forklift web console.
 2. Click **Providers**, then **Add provider**.
 3. Select **Red Hat Virtualization** from the **Type** list.
 4. Fill in the following fields:
-* **Name:** Name toU display in the list of providers
+* **Name:** Name display in the list of providers
 * **Hostname or IP address:** Engine host name or IP address
 * **Username:** Engine user
 * **Password:** Engine password
@@ -62,7 +62,6 @@ Add an oVirt source provider by using the Forklift web console.
 
 The source provider appears in the list of providers.
 
-
 ## Selecting a migration network for a source provider
 Select a migration network in the Forklift web console for a source provider to reduce risk to the source environment and to improve performance.
 
@@ -70,17 +69,17 @@ Select a migration network in the Forklift web console for a source provider to 
 
 **Prerequisites**
 
-* The migration network must a minimum speed of 10 Gbps for disk transfer.
+* The migration network must have a minimum speed of 10 Gbps for disk transfer.
 * The migration network must be accessible to the KubeVirt nodes through the default gateway.
 * The source virtual disks are copied by a pod that is connected to the pod network of the target namespace.
 * The migration network must have jumbo frames enabled.
 
 **Procedure**
 1. Open the Forklift web console.
-2. Click **Providers**, the the **oVirt8** or **VMware** tab.
+2. Click **Providers**, then the **oVirt8** or **VMware** tab.
 3. Click the **host number** in the **Hosts** column beside a provider to view a list of hosts.
-4. Select one or more hosts and click Select migration network.
-5. Select a Network.
+4. Select one or more hosts and click **Select migration network**.
+5. Select a network.
 
 > **Note:** Clear the selection by selecting the default network.
 
@@ -95,12 +94,12 @@ For oVirt:
 * **Password:** Specify the Engine password.
 
 7. Click **Save**.
-8. Verify that the status of each host is Ready.
+8. Verify that the status of each host shows Ready.
 
 > **Note:** If a host status is not Ready, the host might be unreachable on the migration network or the credentials might be incorrect. Modify the host configuration and save the changes to correct.
 
 ## Adding a KubeVirt destination provider
-Add a KubeVirt destination provider to the Forklift web console in addition to the default KubeVirt destination provider, which is the provider where Forklift.
+Add a KubeVirt destination provider to the Forklift web console in addition to the default KubeVirt destination provider.
 
 **Prerequisites**
 
@@ -129,12 +128,12 @@ Override the default migration network of the provider by selecting a different 
 **Procedure**
 1. Open the Forklift web console.
 2. Click **Providers** then the **KubeVirt tab**.
-3. Select a provider and click **Select migration network**.
+3. Select a **provider** and click **Select migration network**.
 4. Select a **network** from the list of available networks and click **Select**.
 5. Click the **network number** in the **Networks column** beside the provider to verify that the selected network is the default migration network.
 
 ## Creating a network mapping
-Create one or more network mappings  using the Forklift web console to map source networks to KubeVirt networks.
+Create one or more network mappings using the Forklift web console to map source networks to KubeVirt networks.
 
 **Prerequisites**
 
@@ -156,7 +155,7 @@ Create one or more network mappings  using the Forklift web console to map sourc
 
 > **Note:** If an additional network mapping is created, select the network attachment definition as the target network.
 
-5. Click Create.
+5. Click **Create**.
 
 The network mapping is displayed on the Network mappings screen.
 
@@ -176,11 +175,11 @@ Create a storage mapping  using the Forklift web console to map source data stor
 * Source provider
 * Target provider
 * VMware:
- * Source datastore
- * Target storage class
+    * Source datastore
+    * Target storage class
 * oVirt:
- * Source storage domain
- * Target storage class
+    * Source storage domain
+    * Target storage class
 
 4. **Optional:** Click **Add** to create additional storage mappings or to map multiple source data stores or storage domains to a single storage class.
 5. Click **Create**.
@@ -222,7 +221,7 @@ Follow the steps below to create a network mapping.
 
 **Procedure**
 1. Select a target network for each source network.
-2. Optional: Select **Save mapping** to use again and enter a network mapping name.
+2. **Optional:** Select **Save mapping** to use again and enter a network mapping name.
 3. Click **Next**.
 4. Select an existing storage mapping or create a new storage mapping.
 
@@ -231,12 +230,12 @@ Follow the steps below to create a storage mapping.
 
 **Procedure**
 1. Select a target storage class for each VMware data store or oVirt storage domain.
-2. Optional: Select Save mapping to use again and enter a storage mapping name.
+2. **Optional:** Select **Save mapping** to use again and enter a storage mapping name.
 3. Click **Next**.
-4. Select a migration type and click Next.
+4. Select a **migration type** and click **Next**.
 * **Cold migration:** The source VMs are stopped while the data is copied.
 * **Warm migration:** The source VMs run while the data is copied incrementally and the cutover runs later which stops the VMs and copies the remaining VM data and metadata.
-5. Optional: Create a migration hook to run an Ansible playbook before or after migration:
+5. **Optional:** Create a migration hook to run an Ansible playbook before or after migration:
 6. Click **Add** hook.
 7. Select the step when the hook will run.
 8. Select a hook definition:
@@ -260,15 +259,15 @@ Run a migration plan and view its progress in the Forklift web console.
 * Valid migration plan.
 
 **Procedure**
-1. Click Migration plans.
+1. Click **Migration plans**.
 
 The Migration plans list displays the source and target providers, the number of virtual machines (VMs) being migrated, and the status of the plan.
 
 2. Click **Start** beside a migration plan to start the migration.
 
->Warm migration only: When the precopy stage starts.
-1. Click Cutover to complete the migration.
-2. Expand a migration plan to view the migration details.
+> Warm migration only: When the precopy stage starts.
+> 1. Click **Cutover** to complete the migration.
+> 2. Expand a migration plan to view the migration details.
 
 The migration details screen displays the migration start and end time, the amount of data copied, and a progress pipeline for each VM being migrated.
 

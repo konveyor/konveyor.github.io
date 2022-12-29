@@ -4,16 +4,14 @@ date: 2022-08-04T19:11:24-06:00
 draft: false
 ---
 
-### Summary
+Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the `transform` command.
 
 ```console
 $ move2kube transform -s docker-compose
 ```
 
-Move2Kube automatically analyzes all the yaml files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes.
-
 ## Prerequisites
-1. Install the Move2Kube CLI tool.
+* Install the Move2Kube CLI tool.
 
 > **Note:** This tutorial has been created with `v0.3.3-rc.2` version of Move2Kube.
 
@@ -21,22 +19,22 @@ Move2Kube automatically analyzes all the yaml files in the docker-compose direct
 $ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ```
 
-2. Install a Kubernetes cluster from [MiniKube](https://minikube.sigs.k8s.io/docs/start/).
+* Install a Kubernetes cluster from [MiniKube](https://minikube.sigs.k8s.io/docs/start/).
 
 ## Overview
 
-In this tutorial we will migrate an application written for Docker Compose to run on Kubernetes using the two [Docker Compose](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose) samples from the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repo.
+This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two [Docker Compose](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose) samples from the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repo.
 
 * [Sample 1](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/single-service) is a web app with a single service using Nginx and a prebuilt image.
 
-* [Sample 2](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/multiple-services) is more complicated. It is also a web app but it has three services.
-  * A frontend written in PHP for Apache
-  * An API backend written for NodeJS
+* [Sample 2](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/multiple-services) is more complicated. It is also a web app, but it has three services.
+  * A frontend written in PHP for Apache.
+  * An API backend written for NodeJS.
   * A service for caching the calculations performed by the backend.
 
-For the cache service we use a prebuilt Redis image.
+For the cache service use a prebuilt Redis image for this tutorial.
 
-Below are the steps for migrating the second sample. The steps for the first sample are similar except that since it uses prebuilt images, you can skip the build and push the images portion.
+Below are the steps for migrating the second sample. The steps for the first sample are similar except that since it uses prebuilt images, skip the build and push the images portion.
 
 **Procedure**
 
@@ -185,12 +183,12 @@ $ cat m2k.plan
 
 4. Run the transformation phase.
 
-> **Important:** For most prompts we accept the default in this tutorial. However, some prompts to watch out for are:
+> **Important:** For most prompts, accept the default in this tutorial. However, some prompts to watch out for are:
 >
-- **Kind of service/ingress created for the `redis` service:**. Here, select `ClusterIP` so the service port will not be exposed via the Ingress.
-- **Exposed 'web' service URL path:** Since most website frontends are built to be served under `/` we can use that here instead of `/web`.
-- **Image registry URL and image registry namespace:** The image registry URL is where the container images will be pushed after building Docker Hub (index.docker.io), Quay (quay.io), IBM Cloud Container Registry (us.icr.io), etc. The `namespace` here means the username on your target image registry and not the Kubernetes cluster namespace.
-- **Ingress host and TLS secret:** If you are deploying to MiniKube, use `localhost` as the ingress host domain. If you are deploying to Kubernetes cluster on IBM Cloud, then you can find your ingress subdomain on your cluster on IBM Cloud as shown here. You can leave the TLS secret blank.
+* **Kind of service/ingress created for the `redis` service:**. Select `ClusterIP` so the service port will not be exposed via the Ingress.
+* **Exposed 'web' service URL path:** Since most website frontends are built to be served under `/` use that instead of `/web`.
+* **Image registry URL and image registry namespace:** The image registry URL is where the container images will be pushed after building Docker Hub (index.docker.io), Quay (quay.io), IBM Cloud Container Registry (us.icr.io), etc. The `namespace` here means the username on the target image registry and not the Kubernetes cluster namespace.
+* **Ingress host and TLS secret:** If deploying to MiniKube, use `localhost` as the ingress host domain. If deploying to a Kubernetes cluster on IBM Cloud, then find the ingress subdomain on the cluster on IBM Cloud as shown here. Leave the TLS secret blank.
 
 ```console
 $ move2kube transform
@@ -498,7 +496,7 @@ The tranformatin is complete.
     43 directories, 107 files
 ```
 
-Inside the `scripts` directory we see some helpful scripts that Move2Kube has generated to help us build and push the container images we need.
+Inside the `scripts` directory note some helpful scripts that Move2Kube has generated to help build and push the needed container images.
 
 6. Build all the images using the `builddockerimages.sh` script.
 
@@ -586,10 +584,10 @@ $ ./builddockerimages.sh
 ```
  
 
-> **Note:** If you are using Quay.io, change the pushed repositories `visibility` to `Public` or the Kubernetes pods may fail to pull the images from the registry and could fail to start due to `ErrImagePullBack`.
+> **Note:** If using Quay.io, change the pushed repositories `visibility` to `Public` or the Kubernetes pods may fail to pull the images from the registry and could fail to start due to `ErrImagePullBack`.
 
 
-8. If you have already have a Kubernetes cluster, log in to your Kubernetes cluster. Or, start MiniKube to start a local Kubernetes cluster.
+8. If there is a Kubernetes cluster already, log in to it. Or, start MiniKube to start a local Kubernetes cluster.
 
 ```console
     $ minikube start
@@ -610,7 +608,7 @@ $ ./builddockerimages.sh
     🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 ```
 
-Also enable the ingress addon
+> **Important:** Enable the ingress addon.
 ```console
     $ minikube addons enable ingress
     💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
@@ -621,7 +619,7 @@ Also enable the ingress addon
     🌟  The 'ingress' addon is enabled
 ```
 
-9. Check if you are able to run the kubectl related command.
+9. Check if the kubectl related command will run.
 ```console
 $ kubectl get pods
 ```
@@ -670,7 +668,7 @@ service/web created
 
 > **Important:** This step is required only if the app has been deployed on MiniKube cluster.
 
-12.  Access the running application using the Ingress we created by starting a tunnel to the MiniKube cluster.
+12.  Access the running application using the Ingress created by starting a tunnel to the MiniKube cluster.
 
 ```console
 $ minikube tunnel

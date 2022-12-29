@@ -3,20 +3,23 @@ title: "Add custom files and directories in custom locations"
 date: 2022-08-04T19:22:55-06:00
 draft: false
 ---
-Move2Kube allows custom template files to be added to the directories of your choice. In this example, we illustrate this by adding a custom helm-chart.
+Move2Kube allows custom template files to be added to any directory. This example illustrates this by adding a custom Helm chart.
 
-1. Start by creating an empty workspace directory say `workspace` and make it the current working directory. We will assume all commands are executed within this directory.
+1. Start by creating an empty workspace directory named `workspace` and make it the current working directory. Asume all commands are executed within this directory.
+
 ```console
 $ mkdir workspace && cd workspace
 ```
 
 2. Use the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) as input for this flow.
+
 ```console
 $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/enterprise-app/src -r move2kube-demos  
 $ ls src
 README.md		config-utils		customers	docs			frontend		gateway			orders
 ```
-In this project, all the apps have a pom.xml file. We will use a custom transformer to place a helm chart created from a template into each of those project directories.
+
+In this project, all the apps have a pom.xml file. Use a custom transformer to place a Helm chart created from a template into each of those project directories.
 
 3. Use the Starlark based custom transformer located [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations). We copy it into the `customizations` sub-directory.
 ```console
@@ -28,7 +31,7 @@ $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-cus
 $ move2kube transform -s src/ -c customizations/ --qa-skip
 ```
 
-Once the output is generated, we can observe one helm-chart was generated for each service and placed within the service directory. Also, note that every helm-chart project is named after the service it is meant for. The contents are shown below for reference:
+Once the output is generated, one Helm chart was generated for each service and placed within the service directory. Also, note that every Helm chart project is named after the service it is meant for. The contents are shown below for reference:
 ```
     {% raw %}
         $ tree myproject
@@ -165,7 +168,7 @@ Once the output is generated, we can observe one helm-chart was generated for ea
 
 ## Anatomy of transformer in add-custom-files-directories-in-custom-locations
 
-This custom transformer is more advanced compared to previous cases. It uses a Starlark script (`customhelmchartgen.star`) and several templatization features to achieve the per-service helm-chart requirement. Notice the `{% raw %}{{\ .ServiceName\ }}{% endraw %}` template in the file names of custom helm-chart template in the `templates` sub-directory. The contents of the `add-custom-files-directories-in-custom-locations` custom transformer are shown below:
+This custom transformer is more advanced compared to previous cases. It uses a Starlark script (`customhelmchartgen.star`) and several templatization features to achieve the per-service Helm chart requirement. Notice the `{% raw %}{{\ .ServiceName\ }}{% endraw %}` template in the file names of custom Helm chart template in the `templates` sub-directory. The contents of the `add-custom-files-directories-in-custom-locations` custom transformer are shown below:
 ```
 {% raw %}customization/add-custom-files-directories-in-custom-locations/
 ├── customhelmchartgen.star
@@ -182,7 +185,7 @@ This custom transformer is more advanced compared to previous cases. It uses a S
 ```
 The code of the Starlark script (`cat customizations/add-custom-files-directories-in-custom-locations/customhelmchartgen.star`) is shown below. At a high level, the custom transformer detects a Java project if it finds `pom.xml` in the directory when the `directory_detect()` function is invoked in the detect phase. Once the Java project is detected, the corresponding project path and service name are passed to the transform phase through Move2Kube.
 
-In the transform phase, the `transform()` function is invoked with the discovered service artifacts from the detect phase. These artifacts are used to fill the helm-chart templates shown above and produced as the output in a per-service directory structure.
+In the transform phase, the `transform()` function is invoked with the discovered service artifacts from the detect phase. These artifacts are used to fill the Helm chart templates shown above and produced as the output in a per-service directory structure.
 
 ```python
 {% raw %}PomFile = "pom.xml"

@@ -8,28 +8,27 @@ draft: false
 Follow the steps below to change the snapshot interval by patching the ForkliftController custom resource (CR).
 
 **Procedure**
-* Patch the ForkliftController CR:
+1. Patch the ForkliftController CR:
 ```
 $ kubectl patch forkliftcontroller/<forklift-controller> -n konveyor-forklift -p '{"spec": {"controller_precopy_interval": <60>}}' --type=merge (1)
 ```
-The explanation below refers to the callout in the sample code above.
-* (1) Specify the precopy interval in minutes. The default value is 60.
+> **Note:** The Creating custom rules for the Validation service section below refers to the callout in the sample code above.
+
+2. Specify the precopy interval in minutes. The default value is 60.
 
 > **Note:** The forklift-controller pod does not need to be restarted.
 
 ## Creating custom rules for the Validation service
-The Validation service uses Open Policy Agent (OPA) policy rules to check the suitability of each virtual machine (VM) for migration. The Validation service generates a list of concerns for each VM, which are stored in the Provider Inventory service as VM attributes. The web console displays the concerns for each VM in the provider inventory.
+The Validation service uses Open Policy Agent (OPA) rules to check the suitability of each virtual machine (VM) for migration. The Validation service generates a list of concerns for each VM, which are stored in the Provider Inventory service as VM attributes. The web console displays the concerns for each VM in the provider inventory.
 
-Custom rules to extend the default ruleset of the Validation service can be created. For example, create a rule that checks whether a VM has multiple disks.
+Custom rules to extend the default ruleset of the Validation service can be created. For example, creating a rule that checks whether a VM has multiple disks.
 
 ### About Rego files
 Validation rules are written in Rego, the Open Policy Agent (OPA) native query language. The rules are stored as .rego files in the /usr/share/opa/policies/io/konveyor/forklift/<provider> directory of the Validation pod.
 
-Each validation rule is defined in a separate .rego file and tests for a specific condition. If the condition evaluates as true, the rule adds a {“category”, “label”, “assessment”} hash to the concerns. The concerns content is added to the concerns key in the inventory record of the VM. The web console displays the content of the concerns key for each VM in the provider inventory.
+Each validation rule is defined in a separate .rego file and tests for a specific condition. If the condition is true, the rule adds a {“category”, “label”, “assessment”} hash to the concerns. The concerns content is added to the concerns key in the inventory record of the VM. The web console displays the content of the concerns key for each VM in the provider inventory.
 
-The following .rego file example checks for distributed resource scheduling enabled in the cluster of a VMware VM:
-
-drs_enabled.rego example:
+The following .rego file example checks if distributed resource scheduling is enabled in the cluster of a VMware VM. Below is a drs_enabled.rego example:
 ```
 package io.konveyor.forklift.vmware (1)
 
@@ -49,6 +48,7 @@ concerns[flag] {
 The explanations below refer to the callouts in the sample code above.
 * (1) Each validation rule is defined within a package. The package namespaces are io.konveyor.forklift.vmware for VMware and io.konveyor.forklift.ovirt for oVirt.
 * (2) Query parameters are based on the input key of the Validation service JSON.
+
 ## Checking the default validation rules
 Before creating a custom rule, follow the steps below to check the default rules of the Validation service to prevent creating a rule that redefines an existing default value.
 
@@ -63,7 +63,7 @@ $ kubectl rsh <validation_pod>
 ```
 $ cd /usr/share/opa/policies/io/konveyor/forklift/<provider> (1)
 ```
-The explanations below refer to the callouts in the sample code above.
+The explanation below refers to the callouts in the sample code above.
 * (1) Specify vmware or ovirt.
 
 3. Search for the default policies:
@@ -85,7 +85,7 @@ $ kubectl get route <inventory_service> -n konveyor-forklift
 ```
 $ GET https://<inventory_service_route>/providers/<provider> (1)
 ```
-The explanations below refer to the callouts in the sample code above.
+The explanation below refers to the callouts in the sample code above.
 * (1) Allowed values for the provider are vsphere and ovirt.
 3. Retrieve the VMs of a provider:
 ```
@@ -438,7 +438,7 @@ Example output:
 ```
 
 ## Creating a validation rule
-Follow the steps below to create a validation rule by applying a config map custom resource (CR) containing the rule to the Validation service.
+Follow the instructions below to create a validation rule by applying a config map custom resource (CR) containing the rule to the Validation service.
 
 * If the rule has the same name as an existing rule, the Validation service performs an OR operation with the rules.
 
@@ -447,7 +447,7 @@ Follow the steps below to create a validation rule by applying a config map cust
 ### Validation rule example
 Validation rules are based on virtual machine (VM) attributes collected by the Provider Inventory service.
 
-For example, the VMware API uses this path to check whether a VMware VM has NUMA node affinity configured: MOR:VirtualMachine.config.extraConfig["numa.nodeAffinity"].
+For example, the VMware API uses this path to check whether a VMware VM has NUMA node affinity configured: MOR:VirtualMachine.config.extraConfig ["numa.nodeAffinity"].
 
 The Provider Inventory service simplifies this configuration and returns a testable attribute with a list value:
 ```
@@ -505,7 +505,7 @@ $ kubectl scale -n konveyor-forklift --replicas=1 deployment/forklift-controller
 ```
 $ kubectl logs -f <validation_pod>
 ```
-If the custom rule conflicts with a default rule, the Validation pod will not start.
+> **Note:** If the custom rule conflicts with a default rule, the Validation pod will not start.
 
 5. Remove the source provider:
 ```

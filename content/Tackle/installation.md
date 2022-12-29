@@ -76,7 +76,7 @@ EOF
 > **Note:** This can take one to five minutes depending on the cluster resources.
 
 ## Logging in to Tackle Web Console
-Follow the steps below to log into the Tackle web console.
+Follow the steps below to log in to the Tackle web console.
 
 **Procedure**
 1. Access the minikube dashboard. This will enable the dashboard add-on, and open the proxy in the default web browser.

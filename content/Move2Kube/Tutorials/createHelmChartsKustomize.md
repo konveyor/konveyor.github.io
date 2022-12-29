@@ -4,12 +4,10 @@ date: 2022-08-04T19:13:10-06:00
 draft: false
 ---
 
-In this tutorial we will see how to transform a set of Kubernetes YAMLs by parameterizing them.
-We can use Move2Kube to generate parameterized Helm charts, Kustomize and Openshift Templates from the Kubernetes YAMLs.
-Move2Kube can also change the version of Kubernetes resources to target particular clusters.
+This tutorial will show how to transform a set of Kubernetes YAMLs by parameterizing them by using Move2Kube to generate parameterized Helm charts, Kustomize and Openshift Templates from the Kubernetes YAMLs. Move2Kube can also change the version of Kubernetes resources to target particular clusters.
 
 **Prerequisites**
-* Move2Kube CLI tool is installed
+* Move2Kube CLI tool is installed.
 * Use a [kubernetes-to-kubernetes](https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes) sample. The `kubernetes-to-kubernetes` directory has some Kubernetes YAMLs that deploy a web app with multiple services. There are three services: a frontend website in PHP, a backend API in Node.JS, and a cache service using Redis.
 
 **Procedure**
@@ -152,8 +150,7 @@ INFO[0006] Transformer Parameterizer Done
 INFO[0006] Plan Transformation done
 INFO[0006] Transformed target artifacts can be found at [/home/user/myproject].
 ```
-5. When the questions are complete, wait a few minutes for it to finish processing and view it has generated a directory called `myproject`.
-The name of the output directory is the same as the project name (by default `myproject`). The project name be changed using the `-n` flag.
+It will take a few minutes for it to finish processing and generate a directory called `myproject`. The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
 
 ```console
   $ ls
@@ -230,22 +227,22 @@ The full structure of the output directory can be seen by executing the `tree` c
   13 directories, 42 files
 ```
 
-Some things to observe:
-- The Helm chart in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/helm-chart` directory.
-- The Kustomize YAMLs in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/kustomize` directory.
-- The Openshift Template in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/openshift-template` directory.
-- In each case, there are three environments `dev`, `staging` and `prod`.
-- It is possible to have different parameterizations for each environment.
+Some things to note:
+* The Helm chart in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/helm-chart` directory.
+* The Kustomize YAMLs in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/kustomize` directory.
+* The Openshift Template in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/openshift-template` directory.
+* In each case, there are three environments `dev`, `staging` and `prod`.
+* It is possible to have different parameterizations for each environment.
 
-Notice that the directory name has `versionchanged` in it. This is because two transformers are currently in play here,
-* The `KubernetesVersionChanger` transformer, which was asking for the Kubernetes version to target, and which created the version changed yamls to suit the target cluster supported Kinds and versions.
-* The `Parameterizer` transformer, which was taking the version changed YAMLs and creating Helm charts, Kustomize overlays, and OC templates.
+Notice that the directory name has `versionchanged` in it. This is because two transformers are currently in play here:
+* The `KubernetesVersionChanger` transformer, which was asking for the Kubernetes version to target, and which created the version changed YAMLs to suit the target cluster supported kinds and versions.
+* The `Parameterizer` transformer, which was taking the version changed YAMLs and creating Helm Charts, Kustomize overlays, and OC templates.
 
-If the intention was to retain the kind and verisons of Kubernetes YAMLs, disable the `KubernetesVersionChanger` transformer either in the QA, configuration, or in plan, and then the YAMLs will be parameterized as is.
+If the intention was to retain the kind and verisons of Kubernetes YAMLs, disable the `KubernetesVersionChanger` transformer either in the QA, configuration, or in the plan, and then the YAMLs will be parameterized as is.
 
-For more details on how to customize the parameterization that Move2Kube does look at the [documentation](/transformers/purpose-built/parameterizer).
+For more details on how to customize the parameterization that Move2Kube does look at the [parameterization documentation](/transformers/purpose-built/parameterizer).
 
 ## Conclusion
 
-Given Kubernetes YAMLs, we saw how Move2Kube can help us parameterize them and generate Helm charts, Kustomize, Openshift Templates, etc.
+Given Kubernetes YAMLs, Move2Kube helps parameterize them and generate Helm charts, Kustomize, Openshift Templates, etc.
 Move2Kube is also capable of changing the versions of various Kubernetes resources to match the target cluster.

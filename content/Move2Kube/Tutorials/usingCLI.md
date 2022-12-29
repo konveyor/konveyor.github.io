@@ -4,13 +4,13 @@ date: 2022-08-04T19:09:57-06:00
 draft: false
 weight: 3
 ---
-In this tutorial we will see how we can transform a set of sample applications to run on Kubernetes. We will use the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, and build scripts for each application. We will then build the container images and deploy them to a cluster.
+This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.
 
 ## Prerequisites
 
 1. Install the Move2Kube CLI tool.
 
-1. We will use [language-platforms](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample. The `language-platforms` directory has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which need to be containerized and deployed to Kubernetes.
+1. Use the[`language-platforms`](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes.
 
 ## Using the CLI to perform a transformation
 
@@ -22,7 +22,7 @@ $ ls language-platforms
 django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
 ```
 
-2. Run `move2kube plan -s language-platforms` to generate a plan file. The `-s` flag specifies a source directory as `language-platforms` because we want Move2Kube to analyze the source code inside the `language-platforms` directory and come up with a plan for transforming them to Kubernetes YAMLs.
+2. Run `move2kube plan -s language-platforms` to generate a plan file. The `-s` flag specifies `language-platforms` as the source directory for Move2Kube to analyze the source code and come up with a plan for transforming them to Kubernetes YAMLs.
 
 ```console
 $ move2kube plan -s language-platforms
@@ -60,7 +60,7 @@ INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
 
 {{% /expand%}}
 
-3. Look at the plan file we generated in YAML format. Notice Move2Kube has detected all the different services, one for each web app.
+3. Look at the plan file generated in YAML format. Notice Move2Kube has detected all the different services, one for each web app.
 
 ```console
 $ ls
@@ -220,11 +220,12 @@ ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuul
 ```
 {{% /expand%}}
 
-4. Run the transformation using `move2kube transform` to perform the transformation according to the generated plan. By default Move2Kube looks for a plan file in the current directory. If you want to specify the path to a different plan file you can do so using the `-p` flag.
+4. Run the transformation using `move2kube transform` to perform the transformation according to the generated plan. By default Move2Kube looks for a plan file in the current directory. Specify the path to a different plan file using the `-p` flag.
 
-During transformation Move2Kube will ask several questions to help guide the transformation process. For most questions we can go with the default answers. Some questions to watch out for are:
-* The container registry and namespace that you want to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
-* The ingress hostname and ingress TLS secret. If you are deploying to MiniKube then give `localhost` as the ingress host and leave the TLS secret blank.
+During transformation Move2Kube will ask several questions to help guide the transformation process. For most questions accept the default answers. Some questions to watch out for are:
+
+* The container registry and namespace to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
+* The ingress hostname and ingress TLS secret. If deploying to MiniKube, give `localhost` as the ingress host and leave the TLS secret blank.
 
 For all other questions accept the default answers by pressing `Enter` for each.
 
@@ -454,8 +455,7 @@ INFO[0056] Transformed target artifacts can be found at [/Users/user/Desktop/tut
 ```
 {{% /expand%}}
 
-After the questions are finished wait a few minutes for it to finish processing. Once it's done, we can see it has generated a directory called `myproject`.
-The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
+After the questions are finished wait a few minutes for it to finish processing and generated a directory called `myproject`. The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
 
 ```console
 $ ls
@@ -788,7 +788,7 @@ The CLI has created Kubernetes YAMLs which are stored inside the `deploy/yamls` 
 
 Many scripts like `builddockerimages.sh` and `pushimages.sh` are also present inside the directory. It has also created a simple `deploy/compose/docker-compose.yaml` to test the images locally. It has also created Tekton artifacts inside the `deploy/cicd/tekton` directory that are required if you want to use Tekton as your CI/CD pipeline.
 
-The `Readme.md` file guides on the next steps to be followed.
+The `Readme.md` file guides the next steps to follow.
 
 ```console
 $ cat Readme.md
@@ -798,9 +798,9 @@ Congratulations! Move2Kube has generated the necessary build artfiacts for movin
 
 Next Steps
 ----------
-To try locally use the scripts in the "./scripts" directory, to build, push and deploy.
+To try locally, use the scripts in the "./scripts" directory, to build, push and deploy.
 
-For production usage use the CI/CD pipelines for deployment.
+For production usage, use the CI/CD pipelines for deployment.
 ```
 
 2. Run the `builddockerimages.sh` script.
@@ -892,7 +892,7 @@ Use 'docker scan' to run Snyk tests against images to find vulnerabilities and l
 ```
 {{% /expand%}}
 
-3. Login into a container registry from the terminal. Refer to the instructions for [Quay](https://docs.quay.io/solution/getting-started.html) and [Docker Hub](https://docs.docker.com/engine/reference/commandline/login/)
+3. Log in to a container registry from the terminal. Refer to the instructions for [Quay](https://docs.quay.io/solution/getting-started.html) and [Docker Hub](https://docs.docker.com/engine/reference/commandline/login/)
 
 1. Push the container images to the registry specified during the transformation using the `pushimages.sh` script.
 
@@ -972,11 +972,11 @@ service/simplewebapp created
 ```
 
 
-Now all our applications are accessible on the cluster.
+Now all applications are accessible on the cluster.
 
 6. Get the ingress to see the URLs where the apps have been deployed to `kubectl get ingress myproject -o yaml`.
 
-> **Note:** If you deployed to Minikube, make sure to enable the ingress addon.
+> **Important:** If deployed to Minikube, enable the ingress addon.
 
 ```console
 $ minikube addons enable ingress
@@ -1011,4 +1011,4 @@ The apps should be available at the URLs below:
 
 ## Conclusion
 
-You can have a very diverse source environment like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) sample, which has multiple apps in different languages, and in a very simple way you can containerize and deploy them to Kubernetes. If you don't like working with the terminal there is a Move2Kube UI tool which has all the same features as the CLI.
+A very diverse source environment like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) sample, which has multiple apps in different languages, but can simply containerize and deploy them to Kubernetes. A Move2Kube UI tool which has all the same features as the CLI.

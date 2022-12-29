@@ -4,7 +4,7 @@ date: 2022-08-04T19:12:22-06:00
 draft: false
 ---
 ## .NET applications in 4.x framework
-In this tutorial, we will learn how containerize .NET applications developed for 4.x versions of .NET framework using Windows containers and deploy them to Kubernetes cluster using Move2Kube. Here, we are going to use the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
+This tutorial shows how containerize .NET applications developed for 4.x versions of .NET framework using Windows containers and deploy them to Kubernetes cluster using Move2Kube. This tutorial uses the sample [WCF](https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf) service from [samples/wcfservice](https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice).
 
 ## Prerequisites
 
@@ -35,9 +35,9 @@ $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples
 
 ## Generating target artifacts
 
-We will be using a two stage process for the transformation: *plan* and *transform*. Run these steps from the directory containing the `./wcfservice/` directory:
+This procedure uses a two stage process for the transformation: plan and *transform*. Run these steps from the directory containing the `./wcfservice/` directory:
 
-1. First create a *plan* of how to transform the applications to run on Kubernetes. In the *plan* phase, Move2Kube is going to go through the source artifacts and come up with a *plan*.
+1. First create a plan of how to transform the applications to run on Kubernetes. In this phase, Move2Kube goes through the source artifacts to develop a plan.
 
 ```console
 $ move2kube plan -s wcfservice
@@ -61,7 +61,7 @@ INFO[0000] No of services identified : 1
 INFO[0000] Plan can be found at [/Users/padmanabha/go/src/github.com/seshapad/workdir/dotnet-legacy-test/m2k.plan].
 ```
 
-* Move2Kube has created a *m2k.plan* which is essentially a YAML file. See what is inside the *plan* file.
+Move2Kube has created a *m2k.plan* which is essentially a YAML file. Details of the plan file are shown below.
 
 ```yaml
         apiVersion: move2kube.konveyor.io/v1alpha1
@@ -121,10 +121,10 @@ INFO[0000] Plan can be found at [/Users/padmanabha/go/src/github.com/seshapad/wo
 ```
 {{% /expand%}}
 
-* In the *plan*, notice that Move2Kube has detected the WCF services (`wcfservice`) and the relative path of the detected `/App.config`.
-* The *plan* file indicates that the applications can be transformed using Move2Kube's built-in `WinConsoleApp-Dockerfile` transformer.
+* In the plan, notice that Move2Kube has detected the WCF services (`wcfservice`) and the relative path of the detected `/App.config`.
+* The plan file indicates that the applications can be transformed using Move2Kube's built-in `WinConsoleApp-Dockerfile` transformer.
 
-2. Invoke `move2kube transform` on this *plan*.
+2. Invoke `move2kube transform` on this plan.
 
 ```console
 $ move2kube transform
@@ -172,7 +172,7 @@ Hints:
 [✓]  WarRouter
 ```
 
-3. Accept the default by pressing `return` or `enter` key.
+3. Accept the default by pressing **Enter** key.
 
 ```console
 Hints:
@@ -216,7 +216,7 @@ Hints:
   podman
 ```
 
-5. Select runtime of choice. In this case, we select `docker`.
+5. Select runtime of choice. In this case, select `docker`.
 
 > **Note:** At this point, the default port `8080` is detected and the user is prompted whether to expose this port.
 
@@ -257,7 +257,7 @@ Hints:
   us.icr.io
 ```
 
-8. Enter `quay.io` for the image registry host. Select 'Other' if your registry name is not here.
+8. Enter `quay.io` for the image registry host. Select 'Other' if the registry name is not here.
 
 ```console
 quay.io
@@ -308,7 +308,7 @@ Hints:
     my-cluster-ingress-host-domain.com
 ```
 
-10. Indicate the ingress hosting domain. It can be grabbed from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster you are fetching from.
+10. Indicate the ingress hosting domain which can be copied from the cluster you are deploying to. The ingress hosting domain will differ based on the cluster being fetched from.
 
 ```console
  my-cluster-ingress-host-domain.com
@@ -319,7 +319,7 @@ Hints:
 
 ```
 
-12. Accept the by-default for the TLS secret by pressing the 'return' key.
+12. Accept the by-default for the TLS secret by pressing the **Enter** key.
 
 ```console
 INFO[0934] Transformer Kubernetes Done  
@@ -387,7 +387,7 @@ Move2Kube has created all the deployment artifacts which are present inside the 
 ## Differences in Windows applications
 There are two main differences in Move2Kube Windows application transformations.
 
-1.  First difference is in the deployment YAML of Windows container images (see `myproject/deploy/yamls/wcfservice-deployment.yaml` in the above example) . The `nodeSelector` and `tolerations` ensure that the image is instantiated on a Windows node in the Kubernetes cluster.
+The first difference is in the deployment YAML of the Windows container images (see `myproject/deploy/yamls/wcfservice-deployment.yaml` in the above example) . The `nodeSelector` and `tolerations` ensure that the image is instantiated on a Windows node in the Kubernetes cluster.
 ```
 nodeSelector:
 kubernetes.io/os: windows
@@ -400,7 +400,8 @@ tolerations:
 key: os
 value: Windows
 ```
-2. Second difference is in the Dockerfile (see `myproject/source/Dockerfile` in the above example) for the Windows service as shown below. The `FROM` instruction refers to Windows container images and the `--platform` indicates that these images have to be built for a Windows platform.
+The second difference is in the Dockerfile (see `myproject/source/Dockerfile` in the above example) for the Windows service as shown below. The `FROM` instruction refers to Windows container images and the `--platform` indicates that these images have to be built for a Windows platform.
+
 ```yaml
 FROM --platform=windows/amd64 mcr.microsoft.com/dotnet/framework/sdk:4.8 As builder
 WORKDIR /app
@@ -418,4 +419,4 @@ The steps involved to deploy a Windows application is the same as any other appl
 
 ## Conclusion
 
-In this tutorial, we learned how to migrate multiple .NET applications developed on 4.x .NET framework to Kubernetes using the target artifacts generated by Move2Kube.
+This tutorial shows how to migrate multiple .NET applications developed on 4.x .NET framework to Kubernetes using the target artifacts generated by Move2Kube.

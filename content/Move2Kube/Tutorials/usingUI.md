@@ -10,7 +10,7 @@ Similar to the command line tool, the Move2Kube Web-UI can also perform the tran
 
 1. Install [Docker](https://www.docker.com/get-started).
 
-1. We will use [language-platforms](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which needs to be containerized and then put into Kubernetes.
+1. Use the [language-platforms](https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms) sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which need to be containerized and then put into Kubernetes.
 
 ## Using the UI to perform a transformation
 
@@ -36,7 +36,7 @@ This starts a container using the Move2Kube UI image on port `8080`.
     $ docker run --rm -it -p 8080:8080 -v "${PWD}/move2kube-api-data:/move2kube-api/data" -v //var/run/docker.sock:/var/run/docker.sock quay.io/konveyormove2kube-ui:latest
     ```
 
-3. Open [http://localhost:8080](http://localhost:8080) in your browser.
+3. Open [http://localhost:8080](http://localhost:8080) in a browser.
 
 1. Click the **New Workspace** button to create a new workspace named `Workspace 1`.
     
@@ -50,9 +50,9 @@ This starts a container using the Move2Kube UI image on port `8080`.
 
 8. Scroll to view the different services.
 
-> **Important:** If you edit the plan you must click **Save**.
+> **Important:** Click **Save** after all edits.
 
-9. Now scroll down to **Outputs** section and click on the **Start Transformation** button.
+9. Scroll down to **Outputs** section and click on the **Start Transformation** button.
 
 1. Move2Kube will ask some questions to aid in the transfomation process.
 
@@ -68,8 +68,8 @@ This starts a container using the Move2Kube UI image on port `8080`.
 
 1. Click on the output to download the generated artifacts as a zip file (here `workspace-1-project-1-output-bcad1e64-23d0-4ea1-ad47-9d060e870b4f.zip`), extract it, and browse them. The applications can now be deployed to Kubernetes using these generated artifacts.
 
-Now we can build and push the container images and deploy to Kubernetes using the output we downloaded.  The steps for doing that are same as the CLI tutorial.  
+1. Build and push the container images and deploy to Kubernetes using the downloaded output.  The steps for doing that are same as the CLI tutorial.  
 
 ## Conclusion
 
-We have seen how easy it is to to do a transformation using the UI. The UI can be hosted on a common server and used by different teams using different workspaces and also has authentication and authorization capabilities to restrict access to particular workspaces.
+This tutorial shows how easy it is to performa a transformation using the UI. The UI can be hosted on a common server and used by different teams using different workspaces and also has authentication and authorization capabilities to restrict access to particular workspaces.

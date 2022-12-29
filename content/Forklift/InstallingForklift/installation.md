@@ -7,7 +7,7 @@ draft: false
 The Forklift Operator can be installed using the OKD web console or the command line interface (CLI).
 
 ## Installing the Forklift Operator using the OKD web console
-Follow the steps below to install the Forklift Operator by using the OKD web console.
+Follow the steps below to install the Forklift Operator using the OKD web console.
 
 **Prerequisites**
 
@@ -16,25 +16,43 @@ Follow the steps below to install the Forklift Operator by using the OKD web con
 
 **Procedure**
 1. Log in with cluster-admin permissions.
-2. OPen the OKD web console, click **Operators**, then **OperatorHub**.
-3. Use the Filter by keyword field to search for forklift-operator.
+2. Open the OKD web console, click **Operators**, then **OperatorHub**.
+3. Use the **Filter by keyword** field to search for forklift-operator.
 
 > **Note:** The Forklift Operator is a Community Operator. Red Hat does not support Community Operators.
 
-4. Click **Migration Tookit for Virtualization Operator** and then click **Install.
+4. Click **Migration Tookit for Virtualization Operator** and then click **Install**.
 5. Click **Install** on the Install Operator page.
 6. Click **Operators** then **Installed Operators** to verify that Migration Tookit for Virtualization Operator appears in the konveyor-forklift project with the status Succeeded.
 7. Click **Migration Tookit for Virtualization Operator**.
-8. Locate the ForkliftController, and click Create Instance under Provided APIs.
+8. Locate the **ForkliftController**, and click **Create Instance** under Provided APIs.
 9. Click **Create**.
 10. Click **Workloads**, then **Pods** to verify that the Forklift pods are running.
 11. Log in to the OKD web console.
 12. Click **Networking** then **Routes**.
-13. Select the konveyor-forklift project in the Project: list.
+13. Select the **konveyor-forklift** project in the **Project:** list.
 
 The URL for the forklift-ui service that opens the login page for the Forklift web console is displayed.
 
 14. Click the URL to navigate to the Forklift web console.
+
+### Getting the Forklift web console URL Using OKD
+Follow the steps below to retrieve the Forklift web console URL at any time using the OKD web console.
+
+**Prerequisites**
+
+* KubeVirt Operator installed.
+* Forklift Operator installed.
+
+**Procedure**
+1. Log in with cluster-admin privileges.
+2. Log in to the OKD web console.
+3. Click **Networking** then **Routes**.
+4. Select the **konveyor-forklift** project in the **Project:** list.
+
+The URL for the forklift-ui service that opens the login page for the Forklift web console is displayed.
+
+5. Click the URL to navigate to the Forklift web console.
 
 ## Installing the Forklift Operator from the command line interface
 Follow the steps below to install the Forklift Operator from the command line interface (CLI).
@@ -121,25 +139,7 @@ Example output:
 https://virt-konveyor-forklift.apps.cluster.openshift.com.
 ```
 
-## Getting the Forklift web console URL Using OKD
-Follow the steps below to retrieve the Forklift web console URL at any time using the OKD web console.
-
-**Prerequisites**
-
-* KubeVirt Operator installed.
-* Forklift Operator installed.
-
-**Procedure**
-1. Log in with cluster-admin privileges.
-2. Log in to the OKD web console.
-3. Click **Networking** then **Routes**.
-4. Select the konveyor-forklift project in the Project: list.
-
-The URL for the forklift-ui service that opens the login page for the Forklift web console is displayed.
-
-5. Click the URL to navigate to the Forklift web console.
-
-## Getting the Forklift web console URL Using CLI
+### Getting the Forklift web console URL Using CLI
 Follow the steps below to retrieve the Forklift web console URL at any time using the command line.
 
 1. Enter the following command to get the Forklift web console URL:

@@ -4,9 +4,9 @@ date: 2022-08-04T19:22:02-06:00
 draft: false
 ---
 
-Move2Kube generates Kubernetes YAMLs based on the needs of the application, but there might be situations where you might require specific fields to be different in the output. In this example, we illustrate how we can add an annotation to the Ingress YAML specifying an ingress class.
+Move2Kube generates Kubernetes YAMLs based on the needs of the application, but there might be situations that might require specific fields to be different in the output. This example illustrates how to add an annotation to the Ingress YAML specifying an ingress class.
 
-1. Create an empty workspace directory mamed `workspace` and make it the current working directory. Assume all commands are executed within this directory.
+1. Create an empty workspace directory named `workspace` and make it the current working directory. Assume all commands are executed within this directory.
 ```console
 $ mkdir workspace && cd workspace
 ```
@@ -37,12 +37,12 @@ $ move2kube transform -s src/ --qa-skip && cat myproject/deploy/yamls/myproject-
 $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d add-custom-kubernetes-annotation -r move2kube-transformers -o customizations
 ```
 
-5. Transform using this customization and specify the customization using the `-c` flag.
+5. Transform using this customization and specify it using the `-c` flag.
 ```console
 $ move2kube transform -s src/ -c customizations/ --qa-skip
 ```
 
-Once the output is generated, we can observe from the snippet of the ingress file (`myproject/deploy/yamls/myproject-ingress.yaml`) that there is an annotation for the ingress class added (`kubernetes.io/ingress.class: haproxy`):
+Once the output is generated, note in the snippet of the ingress file (`myproject/deploy/yamls/myproject-ingress.yaml`) that there is an annotation for the ingress class added (`kubernetes.io/ingress.class: haproxy`):
 ```console
 $ cat myproject/deploy/yamls/myproject-ingress.yaml
 ```
@@ -60,12 +60,14 @@ $ cat myproject/deploy/yamls/myproject-ingress.yaml
 
 ## Anatomy of ingress annotator transformer
 
-This custom transformer uses a configuration YAML (`ingress-annotator.yaml`) and a Starlark script (`ingress-annotator.star`) to add an annotation to the ingress YAML. The contents of custom transformer are as shown below:
+This custom transformer uses a configuration YAML (`ingress-annotator.yaml`) and a Starlark script (`ingress-annotator.star`) to add an annotation to the ingress YAML. The contents of custom transformer are shown below:
 ```console
 $ ls customizations/add-custom-kubernetes-annotation
 ingress-annotator.star  ingress-annotator.yaml
 ```
+
 The configuration YAML specifies that the custom transformer consumes and produces a Kubernetes YAML artifact type as shown in the `consumes` and `produces` section.
+
 ```console
 $ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.yaml
 ```
@@ -131,6 +133,6 @@ $ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.star
       return {'pathMappings': pathMappings, 'artifacts': artifacts}{% endraw %}
 ```
 
-This tutorial can be replicated in the UI by uploading the zip file of the custom transformer as a `customization`. You can get the zip of the source and customization by adding a `-z` to the end of the commands used in steps 2 and 4.
+This tutorial can be replicated in the UI by uploading the zip file of the custom transformer as a `customization`. Obtain the zip of the source and customization by adding a `-z` to the end of the commands used in steps 2 and 4.
 
 The next step is parameterizing custom fields in Helm Chart, Kustomize, and OC Templates.

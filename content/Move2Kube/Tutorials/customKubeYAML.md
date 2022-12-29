@@ -3,9 +3,9 @@ title: "Customize Kubernetes YAMLs to target specific clusters"
 date: 2022-08-04T19:13:38-06:00
 draft: false
 ---
-Move2Kube already supports targeting across multiple clusters includig: Kubernetes, Openshift, IBM-IKS, IBM-Openshift, Azure-EKS, Azure-AKS and GCP-GKS. There might be situations where you require generating Kubernetes YAMLs to target a particular cluster. In this tutorial we will see how we can use Konveyor Move2Kube to change the versions of existing Kubernetes resources to target a particular cluster. Move2Kube can also be customized to generate Kubernetes YAMLS deployable on a particular cluster.
+Move2Kube already supports targeting across multiple clusters including: Kubernetes, Openshift, IBM-IKS, IBM-Openshift, Azure-EKS, Azure-AKS and GCP-GKS. There might be situations that require generating Kubernetes YAMLs to target a particular cluster. This tutorial shows how to use Konveyor Move2Kube to change the versions of existing Kubernetes resources to target a particular cluster. Move2Kube can also be customized to generate Kubernetes YAMLS deployable on a particular cluster.
 
-## Prerequisites
+**Prerequisites**
 
 1. Install the Move2Kube CLI tool.
 
@@ -13,11 +13,11 @@ Move2Kube already supports targeting across multiple clusters includig: Kubernet
 
 1. Use the [kubernetes-to-kubernetes](https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes) sample. This directory has some Kubernetes YAMLs that deploy a web app with multiple services. There are three services: a frontend website in PHP, a backend API in NodeJS, and a cache service using Redis.
 
-## Steps
+**Procedure**
 
 1. Collect data about the Kubernetes cluster using `move2kube collect`. Limit the collection to only cluster information using the `-a k8s` annotation flag.
 
-> **Note:** Before running the below command, log in to your target cluster. To check whether you are logged in to the target cluster run `kubectl get pods`.
+> **Note:** Before running the below command, log in to the target cluster. To verify, run `kubectl get pods`.
 
 ```console
 $ move2kube collect -a k8s
@@ -30,7 +30,7 @@ INFO[0006] Collection done
 INFO[0006] Collect Output in [/Users/user/m2k_collect]. Copy this directory into the source directory to be used for planning.
 ```
 
-The data we collected will be stored in a new directory called `./m2k_collect`.
+The data collected will be stored in a new directory called `./m2k_collect`.
 
 ```console
 $ ls m2k_collect
@@ -39,9 +39,9 @@ cf
 
 The `./m2k_collect/clusters` directory contains the YAML file which has the cluster application information including the buildpacks that are supported, the memory, the number of instances and the ports that are supported. If there are environment variables, it collects that information too. The name of the cluster can be found in the `metadata.name` file, and can be renamed in the YAML file.
 
-* For this tutorial, we have already collected the `move2kube collect` output yaml file which contains the cluster related information and stored it [here](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml). We have renamed the cluster `metadata.name` as `my-kubernetes-cluster` in the yaml file.
+* For this tutorial, the `move2kube collect` output YAML file which contains the cluster related information is stored [here](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml). The cluster `metadata.name` was renamed as `my-kubernetes-cluster` in the YAML file.
 
-* We will use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector) of the [clusterselector transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/kubernetes/clusterselector).
+* Use a [custom configured version](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector) of the [clusterselector transformer](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/kubernetes/clusterselector).
 
 2. Download the [custom-cluster-selector](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector) transformer into the `customizations` sub-directory.
 
@@ -51,7 +51,7 @@ $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d custom-
 
 The `customizations/custom-cluster-selector/transformer.yaml` is the transformer configuration. There are two changes in the [custom-cluster-selector/transformer.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/transformer.yaml) compared to the built-in [clusterselector/transformer.yaml](https://github.com/konveyor/move2kube/tree/main/assets/built-in/transformers/kubernetes/clusterselector/transformer.yaml) :
 * The name of the custom transformer is `CustomClusterSelector` (see `name` field in the `metadata` section).
-* We are also specifying an `override` section which is asking Move2Kube to disable the transformer named `ClusterSelector` if `CustomClusterSelector` transformer is present.
+* Specify an `override` section which is asking Move2Kube to disable the transformer named `ClusterSelector` if `CustomClusterSelector` transformer is present.
 
 ```console
   $ cat customizations/custom-cluster-selector/transformer.yaml
@@ -83,7 +83,7 @@ The `customizations/custom-cluster-selector/transformer.yaml` is the transformer
         move2kube.konveyor.io/name: ClusterSelector
 ```
 
-To check what information did `move2kube collect -a k8s` collected for us, let's see the content inside the [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml).
+To check what information `move2kube collect -a k8s` collected, view the content inside the [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml).
 
 ```console
 $ cat customizations/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml
@@ -313,7 +313,7 @@ spec:
 ```
 {{% /expand%}}
 
-The [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml) has information about the target cluster under the `spec` field, includin the `storageClasses`, `Deployment`, `Service`, `Ingress` and `NetworkPolicy` versions supported by the target cluster. Move2Kube will use this information and generate the Kubernetes YAMLs which are tailored for the given target cluster.
+The [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml) has information about the target cluster under the `spec` field, including the `storageClasses`, `Deployment`, `Service`, `Ingress` and `NetworkPolicy` versions supported by the target cluster. Move2Kube will use this information and generate the Kubernetes YAMLs which are tailored for the given target cluster.
 
 3. Download the [kubernetes-to-kubernetes](https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes) sample.
 
@@ -323,7 +323,7 @@ The [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transform
   api-deployment.yaml  api-service.yaml  redis-deployment.yaml  redis-service.yaml  web-deployment.yaml  web-ingress.yaml  web-service.yaml
   ```
 
-4. Generate a plan file. Here, we provide the `custom-cluster-selector` transformer which is inside the downloaded `customizations` folder to Move2Kube using the `-c flag`.
+4. Generate a plan file by providing the `custom-cluster-selector` transformer inside the downloaded `customizations` folder to Move2Kube using the `-c flag`.
 
 ```console
 $ move2kube plan -s kubernetes-to-kubernetes -c customizations
@@ -347,7 +347,7 @@ INFO[0000] No of services identified : 1
 INFO[0000] Plan can be found at [/Users/user/m2k.plan].
 ```
 
-5. View the generated plan file in YAML format. Notice Move2Kube has detected our `custom-cluster-selector` as `customizationsDir` which will be used during the *Transform* phase.
+5. View the generated plan file in YAML format. Notice Move2Kube has detected the `custom-cluster-selector` as `customizationsDir` which will be used during the *Transform* phase.
 
 ```console
 $ cat m2k.plan
@@ -475,7 +475,7 @@ Hints:
   [✓]  KubernetesVersionChanger
 ```
 
-7. Accept the default by pressing the `return` or `enter` key.
+7. Accept the default by pressing the **Enter** key.
 
 ```console
 ? Select all services that are needed:
@@ -522,7 +522,7 @@ INFO[0393] Plan Transformation done
 INFO[0393] Transformed target artifacts can be found at [/Users/user/myproject].
 ```
 
-10. The *transformation* has completed and generated a directory called `myproject`.
+10. The transformation has completed and generated a directory called `myproject`.
 
 > **Note:** The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
 
@@ -604,7 +604,7 @@ The full structure of the output directory can be seen by executing the `tree` c
 
 The `myproject/source/kubernetes-to-kubernetes-versionchanged` directory has the new  Kubernetes YAMLs (deployment/service/ingress/etc.) which are tailored to meet the target cluster requirements.
 
-Some other things we can observe:
+Some other things to observe:
 
 - The Helm chart in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/helm-chart` directory.
 - The Kustomize YAMLs in the `source/kubernetes-to-kubernetes-versionchanged-parameterized/kustomize` directory.
@@ -613,7 +613,11 @@ Some other things we can observe:
 For more details on how to customize the parameterization look at the documentation.
 
 ## Conclusion
+Follow these steps to complete the tutorial.
 
-First, run `move2kube collect -a k8s` after logging in to your cluster to collect the cluster-related information inside the `m2k_collect` folder. Then, copy-paste the generated YAML file inside `m2k_collect/cluster/` to [custom-cluster-selector/clusters/](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/). While running `move2kube plan -s src -c custom-cluster-selector` (or transform `move2kube transform -s src -c custom-cluster-selector`), provide the customization folder to Move2Kube using the `-c flag`. Finally, select the target cluster in the QA during *Transform* phase. Move2Kube will generate the Kubernetes YAMLs for the target cluster.
+1. Run `move2kube collect -a k8s` after logging in to the cluster to collect the cluster-related information inside the `m2k_collect` folder. 
+2. Copy-paste the generated YAML file inside `m2k_collect/cluster/` to [custom-cluster-selector/clusters/](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/). 
+3. While running `move2kube plan -s src -c custom-cluster-selector` (or transform `move2kube transform -s src -c custom-cluster-selector`), provide the customization folder to Move2Kube using the `-c flag`. 
+4. Select the target cluster in the QA during *Transform* phase. Move2Kube will generate the Kubernetes YAMLs for the target cluster.
 
-Given Kubernetes YAMLs, we saw how Move2Kube can create/transform the Kubernetes YAMLs to target a specific cluster.
+Given Kubernetes YAMLs, this tutorial showed how Move2Kube can create/transform the Kubernetes YAMLs to target a specific cluster.

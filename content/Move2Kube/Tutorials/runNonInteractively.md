@@ -4,12 +4,11 @@ date: 2022-08-04T19:10:32-06:00
 draft: false
 ---
 
-Move2Kube interacts with users through a series of questions during the transformation phase. After looking at the output, you may want to rerun it and give different answers to some of the questions. In order to avoid answering all of the same questions over and over, Move2Kube provides a simple configuration file.
+Move2Kube interacts with users through a series of questions during the transformation phase. After looking at the output, re-running it and giving different answers to some of the questions may be necessary. In order to avoid answering all of the same questions over and over, Move2Kube provides a simple configuration file.
 
-In the directory where we ran the `move2kube transform` command, we see a file called `m2kconfig.yaml` which contains the answers provided to all of the questions that were asked. There is also a `m2kqacache.yaml` file which contains both the questions and the answers in more detail and can be used when we run the transform using the `--config` flag
+In the directory where the `move2kube transform` command was run there is a file called `m2kconfig.yaml` which contains the answers provided to all of the questions that were asked. There is also a `m2kqacache.yaml` file which contains both the questions and the answers in more detail and can be used when running the transform using the `--config` flag
 
-
-### Summary command
+**Summary command**
 
 ```console
 $ move2kube transform --config path/to/m2kconfig.yaml
@@ -25,7 +24,7 @@ $ move2kube transform --config path/to/m2kconfig.yaml
     django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
 ```
 
-> **Important:** If you already have a `m2kconfig.yaml` from a previous run, skip the next step.
+> **Important:** If there already is a `m2kconfig.yaml` from a previous run, skip the next step.
 
 2. Run the plan and transform on the `language-platforms` source, answer all the questions as appropriate.
 ```console
@@ -50,7 +49,7 @@ $ move2kube transform --config path/to/m2kconfig.yaml
     m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	language-platforms
     $ cat m2kconfig.yaml
 ```
-    Your `m2kconfig.yaml` might look different depending on what questions were asked and what answers you gave.
+    The `m2kconfig.yaml` might look different depending on what questions were asked and the answers given.
     
 ```yaml
     move2kube:
@@ -157,7 +156,7 @@ $ move2kube transform --config path/to/m2kconfig.yaml
       transformerselector: ""
 ```
 
-The config file only contains the answers we provided to the questions. We can better understand the config file by looking at its companion file `m2kqacache.yaml`
+The config file only contains the answers provided to the questions. To better understand the config file, look at its companion file `m2kqacache.yaml`
 
 ```console
     $ cat m2kqacache.yaml
@@ -605,7 +604,7 @@ So we find the answer in the config file `/java-maven` stored as:
           "9080":
             urlpath: /java-maven
 ```
-Every time Move2Kube goes to ask a question, it first checks the config file to see if it has already been answered using the question's ID. If the ID is not present in the config file, Move2Kube will usually ask the user for the answer meaning we can provide the answer to any question by storing it in the config file.
+Every time Move2Kube goes to ask a question, it first checks the config file to see if it has already been answered using the question ID. If the ID is not present in the config file, Move2Kube will usually ask the user for the answer meaning the answer to any question can be provided by storing it in the config file.
 
 4. Run the transform again with the generated config file.
 
@@ -622,4 +621,4 @@ Every time Move2Kube goes to ask a question, it first checks the config file to 
     $ ls
     m2k.plan	m2kconfig.yaml	m2kqacache.yaml	myproject	old		language-platforms
 ```
-This time Move2Kube didn't ask any questions because we provided all of the answers by editing the config file directly to change the answer to a question. We can also remove some of the answers from the config file if we want Move2Kube to ask us those questions again. This gives us a nice way to iterate quickly, as well as a way to run Move2Kube non-interatively.
+This time Move2Kube did not ask any questions because all of the answers were provided by editing the config file directly to change the answer to a question. Some answers can be removed from the config file to prompt Move2Kube to ask those questions again. This provides a convenient way to iterate quickly, as well as a way to run Move2Kube non-interatively.

@@ -8,23 +8,24 @@ grand_parent: Tutorials
 weight: 1
 ---
 
-> **Note:** This is an optional step. If you are not familiar with Cloud Foundry or you do not want to collect information from your running app, skip to Customizing the output.
+> **Note:** This is an optional step. If you are not familiar with Cloud Foundry or you do not want to collect information from the running app, skip to Customizing the output.
 
-To analyze the running application in Cloud Foundry (CF), the Move2Kube CLI tool provides a command called `collect`. As the name suggests, the `collect` command collects information about applications running in the cloud.
+To analyze the running application in Cloud Foundry (CF), the Move2Kube CLI tool provides a command called `collect`. As the name suggests, it collects information about applications running in the cloud.
 
-- For collecting information from a CF running instance, you might require `cf` CLI for logging into Cloud Foundry. If you want to target a specific Kubernetes cluster for your yamls, you will need either `oc`, and `kubectl` to collect information about the target cluster.
+* For collecting information from a CF running instance, consider requiring `cf` CLI for logging into Cloud Foundry. To target a specific Kubernetes cluster for the YAMLs, either `oc` or `kubectl` to collect information about the target cluster is necessary.
 
-- If you are logged into the Cloud Foundry instance, information about the apps such as environment variables, services, and more are collected. If you are logged into Kubernetes clusters, it collects information about the types of resources that are installed on the cluster, such as whether it has Tekton, BuildConfigs, etc.
+* If logged into the Cloud Foundry instance, information about the apps such as environment variables, services, and more are collected. If logged into Kubernetes clusters, it collects information about the types of resources that are installed on the cluster, such as whether it has Tekton, BuildConfigs, etc.
 
-- All the information that was collected gets written into a directory called `m2k_collect` as YAML files. In this case, the info about Cloud Foundry apps is written to a sub-directory called `cf`. These YAMLs can then be used during the plan phase to get a holistic plan combining the source and metadata.
+* All the information that was collected gets written into a directory called `m2k_collect` as YAML files. In this case, the info about Cloud Foundry apps is written to a sub-directory called `cf`. These YAMLs can then be used during the plan phase to get a holistic plan combining the source and metadata.
 
-For example: Some of the information that is collected is port and environment variable information. This allows Move2Kube to select the right ports and set the right environment variables for each service when generating Dockerfiles for containerizing these services.
+For example: Some of the information that is collected is port and environment variable information. This allows Move2Kube to select the right ports and set the right environment variables for each service when generating Dockerfiles for containerizing them.
 
 ## Collecting info from e2e-demo app
 
 **Prerequisites**
 
-1. The `cf` tool installed and you have logged into your Cloud Foundry instance. Run `cf target` to check if you are logged in. The output should be similar to this:
+* The `cf` tool installed.
+* Logged into the Cloud Foundry instance. Run `cf target` to verify. The output should be similar to this:
 
 ```console
 $ cf target
@@ -35,7 +36,7 @@ org:            my-org
 space:          dev
 ```
 
-2. The [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app in the Cloud Foundry instance is deployed.
+* The [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) app in the Cloud Foundry instance is deployed.
 
 ```console
 $ cf apps
@@ -66,7 +67,7 @@ INFO[0026] Collection done
 INFO[0026] Collect Output in [/Users/user/Desktop/tutorial/m2k_collect]. Copy this directory into the source directory to be used for planning.
 ```
 
-The output will be in a directory called `m2k_collect` with a sub-directory called `cf` containing two 2 YAML files: `CfApps` and `CfServices`.
+The output will be in a directory called `m2k_collect` with a sub-directory called `cf` containing two YAML files: `CfApps` and `CfServices`.
 
 ```console
 $ ls m2k_collect/
@@ -322,7 +323,7 @@ detectedstartcommand: 'JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/b
 ```
 {{% /expand%}}
 
-Now that we have collected the runtime information from the app running in our Cloud Foundry instance, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are same as the Plan step.
+Now that we have collected the runtime information from the app running in our Cloud Foundry instance, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are the same as the Plan step.
 
 ## Next steps
 
