@@ -15,7 +15,7 @@ In order to do the planning, Move2Kube has a large number of built-in transforme
 
 The plan file can be created using the CLI or through the UI. When complete, the plan file contains all the transformers that Move2Kube detected and ran. These transformers will be run again during the transformation phase.  
 
-The plan file also contains all the services that Move2Kube was able to detect. The service name comes from the transformer that detected that service. We can edit this plan before we move on to the transformation phase. For now we will leave it as is.
+The plan file also contains all the services that Move2Kube was able to detect. The service name comes from the transformer that detected that service. We can edit this plan before moving to the transformation phase. For now, leave it as is.
 
 This information is stored in YAML format in a plan file called `m2k.plan` which is used later during the transformation phase. We can edit this file to enable/disable transformers, add/remove detected services, etc.
 
@@ -78,7 +78,7 @@ spec:
   services:
     config-utils:
 ```
-{{%expand "Click to see the rest of the yaml."%}}
+{{%expand "Click to see the rest of the YAML."%}}
 ```yaml
       - transformerName: Maven
       paths:
@@ -252,7 +252,7 @@ transformers:
 ```
 {{% /expand%}}
 
-Next step: Transform to generate the output needed to deploy our app to Kubernetes.
+Next step: Transform to generate the output needed to deploy the app to Kubernetes.
 
 ## Planning using the UI
 
@@ -271,4 +271,4 @@ Optional: If you have collected Cloud Foundry runtime metadata using the `move2k
 
 > **Note** Planning takes a few minutes.
 
-Next step: Transform to generate the output needed to deploy our app to Kubernetes.
+Next step: Transform to generate the output needed to deploy app to Kubernetes.

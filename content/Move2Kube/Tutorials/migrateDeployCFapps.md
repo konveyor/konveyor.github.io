@@ -16,7 +16,7 @@ $ move2kube transform -s cloud-foundry
 
 * A source directory containing the source code files and/or the manifest.yml file of a Cloud Foundry application.
 
-A sample of this is present in the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository. In this tutorial, we will be using the `cloud-foundry` sample from this repository.
+A sample of this is present in the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repository. This tutorial will be using the `cloud-foundry` sample from this repository.
 ```console
 $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/cloud-foundry -r move2kube-demos
 ```
@@ -35,11 +35,11 @@ View the structure inside the `./cloud-foundry` directory which contains the sou
           └── cfapps.yaml
 ```
 
-1. Install [Move2Kube](/installation).
+1. Install Move2Kube.
 
 2. Install a container runtime: [Docker](https://www.docker.com/get-started) or [Podman](https://podman.io/getting-started/installation).
 
-1. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
+3. Install [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl).
 
 To verify that dependencies were correctly installed you can run the below commands.
 ```console
@@ -56,7 +56,7 @@ $ podman info
 $ kubectl version
 ```
 
-1. Install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html).
+4. Install the [Cloud Foundry CLI](https://docs.cloudfoundry.org/cf-cli/install-go-cli.html).
 
 To demonstrate how to use Move2Kube to migrate a Cloud Foundry (CF) application to Kubernetes, this tutorial will use the source code inside the `cloud-foundry/cfnodejsapp` directory. To try out Move2Kube on a CF application, in place of the sample `cloud-foundry` directory, provide the correct path of the source directory (containing the source code and/or manifest files) of your CF application to Move2Kube during the plan phase.
 

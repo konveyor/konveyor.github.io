@@ -8,7 +8,7 @@ This tutorial shows how containerize .NET applications developed for 4.x version
 
 ## Prerequisites
 
-1. Install [Move2Kube](/installation).
+1. Install Move2Kube.
 
 1. Configure Kubernetes with [windows node support](https://kubernetes.io/docs/setup/production-environment/windows/user-guide-windows-containers/).
 
@@ -319,7 +319,7 @@ Hints:
 
 ```
 
-12. Accept the by-default for the TLS secret by pressing the **Enter** key.
+11. Accept the by-default for the TLS secret by pressing the **Enter** key.
 
 ```console
 INFO[0934] Transformer Kubernetes Done  

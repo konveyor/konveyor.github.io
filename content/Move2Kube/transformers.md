@@ -189,7 +189,7 @@ spec:
 ```
 
 ##### Example 3
-This is an even more complicated scenario continuing from Example 2 that adds a dynamic key in our `values.yaml`.
+This is an even more complicated scenario continuing from Example 2 that adds a dynamic key in the `values.yaml`.
 
 To do this use the `[]` square brackets and `$` dollar sign syntax:
 ```yaml
@@ -227,7 +227,9 @@ An `Executable` class based on a transformer can be configured to run commands l
 ### Starlark
 A `Starlark` class based transformer allows for writing a full fledged transformer in [Starlark](https://docs.bazel.build/versions/2.1.0/skylark/language.html) by implementing the `directory_detect` and `transform` functions.
 
-See examples of using this transform class [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation) and [here](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations).
+See examples of using this transform class:
+* [add-custom-kubernetes-annotation](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-kubernetes-annotation) 
+* [add-custom-files-directories-in-custom-locations](https://github.com/konveyor/move2kube-transformers/tree/main/add-custom-files-directories-in-custom-locations).
 
 ## Special
 These classes allow special behaviors.

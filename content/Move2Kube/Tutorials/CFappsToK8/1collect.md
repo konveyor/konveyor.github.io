@@ -323,8 +323,8 @@ detectedstartcommand: 'JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/b
 ```
 {{% /expand%}}
 
-Now that we have collected the runtime information from the app running in our Cloud Foundry instance, we can use it during the planning phase by simply copying it into the source directory before starting the planning. All the steps are the same as the Plan step.
+Now that the runtime information has been collected from the app running in the Cloud Foundry instance, it can be used during the planning phase by simply copying it into the source directory before starting the planning. All the steps are the same as the Plan step.
 
 ## Next steps
 
-Next we will customize the output that Move2Kube produces using customizations.
+Next is customizing the output that Move2Kube produces using customizations.

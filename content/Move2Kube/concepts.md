@@ -30,7 +30,7 @@ Each artifact is an object with fields that need to be understood in order to wr
 
 > **Important:** Transformers consume artifacts based on their type, so custom artifact types can only be consumed by custom transformers that understand them. Example built-in artifact types include: `IR`, `KubernetesYamls`, `Dockerfile`, etc.
 
-- `processWith` : `object` - This is the same as the Kubernetes label selector field. See https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#resources-that-support-set-based-requirements
+- `processWith` : `object` - This is the same as the Kubernetes label selector field. See [Resources that support set-based requirements](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/#resources-that-support-set-based-requirements)
 - `paths` : `object ([string]: []string)` - Mapping from a file type to a list of directories containing files of that type.
     - The key is a string containing the file type.
     - The value is a list of strings/paths to directories containing files of that type.

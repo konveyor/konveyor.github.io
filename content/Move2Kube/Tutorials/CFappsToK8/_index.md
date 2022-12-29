@@ -3,7 +3,7 @@ title: "Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes"
 date: 2022-08-12T12:06:32-06:00
 draft: false
 ---
-In this tutorial we will go through the entire workflow of migratinging a Cloud Foundry application with several micro-services to run on Kubernetes.
+This tutorial steps through the entire workflow of migratinging a Cloud Foundry application with several micro-services to run on Kubernetes.
 
 We will be using the [enterprise-app](https://github.com/konveyor/move2kube-demos/tree/main/samples/enterprise-app) which is a retail website for shopping online. The website shows some products for sale and you can create orders by adding things to cart and checking out.
 

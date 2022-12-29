@@ -7,7 +7,7 @@ Follow the steps below to upgrade the Forklift Operator using the OKD web consol
 
 > **Important:** Do not skip a release when upgrading.  For example, upgrade 2.0 to 2.1 and then 2.1 to 2.2.
 
-If upgrading from 2.2 to 2.3, see the [### Forklift 2.2 to 2.3 Upgrade Notes](#Forklift-2.2-to-2.3-Upgrade-Notes) section after the procedure
+If upgrading from 2.2 to 2.3, see the ### Forklift 2.2 to 2.3 Upgrade Notes section after the procedure.
 
 **Procedure**
 1. Open the OKD web console.

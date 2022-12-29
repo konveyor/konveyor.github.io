@@ -19,7 +19,7 @@ cp <binary> /usr/bin/crane
 >- amd64-darwin
 >- arm64-darwin
 
-2. Run one of the following commands to download the latest version of Crane for the architecture.
+2. Run one of the following commands to download the latest version of Crane for the architecture:
 
 **amd64-linux.**
 ```

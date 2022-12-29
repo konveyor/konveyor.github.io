@@ -87,6 +87,6 @@ Follow the steps below to log in to the Tackle web console.
 3. Click **Service** then **Ingresses**
 4. Click the endpoint IP for the `tackle` ingress ingress to launch the Tackle web console in a new browser window.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
-6. The default auth enabled credentials are: `admin`/`Passw0rd!`
+5. The default auth enabled credentials are: `admin`/`Passw0rd!`
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/assessAnalyze.md)

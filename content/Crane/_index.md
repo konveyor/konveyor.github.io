@@ -13,10 +13,10 @@ The Crane tool helps application owners migrate Kubernetes workloads and their s
 
 The process uses a few tools:
 
-- **crane:** Command line tool that migrates applications to the terminal.
-- **crane-lib:** The brains behind Crane functionality responsible for transforming resources.
-- **crane-plugin-openshift:** Plugin specifically tailored to manage OpenShift migration workloads and an example of a repeatable best-practice.
-- **crane-plugins:** Collection of plugins from the Konveyor community based on experience from performing Kube migrations.
+* **crane:** Command line tool that migrates applications to the terminal.
+* **crane-lib:** The brains behind Crane functionality responsible for transforming resources.
+* **crane-plugin-openshift:** Plugin specifically tailored to manage OpenShift migration workloads and an example of a repeatable best-practice.
+* **crane-plugins:** Collection of plugins from the Konveyor community based on experience from performing Kube migrations.
 
 ## Why crane is needed?
 

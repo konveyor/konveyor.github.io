@@ -512,7 +512,7 @@ INFO[1852] Transformed target artifacts can be found at [/Users/username/github/
 
 The transformation is successful and the target artifacts can be found inside the `./myproject` directory.
 
-23. View the *./myproject* directory structure.
+22. View the *./myproject* directory structure.
 
 ```console
 $  tree myproject -L 3

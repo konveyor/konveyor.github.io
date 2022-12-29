@@ -624,7 +624,7 @@ $ ./builddockerimages.sh
 $ kubectl get pods
 ```
 
-10. Deploy the Kubernetes YAMLs to our Kubernetes/MiniKube cluster.
+10. Deploy the Kubernetes YAMLs to the Kubernetes/MiniKube cluster.
 
 ```console
 $ kubectl apply -f deploy/yamls
@@ -682,4 +682,4 @@ Password:
 
 ## Conclusion
 
-  In this tutorial we transformed a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube.
+  In this tutorial showed hot to transform a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube.

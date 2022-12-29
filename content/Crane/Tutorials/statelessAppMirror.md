@@ -25,7 +25,7 @@ chmod +x minikube-clusters-start.sh./minikube-clusters-start.sh
 wget "https://raw.githubusercontent.com/konveyor/crane-runner/main/hack/kind-up.sh"
 chmod +x kind-up.sh./kind-up.sh
 ```
-2. Install Crane using the [Installation Guide](https://crane-docs.konveyor.io/content/getting-started/installation/).
+2. Install Crane using the [Installation Guide](https://konveyor.github.io/crane/installation/).
 
 > **Important:** Read through [Kubernetes' documentation on accessing multiple clusters](https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/). This document references **src** and **dest** contexts that refer to the clusters created using the minikube startup scripts above.
 When working in the home environment, or using Kind (`kind-src` and `kind-dest`), modify the commands below to reference the correct cluster context.

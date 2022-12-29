@@ -5,7 +5,7 @@ draft: false
 ---
 ## Installing on Linux / MacOS / Windows WSL (Recommended):
 
-The easiest way to install Move2Kube is to download the pre-built binaries for Linux, MacOS, or Windows from the list of releases on Github: https://github.com/konveyor/move2kube/releases. Follow the steps below to install the latest stable version.
+The easiest way to install Move2Kube is to download the pre-built binaries for Linux, MacOS, or Windows from the [list of releases on Github](https://github.com/konveyor/move2kube/releases). Follow the steps below to install the latest stable version.
 
 **Procedure**
 

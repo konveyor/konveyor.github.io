@@ -5,6 +5,7 @@ weight = 2
 chapter = true
 pre = "<b>2 </b>"
 +++
+
 # Forklift
 
 Forklift provides a simplistic way for large scale migration of virtual machines (VMs) at scale to Kubernetes from traditional hypervisors like VMware (vSphere) and Red Hat Virtualization (oVirt) to KubeVirt. Forklift is an open source tool based on proven core Linux v2v technologies that can rehost a few or hundreds of VMs while minimizing downtime as it lifts and shifts the applications. The benefits of Forklift include:

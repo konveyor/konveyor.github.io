@@ -29,15 +29,15 @@ Follow the steps below to uninstall Forklift using the command line interface (C
 * Logged in as a user with cluster-admin privileges.
 
 **Procedure**
-1. Delete the project:
+1. Delete the project.
 ```
 $ kubectl delete project konveyor-forklift
 ```
-2. Delete the CRDs:
+2. Delete the CRDs.
 ```
 $ kubectl get crd -o name | grep 'forklift' | xargs kubectl delete
 ```
-3. Delete the OAuthClient:
+3. Delete the OAuthClient.
 ```
 $ kubectl delete oauthclient/forklift-ui
 ```

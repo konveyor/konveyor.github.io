@@ -94,7 +94,7 @@ To custom configure a built-in transformer, copy the [built-in transformer's con
 
 In this case, change the Dockerfile template, add a script, and change the transformer configuration YAML.
 
-1. To change the template, we have added our custom template in `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the built-in transformer](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except it is a custom base image and a custom `CMD`.
+1. To change the template, the custom template is placed in `customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile`. The template is the [same as the one used in the built-in transformer](https://github.com/konveyor/move2kube/blob/main/assets/built-in/transformers/dockerfilegenerator/nodejs/templates/Dockerfile), except it is a custom base image and a custom `CMD`.
 ```
 {% raw %}$ cat customizations/custom-dockerfile-change-built-in-behavior/nodejs/templates/Dockerfile
 FROM quay.io/konveyor/nodejs-12

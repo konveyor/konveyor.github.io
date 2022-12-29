@@ -996,18 +996,6 @@ $ minikube tunnel
 🏃  Starting tunnel for service myproject.
 Password:
 ```
-The apps should be available at the URLs below:
-
-* golang - [http://localhost/golang](http://localhost/golang)
-
-* nodejs - [http://localhost/nodejs](http://localhost/nodejs)
-
-* python - [http://localhost/myproject-python](http://localhost/myproject-python)
-
-* ruby - [http://localhost/ruby](http://localhost/ruby)
-
-* rust - [http://localhost/rust](http://localhost/rust)
-
 
 ## Conclusion
 

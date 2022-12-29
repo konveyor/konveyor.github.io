@@ -98,7 +98,7 @@ Forklift uses the VMware Virtual Disk Development Kit (VDDK) SDK to transfer vir
 > **Note:**
 The VDDK init image path is required to add a VMware source provider:
 
-1. Download the VMware Virtual Disk Development Kit (VDDK)
+1. Download the VMware Virtual Disk Development Kit (VDDK).
 2. Build a VDDK image.
 3. Push the VDDK image to the image registry.
 
@@ -111,7 +111,7 @@ The VDDK init image path is required to add a VMware source provider:
 * KubeVirt must be able to access an external registry if used.
 
 **Procedure**
-1. Create and navigate to a temporary directory:
+1. Create and navigate to a temporary directory.
 ```
 Example output:
 $ mkdir /tmp/<dir_name> && cd /tmp/<dir_name>
@@ -119,11 +119,11 @@ $ mkdir /tmp/<dir_name> && cd /tmp/<dir_name>
 2. Open a browser and navigate to the [VMware VDDK download page](https://developer.vmware.com/web/sdk/7.0/vddk).
 3. Select the latest VDDK version and click **Download**.
 4. Save the VDDK archive file in the temporary directory.
-5. Extract the VDDK archive:
+5. Extract the VDDK archive.
 ```
 $ tar -xzf VMware-vix-disklib-<version>.x86_64.tar.gz
 ```
-6. Create a Dockerfile:
+6. Create a Dockerfile.
 ```
 $ cat > Dockerfile <<EOF
 FROM registry.access.redhat.com/ubi8/ubi-minimal
@@ -132,11 +132,11 @@ RUN mkdir -p /opt
 ENTRYPOINT ["cp", "-r", "/vmware-vix-disklib-distrib", "/opt"]
 EOF
 ```
-7. Build the VDDK image:
+7. Build the VDDK image.
 ```
 $ podman build . -t <registry_route_or_server_path>/vddk:<tag>
 ```
-8. Push the VDDK image to the registry:
+8. Push the VDDK image to the registry.
 ```
 $ podman push <registry_route_or_server_path>/vddk:<tag>
 ```
@@ -147,7 +147,7 @@ $ podman push <registry_route_or_server_path>/vddk:<tag>
 Follow the steps below to obtain the SHA-1 fingerprint of a vCenter host in order to create a Secret CR.
 
 **Procedure**
-1. Run the following command:
+1. Run the following command.
 ```
 $ openssl s_client \
     -connect <vcenter_host>:443 \ (1)
@@ -165,7 +165,7 @@ Increasing the NFC service memory of an ESXi host
 
 **Procedure**
 1. Log in to the ESXi host as root.
-2. Change the value of maxMemory to 1000000000 in /etc/vmware/hostd/config.xml:
+2. Change the value of maxMemory to 1000000000 in /etc/vmware/hostd/config.xml.
 ```
 ...
       <nfcsvc>

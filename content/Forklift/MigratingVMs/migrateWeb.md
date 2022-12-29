@@ -12,7 +12,7 @@ Migrate virtual machines (VMs) to KubeVirt using the Forklift web console by per
 **Prerequisites**
 
 * Ensure that all [Prerequisites](https://konveyor.github.io/forklift/installingforklift/prereqs/) are set.
-* VMware only: Create a [VMware Virtual Disk Development Kit (VDDK)](https://forklift-docs.konveyor.io/documentation/doc-Migration_Toolkit_for_Virtualization/master/index.html#creating-vddk-image_forklift) image.
+* VMware only: Create a VMware Virtual Disk Development Kit (VDDK) image.
 
 
 ## Adding source providers
@@ -144,7 +144,7 @@ Create one or more network mappings using the Forklift web console to map source
 **Procedure**
 1. Click **Mappings**.
 2. Click the **Network tab** then click **Create mapping**.
-3. Complete the following fields:
+3. Complete the following fields.
 * **Name:** Enter a name to display in the network mappings list.
 * **Source provider:** Select a source provider.
 * **Target provider:** Select a target provider.
