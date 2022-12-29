@@ -29,7 +29,7 @@ parent"><a href=/move2kube/tutorials/>Tutorials</a><ul><li data-nav-id=/move2kub
 </span></span><span style=display:flex><span>INFO[0000] [Named Services] Identified 1 named services
 </span></span><span style=display:flex><span>INFO[0000] No of services identified : 1
 </span></span><span style=display:flex><span>INFO[0000] Plan can be found at [/home/user/m2k.plan].
-</span></span></code></pre></div><ol start=3><li>Look at the generated plan-file in YAML format.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ ls
+</span></span></code></pre></div><ol start=3><li>Look at the generated plan file in YAML format.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ ls
 </span></span><span style=display:flex><span>kubernetes-to-kubernetes	m2k.plan
 </span></span><span style=display:flex><span>$ cat m2k.plan
 </span></span></code></pre></div><p>Notice that Move2Kube has detected all the different services, one for each web app.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>aapiVersion</span>: <span style=color:#ae81ff>move2kube.konveyor.io/v1alpha1</span>

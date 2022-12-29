@@ -50,7 +50,8 @@ concerns[flag] {
                 &#34;kind&#34;: &#34;Network&#34;,
                 &#34;id&#34;: &#34;network-33&#34;
             }
-        ],
+</code></pre><div class=expand><div class=expand-label style=cursor:pointer onclick='$h=$(this),$h.next("div").slideToggle(100,function(){$h.children("i").attr("class",function(){return $h.next("div").is(":visible")?"fas fa-chevron-down":"fas fa-chevron-right"})})'><i style=font-size:x-small class="fas fa-chevron-right"></i>
+<span>Click to see the rest of the output.</span></div><div class=expand-content style=display:none><pre tabindex=0><code>        ],
         &#34;disks&#34;: [
             {
                 &#34;key&#34;: 2000,
@@ -367,7 +368,7 @@ concerns[flag] {
         }
     }
 }
-</code></pre><h2 id=creating-a-validation-rule>Creating a validation rule</h2><p>Follow the instructions below to create a validation rule by applying a config map custom resource (CR) containing the rule to the Validation service.</p><ul><li><p>If the rule has the same name as an existing rule, the Validation service performs an OR operation with the rules.</p></li><li><p>If the rule contradicts a default rule, the Validation service will not start.</p></li></ul><h3 id=validation-rule-example>Validation rule example</h3><p>Validation rules are based on virtual machine (VM) attributes collected by the Provider Inventory service.</p><p>For example, the VMware API uses this path to check whether a VMware VM has NUMA node affinity configured: MOR:VirtualMachine.config.extraConfig [&ldquo;numa.nodeAffinity&rdquo;].</p><p>The Provider Inventory service simplifies this configuration and returns a testable attribute with a list value:</p><pre tabindex=0><code>&#34;numaNodeAffinity&#34;: [
+</code></pre></div></div><h2 id=creating-a-validation-rule>Creating a validation rule</h2><p>Follow the instructions below to create a validation rule by applying a config map custom resource (CR) containing the rule to the Validation service.</p><ul><li><p>If the rule has the same name as an existing rule, the Validation service performs an OR operation with the rules.</p></li><li><p>If the rule contradicts a default rule, the Validation service will not start.</p></li></ul><h3 id=validation-rule-example>Validation rule example</h3><p>Validation rules are based on virtual machine (VM) attributes collected by the Provider Inventory service.</p><p>For example, the VMware API uses this path to check whether a VMware VM has NUMA node affinity configured: MOR:VirtualMachine.config.extraConfig [&ldquo;numa.nodeAffinity&rdquo;].</p><p>The Provider Inventory service simplifies this configuration and returns a testable attribute with a list value:</p><pre tabindex=0><code>&#34;numaNodeAffinity&#34;: [
     &#34;0&#34;,
     &#34;1&#34;
 ],

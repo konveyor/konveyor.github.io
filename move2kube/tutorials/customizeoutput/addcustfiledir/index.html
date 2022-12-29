@@ -35,7 +35,8 @@ parent"><a href=/move2kube/tutorials/customizeoutput/>Customizing the output</a>
             │                       └── demo
             │                           └── config
             │                               └── ApplicationConfiguration.java
-            ├── customers
+</code></pre><div class=expand><div class=expand-label style=cursor:pointer onclick='$h=$(this),$h.next("div").slideToggle(100,function(){$h.children("i").attr("class",function(){return $h.next("div").is(":visible")?"fas fa-chevron-down":"fas fa-chevron-right"})})'><i style=font-size:x-small class="fas fa-chevron-right"></i>
+<span>Click to see the rest of the output.</span></div><div class=expand-content style=display:none><pre tabindex=0><code>            ├── customers
             │   ├── Makefile
             │   ├── helm-chart
             │   │   └── customers
@@ -145,7 +146,7 @@ parent"><a href=/move2kube/tutorials/customizeoutput/>Customizing the output</a>
                             ├── application-test.properties
                             └── bootstrap.properties
     {% endraw %}
-</code></pre><h2 id=anatomy-of-transformer-in-add-custom-files-directories-in-custom-locations>Anatomy of transformer in add-custom-files-directories-in-custom-locations</h2><p>This custom transformer is more advanced compared to previous cases. It uses a Starlark script (<code>customhelmchartgen.star</code>) and several templatization features to achieve the per-service Helm chart requirement. Notice the <code>{% raw %}{{\ .ServiceName\ }}{% endraw %}</code> template in the file names of custom Helm chart template in the <code>templates</code> sub-directory. The contents of the <code>add-custom-files-directories-in-custom-locations</code> custom transformer are shown below:</p><pre tabindex=0><code>{% raw %}customization/add-custom-files-directories-in-custom-locations/
+</code></pre></div></div><h2 id=anatomy-of-transformer-in-add-custom-files-directories-in-custom-locations>Anatomy of transformer in add-custom-files-directories-in-custom-locations</h2><p>This custom transformer is more advanced compared to previous cases. It uses a Starlark script (<code>customhelmchartgen.star</code>) and several templatization features to achieve the per-service Helm chart requirement. Notice the <code>{% raw %}{{\ .ServiceName\ }}{% endraw %}</code> template in the file names of custom Helm chart template in the <code>templates</code> sub-directory. The contents of the <code>add-custom-files-directories-in-custom-locations</code> custom transformer are shown below:</p><pre tabindex=0><code>{% raw %}customization/add-custom-files-directories-in-custom-locations/
 ├── customhelmchartgen.star
 ├── customhelmchartgen.yaml
 └── templates

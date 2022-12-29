@@ -16,7 +16,7 @@ parent"><a href=/move2kube/><b>3 </b>Move2Kube</a><ul><li data-nav-id=/move2kube
   -s, --source string        Specify the source directory for the artifacts to be considered while collecting.
 </code></pre><h4 id=options-inherited-from-parent-commands>Options inherited from parent commands</h4><pre tabindex=0><code>      --log-file string    File to store the logs. By default it only prints to console.
       --log-level string   Set logging levels. (default &#34;info&#34;)
-</code></pre><h2 id=move2kube-plan>Move2Kube plan</h2><p>Move2Kube discovers and creates a plan-file based on an input directory built after running the collect command.</p><pre tabindex=0><code>move2kube plan [flags]
+</code></pre><h2 id=move2kube-plan>Move2Kube plan</h2><p>Move2Kube discovers and creates a plan file based on an input directory built after running the collect command.</p><pre tabindex=0><code>move2kube plan [flags]
 </code></pre><h3 id=plan-options>Plan options</h3><p>Move2Kube provides the following options for planning.</p><pre tabindex=0><code>  -f, --config strings                Specify config file locations.
   -c, --customizations string         Specify the directory where customizations are stored.
       --disable-local-execution       Allow files to be executed locally.
@@ -29,7 +29,7 @@ parent"><a href=/move2kube/><b>3 </b>Move2Kube</a><ul><li data-nav-id=/move2kube
   -t, --transformer-selector string   Specify the transformer selector.
 </code></pre><h4 id=options-inherited-from-parent-commands-1>Options inherited from parent commands</h4><pre tabindex=0><code>      --log-file string    File to store the logs in. By default it only prints to console.
       --log-level string   Set logging levels. (default &#34;info&#34;)
-</code></pre><h2 id=move2kube-transform>Move2Kube transform</h2><p>Transform functionality modifies artifacts using the Move2Kube plan-file.</p><pre tabindex=0><code>move2kube transform [flags]
+</code></pre><h2 id=move2kube-transform>Move2Kube transform</h2><p>Transform functionality modifies artifacts using the Move2Kube plan file.</p><pre tabindex=0><code>move2kube transform [flags]
 </code></pre><h3 id=transform-options>Transform options</h3><p>Move2Kube provides the following options for transform.</p><pre tabindex=0><code>  -f, --config strings                Specify config file locations.
       --config-out string             Specify config file output location. (default &#34;.&#34;)
   -c, --customizations string         Specify directory where customizations are stored.
