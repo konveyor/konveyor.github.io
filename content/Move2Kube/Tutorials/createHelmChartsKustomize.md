@@ -246,3 +246,5 @@ For more details on how to customize the parameterization that Move2Kube does lo
 
 Given Kubernetes YAMLs, Move2Kube helps parameterize them and generate Helm charts, Kustomize, Openshift Templates, etc.
 Move2Kube is also capable of changing the versions of various Kubernetes resources to match the target cluster.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/createHelmChartsKustomize.md)

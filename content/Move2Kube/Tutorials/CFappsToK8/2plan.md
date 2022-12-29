@@ -272,3 +272,5 @@ Optional: If you have collected Cloud Foundry runtime metadata using the `move2k
 > **Note** Planning takes a few minutes.
 
 Next step: Transform to generate the output needed to deploy app to Kubernetes.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/CFappsToK8/2plan.md)

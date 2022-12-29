@@ -239,3 +239,4 @@ def getServiceName(filePath):
             t2 = t[1].split('<')
             return t2[0]{% endraw %}
 ```
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/CustomizeOutput/addCustFileDir.md)

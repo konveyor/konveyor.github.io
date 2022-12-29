@@ -45,3 +45,5 @@ $ podman run --rm -it -p 8080:8080 quay.io/konveyor/move2kube-ui:v0.3.0
 Open a Web browser and navigate to http://localhost:8080/ to access the UI.
 
 > **Note: There is a known issue when mounting directories in WSL. Some empty directories may be created in the root directory.  If using Windows, use Powershell instead of WSL until this is fixed.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Installation/installWeb.md)

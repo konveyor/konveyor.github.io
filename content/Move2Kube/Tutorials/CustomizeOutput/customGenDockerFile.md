@@ -182,3 +182,5 @@ $ cat customizations/custom-dockerfile-change-built-in-behavior/kubernetes/kuber
 ```
 
 The next step is adding custom annotations to Kubernetes YAMLs.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/CustomizeOutput/customGenDockerFile.md)

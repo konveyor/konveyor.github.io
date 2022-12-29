@@ -1000,3 +1000,5 @@ Password:
 ## Conclusion
 
 A very diverse source environment like the [language-platforms](https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms) sample, which has multiple apps in different languages, but can simply containerize and deploy them to Kubernetes. A Move2Kube UI tool which has all the same features as the CLI.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/usingCLI.md)

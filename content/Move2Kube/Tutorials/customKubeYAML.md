@@ -621,3 +621,5 @@ Follow these steps to complete the tutorial.
 4. Select the target cluster in the QA during *Transform* phase. Move2Kube will generate the Kubernetes YAMLs for the target cluster.
 
 Given Kubernetes YAMLs, this tutorial showed how Move2Kube can create/transform the Kubernetes YAMLs to target a specific cluster.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/customKubeYAML.md)

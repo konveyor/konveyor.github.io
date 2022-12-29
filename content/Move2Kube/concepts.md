@@ -148,7 +148,7 @@ YAML files have four main fields with sub-fields that define them.
             - `-1`: The function runs on the source directory and all of its sub-directories.
             - `0`: The function is disabled entirely (it will not be run on any directories).
             - `1`: The function runs only on the source directory but not on its sub-directories.
-        - The output is a list of artifacts which will be included in the plan file.
+        - The output is a list of artifacts which will be included in the plan-file.
     - `Transform` : `([]Artifact, []Artifact) -> ([]PathMapping, []Artifact, error)`: This function is called during the transformation phase and contains the code to perform the actual transformation and produce part of the Move2Kube output. The path mappings returned by this function cause changes to the Move2Kube output and the artifacts returned are passed to other transformers during the next iteration. It will also return an error if planning does not run correctly.
         - The first input is a list of new artifacts produced during the previous iteration.
         - The second input is a list of artifacts that the transformer has already seen.
@@ -233,3 +233,5 @@ YAML files have four main fields with sub-fields that define them.
     This phase starts by running the `move2kube transform` command. Move2Kube evaluates which transformers to run in an iterative manner. Each iteration will evaluate the list of artifacts produced during the previous iteration and runs all transformers that consume those artifact types. This continues until it hits an iteration where there are no more artifacts or transformers that consume those artifact types at which point the transformation phase is complete.
 
     The evaluated result of all PathMappings is the output.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/concepts.md)

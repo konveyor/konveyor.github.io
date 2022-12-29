@@ -328,3 +328,5 @@ Now that the runtime information has been collected from the app running in the 
 ## Next steps
 
 Next is customizing the output that Move2Kube produces using customizations.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/CFappsToK8/1collect.md)

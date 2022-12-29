@@ -71,3 +71,5 @@ Install using go get pulls from the main branch of [Move2Kube](https://github.co
 ```
 go get -u github.com/konveyor/move2kube
 ```
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Installation/installCLI.md)

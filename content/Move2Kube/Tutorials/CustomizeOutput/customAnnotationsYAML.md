@@ -136,3 +136,5 @@ $ cat customizations/add-custom-kubernetes-annotation/ingress-annotator.star
 This tutorial can be replicated in the UI by uploading the zip file of the custom transformer as a `customization`. Obtain the zip of the source and customization by adding a `-z` to the end of the commands used in steps 2 and 4.
 
 The next step is parameterizing custom fields in Helm Chart, Kustomize, and OC Templates.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/CustomizeOutput/customAnnotationsYAML.md)

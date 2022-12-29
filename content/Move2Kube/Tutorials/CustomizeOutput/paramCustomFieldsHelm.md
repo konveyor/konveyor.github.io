@@ -271,3 +271,5 @@ $ cat customizations/custom-helm-kustomize-octemplates-parameterization/deployme
 ```
 
 Next step is adding custom files and directories in custom locations.
+
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/CustomizeOutput/paramCustomFieldsHelm.md)
