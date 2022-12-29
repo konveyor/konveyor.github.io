@@ -43,7 +43,7 @@ INFO[0000] No of services identified : 1
 INFO[0000] Plan can be found at [/home/user/m2k.plan].
 ```
 
-3. Look at the generated plan-file in YAML format.
+3. Look at the generated plan file in YAML format.
 
 ```console
 $ ls

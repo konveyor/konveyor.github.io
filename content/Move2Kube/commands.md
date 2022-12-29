@@ -41,7 +41,7 @@ Move2Kube provides the following options for collecting.
 ```
 
 ## Move2Kube plan
-Move2Kube discovers and creates a plan-file based on an input directory built after running the collect command.
+Move2Kube discovers and creates a plan file based on an input directory built after running the collect command.
 ```
 move2kube plan [flags]
 ```
@@ -68,7 +68,7 @@ Move2Kube provides the following options for planning.
 ```
 
 ## Move2Kube transform
-Transform functionality modifies artifacts using the Move2Kube plan-file.
+Transform functionality modifies artifacts using the Move2Kube plan file.
 ```
 move2kube transform [flags]
 ```

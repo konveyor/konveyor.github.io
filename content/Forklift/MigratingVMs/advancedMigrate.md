@@ -118,6 +118,10 @@ Example output:
                 "kind": "Network",
                 "id": "network-33"
             }
+```
+{{%expand "Click to see the rest of the output."%}}
+
+```
         ],
         "disks": [
             {
@@ -436,6 +440,8 @@ Example output:
     }
 }
 ```
+
+{{% /expand%}}
 
 ## Creating a validation rule
 Follow the instructions below to create a validation rule by applying a config map custom resource (CR) containing the rule to the Validation service.
