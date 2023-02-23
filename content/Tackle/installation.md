@@ -85,7 +85,7 @@ Follow the steps below to log in to the Tackle web console.
 ```
 2. Ensure the top dropdown namespace selector is set to the `my-tackle-operator`
 3. Click **Service** then **Ingresses**
-4. Click the endpoint IP for the `tackle` ingress ingress to launch the Tackle web console in a new browser window.
+4. Click the endpoint IP for the `tackle` ingress to launch the Tackle web console in a new browser window.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
 5. The default auth enabled credentials are: `admin`/`Passw0rd!`
 
