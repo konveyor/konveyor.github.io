@@ -4,7 +4,7 @@ date: 2022-04-14T14:58:17-06:00
 draft: false
 ---
 ## Konveyor
-![alt_text](https://github.com/konveyor/.github/blob/main/profile/img/konveyor_header.png "image_tooltip")
+![alt_text](../static/images/konveyor_header.png "image_tooltip")
 Konveyor aims to surface insights on applications at scale to empower enterprise architects to make better-informed decisions related to modernization activities
 
 ## Overview
