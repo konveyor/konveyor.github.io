@@ -1,5 +1,5 @@
 ---
-title: "Installing Tackle"
+title: "Installing Konveyor"
 date: 2022-06-14T14:59:30-06:00
 draft: false
 ---
@@ -89,4 +89,4 @@ Follow the steps below to log in to the Tackle web console.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
 5. The default auth enabled credentials are: `admin`/`Passw0rd!`
 
-[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/assessAnalyze.md)
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Konveyor/assessAnalyze.md)

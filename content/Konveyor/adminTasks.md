@@ -127,4 +127,4 @@ This management module configures HTTP & HTTPS proxy settings.  To configure the
 4. Click the **Authentincation** toggle switch to enable authentication (optional).
 5. Select the credential from the drop-down list.
 
-[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/adminTasks.md)
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Konveyor/adminTasks.md)
