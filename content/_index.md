@@ -4,7 +4,7 @@ date: 2023-05-22
 draft: false
 ---
 ## Konveyor
-![alt_text](../static/images/konveyor_header.png "image_tooltip")
+![alt_text](../images/konveyor_header.png "image_tooltip")
 Konveyor aims to surface insights on applications at scale to empower enterprise architects to make better-informed decisions related to modernization activities
 
 ## Overview
@@ -50,7 +50,7 @@ Join our Community to stay up to date on developments.
 * [Konveyor's YouTube channel](https://www.youtube.com/@konveyor361/videos)
 
 ## CNCF Sandbox Project
-![alt_text](https://github.com/konveyor/.github/blob/main/profile/img/cncf_icon.png "image_tooltip")
+![alt_text](../images/cncf_icon.png "image_tooltip")
 * https://www.cncf.io/projects/konveyor/
   * Konveyor was accepted to CNCF on July 26, 2022 and is at the Sandbox project maturity level.
 
