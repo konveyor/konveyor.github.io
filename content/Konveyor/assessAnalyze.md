@@ -104,4 +104,4 @@ Follow the steps below to review the analysis report.  For more information see 
 4. Click the dependencies or source links.
 5. Click the tabs to review the report.  
 
-[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Tackle/assessAnalyze.md)
+[Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Konveyor/assessAnalyze.md)
