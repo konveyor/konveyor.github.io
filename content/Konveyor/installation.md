@@ -4,12 +4,12 @@ date: 2022-06-14T14:59:30-06:00
 draft: false
 ---
 
-Follow the steps below to provision the minikube cluster and install Tackle 2.0.  
+Follow the steps below to provision the minikube cluster and install Konveyor.  
 
 ## Provisioning Minikube
-Follow the steps below to provision minikube for single users deploying Tackle on a workstation. These steps will configure minikube and enable:
-* Ingress so the Tackle tool can publish outside of the Kubernetes cluster.
-* Operator lifecycle manager (OLM) addon. (OpenShift has OLM installed out of the box but Kubernetes does not.)
+Follow the steps below to provision minikube for single users deploying Konveyor on a workstation. These steps will configure minikube and enable:
+* Ingress so the Konveyor tool can publish outside of the Kubernetes cluster.
+* Operator lifecycle manager (OLM) addon. 
 
 **Procedure**
 1. Provision the minikube cluster with these recommended parameters. Replace `<profile name>` with your choice of minikube profile name.
@@ -25,11 +25,11 @@ Follow the steps below to provision minikube for single users deploying Tackle o
 [user@user ~]$ curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.21.2/install.sh | bash -s v0.21.2
 ```
 
-## Installing Tackle Operator
-Operators are a structural layer that manages resources deployed on Kubernetes (database, front end, back end) to automatically create a Tackle instance instead of doing it manually.
+## Installing Konveyor Operator
+Operators are a structural layer that manages resources deployed on Kubernetes (database, front end, back end) to automatically create a Konveyor instance instead of doing it manually.
 
 **Requirements**
-Tackle requires a total of 5 persistent volumes (PVs) used by different components to successfully deploy, 3 RWO volumes and 2 RWX volumes will be requested via PVCs.
+Konveyor requires a total of 5 persistent volumes (PVs) used by different components to successfully deploy, 3 RWO volumes and 2 RWX volumes will be requested via PVCs.
 
 |Name|Default Size|Access Mode|Description|
 |--|--|--|--|
@@ -39,16 +39,26 @@ Tackle requires a total of 5 persistent volumes (PVs) used by different componen
 |pathfinder postgresql|1Gi|RWO|Pathfinder backend DB|
 |maven|100Gi|RWX|maven m2 repository|
 
-Follow the steps below to install the Tackle Operator in the my-tackle-operator namespace (default) on any Kubernetes distribution, including minikube.
+Follow the steps below to install the Konveyor Operator in the konveyor-tackle namespace (default) on any Kubernetes distribution, including minikube.
 
 **Procedure**
-1. Install the Tackle Operator.
+1. Install the Konveyor Operator.
 ```
-[user@user ~]$ kubectl create -f https://operatorhub.io/install/tackle-operator.yaml
+[user@user ~]$ kubectl apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
 ```
-2. Verify Tackle was installed.
+This step will create the konveyor-tackle namespace, catalogsource and other OLM related objects.
+
+### Installing _beta_ (or special branches)
+
+If you need to deploy a beta release (or special branch) please replace the *main* branch in URL with the desired beta branch (i.e v2.0.0-beta.0):
+
+`$ kubectl apply -f https://raw.githubusercontent.com/konveyor/tackle2-operator/<release>-beta.0/tackle-k8s.yaml`
+
+**Note:** Upgrades between beta releases are **not guaranteed** , once installed, we strongly suggest to edit your subscription and switch to Manual upgrade mode for beta releases: `$ kubectl edit subscription` -> installPlanApproval: Manual
+
+2. Verify Konveyor was installed.
 ```
-[user@user ~]$ kubectl get pods -n my-tackle-operator
+[user@user ~]$ kubectl get pods -n konveyor-tackle
 ```
 3. Repeat this step until konveyor-tackle-XXX and tackle-operator-XXX show 1/1 Running.
 
@@ -63,19 +73,21 @@ kind: Tackle
 apiVersion: tackle.konveyor.io/v1alpha1
 metadata:
   name: tackle
-  namespace: my-tackle-operator
+  namespace: konveyor-tackle
 spec:
+  rwx_supported: "false"
+  feature_auth_required: "false"
 EOF
 ```
 2. Verify the instance
 ```
-[user@user ~]$ kubectl get pods -n my-tackle-operator
+[user@user ~]$ kubectl get pods -n konveyor-tackle
 ```
 3. Repeat this step until all components are Completed or Running.
 
 > **Note:** This can take one to five minutes depending on the cluster resources.
 
-## Logging in to Tackle Web Console
+## Logging in to Konveyor UI 
 Follow the steps below to log in to the Tackle web console.
 
 **Procedure**
@@ -83,7 +95,7 @@ Follow the steps below to log in to the Tackle web console.
 ```
 [user@user ~]$ minikube dashboard -p <profile name>
 ```
-2. Ensure the top dropdown namespace selector is set to the `my-tackle-operator`
+2. Ensure the top dropdown namespace selector is set to the `konveyor-tackle`
 3. Click **Service** then **Ingresses**
 4. Click the endpoint IP for the `tackle` ingress ingress to launch the Tackle web console in a new browser window.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
