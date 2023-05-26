@@ -34,7 +34,7 @@ Follow the steps below to install the Konveyor Operator in the `my-konveyor-oper
 1. Install the latest released Konveyor Operator.
 ```
 [user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-0.1/konveyor-operator.yaml
-
+```
 This step will create the `my-konveyor-operator` namespace, catalogsource and other OLM related objects.
 
 ### Installing the latest
