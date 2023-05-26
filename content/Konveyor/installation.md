@@ -59,7 +59,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
   name: konveyor
-  namespace: konveyor-tackle
+  namespace: my-konveyor-operator
 spec:
   displayName: Konveyor Operator
   publisher: Konveyor
@@ -73,20 +73,17 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: konveyor-operator
-  namespace: konveyor-tackle
+  namespace: my-konveyor-operator
 spec:
   channel: development
   installPlanApproval: Automatic
   name: konveyor-operator
   source: konveyor
-  sourceNamespace: konveyor-tackle
+  sourceNamespace: my-konveyor-operator
 ```
-* Create the Tackle instance using the url below,
-```
-kubectl create -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
-```
+
 _Note: Latest builds are built nightly. It strictly for developmental purpose and not to be used in production._
-_Note: The namsespace used in latest build differs from the one used in released versions. Please update the namespace to 'konveyor-tackle' in the following commands._
+
 {{% /tab %}}
 {{< /tabs >}}
 2. Verify Konveyor was installed.
