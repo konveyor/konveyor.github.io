@@ -62,7 +62,7 @@ kind: Tackle
 apiVersion: tackle.konveyor.io/v1alpha1
 metadata:
   name: tackle
-  namespace: konveyor-tackle
+  namespace: my-konveyor-operator
 spec:
   rwx_supported: "false"
   feature_auth_required: "false"
@@ -84,7 +84,7 @@ Follow the steps below to log in to the Konveyor web console.
 ```
 [user@user ~]$ minikube dashboard -p <profile name>
 ```
-2. Ensure the top dropdown namespace selector is set to the `konveyor-tackle`
+2. Ensure the top dropdown namespace selector is set to the `my-konveyor-operator`
 3. Click **Service** then **Ingresses**
 4. Click the endpoint IP for the `tackle` ingress ingress to launch the Konveyor web console in a new browser window.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
