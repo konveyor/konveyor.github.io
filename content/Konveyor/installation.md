@@ -31,20 +31,64 @@ Operators are a structural layer that manages resources deployed on Kubernetes (
 Follow the steps below to install the Konveyor Operator in the `my-konveyor-operator` namespace (default) on any Kubernetes distribution, including minikube.
 
 **Procedure**
+{{< tabs >}}
+{{% tab name="Latest Release" %}}
 1. Install the latest released Konveyor Operator.
 ```
 [user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-0.1/konveyor-operator.yaml
 ```
 This step will create the `my-konveyor-operator` namespace, catalogsource and other OLM related objects.
+{{% /tab %}}
+{{% tab name="Alpha Release" %}}
+### Installing the alpha version
 
-### Installing the latest
-
-If you need to deploy a latest build off main please use the below url
+If you need to deploy a latest alpha release build please use the below url
 
 ```
 [user@user ~]$ kubectl create -f https://operatorhub.io/install/alpha/konveyor-operator.yaml
 ```
+{{% /tab %}}
+{{% tab name="Development" %}}
+### Installing the latest version
 
+If you need to deploy a latest available build please follow the steps below,
+
+* Create a custom CatalogSource
+```
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: konveyor
+  namespace: konveyor-tackle
+spec:
+  displayName: Konveyor Operator
+  publisher: Konveyor
+  sourceType: grpc
+  image: quay.io/konveyor/tackle2-operator-index:latest
+```
+
+* Create a Subscription using the custom Catalog Source
+```
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: konveyor-operator
+  namespace: konveyor-tackle
+spec:
+  channel: development
+  installPlanApproval: Automatic
+  name: konveyor-operator
+  source: konveyor
+  sourceNamespace: konveyor-tackle
+```
+* Create the Tackle instance using the url below,
+```
+kubectl create -f https://raw.githubusercontent.com/konveyor/tackle2-operator/main/tackle-k8s.yaml
+```
+_Note: Latest builds are built nightly. It strictly for developmental purpose and not to be used in production._
+_Note: The namsespace used in latest build differs from the one used in released versions. Please update the namespace to 'konveyor-tackle' in the following commands._
+{{% /tab %}}
+{{< /tabs >}}
 2. Verify Konveyor was installed.
 ```
 [user@user ~]$ kubectl get pods -n my-konveyor-operator 
