@@ -1,4 +1,4 @@
-<!doctype html><html lang=en class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.112.3"><meta name=description content><link rel=icon href=/images/favicon.png type=image/png><title>Installing Konveyor - Documentation for Konveyor projects</title><link href=/css/nucleus.css rel=stylesheet><link href=/css/fontawesome-all.min.css rel=stylesheet><link href=/css/hybrid.css rel=stylesheet><link href=/css/featherlight.min.css rel=stylesheet><link href=/css/perfect-scrollbar.min.css rel=stylesheet><link href=/css/auto-complete.css rel=stylesheet><link href=/css/atom-one-dark-reasonable.css rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=/css/tabs.css rel=stylesheet><link href=/css/hugo-theme.css rel=stylesheet><link href=/css/theme-konveyor.css rel=stylesheet><link href=/css/foo.css rel=stylesheet><link href=/css/bar.css rel=stylesheet><script src=/js/jquery-3.3.1.min.js></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style><script>var dataLayer=window.dataLayer=window.dataLayer||[];dataLayer.push({page:"Installing Konveyor",fileUniqID:"8402165a32cfcb270cdf6e2c2465947f"})</script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body data-url=/konveyor/installation/><nav id=sidebar><div id=header-wrapper><div id=header><a id=logo href=/><img src=/images/konveyor_logo.png></img></a>
+<!doctype html><html lang=en class="js csstransforms3d"><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.113.0"><meta name=description content><link rel=icon href=/images/favicon.png type=image/png><title>Installing Konveyor - Documentation for Konveyor projects</title><link href=/css/nucleus.css rel=stylesheet><link href=/css/fontawesome-all.min.css rel=stylesheet><link href=/css/hybrid.css rel=stylesheet><link href=/css/featherlight.min.css rel=stylesheet><link href=/css/perfect-scrollbar.min.css rel=stylesheet><link href=/css/auto-complete.css rel=stylesheet><link href=/css/atom-one-dark-reasonable.css rel=stylesheet><link href=/css/theme.css rel=stylesheet><link href=/css/tabs.css rel=stylesheet><link href=/css/hugo-theme.css rel=stylesheet><link href=/css/theme-konveyor.css rel=stylesheet><link href=/css/foo.css rel=stylesheet><link href=/css/bar.css rel=stylesheet><script src=/js/jquery-3.3.1.min.js></script><style>:root #header+#content>#left>#rlblock_left{display:none!important}</style><script>var dataLayer=window.dataLayer=window.dataLayer||[];dataLayer.push({page:"Installing Konveyor",fileUniqID:"8402165a32cfcb270cdf6e2c2465947f"})</script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body data-url=/konveyor/installation/><nav id=sidebar><div id=header-wrapper><div id=header><a id=logo href=/><img src=/images/konveyor_logo.png></img></a>
 <a href=https://github.com/konveyor/konveyor.github.io>Documentation source code</a></div><div class=searchbox><label for=search-by><i class="fas fa-search"></i></label>
 <input data-search-input id=search-by type=search placeholder=Search...>
 <span data-search-clear><i class="fas fa-times"></i></span></div><script type=text/javascript src=/js/lunr.min.js></script>
@@ -13,7 +13,11 @@ parent"><a href=/konveyor/>Konveyor</a><ul><li data-nav-id=/konveyor/admintasks/
 <button data-tab-item="Alpha Release" data-tab-group=default class="tab-nav-button btn" onclick='switchTab("default","Alpha Release")'>Alpha Release</button>
 <button data-tab-item=Development data-tab-group=default class="tab-nav-button btn" onclick='switchTab("default","Development")'>Development</button></div><div class=tab-content><div data-tab-item="Latest Release" data-tab-group=default class="tab-item active"><ol><li>Install the latest released Konveyor Operator.</li></ol><pre tabindex=0><code>[user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-0.1/konveyor-operator.yaml
 </code></pre><p>This step will create the <code>my-konveyor-operator</code> namespace, catalogsource and other OLM related objects.</p></div><div data-tab-item="Alpha Release" data-tab-group=default class=tab-item><h3 id=installing-the-alpha-version>Installing the alpha version</h3><p>If you need to deploy a latest alpha release build please use the below url</p><pre tabindex=0><code>[user@user ~]$ kubectl create -f https://operatorhub.io/install/alpha/konveyor-operator.yaml
-</code></pre></div><div data-tab-item=Development data-tab-group=default class=tab-item><h3 id=installing-the-latest-version>Installing the latest version</h3><p>If you need to deploy a latest available build please follow the steps below,</p><ul><li>Create a custom CatalogSource</li></ul><pre tabindex=0><code>apiVersion: operators.coreos.com/v1alpha1
+</code></pre></div><div data-tab-item=Development data-tab-group=default class=tab-item><h3 id=installing-the-latest-version>Installing the latest version</h3><p>If you need to deploy a latest available build please follow the steps below,</p><ul><li>Create a namespace</li></ul><pre tabindex=0><code>apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-konveyor-operator
+</code></pre><ul><li>Create a custom CatalogSource</li></ul><pre tabindex=0><code>apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
   name: konveyor
@@ -23,7 +27,17 @@ spec:
   publisher: Konveyor
   sourceType: grpc
   image: quay.io/konveyor/tackle2-operator-index:latest
-</code></pre><ul><li>Create a Subscription using the custom Catalog Source</li></ul><pre tabindex=0><code>apiVersion: operators.coreos.com/v1alpha1
+</code></pre><ul><li>Create an operator group and Subscription using the custom Catalog Source</li></ul><pre tabindex=0><code>---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: konveyor
+  namespace: my-konveyor-operator
+spec:
+  targetNamespaces:
+    - my-konveyor-operator
+---
+apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: konveyor-operator
