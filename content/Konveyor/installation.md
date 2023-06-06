@@ -52,7 +52,13 @@ If you need to deploy a latest alpha release build please use the below url
 ### Installing the latest version
 
 If you need to deploy a latest available build please follow the steps below,
-
+* Create a namespace
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: my-konveyor-operator
+```
 * Create a custom CatalogSource
 ```
 apiVersion: operators.coreos.com/v1alpha1
@@ -67,7 +73,17 @@ spec:
   image: quay.io/konveyor/tackle2-operator-index:latest
 ```
 
-* Create a Subscription using the custom Catalog Source
+* Create an operator group and Subscription using the custom Catalog Source
+```
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: konveyor
+  namespace: my-konveyor-operator
+spec:
+  targetNamespaces:
+    - my-konveyor-operator
+```
 ```
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
