@@ -75,6 +75,7 @@ spec:
 
 * Create an operator group and Subscription using the custom Catalog Source
 ```
+---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
@@ -83,8 +84,7 @@ metadata:
 spec:
   targetNamespaces:
     - my-konveyor-operator
-```
-```
+---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
