@@ -103,4 +103,4 @@ repository, you can amend your commit with the sign-off by running
 
 
 *This template has been taken from CNCF's contributing template and has been 
-modified to suit the need of Konveyor project.*
+modified to suit the needs of Konveyor project.*
