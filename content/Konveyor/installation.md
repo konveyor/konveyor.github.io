@@ -22,7 +22,8 @@ Follow the steps below to provision minikube for single users deploying Konveyor
 ```
 3. Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
 ```
-[user@user ~]$ curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.24.0/install.sh | bash -s v0.24.0
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.25.0/install.sh | bash -s v0.25.0
+
 ```
 
 ## Installing Konveyor Operator
@@ -35,7 +36,7 @@ Follow the steps below to install the Konveyor Operator in the `my-konveyor-oper
 {{% tab name="Latest Release" %}}
 1. Install the latest released Konveyor Operator.
 ```
-[user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-0.1/konveyor-operator.yaml
+[user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-operator.yaml
 ```
 This step will create the `my-konveyor-operator` namespace, catalogsource and other OLM related objects.
 {{% /tab %}}
