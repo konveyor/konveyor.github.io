@@ -146,6 +146,7 @@ Follow the steps below to log in to the Konveyor web console.
 3. Click **Service** then **Ingresses**
 4. Click the endpoint IP for the `tackle` ingress ingress to launch the Konveyor web console in a new browser window.
 > **Note:** This may default to `http://$IP_ADDR` and fail to load, if so switch to `https://$IP_ADDR`
+
 > In some cases, it could still fail to load, open the terminal and type in `kubectl port-forward service/tackle-ui 8080:8080 -n my-konveyor-operator` and then access the webpage by visiting `localhost:8080`
 5. The default auth enabled credentials are: `admin`/`Passw0rd!`
 
