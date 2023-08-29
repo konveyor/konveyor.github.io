@@ -4,6 +4,7 @@ date: 2022-08-04T19:09:57-06:00
 draft: false
 weight: 3
 ---
+
 This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.
 
 ## Prerequisites
@@ -15,6 +16,7 @@ This tutorial shows how to transform a set of sample applications to run on Kube
 ## Using the CLI to perform a transformation
 
 1. Download the language platforms sample. Each directory contains a simple web application written in different languages.
+
 ```console
 $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/language-platforms -r move2kube-demos
 
@@ -26,18 +28,20 @@ django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		ph
 
 ```console
 $ move2kube plan -s language-platforms
-INFO[0000] Configuration loading done   
+INFO[0000] Configuration loading done
 INFO[0000] Planning Transformation - Base Directory
-INFO[0000] [CloudFoundry] Planning transformation   
-INFO[0000] [CloudFoundry] Done  
+INFO[0000] [CloudFoundry] Planning transformation
+INFO[0000] [CloudFoundry] Done
 INFO[0000] [ComposeAnalyser] Planning transformation
-INFO[0000] [ComposeAnalyser] Done   
+INFO[0000] [ComposeAnalyser] Done
 INFO[0000] [DockerfileDetector] Planning transformation
 INFO[0000] [DockerfileDetector] Done
 INFO[0000] [Base Directory] Identified 0 named services and 0 to-be-named services
 INFO[0000] Transformation planning - Base Directory done
 ```
+
 {{%expand "Click to see the remaining output."%}}
+
 ```
 INFO[0000] Planning Transformation - Directory Walk
 INFO[0000] Identified 1 named services and 0 to-be-named services in django
@@ -54,7 +58,7 @@ INFO[0000] Identified 1 named services and 0 to-be-named services in rust
 INFO[0000] Transformation planning - Directory Walk done
 INFO[0000] [Directory Walk] Identified 6 named services and 5 to-be-named services
 INFO[0000] [Named Services] Identified 11 named services
-INFO[0000] No of services identified : 11   
+INFO[0000] No of services identified : 11
 INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
 ```
 
@@ -67,16 +71,19 @@ $ ls
 language-platforms	language-platforms.zip	m2k.plan
 $ cat m2k.plan
 ```
+
 ```yaml
 apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Plan
 metadata:
-  name: myproject
+          name: myproject
 spec:
-  sourceDir: language-platforms
-  services:
+          sourceDir: language-platforms
+          services:
 ```
+
 {{%expand "Click to see the rest of the yaml."%}}
+
 ```yaml
 golang:
   - transformerName: Golang-Dockerfile
@@ -218,14 +225,15 @@ WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/wind
 WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
 ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
 ```
+
 {{% /expand%}}
 
 4. Run the transformation using `move2kube transform` to perform the transformation according to the generated plan. By default Move2Kube looks for a plan file in the current directory. Specify the path to a different plan file using the `-p` flag.
 
 During transformation Move2Kube will ask several questions to help guide the transformation process. For most questions accept the default answers. Some questions to watch out for are:
 
-* The container registry and namespace to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
-* The ingress hostname and ingress TLS secret. If deploying to MiniKube, give `localhost` as the ingress host and leave the TLS secret blank.
+- The container registry and namespace to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).
+- The ingress hostname and ingress TLS secret. If deploying to MiniKube, give `localhost` as the ingress host and leave the TLS secret blank.
 
 For all other questions accept the default answers by pressing `Enter` for each.
 
@@ -242,24 +250,26 @@ Hints:
  golang, myproject-python, nodejs, rust, simplewebapp, myproject-django, myproject-java-gradle, myproject-java-gradle-war, myproject-java-maven-war, myproject-php, ruby
 INFO[0009] Starting Plan Transformation
 ```
+
 {{%expand "Click to see the remaining questions and output."%}}
+
 ```
-INFO[0009] Iteration 1  
+INFO[0009] Iteration 1
 INFO[0009] Iteration 2 - 11 artifacts to process
 INFO[0009] Transformer Maven processing 1 artifacts
 INFO[0009] Transformer WarRouter processing 2 artifacts
 ? Select the transformer to use for service simplewebapp
  Tomcat
-INFO[0014] Transformer WarRouter Done   
-INFO[0014] Transformer Maven Done   
+INFO[0014] Transformer WarRouter Done
+INFO[0014] Transformer Maven Done
 INFO[0014] Transformer PHP-Dockerfile processing 1 artifacts
-INFO[0014] Transformer PHP-Dockerfile Done  
+INFO[0014] Transformer PHP-Dockerfile Done
 INFO[0014] Transformer Nodejs-Dockerfile processing 1 artifacts
 ? Enter the port to be exposed for the service nodejs:
 Hints:
 [The service nodejs will be exposed to the specified port]
  8080
-INFO[0016] Transformer Nodejs-Dockerfile Done   
+INFO[0016] Transformer Nodejs-Dockerfile Done
 INFO[0016] Transformer Ruby-Dockerfile processing 1 artifacts
 ? Select port to be exposed for the service ruby :
 Hints:
@@ -272,20 +282,20 @@ INFO[0017] Transformer WarRouter processing 3 artifacts
  Tomcat
 ? Select the transformer to use for service myproject-java-maven-war
  Tomcat
-INFO[0020] Transformer WarRouter Done   
+INFO[0020] Transformer WarRouter Done
 INFO[0020] Transformer WarAnalyser Done
 INFO[0020] Transformer Golang-Dockerfile processing 1 artifacts
 ? Select ports to be exposed for the service golang :
 Hints:
 [Select Other if you want to add more ports]
  8080
-INFO[0021] Transformer Golang-Dockerfile Done   
+INFO[0021] Transformer Golang-Dockerfile Done
 INFO[0021] Transformer Gradle processing 1 artifacts
 ? Select port to be exposed for the service myproject-java-gradle :
 Hints:
 [Select Other if you want to expose the service myproject-java-gradle to some other port]
  8080
-INFO[0022] Transformer Gradle Done  
+INFO[0022] Transformer Gradle Done
 INFO[0022] Transformer Rust-Dockerfile processing 1 artifacts
 ? Select port to be exposed for the service rust :
 Hints:
@@ -301,7 +311,7 @@ Hints:
 Hints:
 [Select Other if you want to expose the service myproject-python to some other port]
  8080
-INFO[0024] Transformer Python-Dockerfile Done   
+INFO[0024] Transformer Python-Dockerfile Done
 INFO[0024] Created 16 pathMappings and 20 artifacts. Total Path Mappings : 16. Total Artifacts : 11.
 INFO[0024] Iteration 3 - 20 artifacts to process
 INFO[0024] Transformer DockerfileImageBuildScript processing 8 artifacts
@@ -309,15 +319,15 @@ INFO[0024] Transformer DockerfileImageBuildScript processing 8 artifacts
 Hints:
 [The container runtime selected will be used in the scripts]
  docker
-INFO[0028] Transformer DockerfileImageBuildScript Done  
-INFO[0028] Transformer Jar processing 1 artifacts   
+INFO[0028] Transformer DockerfileImageBuildScript Done
+INFO[0028] Transformer Jar processing 1 artifacts
 INFO[0028] Transformer Jar Done
 INFO[0028] Transformer DockerfileParser processing 7 artifacts
 INFO[0028] Transformer ZuulAnalyser processing 2 artifacts
 INFO[0028] Transformer ZuulAnalyser Done
 INFO[0028] Transformer DockerfileParser Done
 INFO[0028] Transformer Tomcat processing 4 artifacts
-INFO[0028] Transformer Tomcat Done  
+INFO[0028] Transformer Tomcat Done
 INFO[0028] Created 11 pathMappings and 20 artifacts. Total Path Mappings : 27. Total Artifacts : 31.
 INFO[0028] Iteration 4 - 20 artifacts to process
 INFO[0028] Transformer ClusterSelector processing 2 artifacts
@@ -379,21 +389,21 @@ Hints:
 Hints:
 [Leave empty to use http]
 
-INFO[0049] Transformer Tekton Done  
+INFO[0049] Transformer Tekton Done
 INFO[0049] Transformer ClusterSelector processing 2 artifacts
 INFO[0049] Transformer ClusterSelector Done
-INFO[0049] Transformer Knative processing 2 artifacts   
+INFO[0049] Transformer Knative processing 2 artifacts
 INFO[0050] Transformer Knative Done
 INFO[0050] Transformer ComposeGenerator processing 2 artifacts
 INFO[0050] Transformer ComposeGenerator Done
 INFO[0050] Transformer ClusterSelector processing 2 artifacts
 INFO[0050] Transformer ClusterSelector Done
 INFO[0050] Transformer Kubernetes processing 2 artifacts
-INFO[0050] Transformer Kubernetes Done  
+INFO[0050] Transformer Kubernetes Done
 INFO[0050] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
 INFO[0050] Transformer ContainerImagesPushScriptGenerator Done
 INFO[0050] Transformer DockerfileImageBuildScript processing 5 artifacts
-INFO[0050] Transformer DockerfileImageBuildScript Done  
+INFO[0050] Transformer DockerfileImageBuildScript Done
 INFO[0050] Transformer DockerfileParser processing 5 artifacts
 INFO[0050] Transformer ZuulAnalyser processing 2 artifacts
 INFO[0050] Transformer ZuulAnalyser Done
@@ -428,31 +438,32 @@ INFO[0054] Transformer ReadMeGenerator processing 5 artifacts
 INFO[0054] Transformer ReadMeGenerator Done
 INFO[0054] Transformer ClusterSelector processing 2 artifacts
 INFO[0054] Transformer ClusterSelector Done
-INFO[0054] Transformer Knative processing 2 artifacts   
+INFO[0054] Transformer Knative processing 2 artifacts
 INFO[0055] Transformer Knative Done
 INFO[0055] Transformer ClusterSelector processing 2 artifacts
 INFO[0055] Transformer ClusterSelector Done
 INFO[0055] Transformer Tekton processing 2 artifacts
-INFO[0055] Transformer Tekton Done  
+INFO[0055] Transformer Tekton Done
 INFO[0055] Transformer ClusterSelector processing 2 artifacts
 INFO[0055] Transformer ClusterSelector Done
 INFO[0055] Transformer Kubernetes processing 2 artifacts
-INFO[0055] Transformer Kubernetes Done  
+INFO[0055] Transformer Kubernetes Done
 INFO[0055] Transformer ComposeGenerator processing 2 artifacts
 INFO[0055] Transformer ComposeGenerator Done
 INFO[0055] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
 INFO[0055] Transformer ContainerImagesPushScriptGenerator Done
 INFO[0055] Transformer Parameterizer processing 4 artifacts
-INFO[0055] Transformer Parameterizer Done   
+INFO[0055] Transformer Parameterizer Done
 INFO[0056] Created 60 pathMappings and 7 artifacts. Total Path Mappings : 127. Total Artifacts : 72.
 INFO[0056] Iteration 6 - 7 artifacts to process
 INFO[0056] Transformer Parameterizer processing 4 artifacts
-INFO[0056] Transformer Parameterizer Done   
+INFO[0056] Transformer Parameterizer Done
 INFO[0056] Transformer ReadMeGenerator processing 5 artifacts
 INFO[0056] Transformer ReadMeGenerator Done
 INFO[0056] Plan Transformation done
 INFO[0056] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
 ```
+
 {{% /expand%}}
 
 After the questions are finished wait a few minutes for it to finish processing and generated a directory called `myproject`. The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
@@ -492,7 +503,9 @@ $ tree
 │   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
 │   │   └── tekton-parameterized
 ```
+
 {{%expand "Click to see the rest of the tree."%}}
+
 ```console
 │   │   ├── helm-chart
 │   │   │   └── myproject
@@ -782,9 +795,10 @@ $ tree
 
 59 directories, 241 files
 ```
+
 {{% /expand%}}
 
-The CLI has created Kubernetes YAMLs which are stored inside the `deploy/yamls` directory. For each of the directories and the services identified, it has created the deployment artifacts, service artifacts, and the ingress as required.  The `scripts` directory contains the scripts for building the images for the applications using Dockerfiles.
+The CLI has created Kubernetes YAMLs which are stored inside the `deploy/yamls` directory. For each of the directories and the services identified, it has created the deployment artifacts, service artifacts, and the ingress as required. The `scripts` directory contains the scripts for building the images for the applications using Dockerfiles.
 
 Many scripts like `builddockerimages.sh` and `pushimages.sh` are also present inside the directory. It has also created a simple `deploy/compose/docker-compose.yaml` to test the images locally. It has also created Tekton artifacts inside the `deploy/cicd/tekton` directory that are required if you want to use Tekton as your CI/CD pipeline.
 
@@ -820,7 +834,9 @@ $ ./builddockerimages.sh
 => [internal] load build context 0.0s
 => => transferring context: 19.68kB 0.0s
 ```
+
 {{%expand "Click to see the remaining output."%}}
+
 ```console
 => CACHED [2/6] RUN microdnf update && microdnf install -y java-11-openjdk-devel wget tar && microdnf clean all 0.0s
 => CACHED [3/6] WORKDIR /usr/local 0.0s
@@ -890,6 +906,7 @@ Use 'docker scan' to run Snyk tests against images to find vulnerabilities and l
 => => naming to docker.io/library/nodejs 0.0s
 ...
 ```
+
 {{% /expand%}}
 
 3. Log in to a container registry from the terminal. Refer to the instructions for [Quay](https://docs.quay.io/solution/getting-started.html) and [Docker Hub](https://docs.docker.com/engine/reference/commandline/login/)
@@ -909,7 +926,9 @@ e262751a7e43: Layer already exists
 3ba8c926eef9: Layer already exists
 352ba846236b: Layer already exists
 ```
+
 {{%expand "Click to see the remaining output."%}}
+
 ```console
 latest: digest: sha256:d76b1dc841442b0e31c533c1e2419b3ae670de7b4381d4ff1ca2eaf1fbf5dfe6 size: 1999
 Using default tag: latest
@@ -939,6 +958,7 @@ The push refers to repository [quay.io/move2kube/ruby]
 5f70bf18a086: Layer already exists
 ...
 ```
+
 {{% /expand%}}
 
 5. Deploy the applications using `kubectl apply -f ./deploy/yamls`.
@@ -971,7 +991,6 @@ deployment.apps/simplewebapp created
 service/simplewebapp created
 ```
 
-
 Now all applications are accessible on the cluster.
 
 6. Get the ingress to see the URLs where the apps have been deployed to `kubectl get ingress myproject -o yaml`.
@@ -981,9 +1000,9 @@ Now all applications are accessible on the cluster.
 ```console
 $ minikube addons enable ingress
 💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
-▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
-▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
-▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+▪ Using image registry.k8s.io/ingress-nginx/controller:v1.0.4
+▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
 🔎  Verifying ingress addon...
 🌟  The 'ingress' addon is enabled
 $ minikube addons enable ingress-dns

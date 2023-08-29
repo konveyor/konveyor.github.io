@@ -11,7 +11,8 @@ $ move2kube transform -s docker-compose
 ```
 
 ## Prerequisites
-* Install the Move2Kube CLI tool.
+
+- Install the Move2Kube CLI tool.
 
 > **Note:** This tutorial has been created with `v0.3.3-rc.2` version of Move2Kube.
 
@@ -19,18 +20,18 @@ $ move2kube transform -s docker-compose
 $ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
 ```
 
-* Install a Kubernetes cluster from [MiniKube](https://minikube.sigs.k8s.io/docs/start/).
+- Install a Kubernetes cluster from [MiniKube](https://minikube.sigs.k8s.io/docs/start/).
 
 ## Overview
 
 This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two [Docker Compose](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose) samples from the [move2kube-demos](https://github.com/konveyor/move2kube-demos) repo.
 
-* [Sample 1](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/single-service) is a web app with a single service using Nginx and a prebuilt image.
+- [Sample 1](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/single-service) is a web app with a single service using Nginx and a prebuilt image.
 
-* [Sample 2](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/multiple-services) is more complicated. It is also a web app, but it has three services.
-  * A frontend written in PHP for Apache.
-  * An API backend written for NodeJS.
-  * A service for caching the calculations performed by the backend.
+- [Sample 2](https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/multiple-services) is more complicated. It is also a web app, but it has three services.
+     - A frontend written in PHP for Apache.
+     - An API backend written for NodeJS.
+     - A service for caching the calculations performed by the backend.
 
 For the cache service use a prebuilt Redis image for this tutorial.
 
@@ -48,6 +49,7 @@ multiple-services
 ```
 
 2. Run the planning phase.
+
 ```console
 $ move2kube plan -s multiple-services/
 INFO[0000] Configuration loading done
@@ -74,7 +76,6 @@ INFO[0000] No of services identified : 3
 INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]
 ```
 
-
 3. Inspect the plan to verify all three services were detected.
 
 ```console
@@ -82,113 +83,113 @@ $ cat m2k.plan
 ```
 
 ```yaml
-    apiVersion: move2kube.konveyor.io/v1alpha1
-    kind: Plan
-    metadata:
-      name: myproject
-    spec:
-      sourceDir: multiple-services
-      services:
-        api:
-          - transformerName: ComposeAnalyser
-            paths:
-              DockerCompose:
-                - docker-compose.yaml
-              Dockerfile:
-                - api/Dockerfile
-              ServiceDirectories:
-                - api
-            configs:
-              ComposeService:
-                serviceName: api
-          - transformerName: Nodejs-Dockerfile
-            paths:
-              ServiceDirectories:
-                - api
-          - transformerName: DockerfileDetector
-            paths:
-              Dockerfile:
-                - api/Dockerfile
-              ServiceDirectories:
-                - api
-        redis:
-          - transformerName: ComposeAnalyser
-            paths:
-              DockerCompose:
-                - docker-compose.yaml
-            configs:
-              ComposeService:
-                serviceName: redis
-        web:
-          - transformerName: ComposeAnalyser
-            paths:
-              DockerCompose:
-                - docker-compose.yaml
-              Dockerfile:
-                - web/Dockerfile
-              ServiceDirectories:
-                - web
-            configs:
-              ComposeService:
-                serviceName: web
-          - transformerName: DockerfileDetector
-            paths:
-              Dockerfile:
-                - web/Dockerfile
-              ServiceDirectories:
-                - web
-          - transformerName: PHP-Dockerfile
-            paths:
-              ServiceDirectories:
-                - web
-      transformers:
-        ArgoCD: m2kassets/built-in/transformers/kubernetes/argocd/transformer.yaml
-        Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml
-        CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/transformer.yaml
-        ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/transformer.yaml
-        ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/transformer.yaml
-        ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/transformer.yaml
-        ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimagespushscript/transformer.yaml
-        DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/transformer.yaml
-        DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/transformer.yaml
-        DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/transformer.yaml
-        DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/transformer.yaml
-        EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/transformer.yaml
-        EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/transformer.yaml
-        Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/transformer.yaml
-        Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/transformer.yaml
-        Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/transformer.yaml
-        Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/transformer.yaml
-        Knative: m2kassets/built-in/transformers/kubernetes/knative/transformer.yaml
-        Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/transformer.yaml
-        KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/transformer.yaml
-        Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/transformer.yaml
-        Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/transformer.yaml
-        Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml
-        PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/transformer.yaml
-        Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/transformer.yaml
-        Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/transformer.yaml
-        ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/transformer.yaml
-        Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/transformer.yaml
-        Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/transformer.yaml
-        Tekton: m2kassets/built-in/transformers/kubernetes/tekton/transformer.yaml
-        Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/transformer.yaml
-        WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/transformer.yaml
-        WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/transformer.yaml
-        WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/transformer.yaml
-        WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml
-        WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
-        ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
+apiVersion: move2kube.konveyor.io/v1alpha1
+kind: Plan
+metadata:
+          name: myproject
+spec:
+          sourceDir: multiple-services
+          services:
+                    api:
+                              - transformerName: ComposeAnalyser
+                                paths:
+                                          DockerCompose:
+                                                    - docker-compose.yaml
+                                          Dockerfile:
+                                                    - api/Dockerfile
+                                          ServiceDirectories:
+                                                    - api
+                                configs:
+                                          ComposeService:
+                                                    serviceName: api
+                              - transformerName: Nodejs-Dockerfile
+                                paths:
+                                          ServiceDirectories:
+                                                    - api
+                              - transformerName: DockerfileDetector
+                                paths:
+                                          Dockerfile:
+                                                    - api/Dockerfile
+                                          ServiceDirectories:
+                                                    - api
+                    redis:
+                              - transformerName: ComposeAnalyser
+                                paths:
+                                          DockerCompose:
+                                                    - docker-compose.yaml
+                                configs:
+                                          ComposeService:
+                                                    serviceName: redis
+                    web:
+                              - transformerName: ComposeAnalyser
+                                paths:
+                                          DockerCompose:
+                                                    - docker-compose.yaml
+                                          Dockerfile:
+                                                    - web/Dockerfile
+                                          ServiceDirectories:
+                                                    - web
+                                configs:
+                                          ComposeService:
+                                                    serviceName: web
+                              - transformerName: DockerfileDetector
+                                paths:
+                                          Dockerfile:
+                                                    - web/Dockerfile
+                                          ServiceDirectories:
+                                                    - web
+                              - transformerName: PHP-Dockerfile
+                                paths:
+                                          ServiceDirectories:
+                                                    - web
+          transformers:
+                    ArgoCD: m2kassets/built-in/transformers/kubernetes/argocd/transformer.yaml
+                    Buildconfig: m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml
+                    CloudFoundry: m2kassets/built-in/transformers/cloudfoundry/transformer.yaml
+                    ClusterSelector: m2kassets/built-in/transformers/kubernetes/clusterselector/transformer.yaml
+                    ComposeAnalyser: m2kassets/built-in/transformers/compose/composeanalyser/transformer.yaml
+                    ComposeGenerator: m2kassets/built-in/transformers/compose/composegenerator/transformer.yaml
+                    ContainerImagesPushScriptGenerator: m2kassets/built-in/transformers/containerimagespushscript/transformer.yaml
+                    DockerfileDetector: m2kassets/built-in/transformers/dockerfile/dockerfiledetector/transformer.yaml
+                    DockerfileImageBuildScript: m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/transformer.yaml
+                    DockerfileParser: m2kassets/built-in/transformers/dockerfile/dockerfileparser/transformer.yaml
+                    DotNetCore-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/transformer.yaml
+                    EarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/transformer.yaml
+                    EarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/transformer.yaml
+                    Golang-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/golang/transformer.yaml
+                    Gradle: m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/transformer.yaml
+                    Jar: m2kassets/built-in/transformers/dockerfilegenerator/java/jar/transformer.yaml
+                    Jboss: m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/transformer.yaml
+                    Knative: m2kassets/built-in/transformers/kubernetes/knative/transformer.yaml
+                    Kubernetes: m2kassets/built-in/transformers/kubernetes/kubernetes/transformer.yaml
+                    KubernetesVersionChanger: m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/transformer.yaml
+                    Liberty: m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/transformer.yaml
+                    Maven: m2kassets/built-in/transformers/dockerfilegenerator/java/maven/transformer.yaml
+                    Nodejs-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml
+                    PHP-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/php/transformer.yaml
+                    Parameterizer: m2kassets/built-in/transformers/kubernetes/parameterizer/transformer.yaml
+                    Python-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/python/transformer.yaml
+                    ReadMeGenerator: m2kassets/built-in/transformers/readmegenerator/transformer.yaml
+                    Ruby-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/ruby/transformer.yaml
+                    Rust-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/rust/transformer.yaml
+                    Tekton: m2kassets/built-in/transformers/kubernetes/tekton/transformer.yaml
+                    Tomcat: m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/transformer.yaml
+                    WarAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/transformer.yaml
+                    WarRouter: m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/transformer.yaml
+                    WinConsoleApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/transformer.yaml
+                    WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml
+                    WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
+                    ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
 ```
 
 4. Run the transformation phase.
 
 > **Important:** For most prompts, accept the default in this tutorial. However, some prompts to watch out for are:
->
-* **Kind of service/ingress created for the `redis` service:**. Select `ClusterIP` so the service port will not be exposed via the Ingress.
-* **Exposed 'web' service URL path:** Since most website frontends are built to be served under `/` use that instead of `/web`.
-* **Image registry URL and image registry namespace:** The image registry URL is where the container images will be pushed after building Docker Hub (index.docker.io), Quay (quay.io), IBM Cloud Container Registry (us.icr.io), etc. The `namespace` here means the username on the target image registry and not the Kubernetes cluster namespace.
-* **Ingress host and TLS secret:** If deploying to MiniKube, use `localhost` as the ingress host domain. If deploying to a Kubernetes cluster on IBM Cloud, then find the ingress subdomain on the cluster on IBM Cloud as shown here. Leave the TLS secret blank.
+
+- **Kind of service/ingress created for the `redis` service:**. Select `ClusterIP` so the service port will not be exposed via the Ingress.
+- **Exposed 'web' service URL path:** Since most website frontends are built to be served under `/` use that instead of `/web`.
+- **Image registry URL and image registry namespace:** The image registry URL is where the container images will be pushed after building Docker Hub (index.docker.io), Quay (quay.io), IBM Cloud Container Registry (us.icr.io), etc. The `namespace` here means the username on the target image registry and not the Kubernetes cluster namespace.
+- **Ingress host and TLS secret:** If deploying to MiniKube, use `localhost` as the ingress host domain. If deploying to a Kubernetes cluster on IBM Cloud, then find the ingress subdomain on the cluster on IBM Cloud as shown here. Leave the TLS secret blank.
 
 ```console
 $ move2kube transform
@@ -334,7 +335,6 @@ INFO[1500] Transformed target artifacts can be found at [/Users/user/Desktop/tut
 The tranformatin is complete.
 
 5. View the transformation output.
-
 
 ```console
     # click to see the output
@@ -504,7 +504,7 @@ Inside the `scripts` directory note some helpful scripts that Move2Kube has gene
 # click to see the output
 $ cd myproject/
 $ ./builddockerimages.sh
-    [+] Building 4.3s (10/10) FINISHED                                                                                                                                
+    [+] Building 4.3s (10/10) FINISHED
      => [internal] load build definition from Dockerfile                                                                                                         0.0s
      => => transferring dockerfile: 133B                                                                                                                         0.0s
      => [internal] load .dockerignore                                                                                                                            0.0s
@@ -524,7 +524,7 @@ $ ./builddockerimages.sh
 
     Use 'docker scan' to run Snyk tests against images to find vulnerabilities and learn how to fix them
     /Users/user/Desktop/tutorial/myproject
-    [+] Building 2.5s (8/8) FINISHED                                                                                                                                  
+    [+] Building 2.5s (8/8) FINISHED
      => [internal] load build definition from Dockerfile                                                                                                         0.0s
      => => transferring dockerfile: 82B                                                                                                                          0.0s
      => [internal] load .dockerignore                                                                                                                            0.0s
@@ -546,7 +546,6 @@ $ ./builddockerimages.sh
 ```
 
 7. Push the images to the registry and namespace selected using the `pushimages.sh` script.
-
 
 ```console
     # click to see the output
@@ -582,10 +581,8 @@ $ ./builddockerimages.sh
     9d1a9278f26b: Layer already exists
     latest: digest: sha256:521be8d409c29414274c912600dc7606b7db591f69abb2fbfb5e402ccb547878 size: 2840
 ```
- 
 
 > **Note:** If using Quay.io, change the pushed repositories `visibility` to `Public` or the Kubernetes pods may fail to pull the images from the registry and could fail to start due to `ErrImagePullBack`.
-
 
 8. If there is a Kubernetes cluster already, log in to it. Or, start MiniKube to start a local Kubernetes cluster.
 
@@ -600,26 +597,28 @@ $ ./builddockerimages.sh
     🔎  Verifying Kubernetes components...
         ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
     💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
-        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.0.4
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
     🔎  Verifying ingress addon...
     🌟  Enabled addons: storage-provisioner, default-storageclass, ingress
     🏄  Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
 ```
 
 > **Important:** Enable the ingress addon.
+
 ```console
     $ minikube addons enable ingress
     💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
-        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
-        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.0.4
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+        ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.1.1
     🔎  Verifying ingress addon...
     🌟  The 'ingress' addon is enabled
 ```
 
 9. Check if the kubectl related command will run.
+
 ```console
 $ kubectl get pods
 ```
@@ -668,7 +667,7 @@ service/web created
 
 > **Important:** This step is required only if the app has been deployed on MiniKube cluster.
 
-12.  Access the running application using the Ingress created by starting a tunnel to the MiniKube cluster.
+12. Access the running application using the Ingress created by starting a tunnel to the MiniKube cluster.
 
 ```console
 $ minikube tunnel
@@ -682,6 +681,6 @@ Password:
 
 ## Conclusion
 
-  In this tutorial showed hot to transform a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube.
+In this tutorial showed hot to transform a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube.
 
 [Source](https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/migrateDockerComposeKube.md)
