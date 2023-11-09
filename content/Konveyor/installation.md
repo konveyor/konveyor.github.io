@@ -40,13 +40,13 @@ Follow the steps below to install the Konveyor Operator in the `my-konveyor-oper
 ```
 This step will create the `my-konveyor-operator` namespace, catalogsource and other OLM related objects.
 {{% /tab %}}
-{{% tab name="Alpha Release" %}}
-### Installing the alpha version
+{{% tab name="Beta Release" %}}
+### Installing the beta version
 
-If you need to deploy a latest alpha release build please use the below url
+If you need to deploy a latest beta release build please use the below url
 
 ```
-[user@user ~]$ kubectl create -f https://operatorhub.io/install/alpha/konveyor-operator.yaml
+[user@user ~]$ kubectl create -f https://operatorhub.io/install/beta/konveyor-operator.yaml
 ```
 {{% /tab %}}
 {{% tab name="Development" %}}
