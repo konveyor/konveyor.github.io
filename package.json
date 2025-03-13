@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/konveyor/konveyor.github.io#readme",
   "dependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
     "postcss-cli": "^11.0.1"
   }
 }
