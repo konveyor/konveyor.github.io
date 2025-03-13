@@ -36,9 +36,6 @@ INFO[0000] [DockerfileDetector] Planning transformation
 INFO[0000] [DockerfileDetector] Done
 INFO[0000] [Base Directory] Identified 0 named services and 0 to-be-named services
 INFO[0000] Transformation planning - Base Directory done
-```
-{{%expand "Click to see the remaining output."%}}
-```
 INFO[0000] Planning Transformation - Directory Walk
 INFO[0000] Identified 1 named services and 0 to-be-named services in django
 INFO[0000] Identified 1 named services and 0 to-be-named services in golang
@@ -58,9 +55,8 @@ INFO[0000] No of services identified : 11
 INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
 ```
 
-{{% /expand%}}
 
-3. Look at the plan file generated in YAML format. Notice Move2Kube has detected all the different services, one for each web app.
+1. Look at the plan file generated in YAML format. Notice Move2Kube has detected all the different services, one for each web app.
 
 ```console
 $ ls
@@ -75,9 +71,6 @@ metadata:
 spec:
   sourceDir: language-platforms
   services:
-```
-{{%expand "Click to see the rest of the yaml."%}}
-```yaml
 golang:
   - transformerName: Golang-Dockerfile
 paths:
@@ -218,9 +211,8 @@ WinSLWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/wind
 WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml
 ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml
 ```
-{{% /expand%}}
 
-4. Run the transformation using `move2kube transform` to perform the transformation according to the generated plan. By default Move2Kube looks for a plan file in the current directory. Specify the path to a different plan file using the `-p` flag.
+1. Run the transformation using `move2kube transform` to perform the transformation according to the generated plan. By default Move2Kube looks for a plan file in the current directory. Specify the path to a different plan file using the `-p` flag.
 
 During transformation Move2Kube will ask several questions to help guide the transformation process. For most questions accept the default answers. Some questions to watch out for are:
 
@@ -241,9 +233,6 @@ Hints:
 [The services unselected here will be ignored.]
  golang, myproject-python, nodejs, rust, simplewebapp, myproject-django, myproject-java-gradle, myproject-java-gradle-war, myproject-java-maven-war, myproject-php, ruby
 INFO[0009] Starting Plan Transformation
-```
-{{%expand "Click to see the remaining questions and output."%}}
-```
 INFO[0009] Iteration 1  
 INFO[0009] Iteration 2 - 11 artifacts to process
 INFO[0009] Transformer Maven processing 1 artifacts
@@ -452,8 +441,7 @@ INFO[0056] Transformer ReadMeGenerator processing 5 artifacts
 INFO[0056] Transformer ReadMeGenerator Done
 INFO[0056] Plan Transformation done
 INFO[0056] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
-```
-{{% /expand%}}
+
 
 After the questions are finished wait a few minutes for it to finish processing and generated a directory called `myproject`. The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
 
@@ -491,9 +479,6 @@ $ tree
 │   │   │   ├── myproject-tekton-triggers-admin-rolebinding.yaml
 │   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
 │   │   └── tekton-parameterized
-```
-{{%expand "Click to see the rest of the tree."%}}
-```console
 │   │   ├── helm-chart
 │   │   │   └── myproject
 │   │   │   ├── Chart.yaml
@@ -782,7 +767,6 @@ $ tree
 
 59 directories, 241 files
 ```
-{{% /expand%}}
 
 The CLI has created Kubernetes YAMLs which are stored inside the `deploy/yamls` directory. For each of the directories and the services identified, it has created the deployment artifacts, service artifacts, and the ingress as required.  The `scripts` directory contains the scripts for building the images for the applications using Dockerfiles.
 
@@ -803,7 +787,7 @@ To try locally, use the scripts in the "./scripts" directory, to build, push and
 For production usage, use the CI/CD pipelines for deployment.
 ```
 
-2. Run the `builddockerimages.sh` script.
+1. Run the `builddockerimages.sh` script.
 
 > **Note:** This step may take some time to complete.
 
@@ -819,9 +803,6 @@ $ ./builddockerimages.sh
 => [1/6] FROM registry.access.redhat.com/ubi8/ubi-minimal:latest@sha256:cf1c63e3247e4074ee3549a064b8798a1a2513ad57dd79c9edb979836355b469 0.0s
 => [internal] load build context 0.0s
 => => transferring context: 19.68kB 0.0s
-```
-{{%expand "Click to see the remaining output."%}}
-```console
 => CACHED [2/6] RUN microdnf update && microdnf install -y java-11-openjdk-devel wget tar && microdnf clean all 0.0s
 => CACHED [3/6] WORKDIR /usr/local 0.0s
 => CACHED [4/6] RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz && tar -zxf apache-tomcat-9.0.56.tar.gz && rm -f  apache-tomcat-9.0.56.tar.gz && mv apache-tomcat-9.0.56 tomcat9 0.0s
@@ -890,11 +871,10 @@ Use 'docker scan' to run Snyk tests against images to find vulnerabilities and l
 => => naming to docker.io/library/nodejs 0.0s
 ...
 ```
-{{% /expand%}}
 
-3. Log in to a container registry from the terminal. Refer to the instructions for [Quay](https://docs.quay.io/solution/getting-started.html) and [Docker Hub](https://docs.docker.com/engine/reference/commandline/login/)
+1. Log in to a container registry from the terminal. Refer to the instructions for [Quay](https://docs.quay.io/solution/getting-started.html) and [Docker Hub](https://docs.docker.com/engine/reference/commandline/login/)
 
-1. Push the container images to the registry specified during the transformation using the `pushimages.sh` script.
+2. Push the container images to the registry specified during the transformation using the `pushimages.sh` script.
 
 ```console
 $ ./pushimages.sh
@@ -908,9 +888,6 @@ e262751a7e43: Layer already exists
 558b534f4e1b: Layer already exists
 3ba8c926eef9: Layer already exists
 352ba846236b: Layer already exists
-```
-{{%expand "Click to see the remaining output."%}}
-```console
 latest: digest: sha256:d76b1dc841442b0e31c533c1e2419b3ae670de7b4381d4ff1ca2eaf1fbf5dfe6 size: 1999
 Using default tag: latest
 The push refers to repository [quay.io/move2kube/myproject-php]
@@ -939,9 +916,8 @@ The push refers to repository [quay.io/move2kube/ruby]
 5f70bf18a086: Layer already exists
 ...
 ```
-{{% /expand%}}
 
-5. Deploy the applications using `kubectl apply -f ./deploy/yamls`.
+1. Deploy the applications using `kubectl apply -f ./deploy/yamls`.
 
 ```console
 $ cd ..

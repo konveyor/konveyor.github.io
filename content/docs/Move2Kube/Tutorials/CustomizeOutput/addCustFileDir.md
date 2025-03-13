@@ -54,10 +54,6 @@ Once the output is generated, one Helm chart was generated for each service and 
             │                       └── demo
             │                           └── config
             │                               └── ApplicationConfiguration.java
-```
-{{%expand "Click to see the rest of the output."%}}
-
-```
             ├── customers
             │   ├── Makefile
             │   ├── helm-chart
@@ -169,7 +165,6 @@ Once the output is generated, one Helm chart was generated for each service and 
                             └── bootstrap.properties
     {% endraw %}
 ```
-{{% /expand%}}
 
 ## Anatomy of transformer in add-custom-files-directories-in-custom-locations
 

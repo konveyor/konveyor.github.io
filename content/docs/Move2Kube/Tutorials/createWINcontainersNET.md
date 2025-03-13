@@ -75,9 +75,6 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. Details of 
             - transformerName: WinConsoleApp-Dockerfile
                 paths:
                 AppConfigFilePathList:
-```
-{{%expand "Click to see the rest of the yaml."%}}
-```
                     - wcfservice/App.config
                 ServiceDirPath:
                     - .
@@ -119,12 +116,11 @@ Move2Kube has created a *m2k.plan* which is essentially a YAML file. Details of 
             WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
             ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
 ```
-{{% /expand%}}
 
 * In the plan, notice that Move2Kube has detected the WCF services (`wcfservice`) and the relative path of the detected `/App.config`.
 * The plan file indicates that the applications can be transformed using Move2Kube's built-in `WinConsoleApp-Dockerfile` transformer.
 
-2. Invoke `move2kube transform` on this plan.
+1. Invoke `move2kube transform` on this plan.
 
 ```console
 $ move2kube transform

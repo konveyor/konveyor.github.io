@@ -1,0 +1,306 @@
+.td-navbar {
+  background-color: #fff;
+    .navbar-brand {
+      @include media-breakpoint-up(md) {
+        padding: 0;
+      }
+      svg {
+        width: 128px;
+      }
+      .navbar-brand__name {
+        display: none;
+      }
+    }
+}
+
+.nav-link {
+  color: #787878;
+  &:hover {
+    color: #353688;
+}
+}
+
+.o-banner {
+  @include media-breakpoint-up(md) {
+    width: 100%;
+    position: fixed;
+    margin-left: -15px;
+    z-index: 31;
+    top: 4rem;
+  }
+  background-color: #353688;
+  color: #fff;
+  text-align: center;
+
+  & p {
+    padding: 0.5rem;
+    margin-bottom: initial;
+  }
+}
+
+.footer-container {
+    background-color: #353688;
+    padding: 2rem 1rem;
+    margin-left: calc(-.5*1.5rem);
+    margin-right: calc(-.5*1.5rem);
+    color: #bebeef;
+}
+
+.footer-inner-top {
+    max-width: 95%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-links {
+    display: flex;
+    list-style: none;
+    gap: 1rem;
+}
+
+.footer-img-container {
+    width: 8rem;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.footer-inner-bottom {
+    max-width: 95%;
+    margin: 0 auto;
+    padding: 20px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.hero {
+    display: flex;
+    justify-content: space-between;
+    color: #000;
+    margin-top: 3rem;
+}
+
+.flex {
+    display: flex;
+}
+
+.inline-flex {
+    display: inline-flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.space-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.flex-reverse {
+    flex-direction: row-reverse;
+}
+
+.max-w-60 {
+    max-width: 60%;
+    margin: 0 auto;
+}
+
+.max-w-80 {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.max-w-58 {
+    max-width: 58%;
+    margin: 0 auto;
+}
+
+.max-w-300px {
+    max-width: 300px;
+}
+
+.max-w-400px {
+    max-width: 400px;
+}
+
+.max-w-600px {
+    max-width: 600px;
+}
+
+.max-w-700px {
+    max-width: 700px;
+}
+
+.gap-sm {
+    gap: 0.5rem;
+}
+
+.gap-md {
+    gap: 2rem;
+}
+
+.gap-2xl {
+    gap: 4rem;
+}
+
+.feature-image {
+    width: 500px;
+    height: 300px;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.cncf-banner {
+    max-width: fit-content;
+    padding: 2rem 7rem;
+    background-color: #AC945D;
+    color: #fff;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+.cncf-banner-image {
+    img {
+        width: 300px;
+    }
+}
+
+.supporter-logo-container {
+    width: 80rem;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
+.m-auto {
+    margin: 0 auto;
+}
+
+.ml-5px {
+    margin-left: 5px;
+}
+
+.mt-3 {
+    margin-top: 3rem;
+}
+
+.mb-5 {
+    margin-bottom: 5rem;
+}
+
+.py-20 {
+    padding: 20px 0;
+}
+
+.py-120 {
+    padding: 120px 0;
+}
+
+.newsletter {
+    background-image: url('/images/newsletter-bg.svg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.newsletter-banner-container {
+    width: 25rem;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 12px;
+    }
+}
+
+.text-6xl {
+    font-size: 4rem;
+}
+
+.text-lg {
+    font-size: 1.125rem;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-green {
+    color: #28CD55;
+}
+
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    &:hover {
+        background-color: #2E2E6B;
+        color: #fff;
+    }
+}
+
+.btn-primary {
+    background-color: #353688;
+    color: #fff;
+}
+
+.btn-secondary {
+    background-color: #e0e8ff;
+    color: #353688;
+}
+
+.btn-transparent {
+    background-color: transparent;
+    color: #353688;
+    border: 1px solid #353688;
+}
+
+.cta-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.td-search:not(:focus-within) {
+    color: #787878;
+}
+
+.td-search {
+    border: 1px solid #787878;
+    border-radius: 10px;
+}
+
+.newsletter-input {
+    outline: none;
+    border-right: 0px;
+    padding: 0.5rem 1.5rem;
+    border-radius: 10px 0px 0px 10px;
+    width: 100%;
+}
+
+.featured-post-image {
+    width: 20rem;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}

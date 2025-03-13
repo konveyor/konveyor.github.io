@@ -3,6 +3,7 @@ title = "Konveyor"
 date = 2023-05-22
 weight = 1
 chapter = false
+type = "docs"
 +++
 
 Konveyor helps organizations safely and predictably modernize their tradional/legacy applications to Kubernetes.

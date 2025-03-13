@@ -98,9 +98,6 @@ spec:
     name: orders
     memory: 1024
     instances: 1
-```
-{{%expand "Click to see the rest of the yaml."%}}
-```yaml
     diskquota: 1024
     spaceguid: space-id1
     stackguid: stack-id1
@@ -321,7 +318,6 @@ detectedstartcommand: 'JAVA_OPTS="-agentpath:$PWD/.java-buildpack/open_jdk_jre/b
         VCAP_APPLICATION: 
 '{"application_id":"id3","application_name":"frontend","application_uris":["frontend-patient-oryx-mc.net"],"application_version":"app-ver3","cf_api":"app-url","limits":{"disk":1024,"fds":16384,"mem":1024},"name":"frontend","organization_id":"org-id1","organization_name":"org-name","process_id":"id3","process_type":"web","space_id":"space-id1","space_name":"dev","uris":["frontend-patient-oryx-mc.net"],"users":null,"version":"app-ver3"}'
 ```
-{{% /expand%}}
 
 Now that the runtime information has been collected from the app running in the Cloud Foundry instance, it can be used during the planning phase by simply copying it into the source directory before starting the planning. All the steps are the same as the Plan step.
 

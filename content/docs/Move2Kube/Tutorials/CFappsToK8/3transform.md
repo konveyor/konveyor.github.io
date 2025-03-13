@@ -65,9 +65,6 @@ INFO[0005] Iteration 2 - 5 artifacts to process
 INFO[0005] Transformer CloudFoundry processing 3 artifacts
 INFO[0005] Transformer CloudFoundry Done
 INFO[0005] Transformer Maven processing 2 artifacts
-```
-{{%expand "Click to see the remaining transform questions."%}}
-```console 
 ? Choose the Maven profile to be used for the service customers
 ID: move2kube.services.customers.activemavenprofiles
 Hints:
@@ -287,8 +284,6 @@ INFO[0068] Transformer ReadMeGenerator Done
 INFO[0069] Plan Transformation done 
 INFO[0069] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
 ```
-{{% /expand%}}
-
 ## Transforming using the UI
 Continue from the previous step in the UI.
 

@@ -1,9 +1,29 @@
 baseURL = 'http://konveyor.github.io/'
 languageCode = 'en-us'
 title = 'Documentation for Konveyor projects'
-theme = 'github.com/google/docsy'
+theme = ["github.com/google/docsy"]
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
+[[menu.main]]
+  name = "Components"
+  weight = 1
+  url = "/docs"
+[[menu.main]]
+  name = "Documentation"
+  weight = 2
+  url = "/docs"
+[[menu.main]]
+  name = "Community"
+  weight = 3
+  url = "/community"
+[[menu.main]]
+  name = "Ecosystem"
+  weight = 4
+  url = "/docs"
+[[menu.main]]
+  name = "Blog"
+  weight = 5
+  url = "/docs"
 [params]
   # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
   # Useful to give opportunity to people to create merge request for your doc.
@@ -47,3 +67,41 @@ home = [ "HTML", "RSS", "JSON"]
   titleSeparator = "-"
   # Google Tag Manager
   gtm_id = "GTM-TKPDMS3"
+  # offline search
+  offlineSearch = true
+[params.ui]
+sidebar_search_disable = false
+[params.links]
+# End user relevant links. These will show up on left side of footer and in the community page if you have one.
+[[params.links.user]]
+	name = "User mailing list"
+	url = "https://example.org/mail"
+	icon = "fa fa-envelope"
+        desc = "Discussion and help from your fellow users"
+[[params.links.user]]
+	name ="Twitter"
+	url = "https://example.org/twitter"
+	icon = "fab fa-x-twitter"
+        desc = "Follow us on Twitter to get the latest news!"
+[[params.links.user]]
+	name = "Stack Overflow"
+	url = "https://example.org/stack"
+	icon = "fab fa-stack-overflow"
+        desc = "Practical questions and curated answers"
+# Developer relevant links. These will show up on right side of footer and in the community page if you have one.
+[[params.links.developer]]
+	name = "GitHub"
+	url = "https://github.com/google/docsy"
+	icon = "fab fa-github"
+        desc = "Development takes place here!"
+[[params.links.developer]]
+	name = "Slack"
+	url = "https://example.org/slack"
+	icon = "fab fa-slack"
+        desc = "Chat with other project developers"
+[[params.links.developer]]
+	name = "Developer mailing list"
+	url = "https://example.org/mail"
+	icon = "fa fa-envelope"
+        desc = "Discuss development issues around the project"
+

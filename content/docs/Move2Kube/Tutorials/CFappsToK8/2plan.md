@@ -77,9 +77,6 @@ spec:
   sourceDir: src
   services:
     config-utils:
-```
-{{%expand "Click to see the rest of the YAML."%}}
-```yaml
       - transformerName: Maven
       paths:
         MavenPom:
@@ -250,7 +247,6 @@ transformers:
   WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
   ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
 ```
-{{% /expand%}}
 
 Next step: Transform to generate the output needed to deploy the app to Kubernetes.
 

@@ -1,7 +1,6 @@
 ---
-title: "Konveyor Homepage"
+title: "Konveyor Docs"
 date: 2023-05-22
-draft: false
 ---
 ## Konveyor
 ![alt_text](../images/konveyor_header.png "image_tooltip")

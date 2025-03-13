@@ -127,9 +127,6 @@ Hints:
 ID: move2kube.services.[].enable
 Hints:
 [The services unselected here will be ignored.]
-```
-{{%expand "Click to see the remaining output."%}}
-```console
  myproject
 INFO[0005] Starting Plan Transformation
 INFO[0005] Iteration 1
@@ -150,7 +147,7 @@ INFO[0006] Transformer Parameterizer Done
 INFO[0006] Plan Transformation done
 INFO[0006] Transformed target artifacts can be found at [/home/user/myproject].
 ```
-{{% /expand %}}
+
 It will take a few minutes for it to finish processing and generate a directory called `myproject`. The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
 
 ```console

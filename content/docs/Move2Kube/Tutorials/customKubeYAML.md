@@ -101,9 +101,6 @@ spec:
     - ibmc-file-bronze-gid
     - ibmc-file-custom
     - ibmc-file-gold
-```
-{{%expand "Click to see the rest of the yaml."%}}
-```yaml
 - ibmc-file-gold-gid
      - ibmc-file-retain-bronze
      - ibmc-file-retain-custom
@@ -311,11 +308,10 @@ spec:
        - snapshot.storage.k8s.io/v1
        - snapshot.storage.k8s.io/v1beta1
 ```
-{{% /expand%}}
 
 The [my-kubernetes-cluster.yaml](https://github.com/konveyor/move2kube-transformers/tree/main/custom-cluster-selector/clusters/my-kubernetes-cluster.yaml) has information about the target cluster under the `spec` field, including the `storageClasses`, `Deployment`, `Service`, `Ingress` and `NetworkPolicy` versions supported by the target cluster. Move2Kube will use this information and generate the Kubernetes YAMLs which are tailored for the given target cluster.
 
-3. Download the [kubernetes-to-kubernetes](https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes) sample.
+1. Download the [kubernetes-to-kubernetes](https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes) sample.
 
   ```
   $ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/kubernetes-to-kubernetes -r move2kube-demos
@@ -365,10 +361,6 @@ apiVersion: move2kube.konveyor.io/v1alpha1
 kind: Plan
 metadata:
    name: myproject
-```
-{{%expand "Click to see the rest of the yaml."%}}
-
-```yaml
  spec:
    sourceDir: kubernetes-to-kubernetes
    customizationsDir: custom-cluster-selector
@@ -425,9 +417,8 @@ metadata:
      WinWebApp-Dockerfile: m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml
      ZuulAnalyser: m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml
 ```
-{{% /expand%}}
 
-6. Run the transformation using `move2kube transform`.
+1. Run the transformation using `move2kube transform`.
 
 ```console
 $ move2kube transform

@@ -2,6 +2,7 @@
 title = "Move2Kube"
 date = 2022-05-23T18:00:01+05:30
 weight = 3
+type = "docs"
 chapter = false
 +++
 

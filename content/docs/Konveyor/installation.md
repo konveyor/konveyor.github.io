@@ -32,7 +32,7 @@ Operators are a structural layer that manages resources deployed on Kubernetes (
 Follow the steps below to install the Konveyor Operator in the `my-konveyor-operator` namespace (default) on any Kubernetes distribution, including minikube.
 
 **Procedure**
-{{< tabs >}}
+{{< tabpane >}}
 {{% tab name="Latest Release" %}}
 1. Install the latest released Konveyor Operator.
 ```
@@ -102,7 +102,7 @@ spec:
 _Note: Latest builds are built nightly. It strictly for developmental purpose and not to be used in production._
 
 {{% /tab %}}
-{{< /tabs >}}
+{{< /tabpane >}}
 2. Verify Konveyor was installed.
 ```
 [user@user ~]$ kubectl get pods -n my-konveyor-operator 
