@@ -20,6 +20,16 @@
 }
 }
 
+.navbar-nav .nav-link.active, .navbar-nav .nav-link.show {
+  color: #353688;
+}
+
+.dropdown-item {
+    &:hover {
+        background-color: transparent;
+    }
+}
+
 .o-banner {
   @include media-breakpoint-up(md) {
     width: 100%;
