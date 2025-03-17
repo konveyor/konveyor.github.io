@@ -9,17 +9,17 @@ home = [ "HTML", "RSS", "JSON"]
   weight = 1
   identifier = "components"
 [[menu.main]]
-  url = "/konveyor-hub"
+  url = "/components/konveyor-hub"
   name = "Konveyor Hub"
   parent = "components"
   weight = 1
 [[menu.main]]
-  url = "/konveyor-cli"
+  url = "/components/konveyor-cli"
   name = "Konveyor CLI"
   parent = "components"
   weight = 2
 [[menu.main]]
-  url = "/kai"
+  url = "/components/kai"
   name = "Konveyor AI"
   parent = "components"
   weight = 3

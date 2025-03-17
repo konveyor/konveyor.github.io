@@ -99,6 +99,16 @@
     margin-top: 3rem;
 }
 
+.hero-image {
+    width: 1000px;
+    height: 500px;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+}
+
 .flex {
     display: flex;
 }
