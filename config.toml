@@ -34,7 +34,7 @@ home = [ "HTML", "RSS", "JSON"]
 [[menu.main]]
   name = "Ecosystem"
   weight = 4
-  url = "/docs"
+  url = "/ecosystem"
 [[menu.main]]
   name = "Blog"
   weight = 5

@@ -19,9 +19,11 @@
               <p class="max-w-600px m-auto mt-3 mb-5">
                 {{ .Params.Subtitle }}
               </p>
+              {{ with .Params.header_image }} 
               <div class="hero-image">
-                <img src="{{ .Params.header_image }}" alt="header image" />
-            </div>
+                <img src="{{ . }}" alt="header image" />
+              </div>
+              {{ end }}
             </div>
             <div>
               <img src="/images/right-illustration.svg" alt="right illustration" />
@@ -48,15 +50,29 @@
                                 {{ . }}
                             </p>
                         {{ end }}
+                        <div class="cta-group">
+                            {{ with $feature.cta_primary }}
+                            <a href="{{ $feature.cta_primary.url }}" class="btn btn-primary">{{ $feature.cta_primary.title }}</a>
+                            {{ end }}
+                            {{ with $feature.cta_secondary }}
+                            <a href="{{ $feature.cta_secondary.url }}" class="btn btn-transparent">{{ $feature.cta_secondary.title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                            {{ end }}
+                        </div>
                     </div>
                 </div>
             {{ end }}
+            {{ if (or .Params.cta_primary .Params.cta_secondary) }}
               <div class="flex justify-center pt-120 mb-5">
                     <div class="cta-group">
-                        <a href="{{ .Params.cta_primary.url }}" class="btn btn-primary">{{ .Params.cta_primary.title }}</a>
-                        <a href="{{ .Params.cta_secondary.url }}" target="_blank" class="btn btn-transparent">{{ .Params.cta_secondary.title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        {{ with $primary_cta := .Params.cta_primary }}
+                        <a href="{{ $primary_cta.url }}" class="btn btn-primary">{{ $primary_cta.title }}</a>
+                        {{ end }}
+                        {{ with $secondary_cta := .Params.cta_secondary }}
+                        <a href="{{ $secondary_cta.url }}" target="_blank" class="btn btn-transparent">{{ $secondary_cta.title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        {{ end }}
                     </div>
              </div>
+             {{ end }}
           </section>
       </main>
       {{ partial "footer.html" . }}
