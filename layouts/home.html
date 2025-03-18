@@ -17,51 +17,33 @@
 </section>
 <div class="text-center font-medium text-green text-lg">Key components of Konveyor</div>
 <section>
-    <div class="flex max-w-60 gap-md">
-        <div class="feature-image">
-            <img src="/images/konveyor-ui-dashboard.png" alt="konveyor ui" />
-        </div>
-        <div class="max-w-400px">
-            <h2 class="-text-primary">Konveyor Hub</h2>
-            <p>
-                Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-            </p>
-            <div class="cta-group">
-                <a href="" class="btn btn-primary">Get Started</a>
-                <a href="" class="btn btn-transparent">Learn More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="flex flex-reverse max-w-58 space-between py-120">
-        <div class="feature-image">
-            <img src="/images/konveyor-ui-dashboard.png" alt="konveyor ui" />
-        </div>
-        <div class="max-w-400px">
-            <h2 class="-text-primary">Konveyor Hub</h2>
-            <p>
-                Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-            </p>
-            <div class="cta-group">
-                <a href="" class="btn btn-primary">Get Started</a>
-                <a href="" class="btn btn-transparent">Learn More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
-            </div>
-        </div>
-    </div>
-    <div class="flex max-w-60 gap-md">
-        <div class="feature-image">
-            <img src="/images/konveyor-ui-dashboard.png" alt="konveyor ui" />
-        </div>
-        <div class="max-w-400px">
-            <h2 class="-text-primary">Konveyor Hub</h2>
-            <p>
-                Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-            </p>
-            <div class="cta-group">
-                <a href="" class="btn btn-primary">Get Started</a>
-                <a href="" class="btn btn-transparent">Learn More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
-            </div>
-        </div>
-    </div>
+    {{ range $index, $component := site.Params.components }}
+            {{ if not (modBool $index 2) }} 
+                <div class="flex flex-reverse max-w-58 space-between py-120">
+            {{ else }}  
+                <div class="flex max-w-60 gap-md">
+            {{ end }}
+                    <div class="feature-image">
+                        {{ with $component.src }}                  
+                        <img src="{{ . }}" alt="konveyor ui" />
+                        {{ end }}
+                    </div>
+                    <div class="max-w-400px">
+                        {{ with $component.title }}
+                            <h2 class="-text-primary">{{ . }}</h2>
+                        {{ end }}
+                        {{ with $component.description }}
+                            <p>
+                                {{ . }}
+                            </p>
+                        {{ end }}
+                        <div class="cta-group">
+                            <a href="{{ $component.cta_primary_url }}" class="btn btn-primary">{{ $component.cta_primary_title }}</a>
+                            <a href="{{ $component.cta_secondary_url }}" class="btn btn-transparent">{{ $component.cta_secondary_title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{ end }}
 </section>
 <div class="cncf-banner">
     <p>Konveyor is a <span class="cncf-banner-image"><img src="/images/cncf-logo-white.svg" alt="cncf logo"></span> Sandbox Project</p>
