@@ -50,16 +50,12 @@
 </div>
 <section class="text-center">
     <h2 class="-text-primary">Community Supporters</h2>
-    <div class="flex max-w-600px gap-md m-auto py-20">
+    <div class="flex flex-wrap justify-center max-w-600px m-auto py-20">
+    {{ range $supporters := site.Params.supporters }}
         <div class="supporter-logo-container">
-            <img src="/images/community-supporters/claranet.svg" alt="claranet logo" />
+            <img src="{{ $supporters.logo }}" alt="{{ $supporters.company }} logo" />
         </div>
-        <div class="supporter-logo-container">
-            <img src="/images/community-supporters/ibm-research.svg" alt="claranet logo" />
-        </div>
-        <div class="supporter-logo-container">
-            <img src="/images/community-supporters/redhat.svg" alt="claranet logo" />
-        </div>
+    {{ end }}
     </div>
     <a href="" class="btn btn-secondary text-lg inline-flex gap-sm align-center">Reach out to become a community supporter <i class="fa-solid fa-arrow-right"></i></a>
 </section>

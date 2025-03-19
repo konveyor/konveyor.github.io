@@ -107,3 +107,16 @@ cta_primary_url = "/docs"
 cta_secondary_title = "Learn More"
 cta_secondary_url = "/components/kai"
 description = "Automate the replatforming of your applications to Kubernetes with Move2Kube. With this tool, you can translate your source files to Kubernetes artifacts to quickly get your workloads running on Kubernetes."
+
+# community supporters
+[[params.supporters]]
+logo = "/images/community-supporters/claranet.svg"
+company = "claranet"
+
+[[params.supporters]]
+logo = "/images/community-supporters/ibm-research.svg"
+company = "ibm research"
+
+[[params.supporters]]
+logo = "/images/community-supporters/redhat.svg"
+company = "redhat"
