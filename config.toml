@@ -1,6 +1,6 @@
 baseURL = 'http://konveyor.github.io/'
 languageCode = 'en-us'
-title = 'Konveyor community'
+title = 'Konveyor'
 theme = ["github.com/google/docsy"]
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
