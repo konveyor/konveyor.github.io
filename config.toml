@@ -38,7 +38,7 @@ home = [ "HTML", "RSS", "JSON"]
 [[menu.main]]
   name = "Blog"
   weight = 5
-  url = "/docs"
+  url = "/blog"
 [params]
   # Google Tag Manager
   gtm_id = "GTM-TKPDMS3"

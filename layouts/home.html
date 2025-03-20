@@ -81,48 +81,24 @@
 <section>
     <h2 class="max-w-60 mb-5 -text-primary">Recent Posts</h2>
     <div class="flex max-w-60 space-between m-auto">
-        <div>
-            <div class="featured-post-image">
-                <img src="/images/konveyor-ui-dashboard.png" alt="post image" />
-            </div>
-            <div class="max-w-300px">
-                <h3 class="-text-primary mt-3">Konveyor Hub</h3>
-                <p>
-                    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-                </p>
+        {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
+            {{ if .Params.featured }}
                 <div>
-                    <a href="" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                    <div class="featured-post-image">
+                        <img src="{{ .Params.image }}" alt="post image" />
+                    </div>
+                    <div class="max-w-300px">
+                        <h3 class="-text-primary mt-3">{{ .Title }}</h3>
+                        <p>
+                            {{ .Summary }}
+                        </p>
+                        <div>
+                            <a href="{{ .Permalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div>
-            <div class="featured-post-image">
-                <img src="/images/konveyor-ui-dashboard.png" alt="post image" />
-            </div>
-            <div class="max-w-300px">
-                <h3 class="-text-primary mt-3">Konveyor Hub</h3>
-                <p>
-                    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-                </p>
-                <div>
-                    <a href="" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
-                </div>
-            </div>
-        </div>
-        <div>
-            <div class="featured-post-image">
-                <img src="/images/konveyor-ui-dashboard.png" alt="post image" />
-            </div>
-            <div class="max-w-300px">
-                <h3 class="-text-primary mt-3">Konveyor Hub</h3>
-                <p>
-                    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-                </p>
-                <div>
-                    <a href="" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
-                </div>
-            </div>
-        </div>
+            {{ end }}
+        {{ end }}
     </div>
 </section>
 {{ end }}
