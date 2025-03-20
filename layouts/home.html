@@ -90,7 +90,7 @@
                     <div class="max-w-300px">
                         <h3 class="-text-primary mt-3">{{ .Title }}</h3>
                         <p>
-                            {{ .Summary }}
+                            {{ .Summary | safeHTML | truncate 200 }}
                         </p>
                         <div>
                             <a href="{{ .Permalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
