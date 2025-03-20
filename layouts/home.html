@@ -85,12 +85,14 @@
             {{ if .Params.featured }}
                 <div>
                     <div class="featured-post-image">
-                        <img src="{{ .Params.image }}" alt="post image" />
+                        {{ with .Resources.Get .Params.image }}
+                            <img src="{{ .RelPermalink }}" alt="{{ .Title }}" />
+                        {{ end }}
                     </div>
                     <div class="max-w-300px">
-                        <h3 class="-text-primary mt-3">{{ .Title }}</h3>
+                        <a href="{{ .Permalink }}" class="text-decoration-none"><h3 class="-text-primary mt-3">{{ .Title }}</h3></a>
                         <p>
-                            {{ .Summary | safeHTML | truncate 200 }}
+                            {{ .Description }}
                         </p>
                         <div>
                             <a href="{{ .Permalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
