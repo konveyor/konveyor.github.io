@@ -71,12 +71,12 @@
                         {{ end }}
                     </div>
                     <div class="max-w-300px">
-                        <a href="{{ .Permalink }}" class="text-decoration-none"><h3 class="-text-primary mt-3">{{ .Title }}</h3></a>
+                        <a href="{{ .RelPermalink }}" class="text-decoration-none"><h3 class="-text-primary mt-3">{{ .Title }}</h3></a>
                         <p>
                             {{ .Description }}
                         </p>
                         <div>
-                            <a href="{{ .Permalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                            <a href="{{ .RelPermalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
                         </div>
                     </div>
                 </div>
