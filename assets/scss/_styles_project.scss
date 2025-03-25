@@ -60,6 +60,7 @@
     max-width: 95%;
     margin: 0 auto;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
 }
@@ -68,6 +69,7 @@
     display: flex;
     list-style: none;
     gap: 1rem;
+    padding-left: 0 !important;
 }
 
 .footer-img-container {
@@ -101,15 +103,28 @@
     justify-content: space-between;
     color: #000;
     margin-top: 3rem;
+    @include media-breakpoint-down(sm) { 
+        margin-top: 0px;
+    }
 }
 
 .hero-image {
-    width: 1000px;
+    width: 800px;
     height: 500px;
+    @include media-breakpoint-down(xxl) { 
+        width: 80%;
+        height: auto;
+    }
     img {
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+}
+
+.hero-illustration {
+    @include media-breakpoint-down(lg) { 
+        display: none;
     }
 }
 
@@ -119,6 +134,12 @@
 
 .flex-1 {
     flex: 1;
+}
+
+.flex-col--mobile {
+    @include media-breakpoint-down(lg) { 
+        flex-direction: column;
+    }
 }
 
 .inline-flex {
@@ -133,12 +154,26 @@
     justify-content: space-between;
 }
 
+.space-between--mobile {
+    @include media-breakpoint-down(lg) {
+        justify-content: space-between;
+    }
+}
+
 .align-center {
     align-items: center;
 }
 
+.align-center--mobile {
+    @include media-breakpoint-down(lg) { 
+        align-items: center;
+    }
+}
+
 .flex-reverse {
-    flex-direction: row-reverse;
+    @include media-breakpoint-up(lg) { 
+        flex-direction: row-reverse;
+    }
 }
 
 .flex-wrap {
@@ -147,6 +182,9 @@
 
 .max-w-60 {
     max-width: 60%;
+    @include media-breakpoint-down(xxl) { 
+        max-width: 80%;
+    }
     margin: 0 auto;
 }
 
@@ -157,23 +195,38 @@
 
 .max-w-58 {
     max-width: 58%;
+    @include media-breakpoint-down(xxl) { 
+        max-width: 80%;
+    }
     margin: 0 auto;
 }
 
 .max-w-300px {
     max-width: 300px;
+    @include media-breakpoint-down(lg) { 
+        max-width: 100%;
+    }
 }
 
 .max-w-400px {
     max-width: 400px;
+    @include media-breakpoint-down(lg) { 
+        width: 80%;
+    }
 }
 
 .max-w-600px {
     max-width: 600px;
+    @include media-breakpoint-down(lg) { 
+        max-width: 80%;
+    }
 }
 
 .max-w-700px {
     max-width: 700px;
+    @include media-breakpoint-down(lg) { 
+        max-width: 80%;
+    }
 }
 
 .gap-sm {
@@ -191,6 +244,10 @@
 .feature-image {
     width: 500px;
     height: 300px;
+    @include media-breakpoint-down(lg) { 
+        width: 80%;
+        height: auto;
+    }
     img {
         width: 100%;
         height: 100%;
@@ -205,11 +262,17 @@
     color: #fff;
     margin: 0 auto;
     border-radius: 10px;
+    @include media-breakpoint-down(lg) { 
+        padding: 1rem 3rem;
+    }
 }
 
 .cncf-banner-image {
     img {
         width: 300px;
+        @include media-breakpoint-down(sm) { 
+            width: 280px;
+        }
     }
 }
 
@@ -233,6 +296,10 @@
 
 .mt-3 {
     margin-top: 3rem;
+}
+
+.mr-3 {
+    margin-right: 3rem;
 }
 
 .mb-5 {
@@ -273,6 +340,9 @@
 
 .text-6xl {
     font-size: 4rem;
+    @include media-breakpoint-down(sm) { 
+        font-size: 3rem;
+    }
 }
 
 .text-lg {
@@ -339,9 +409,30 @@
 
 .featured-post-image {
     width: 20rem;
+    @include media-breakpoint-down(lg) { 
+        width: 100%;
+    }
     img {
         width: 100%;
         height: 100%;
         object-fit: contain;
+    }
+}
+
+.sub-menu {
+    @include media-breakpoint-down(sm) { 
+        margin-right: 55px;
+    }
+}
+
+.td-navbar .navbar-nav {
+    @include media-breakpoint-down(lg) { 
+        padding-bottom: 3rem;
+    }
+}
+
+.td-navbar .td-navbar-nav-scroll {
+    @include media-breakpoint-down(lg) { 
+        height: auto;
     }
 }

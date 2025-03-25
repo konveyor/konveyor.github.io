@@ -11,7 +11,7 @@
       {{- partial "banner.html" . }}
       <main role="main" class="td-main">
         <section class="hero mb-5">
-            <div>
+            <div class="hero-illustration">
               <img src="/images/left-illustration.svg" alt="left illustration" />
             </div>
             <div class="text-center">
@@ -20,21 +20,21 @@
                 {{ .Params.Subtitle }}
               </p>
               {{ with .Params.header_image }} 
-              <div class="hero-image">
+              <div class="hero-image m-auto">
                 <img src="{{ . }}" alt="header image" />
               </div>
               {{ end }}
             </div>
-            <div>
+            <div class="hero-illustration">
               <img src="/images/right-illustration.svg" alt="right illustration" />
             </div>
           </section>
           <section>
             {{ range $index, $feature := .Params.Features }}
             {{ if not (modBool $index 2) }} 
-                <div class="flex flex-reverse max-w-58 space-between py-120">
+                <div class="flex flex-col--mobile flex-reverse align-center--mobile max-w-58 gap-md space-between py-120">
             {{ else }}  
-                <div class="flex max-w-60 gap-md">
+                <div class="flex flex-col--mobile align-center--mobile space-between--mobile max-w-60 gap-md">
             {{ end }}
                     <div class="feature-image">
                         {{ with $feature.src }}                  

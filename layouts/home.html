@@ -1,17 +1,17 @@
 {{ define "main" }}
 <section class="hero">
-  <div>
+  <div class="hero-illustration">
     <img src="/images/left-illustration.svg" alt="left illustration" />
   </div>
   <div class="text-center">
-    <h1 class="max-w-700px text-6xl -text-primary">Accelerate Your Application Modernization to Kubernetes</h1>
-    <p class="max-w-600px mt-3">
+    <h1 class="max-w-700px text-6xl -text-primary m-auto">Accelerate Your Application Modernization to Kubernetes</h1>
+    <p class="max-w-600px mt-3 m-auto">
       The Konveyor community helps modernize applications by providing open
       source tools to rehost, replatform, and refactor applications to
       Kubernetes and cloud-native technologies.
     </p>
   </div>
-  <div>
+  <div class="hero-illustration">
     <img src="/images/right-illustration.svg" alt="right illustration" />
   </div>
 </section>
@@ -19,9 +19,9 @@
 <section>
     {{ range $index, $component := site.Params.components }}
             {{ if not (modBool $index 2) }} 
-                <div class="flex flex-reverse max-w-58 space-between py-120">
+                <div class="flex flex-col--mobile flex-reverse align-center--mobile max-w-58 gap-md space-between py-120">
             {{ else }}  
-                <div class="flex max-w-60 gap-md">
+                <div class="flex flex-col--mobile align-center--mobile space-between--mobile max-w-60 gap-md">
             {{ end }}
                     <div class="feature-image">
                         {{ with $component.src }}                  
@@ -61,7 +61,7 @@
 </section>
 <section>
     <h2 class="max-w-60 mb-5 -text-primary">Recent Posts</h2>
-    <div class="flex max-w-60 space-between m-auto">
+    <div class="flex flex-wrap max-w-60 gap-sm m-auto">
         {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
             {{ if .Params.featured }}
                 <div>

@@ -28,16 +28,18 @@
       {{ range .Site.Menus.main -}}
       {{ if .HasChildren }}
       {{ $activeMenu := $p.HasMenuCurrent "main" . -}}
-        <li class="nav-item dropdown sub-menu{{if $activeMenu }} active{{end}}">
+        <li class="nav-item sub-menu{{if $activeMenu }} active{{end}} dropdown">
+          <div class="dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 {{ .Pre }}
                 <span>{{ .Name }}</span>
             </a>
-            <div class="dropdown-menu -bg-primary" aria-labelledby="navbarDropdownMenuLink">
+            <ul class="dropdown-menu dropdown-menu-end -bg-primary">
                 {{ range .Children }}
-                <a class="dropdown-item" href="{{ .URL }}">{{ .Name }}</a>
+                <li><a class="dropdown-item" href="{{ .URL }}">{{ .Name }}</a></li>
                 {{ end }}
-            </div>
+            </ul>
+          </div>
         </li>
         {{ else }}
       <li class="nav-item">
