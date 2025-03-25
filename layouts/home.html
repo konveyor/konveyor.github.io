@@ -61,7 +61,7 @@
 </section>
 <section>
     <h2 class="max-w-60 mb-5 -text-primary">Recent Posts</h2>
-    <div class="flex flex-wrap max-w-60 gap-sm m-auto">
+    <div class="flex flex-wrap max-w-60 gap-sm m-auto space-between--tablet">
         {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
             {{ if .Params.featured }}
                 <div>

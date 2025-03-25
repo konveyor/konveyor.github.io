@@ -173,6 +173,12 @@
     }
 }
 
+.space-between--tablet {
+    @media (max-width: 1650px) {
+        justify-content: space-between;
+    }
+}
+
 .align-center {
     align-items: center;
 }
@@ -195,7 +201,7 @@
 
 .max-w-60 {
     max-width: 60%;
-    @include media-breakpoint-down(xxl) { 
+    @media (max-width: 1650px) {
         max-width: 80%;
     }
     margin: 0 auto;
