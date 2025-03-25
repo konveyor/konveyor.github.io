@@ -46,6 +46,8 @@ home = [ "HTML", "RSS", "JSON"]
   offlineSearch = true
 [params.ui]
 sidebar_search_disable = false
+sidebar_menu_compact = true
+sidebar_menu_foldable = true
 [params.links]
 # End user relevant links. These will show up on left side of footer and in the community page if you have one.
 [[params.links.user]]
