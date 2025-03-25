@@ -1,4 +1,4 @@
-baseURL = 'http://konveyor.github.io/'
+baseURL = 'http://konveyor.io/'
 languageCode = 'en-us'
 title = 'Konveyor'
 theme = ["github.com/google/docsy"]
