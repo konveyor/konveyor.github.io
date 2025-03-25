@@ -111,6 +111,10 @@
     text-decoration: none;
 }
 
+.text-decoration-underline {
+    text-decoration: underline;
+}
+
 .hero {
     display: flex;
     justify-content: space-between;
@@ -366,6 +370,10 @@
 
 .text-lg {
     font-size: 1.125rem;
+}
+
+.text-2xl {
+    font-size: 1.5rem;
 }
 
 .font-medium {

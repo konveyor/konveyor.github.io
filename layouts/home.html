@@ -5,7 +5,7 @@
   </div>
   <div class="text-center">
     <h1 class="max-w-700px text-6xl -text-primary m-auto">Accelerate application modernization</h1>
-    <p class="max-w-600px mt-3 m-auto">
+    <p class="max-w-600px text-lg mt-3 m-auto">
         Konveyor is an open-source project that gives developers and platform teams visibility, analysis, and transformation tools to predictably re-platform and refactor legacy applications at scale for Kubernetes and cloud-native technologies.
     </p>
   </div>
@@ -13,7 +13,7 @@
     <img src="/images/right-illustration.svg" alt="right illustration" />
   </div>
 </section>
-<div class="text-center font-medium text-green text-lg">Key components of Konveyor</div>
+<h2 class="text-center font-medium -text-primary">Key components of Konveyor</h2>
 <section>
     {{ range $index, $component := site.Params.components }}
             {{ if not (modBool $index 2) }} 
@@ -31,7 +31,7 @@
                             <h2 class="-text-primary">{{ . }}</h2>
                         {{ end }}
                         {{ with $component.description }}
-                            <p>
+                            <p class="text-lg">
                                 {{ . }}
                             </p>
                         {{ end }}
