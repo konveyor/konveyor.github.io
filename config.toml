@@ -44,6 +44,8 @@ home = [ "HTML", "RSS", "JSON"]
   gtm_id = "GTM-TKPDMS3"
   # offline search
   offlineSearch = true
+  # announcement banner
+  show_banner = true
 [params.ui]
 sidebar_search_disable = false
 sidebar_menu_compact = true

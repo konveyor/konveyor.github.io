@@ -46,6 +46,13 @@
     padding: 0.5rem;
     margin-bottom: initial;
   }
+
+  & a {
+    color: #fff;
+    &:hover {
+      color: #dedeef;
+    }
+  }
 }
 
 .footer-container {

@@ -1,4 +1,4 @@
-{{ if .Params.show_banner -}}
+{{ if .Site.Params.show_banner -}}
   {{ $announcements := site.GetPage "announcements" -}}
   {{ if $announcements -}}
     <div class="o-banner">
