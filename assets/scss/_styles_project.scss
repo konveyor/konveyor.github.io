@@ -77,6 +77,12 @@
     list-style: none;
     gap: 1rem;
     padding-left: 0 !important;
+    & a {
+        color: #bebeef;
+        &:hover {
+            color: #fff;
+        }
+    }
 }
 
 .footer-img-container {
