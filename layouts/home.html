@@ -1,0 +1,85 @@
+{{ define "main" }}
+<section class="hero">
+  <div class="hero-illustration">
+    <img src="/images/left-illustration.svg" alt="left illustration" />
+  </div>
+  <div class="text-center">
+    <h1 class="max-w-700px text-6xl -text-primary m-auto">Accelerate application modernization</h1>
+    <p class="max-w-600px text-lg mt-3 m-auto">
+        Konveyor is an open-source project that gives developers and platform teams visibility, analysis, and transformation tools to predictably re-platform and refactor legacy applications at scale for Kubernetes and cloud-native technologies.
+    </p>
+  </div>
+  <div class="hero-illustration">
+    <img src="/images/right-illustration.svg" alt="right illustration" />
+  </div>
+</section>
+<h2 class="text-center font-medium -text-primary">Key components of Konveyor</h2>
+<section>
+    {{ range $index, $component := site.Params.components }}
+            {{ if not (modBool $index 2) }} 
+                <div class="flex flex-col--mobile flex-reverse align-center--mobile max-w-58 gap-md space-between py-120">
+            {{ else }}  
+                <div class="flex flex-col--mobile align-center--mobile space-between--mobile max-w-60 gap-md">
+            {{ end }}
+                    <div class="feature-image">
+                        {{ with $component.src }}                  
+                        <img src="{{ . }}" alt="konveyor ui" />
+                        {{ end }}
+                    </div>
+                    <div class="max-w-400px">
+                        {{ with $component.title }}
+                            <h2 class="-text-primary">{{ . }}</h2>
+                        {{ end }}
+                        {{ with $component.description }}
+                            <p class="text-lg">
+                                {{ . }}
+                            </p>
+                        {{ end }}
+                        <div class="cta-group">
+                            <a href="{{ $component.cta_primary_url }}" class="btn btn-primary">{{ $component.cta_primary_title }}</a>
+                            <a href="{{ $component.cta_secondary_url }}" class="btn btn-transparent">{{ $component.cta_secondary_title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{ end }}
+</section>
+<div class="cncf-banner">
+    <p>Konveyor is a <span class="cncf-banner-image"><img src="/images/cncf-logo-white.svg" alt="cncf logo"></span> Sandbox Project</p>
+</div>
+<section class="text-center">
+    <h2 class="-text-primary">Community Supporters</h2>
+    <div class="flex flex-wrap justify-center max-w-600px m-auto py-20">
+    {{ range $supporters := site.Params.supporters }}
+        <div class="supporter-logo-container">
+            <img src="{{ $supporters.logo }}" alt="{{ $supporters.company }} logo" />
+        </div>
+    {{ end }}
+    </div>
+    <a href="mailto:konveyorio@gmail.com" target="_self" rel="noopener noreferrer" class="btn btn-secondary text-lg inline-flex gap-sm align-center">Reach out to become a community supporter <i class="fa-solid fa-arrow-right"></i></a>
+</section>
+<section>
+    <h2 class="max-w-60 mb-5 -text-primary">Recent Posts</h2>
+    <div class="flex flex-wrap max-w-60 gap-sm m-auto space-between--tablet">
+        {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
+            {{ if .Params.featured }}
+                <div>
+                    <div class="featured-post-image">
+                        {{ with .Resources.Get .Params.image }}
+                            <img src="{{ .RelPermalink }}" alt="{{ .Title }}" />
+                        {{ end }}
+                    </div>
+                    <div class="max-w-300px">
+                        <a href="{{ .RelPermalink }}" class="text-decoration-none"><h3 class="-text-primary mt-3">{{ .Title }}</h3></a>
+                        <p>
+                            {{ .Description }}
+                        </p>
+                        <div>
+                            <a href="{{ .RelPermalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        </div>
+                    </div>
+                </div>
+            {{ end }}
+        {{ end }}
+    </div>
+</section>
+{{ end }}

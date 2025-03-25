@@ -1,0 +1,25 @@
+{
+  "name": "konveyor.github.io",
+  "version": "1.0.0",
+  "description": "This repository contains documentation for projects under [Konveyor.io](http://konveyor.io) * Leverages [Hugo](https://gohugo.io/) * Is served at: [https://konveyor.github.io/](https://konveyor.github.io/)     * Assets are built and served from the branch [gh-pages](https://github.com/konveyor/konveyor.github.io/tree/gh-pages)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/konveyor/konveyor.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/konveyor/konveyor.github.io/issues"
+  },
+  "homepage": "https://github.com/konveyor/konveyor.github.io#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "postcss-cli": "^11.0.1"
+  }
+}

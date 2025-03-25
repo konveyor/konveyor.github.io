@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="{{ .Site.Language.Lang }}" class="no-js">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body class="td-{{ .Kind }}{{ with .Page.Params.body_class }} {{ . }}{{ end }}">
+    <header>
+      {{ partial "navbar.html" . }}
+    </header>
+    <div class="container-fluid td-default td-outer">
+      {{- partial "banner.html" . }}
+      <main role="main" class="td-main">
+        <section class="hero mb-5">
+            <div class="hero-illustration">
+              <img src="/images/left-illustration.svg" alt="left illustration" />
+            </div>
+            <div class="text-center">
+              <h1 class="max-w-700px m-auto text-6xl -text-primary">{{ .Title }}</h1>
+              <p class="max-w-600px m-auto mt-3 mb-5">
+                {{ .Params.Subtitle }}
+              </p>
+              {{ with .Params.header_image }} 
+              <div class="hero-image m-auto">
+                <img src="{{ . }}" alt="header image" />
+              </div>
+              {{ end }}
+            </div>
+            <div class="hero-illustration">
+              <img src="/images/right-illustration.svg" alt="right illustration" />
+            </div>
+          </section>
+          <section>
+            {{ range $index, $feature := .Params.Features }}
+            {{ if not (modBool $index 2) }} 
+                <div class="flex flex-col--mobile flex-reverse align-center--mobile max-w-58 gap-md space-between py-120">
+            {{ else }}  
+                <div class="flex flex-col--mobile align-center--mobile space-between--mobile max-w-60 gap-md">
+            {{ end }}
+                    <div class="feature-image">
+                        {{ with $feature.src }}                  
+                        <img src="{{ . }}" alt="konveyor ui" />
+                        {{ end }}
+                    </div>
+                    <div class="max-w-400px">
+                        {{ with $feature.title }}
+                            <h2 class="-text-primary">{{ . }}</h2>
+                        {{ end }}
+                        {{ with $feature.description }}
+                            <p>
+                                {{ . }}
+                            </p>
+                        {{ end }}
+                        <div class="cta-group">
+                            {{ with $feature.cta_primary }}
+                            <a href="{{ $feature.cta_primary.url }}" class="btn btn-primary">{{ $feature.cta_primary.title }}</a>
+                            {{ end }}
+                            {{ with $feature.cta_secondary }}
+                            <a href="{{ $feature.cta_secondary.url }}" class="btn btn-transparent">{{ $feature.cta_secondary.title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                            {{ end }}
+                        </div>
+                    </div>
+                </div>
+            {{ end }}
+            {{ if (or .Params.cta_primary .Params.cta_secondary) }}
+              <div class="flex justify-center pt-120 mb-5">
+                    <div class="cta-group">
+                        {{ with $primary_cta := .Params.cta_primary }}
+                        <a href="{{ $primary_cta.url }}" class="btn btn-primary">{{ $primary_cta.title }}</a>
+                        {{ end }}
+                        {{ with $secondary_cta := .Params.cta_secondary }}
+                        <a href="{{ $secondary_cta.url }}" target="_blank" class="btn btn-transparent">{{ $secondary_cta.title }} <i class="fa-solid fa-arrow-right ml-5px"></i></a>
+                        {{ end }}
+                    </div>
+             </div>
+             {{ end }}
+          </section>
+      </main>
+      {{ partial "footer.html" . }}
+    </div>
+    {{ partialCached "scripts.html" . }}
+  </body>
+</html>

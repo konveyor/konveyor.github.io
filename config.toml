@@ -1,49 +1,126 @@
-baseURL = 'http://konveyor.github.io/'
+baseURL = 'http://konveyor.io/'
 languageCode = 'en-us'
-title = 'Documentation for Konveyor projects'
-theme = 'learn'
+title = 'Konveyor'
+theme = ["github.com/google/docsy"]
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
+[[menu.main]]
+  name = "Components"
+  weight = 1
+  identifier = "components"
+[[menu.main]]
+  url = "/components/konveyor-hub"
+  name = "Konveyor Hub"
+  parent = "components"
+  weight = 1
+[[menu.main]]
+  url = "/components/konveyor-cli"
+  name = "Konveyor CLI"
+  parent = "components"
+  weight = 2
+[[menu.main]]
+  url = "/components/kai"
+  name = "Konveyor AI"
+  parent = "components"
+  weight = 3
+[[menu.main]]
+  name = "Documentation"
+  weight = 2
+  url = "/docs"
+[[menu.main]]
+  name = "Community"
+  weight = 3
+  url = "/docs/konveyor/contributetokonveyor/"
+[[menu.main]]
+  name = "Ecosystem"
+  weight = 4
+  url = "/ecosystem"
+[[menu.main]]
+  name = "Blog"
+  weight = 5
+  url = "/blog"
 [params]
-  # Prefix URL to edit current page. Will display an "Edit this page" button on top right hand corner of every page.
-  # Useful to give opportunity to people to create merge request for your doc.
-  # See the config.toml file from this documentation site to have an example.
-  editURL = ""
-  # Author of the site, will be used in meta information
-  author = ""
-  # Description of the site, will be used in meta information
-  description = ""
-  # Shows a checkmark for visited pages on the menu
-  showVisitedLinks = false
-  # Disable search function. It will hide search bar
-  disableSearch = false
-  # Javascript and CSS cache are automatically busted when new version of site is generated.
-  # Set this to true to disable this behavior (some proxies don't handle well this optimization)
-  disableAssetsBusting = true
-  # Set this to true to disable copy-to-clipboard button for inline code.
-  disableInlineCopyToClipBoard = false
-  # A title for shortcuts in menu is set by default. Set this to true to disable it.
-  disableShortcutsTitle = false
-  # If set to false, a Home button will appear below the search bar on the menu.
-  # It is redirecting to the landing page of the current language if specified. (Default is "/")
-  disableLandingPageButton = true
-  # When using mulitlingual website, disable the switch language button.
-  disableLanguageSwitchingButton = false
-  # Hide breadcrumbs in the header and only show the current page title
-  disableBreadcrumb = true
-  # If set to true, prevents Hugo from including the mermaid module if not needed (will reduce load times and traffic)
-  disableMermaid = false
-  # Specifies the remote location of the mermaid js
-  customMermaidURL = "https://unpkg.com/mermaid@8.8.0/dist/mermaid.min.js"
-  # Hide Next and Previous page buttons normally displayed full height beside content
-  disableNextPrev = true
-  # Order sections in menu by "weight" or "title". Default to "weight"
-  ordersectionsby = "weight"
-  # Change default color scheme with a variant one. Can be "red", "blue", "green".
-  themeVariant = "konveyor"
-  # Provide a list of custom css files to load relative from the `static/` folder in the site root.
-  custom_css = ["css/foo.css", "css/bar.css"]
-  # Change the title separator. Default to "::".
-  titleSeparator = "-"
   # Google Tag Manager
   gtm_id = "GTM-TKPDMS3"
+  # offline search
+  offlineSearch = true
+  # announcement banner
+  show_banner = true
+[params.ui]
+sidebar_search_disable = false
+sidebar_menu_compact = true
+sidebar_menu_foldable = true
+[params.links]
+# End user relevant links. These will show up on left side of footer and in the community page if you have one.
+[[params.links.user]]
+	name = "User mailing list"
+	url = "https://example.org/mail"
+	icon = "fa fa-envelope"
+        desc = "Discussion and help from your fellow users"
+[[params.links.user]]
+	name ="Twitter"
+	url = "https://example.org/twitter"
+	icon = "fab fa-x-twitter"
+        desc = "Follow us on Twitter to get the latest news!"
+[[params.links.user]]
+	name = "Stack Overflow"
+	url = "https://example.org/stack"
+	icon = "fab fa-stack-overflow"
+        desc = "Practical questions and curated answers"
+# Developer relevant links. These will show up on right side of footer and in the community page if you have one.
+[[params.links.developer]]
+	name = "GitHub"
+	url = "https://github.com/google/docsy"
+	icon = "fab fa-github"
+        desc = "Development takes place here!"
+[[params.links.developer]]
+	name = "Slack"
+	url = "https://example.org/slack"
+	icon = "fab fa-slack"
+        desc = "Chat with other project developers"
+[[params.links.developer]]
+	name = "Developer mailing list"
+	url = "https://example.org/mail"
+	icon = "fa fa-envelope"
+        desc = "Discuss development issues around the project"
+
+# Key konveyor components section on the main page
+[[params.components]]
+src = "/images/konveyor-ui-dashboard.png"
+title = "Konveyor Hub"
+cta_primary_title = "Get Started"
+cta_primary_url = "/docs/konveyor/"
+cta_secondary_title = "Learn More"
+cta_secondary_url = "/components/konveyor-hub"
+description = "A hub for all your migration projects. View, categorize, and analyze your application landscape from a web console. Use it to build and manage a predictable, measurable migration plan."
+
+[[params.components]]
+src = "/images/konveyor-cli.png"
+title = "Konveyor CLI"
+cta_primary_title = "Get Started"
+cta_primary_url = "/docs"
+cta_secondary_title = "Learn More"
+cta_secondary_url = "/components/konveyor-cli"
+description = "Kantra, an essential part of the Konveyor hub, performs Static code analysis for multiple languages, including Go, .Net, Node.js, and Java. Kantra can also generate assets for Kubernetes, enabling the replatforming of applications."
+
+[[params.components]]
+src = "/images/kai.gif"
+title = "Konveyor AI"
+cta_primary_title = "Get Started"
+cta_primary_url = "https://github.com/konveyor/kantra"
+cta_secondary_title = "Learn More"
+cta_secondary_url = "/components/kai"
+description = "With more context comes more power. Konveyor AI combines Static code analysis with Generative AI. Seamlessly integrate LLMs into your modernization and refactoring journey."
+
+# community supporters
+[[params.supporters]]
+logo = "/images/community-supporters/claranet.svg"
+company = "claranet"
+
+[[params.supporters]]
+logo = "/images/community-supporters/ibm-research.svg"
+company = "ibm research"
+
+[[params.supporters]]
+logo = "/images/community-supporters/redhat.svg"
+company = "redhat"
