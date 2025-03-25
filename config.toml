@@ -30,7 +30,7 @@ home = [ "HTML", "RSS", "JSON"]
 [[menu.main]]
   name = "Community"
   weight = 3
-  url = "/community"
+  url = "/docs/konveyor/contributetokonveyor/"
 [[menu.main]]
   name = "Ecosystem"
   weight = 4
@@ -89,28 +89,28 @@ sidebar_menu_foldable = true
 src = "/images/konveyor-ui-dashboard.png"
 title = "Konveyor Hub"
 cta_primary_title = "Get Started"
-cta_primary_url = "/docs"
+cta_primary_url = "/docs/konveyor/"
 cta_secondary_title = "Learn More"
 cta_secondary_url = "/components/konveyor-hub"
-description = "Automate the replatforming of your applications to Kubernetes with Move2Kube. With this tool, you can translate your source files to Kubernetes artifacts to quickly get your workloads running on Kubernetes."
+description = "A hub for all your migration projects. View, categorize, and analyze your application landscape from a web console. Use it to build and manage a predictable, measurable migration plan."
 
 [[params.components]]
-src = "/images/konveyor-ui-dashboard.png"
+src = "/images/konveyor-cli.png"
 title = "Konveyor CLI"
 cta_primary_title = "Get Started"
 cta_primary_url = "/docs"
 cta_secondary_title = "Learn More"
 cta_secondary_url = "/components/konveyor-cli"
-description = "Automate the replatforming of your applications to Kubernetes with Move2Kube. With this tool, you can translate your source files to Kubernetes artifacts to quickly get your workloads running on Kubernetes."
+description = "Kantra, an essential part of the Konveyor hub, performs Static code analysis for multiple languages, including Go, .Net, Node.js, and Java. Kantra can also generate assets for Kubernetes, enabling the replatforming of applications."
 
 [[params.components]]
-src = "/images/konveyor-ui-dashboard.png"
+src = "/images/kai.gif"
 title = "Konveyor AI"
 cta_primary_title = "Get Started"
-cta_primary_url = "/docs"
+cta_primary_url = "https://github.com/konveyor/kantra"
 cta_secondary_title = "Learn More"
 cta_secondary_url = "/components/kai"
-description = "Automate the replatforming of your applications to Kubernetes with Move2Kube. With this tool, you can translate your source files to Kubernetes artifacts to quickly get your workloads running on Kubernetes."
+description = "With more context comes more power. Konveyor AI combines Static code analysis with Generative AI. Seamlessly integrate LLMs into your modernization and refactoring journey."
 
 # community supporters
 [[params.supporters]]

@@ -1,28 +1,26 @@
 ---
-title: "Konveyor CLI"
+title: "Kantra, Konveyor Command-Line-Interface (CLI)"
 type: "components"
-header_image: /images/konveyor-ui-dashboard.png
+header_image: /images/konveyor-cli.png
 subtitle: > 
-    The Konveyor community helps modernize applications by providing open
-    source tools to rehost, replatform, and refactor applications to
-    Kubernetes and cloud-native technologies.
+    Pinpoint application modernization issues. Generate assets to replatform an application to Kubernetes. Do it locally then store it in Konveyor Hub to share insights, progress, and fuel AI-powered refactoring with Konveyor AI.
 features:
-- src: /images/konveyor-ui-dashboard.png
-  title: Photo Specifications
+- src: /images/find-code-cli.png
+  title: Find needed code adjustments when modernizing
   description: > 
-    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-- src: /images/konveyor-ui-dashboard.png
-  title: Instruction Guide
+    Use rulesets to analyze code and binaries to see issues keeping your app from moving to a newer technology and get guidance on how to address it. The CLI will generate static HTML reports for analysis results. Use existing rulesets or create and test rulesets for your custom technology.
+- src: /images/discover-app-config.png
+  title: Discover application configuration
   description: > 
-    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-- src: /images/konveyor-ui-dashboard.png
-  title: Document Checklist
+    Run the discover command to get application deployment and runtime configuration information. Know the platform it is deployed on, where it is deployed, and the runtime it is using. So you can better understand your applications. When you’re ready, store information in Konveyor Hub to ensure team alignment. This also enables asset generation for moving an app to Kubernetes.
+- src: /images/generate-assets-cli.png
+  title: Generate assets to replatform your applications to Kubernetes
   description: > 
-    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
+    Create deployment descriptors for your existing application with automation. These can then be added to the target application repository or on a separate configuration repository if the application uses GitOps for configuration management. From Konveyor Hub, project leads can assign generators to representative apps (archetypes) to incorporate enterprise standards.
 cta_primary: 
   title: Get Started
-  url: /docs
+  url: https://github.com/konveyor/kantra?tab=readme-ov-file#kantra
 cta_secondary: 
   title: Give us feedback
-  url: https://github.com/konveyor
+  url: /docs/konveyor/contributetokonveyor/
 ---

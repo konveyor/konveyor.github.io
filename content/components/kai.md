@@ -1,28 +1,26 @@
 ---
-title: "Konveyor AI"
+title: "Konveyor AI (Kai)"
 type: "components"
-header_image: /images/konveyor-ui-dashboard.png
+header_image: /images/kai.gif
 subtitle: > 
-    The Konveyor community helps modernize applications by providing open
-    source tools to rehost, replatform, and refactor applications to
-    Kubernetes and cloud-native technologies.
+    Combine static code analysis with Generative AI. Seamlessly integrate LLMs into your modernization to speed up your refactoring journey.
 features:
-- src: /images/konveyor-ui-dashboard.png
-  title: Photo Specifications
+- src: /images/code-gen-kai.png
+  title: Contextual code generation
   description: > 
-    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-- src: /images/konveyor-ui-dashboard.png
-  title: Instruction Guide
+    Static code analysis provides context for the LLM to generate meaningful results. Large language models have a context limit, and they do not have a memory to remember each generation. It's not possible to send thousands of lines of code with its dependencies and context. By leveraging the Konveyor static code analysis, we break down complex problems into more manageable ones with more context. And use this to create more meaningful code generations.
+- src: /images/improve-output-kai.png
+  title: Improve output with each migrated application
   description: > 
-    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
-- src: /images/konveyor-ui-dashboard.png
-  title: Document Checklist
+    Calling an LLM repeatedly for the same code generations can quickly become expensive. For example, a typical pattern like logging is used in almost all applications. Konveyor AI remembers and learns each code generation that solves an issue, reducing the number of calls to an LLM for similar generations.
+- src: /images/model-agnostic-kai.png
+  title: Model Agnostic
   description: > 
-    Learn how organizations plan to approach application modernization and migration—and what they consider success to look like. In all, 1,000 responses were gathered with half coming from the US and the balance split evenly between the United Kingdom (UK) and English-speaking Asia-Pacific (APAC).
+    LLMs are powerful tools, but without explicit guidance, they can generate useless content. Kai combines Retrieval Augmented Generation (RAG) with your choice of LLM to extract relevant information from Konveyor static-code analysis reports and change-log history of successfully migrated applications in your repos. Because of our RAG approach, Kai can generate solutions without needing to fine-tune the model.
 cta_primary: 
   title: Get Started
-  url: /docs
+  url: https://github.com/konveyor/kai/tree/main/docs#installation
 cta_secondary: 
   title: Give us feedback
-  url: https://github.com/konveyor
+  url: /docs/konveyor/contributetokonveyor/
 ---

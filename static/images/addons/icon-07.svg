@@ -1,0 +1,23 @@
+<svg enable-background="new 0 0 60 60" version="1.1" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+ <style type="text/css">.st0{fill:none;stroke:currentColor;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:currentColor;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st3{fill:currentColor;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st4{fill:currentColor;}
+	.st5{fill:none;stroke:currentColor;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:currentColor;stroke-width:0.9663;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st7{fill:none;stroke:currentColor;stroke-width:0.9663;stroke-linecap:round;stroke-linejoin:round;}
+	.st8{fill:none;stroke:currentColor;stroke-width:1.9326;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st9{fill:none;stroke:currentColor;stroke-width:0.9344;stroke-linecap:round;stroke-linejoin:round;}
+	.st10{fill:none;stroke:currentColor;stroke-width:0.9344;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}</style>
+ <line class="st9" x1="20.22" x2="47.99" y1="29.62" y2="29.59"/>
+ <polygon class="st4" points="44.43 33.99 43.7 33.2 47.57 29.59 43.69 25.99 44.42 25.2 49.15 29.59"/>
+ <path class="st9" d="m20.22 29.62s-2.1 0.14 4.84-0.21c8.63-0.44 14.79-6.46 16.84-8.77"/>
+ <polygon class="st4" points="42.6 26.21 41.53 26.21 41.56 20.91 36.27 21.26 36.2 20.19 42.64 19.76"/>
+ <path class="st9" d="m20.22 29.62s-1.27 0.03 4.1 0.13c8.66 0.17 14.82 6.39 16.86 8.75"/>
+ <polygon class="st4" points="35.47 38.88 35.56 37.81 40.84 38.25 40.89 32.95 41.97 32.96 41.9 39.42"/>
+ <circle class="st10" cx="46.26" cy="16.98" r="3.95"/>
+ <circle class="st10" cx="53.39" cy="29.59" r="3.95"/>
+ <circle class="st10" cx="44.56" cy="43.05" r="3.95"/>
+ <rect class="st10" x="2.32" y="20.93" width="17.31" height="17.31"/>
+</svg>
