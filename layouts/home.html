@@ -59,9 +59,9 @@
     </div>
     <a href="mailto:konveyorio@gmail.com" target="_self" rel="noopener noreferrer" class="btn btn-secondary text-lg inline-flex gap-sm align-center">Reach out to become a community supporter</a>
 </section>
-<section>
+<section class="max-w-1000px m-auto">
     <h2 class="fancy mb-5 -text-primary text-center"><span>Recent Posts</span></h2>
-    <div class="flex flex-wrap max-w-60 gap-sm m-auto space-between--tablet">
+    <div class="flex flex-wrap gap-sm m-auto space-between--tablet">
         {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
             {{ if .Params.featured }}
                 <div>
