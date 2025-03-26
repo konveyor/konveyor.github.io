@@ -4,7 +4,7 @@
     <img src="/images/left-illustration.svg" alt="left illustration" />
   </div>
   <div class="text-center">
-    <h1 class="max-w-700px text-6xl -text-primary m-auto">Accelerate application modernization</h1>
+    <h1 class="max-w-700px text-6xl line-height-1 -text-primary m-auto">Accelerate application modernization</h1>
     <p class="max-w-600px text-lg mt-3 m-auto">
         Konveyor is an open-source project that gives developers and platform teams visibility, analysis, and transformation tools to predictably re-platform and refactor legacy applications at scale for Kubernetes and cloud-native technologies.
     </p>
@@ -13,13 +13,13 @@
     <img src="/images/right-illustration.svg" alt="right illustration" />
   </div>
 </section>
-<h2 class="text-center font-medium -text-primary">Key components of Konveyor</h2>
-<section>
+<h2 class="fancy text-center font-medium -text-primary"><span>Key components of Konveyor</span></h2>
+<section class="max-w-1000px m-auto">
     {{ range $index, $component := site.Params.components }}
             {{ if not (modBool $index 2) }} 
-                <div class="flex flex-col--mobile flex-reverse align-center--mobile max-w-58 gap-md space-between py-120">
+                <div class="flex flex-col--mobile flex-reverse align-center--mobile space-between py-120">
             {{ else }}  
-                <div class="flex flex-col--mobile align-center--mobile space-between--mobile max-w-60 gap-md">
+                <div class="flex flex-col--mobile align-center--mobile space-between">
             {{ end }}
                     <div class="feature-image">
                         {{ with $component.src }}                  
@@ -43,11 +43,13 @@
                 </div>
             {{ end }}
 </section>
+<section>
 <div class="cncf-banner">
     <p>Konveyor is a <span class="cncf-banner-image"><img src="/images/cncf-logo-white.svg" alt="cncf logo"></span> Sandbox Project</p>
 </div>
+</section>
 <section class="text-center">
-    <h2 class="-text-primary">Community Supporters</h2>
+    <h2 class="fancy -text-primary"><span>Community Supporters</span></h2>
     <div class="flex flex-wrap justify-center max-w-600px m-auto py-20">
     {{ range $supporters := site.Params.supporters }}
         <div class="supporter-logo-container">
@@ -55,10 +57,10 @@
         </div>
     {{ end }}
     </div>
-    <a href="mailto:konveyorio@gmail.com" target="_self" rel="noopener noreferrer" class="btn btn-secondary text-lg inline-flex gap-sm align-center">Reach out to become a community supporter <i class="fa-solid fa-arrow-right"></i></a>
+    <a href="mailto:konveyorio@gmail.com" target="_self" rel="noopener noreferrer" class="btn btn-secondary text-lg inline-flex gap-sm align-center">Reach out to become a community supporter</a>
 </section>
 <section>
-    <h2 class="max-w-60 mb-5 -text-primary">Recent Posts</h2>
+    <h2 class="fancy mb-5 -text-primary text-center"><span>Recent Posts</span></h2>
     <div class="flex flex-wrap max-w-60 gap-sm m-auto space-between--tablet">
         {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
             {{ if .Params.featured }}
