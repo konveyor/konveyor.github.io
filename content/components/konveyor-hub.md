@@ -8,7 +8,7 @@ features:
 - src: /images/modernize-with-insights-hub.png
   title: Modernize with insights
   description: > 
-    View, classify, assess, and analyze your applications from a web console by integrating the hub with source code and binaries repositories. Use tags and archetypes to add descriptions and automatically classify apps. Categorize them by multiple dimensions like business service and technology stack You can then assess and analyze archetypes that represent the bulk of apps that you want to modernize. This helps you find insights that scale execution.
+    View, classify, assess, and analyze your applications from a web console by integrating the hub with source code and binaries repositories. Use tags and archetypes to add descriptions and automatically classify apps. Categorize them by multiple dimensions like business service and technology stack. You can then assess and analyze archetypes that represent the bulk of apps that you want to modernize. This helps you find insights that scale execution.
 - src: /images/uncover-risks-hub.png
   title: Uncover migration risks
   description: > 
