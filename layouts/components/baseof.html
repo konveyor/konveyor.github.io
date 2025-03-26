@@ -15,7 +15,7 @@
               <img src="/images/left-illustration.svg" alt="left illustration" />
             </div>
             <div class="text-center">
-              <h1 class="max-w-700px m-auto text-6xl -text-primary">{{ .Title }}</h1>
+              <h1 class="max-w-700px m-auto line-height-1 text-6xl -text-primary">{{ .Title }}</h1>
               <p class="max-w-600px m-auto mt-3 mb-5">
                 {{ .Params.Subtitle }}
               </p>
@@ -29,12 +29,12 @@
               <img src="/images/right-illustration.svg" alt="right illustration" />
             </div>
           </section>
-          <section>
+          <section class="max-w-1000px m-auto">
             {{ range $index, $feature := .Params.Features }}
             {{ if not (modBool $index 2) }} 
-                <div class="flex flex-col--mobile flex-reverse align-center--mobile max-w-58 gap-md space-between py-120">
+                <div class="flex flex-col--mobile flex-reverse align-center--mobile space-between py-120">
             {{ else }}  
-                <div class="flex flex-col--mobile align-center--mobile space-between--mobile max-w-60 gap-md">
+                <div class="flex flex-col--mobile align-center--mobile space-between">
             {{ end }}
                     <div class="feature-image">
                         {{ with $feature.src }}                  
