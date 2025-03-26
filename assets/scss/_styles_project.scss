@@ -68,7 +68,10 @@
 }
 
 .footer-inner-top {
-    max-width: 1800px;
+    @media (min-width: 1800px) {
+        max-width: 1800px;
+    } 
+    max-width: 95%;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -111,7 +114,10 @@
 }
 
 .footer-inner-bottom {
-    max-width: 1800px;
+    @media (min-width: 1800px) {
+        max-width: 1800px;
+    } 
+    max-width: 95%;
     margin: 0 auto;
     padding: 20px 0px;
     display: flex;
