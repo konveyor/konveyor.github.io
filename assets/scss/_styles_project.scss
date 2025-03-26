@@ -13,6 +13,10 @@
     }
 }
 
+.td-navbar > div {
+    max-width: 1800px;
+}
+
 .nav-link {
   color: #787878;
   &:hover {
@@ -64,7 +68,7 @@
 }
 
 .footer-inner-top {
-    max-width: 95%;
+    max-width: 1800px;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
@@ -95,7 +99,7 @@
 }
 
 .cncf-logo-container {
-    width: 18rem;
+    width: 17rem;
     @include media-breakpoint-down(lg) { 
         width: 12rem;
     }
@@ -107,7 +111,7 @@
 }
 
 .footer-inner-bottom {
-    max-width: 95%;
+    max-width: 1800px;
     margin: 0 auto;
     padding: 20px 0px;
     display: flex;
@@ -135,7 +139,8 @@
     display: flex;
     justify-content: space-between;
     color: #000;
-    margin-top: 3rem;
+    max-width: 1800px;
+    margin: 3rem auto 0 auto;
     @include media-breakpoint-down(sm) { 
         margin-top: 0px;
     }
@@ -302,7 +307,7 @@
 
 .cncf-banner {
     max-width: fit-content;
-    padding: 2rem 7rem;
+    padding: 2rem 7rem 1rem 7rem;
     background-color: #AC945D;
     color: #fff;
     margin: 0 auto;
@@ -500,25 +505,44 @@
 .fancy {
     line-height: 0.5;
     text-align: center;
-  }
-  .fancy span {
+    &:before, &:after {
+        @include media-breakpoint-down(md) {
+            content: "";
+            border: none;
+            display: none;
+        }
+    }
+}
+
+.fancy span {
     display: inline-block;
-    position: relative;  
-  }
-  .fancy span:before,
-  .fancy span:after {
+    position: relative;
+    @include media-breakpoint-down(md){
+            background: inherit;
+            position: static;
+            padding: 0;
+    } 
+}
+
+.fancy span:before,
+.fancy span:after {
     content: "";
     position: absolute;
     height: 1px;
     border-top: 1px solid #353688;
     top: 50%;
     width: 300px;
-  }
-  .fancy span:before {
+}
+
+.fancy span:before {
     right: 100%;
     margin-right: 15px;
-  }
-  .fancy span:after {
+}
+
+.fancy span:after {
     left: 100%;
     margin-left: 15px;
-  }
+    @include media-breakpoint-down(md) {
+        display: none;
+    }
+}
