@@ -25,28 +25,22 @@ This release is a significant step forward for the Konveyor project, and for any
 
 Built on top of the Konveyor ecosystem, Kai brings:
 
-- **Static code analysis**  
-  Identifies potential issues when adopting new technologies (e.g., modern Java frameworks, containers).
+- **Static code analysis**:
+  Identifies potential issues when migrating to  new technologies (e.g., updating Java frameworks, containerizing an application).
 
-- **Changelog history from source repositories**  
-  Maintains a record of changes during migration.
+- **Extensible migration paths**:
+  Includes 2,400 predefined rules for different migration paths. Users can create their own custom rules for unique scenarios. 
 
-- **Issue tracking**  
-  Keeps a history of resolved modernization challenges.
+- **VS Code extension**: 
+  Suggested code changes show up within the IDE.
 
-- **Enhanced migration intelligence**  
-  Includes 2,400+ predefined rules for various migration paths, with support for user-defined custom rules.
+- **Model-agnostic AI**:  
+  Users are not locked into a specific LLM, enabling flexibility in AI-driven modernization
 
-- **VS Code extension**  
-  Provides modernization insights and suggested changes directly inside the IDE.
-
-- **Model-agnostic AI**  
-  Kai does not lock users into a specific LLM, providing flexibility for AI-driven workflows.
-
-- **Agentic AI for intelligent responses**  
+- **Agentic AI for intelligent responses**:  
   Delivers more meaningful, sanitized suggestions, validating Maven compilations and dependency resolutions.
 
-- **Effort estimation for dependencies**  
+- **Effort estimation for dependencies**:  
   Assesses dependency updates with low, medium, or high effort levels to help plan and prioritize.
 
 Kai can assist you with migrating from legacy Java, upgrading to Spring Boot 3, or prepping for a cloud native deployment. You can also [build custom rulesets](https://github.com/konveyor/analyzer-lsp/blob/main/docs/rules.md) when needed.
