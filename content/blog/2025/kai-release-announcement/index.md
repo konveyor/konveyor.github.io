@@ -40,9 +40,6 @@ Built on top of the Konveyor ecosystem, Kai brings:
 - **Agentic AI for intelligent responses**:  
   Delivers more meaningful, sanitized suggestions, validating Maven compilations and dependency resolutions.
 
-- **Effort estimation for dependencies**:  
-  Assesses dependency updates with low, medium, or high effort levels to help plan and prioritize.
-
 Kai can assist you with migrating from legacy Java, upgrading to Spring Boot 3, or prepping for a cloud native deployment. You can also [build custom rulesets](https://github.com/konveyor/analyzer-lsp/blob/main/docs/rules.md) when needed.
 
 ## Try it out!
