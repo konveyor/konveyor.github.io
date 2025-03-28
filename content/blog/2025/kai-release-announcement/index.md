@@ -2,7 +2,7 @@
 author: SavithaRaghunathan, JonathanRecinos
 date: 2025-04-01
 description: >-
-    After months of ideas, development, and feedback from early users and contributors, we're excited to share the first official release of Konveyor AI 0.1.0
+    After months of ideas, development, and feedback from early users and contributors, we're excited to share the first official release of Konveyor AI 0.1.0. Please download it and try it out in your local environment. Report your issues and feature requests, and contribute fixes and documentation if you can!
 featured: true
 image: header.png
 tags:
@@ -29,7 +29,7 @@ Built on top of the Konveyor ecosystem, Kai brings:
   Identifies potential issues when migrating to  new technologies (e.g., updating Java frameworks, containerizing an application).
 
 - **Extensible migration paths**:
-  Includes 2,400 predefined rules for different migration paths. Users can create their own custom rules for unique scenarios. 
+  Includes 2,400 predefined community contributed rules for different migration paths. Users can create their own custom rules for unique scenarios. 
 
 - **VS Code extension**: 
   Suggested code changes show up within the IDE.
@@ -55,7 +55,7 @@ If you are interested in learning how Kai works, here are some links to the tech
 - [**Konveyor AI: Supporting Application Modernization**](https://www.cncf.io/blog/2024/11/22/konveyor-ai-supporting-application-modernization/)
 
 
-We would like to thank the Konveyor community for their continued support, feedback, and encouragement. Huge shoutout to the contributors ([IDE extension](https://github.com/konveyor/editor-extensions/graphs/contributors), [backend](https://github.com/konveyor/kai/graphs/contributors)) who made this release possible. Thank you!
+The Konveyor project maintainers would like to thank the community for their continued support, feedback, and encouragement. Huge shoutout to the contributors ([IDE extension](https://github.com/konveyor/editor-extensions/graphs/contributors), [backend](https://github.com/konveyor/kai/graphs/contributors)) who made this release possible. Thank you!
 
 If you’re interested in application modernization, AI-driven developer tools, or want to contribute to something exciting and community-led, [come join us](https://github.com/konveyor/community/blob/main/README.md)! 
 
