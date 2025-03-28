@@ -35,10 +35,13 @@ Built on top of the Konveyor ecosystem, Kai brings:
   Suggested code changes show up within the IDE.
 
 - **Model-agnostic AI**:  
-  Users are not locked into a specific LLM, enabling flexibility in AI-driven modernization
+  Users are not locked into a specific LLM, enabling flexibility in AI-driven modernization.
 
 - **Agentic AI for intelligent responses**:  
   Delivers more meaningful, sanitized suggestions, validating Maven compilations and dependency resolutions.
+
+- **Varying levels of AI assistance**:
+ Users can choose the level of issue complexity that Kai solves.
 
 Kai can assist you with migrating from legacy Java, upgrading to Spring Boot 3, or prepping for a cloud native deployment. You can also [build custom rulesets](https://github.com/konveyor/analyzer-lsp/blob/main/docs/rules.md) when needed.
 
