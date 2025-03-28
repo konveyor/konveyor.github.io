@@ -1,0 +1,19 @@
+<svg enable-background="new 0 0 60 60" version="1.1" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+ <style type="text/css">.st0{fill:none;stroke:currentColor;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:currentColor;stroke-width:2;stroke-miterlimit:10;}
+	.st2{fill:none;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st3{fill:currentColor;stroke:currentColor;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st4{fill:currentColor;}
+	.st5{fill:none;stroke:currentColor;stroke-width:0.5;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st6{fill:none;stroke:currentColor;stroke-width:0.9663;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st7{fill:none;stroke:currentColor;stroke-width:0.9663;stroke-linecap:round;stroke-linejoin:round;}
+	.st8{fill:none;stroke:currentColor;stroke-width:1.9326;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st9{fill:none;stroke:currentColor;stroke-width:0.9344;stroke-linecap:round;stroke-linejoin:round;}
+	.st10{fill:none;stroke:currentColor;stroke-width:0.9344;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}</style>
+ <rect class="st6" x="4.63" y="25.86" width="12.01" height="12.01"/>
+ <polyline class="st6" points="54.68 28.26 54.68 44.78 28.19 44.78 28.19 18.29 43.7 18.29"/>
+ <line class="st7" x1="10.64" x2="26.86" y1="31.87" y2="31.87"/>
+ <polygon class="st4" points="23.65 35.82 22.99 35.12 26.48 31.87 22.99 28.63 23.65 27.92 27.9 31.87"/>
+ <line class="st8" x1="42.04" x2="58.41" y1="33.75" y2="14.12"/>
+ <line class="st8" x1="34.51" x2="42.04" y1="24.73" y2="33.75"/>
+</svg>

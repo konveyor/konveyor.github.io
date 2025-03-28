@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Installation on Konveyor</title><link>http://konveyor.io/docs/move2kube/installation/</link><description>Recent content in Installation on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 03 Aug 2022 15:23:24 -0600</lastBuildDate><atom:link href="http://konveyor.io/docs/move2kube/installation/index.xml" rel="self" type="application/rss+xml"/><item><title>Web Interface</title><link>http://konveyor.io/docs/move2kube/installation/installweb/</link><pubDate>Wed, 03 Aug 2022 15:23:24 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/installation/installweb/</guid><description>&lt;p>Minikube can be installed using Docker or Podman web interfaces.&lt;/p>
+&lt;h2 id="installing-move2kube-using-docker">Installing Move2Kube using Docker&lt;/h2>
+&lt;p>Follow the steps below to install Move2Kube with options of persistence by mounting to the current directory, and advanced features by mounting to the Docker socket allowing Move2Kube to run container based transformers.&lt;/p>
+&lt;p>Move2Kube can also be installed as a Helm Chart from &lt;a href="https://artifacthub.io/packages/helm/move2kube/move2kube/0.3.0?modal=install">ArtifactHub&lt;/a>. For more information on Helm Chart and Operator see &lt;a href="https://github.com/konveyor/move2kube-operator">Move2Kube Operator&lt;/a>&lt;/p>
+&lt;p>&lt;strong>Procedure&lt;/strong>
+.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Note&lt;/strong> For bleeding edge features, development, and testing, follow the steps below, but replace &lt;code>v0.3.0&lt;/code> with &lt;code>latest&lt;/code>.&lt;/p></description></item><item><title>Command line tool</title><link>http://konveyor.io/docs/move2kube/installation/installcli/</link><pubDate>Wed, 03 Aug 2022 15:23:12 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/installation/installcli/</guid><description>&lt;h2 id="installing-on-linux--macos--windows-wsl-recommended">Installing on Linux / MacOS / Windows WSL (Recommended):&lt;/h2>
+&lt;p>The easiest way to install Move2Kube is to download the pre-built binaries for Linux, MacOS, or Windows from the &lt;a href="https://github.com/konveyor/move2kube/releases">list of releases on Github&lt;/a>. Follow the steps below to install the latest stable version.&lt;/p>
+&lt;p>&lt;strong>Procedure&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Install Move2Kube with one of the following options.&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>Latest stable version:&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>bash &amp;lt;(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+&lt;/code>&lt;/pre>&lt;ul>
+&lt;li>A specific version (for example version v0.3.0-beta.0):&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>MOVE2KUBE_TAG=&amp;#39;v0.3.0-beta.0&amp;#39; bash &amp;lt;(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+&lt;/code>&lt;/pre>&lt;ul>
+&lt;li>Bleeding edge version:&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>BLEEDING_EDGE=&amp;#39;true&amp;#39; bash &amp;lt;(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+&lt;/code>&lt;/pre>&lt;ul>
+&lt;li>Without sudo:&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>USE_SUDO=false bash &amp;lt;(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Consider setting the following options.&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>The script installs to /usr/local/bin by default. To install to a different directory:&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>MOVE2KUBE_INSTALL_DIR=/my/new/install/dir bash &amp;lt;(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+&lt;/code>&lt;/pre>&lt;ul>
+&lt;li>Make the installation directory in the PATH to run Move2Kube as move2kube instead of /my/new/install/dir/move2kube.&lt;/li>
+&lt;li>Combine the above two environment variables to install without sudo and install to a different directory.&lt;/li>
+&lt;/ul>
+&lt;pre tabindex="0">&lt;code>USE_SUDO=false MOVE2KUBE_INSTALL_DIR=/my/new/install/dir bash &amp;lt;(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh)
+&lt;/code>&lt;/pre>&lt;h3 id="alternate-installations">Alternate installations&lt;/h3>
+&lt;p>Move2Kube can be installed using Homebrew and Go.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,601 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>Migrate from Docker Compose to Kubernetes | Konveyor</title>
+<meta name=description content="Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the transform command.
+$ move2kube transform -s docker-compose Prerequisites Install the Move2Kube CLI tool. Note: This tutorial has been created with v0.3.3-rc.2 version of Move2Kube.
+$ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh) Install a Kubernetes cluster from MiniKube. Overview This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two Docker Compose samples from the move2kube-demos repo."><meta property="og:url" content="http://konveyor.io/docs/move2kube/tutorials/migratedockercomposekube/"><meta property="og:site_name" content="Konveyor"><meta property="og:title" content="Migrate from Docker Compose to Kubernetes"><meta property="og:description" content="Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the transform command.
+$ move2kube transform -s docker-compose Prerequisites Install the Move2Kube CLI tool. Note: This tutorial has been created with v0.3.3-rc.2 version of Move2Kube.
+$ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh) Install a Kubernetes cluster from MiniKube. Overview This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two Docker Compose samples from the move2kube-demos repo."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><meta property="article:published_time" content="2022-08-04T19:11:24-06:00"><meta property="article:modified_time" content="2022-08-04T19:11:24-06:00"><meta itemprop=name content="Migrate from Docker Compose to Kubernetes"><meta itemprop=description content="Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the transform command.
+$ move2kube transform -s docker-compose Prerequisites Install the Move2Kube CLI tool. Note: This tutorial has been created with v0.3.3-rc.2 version of Move2Kube.
+$ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh) Install a Kubernetes cluster from MiniKube. Overview This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two Docker Compose samples from the move2kube-demos repo."><meta itemprop=datePublished content="2022-08-04T19:11:24-06:00"><meta itemprop=dateModified content="2022-08-04T19:11:24-06:00"><meta itemprop=wordCount content="2984"><meta name=twitter:card content="summary"><meta name=twitter:title content="Migrate from Docker Compose to Kubernetes"><meta name=twitter:description content="Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the transform command.
+$ move2kube transform -s docker-compose Prerequisites Install the Move2Kube CLI tool. Note: This tutorial has been created with v0.3.3-rc.2 version of Move2Kube.
+$ MOVE2KUBE_TAG='v0.3.3-rc.2' bash <(curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh) Install a Kubernetes cluster from MiniKube. Overview This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two Docker Compose samples from the move2kube-demos repo."><link rel=preload href=/scss/main.min.baa48bdc810b00549fa012f6adc6b2b008c86b5b3df483032d70e6abe36a8bbe.css as=style integrity="sha256-uqSL3IELAFSfoBL2rcaysAjIa1s99IMDLXDmq+Nqi74=" crossorigin=anonymous><link href=/scss/main.min.baa48bdc810b00549fa012f6adc6b2b008c86b5b3df483032d70e6abe36a8bbe.css rel=stylesheet integrity="sha256-uqSL3IELAFSfoBL2rcaysAjIa1s99IMDLXDmq+Nqi74=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body class=td-page><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/><span class="navbar-brand__logo navbar-logo"><svg width="575.19pt" height="221.79pt" version="1.2" viewBox="0 0 575.19 221.79"><g transform="translate(-9.3672,-9.1211)"><path d="m174.6 82.258h38.348v14.941H174.6z"/><path d="m246.31 82.258h38.348v14.941H246.31z"/><path d="m209.96 14.031h38.348v14.941H209.96z"/></g><path d="m247.85 78.121h15.727c1.418.0 2.5586 1.1367 2.5586 2.5547s-1.1406 2.5586-2.5586 2.5586H247.85c-1.418.0-2.5586-1.1406-2.5586-2.5586s1.1406-2.5547 2.5586-2.5547m-70.941.0h15.727c1.4141.0 2.5586 1.1367 2.5586 2.5547s-1.1445 2.5586-2.5586 2.5586h-15.727c-1.4141.0-2.5586-1.1406-2.5586-2.5586s1.1445-2.5547 2.5586-2.5547m47.938-8.7539c-.8789.0-1.5859.70703-1.5859 1.582v61.738c0 .87891.70703 1.5859 1.5859 1.5859h61.734c.8789.0 1.582-.71094 1.582-1.5859v-61.738c0-.875-.70313-1.582-1.582-1.582zm-70.945.0c-.875.0-1.5781.70703-1.5781 1.582v61.738c0 .87891.70312 1.5859 1.5781 1.5859h61.742c.875.0 1.5781-.71094 1.5781-1.5859v-61.738c0-.875-.70312-1.582-1.5781-1.582zm58.477-60.613h15.727c1.418.0 2.5586 1.1367 2.5586 2.5547s-1.1406 2.5586-2.5586 2.5586h-15.727c-1.418.0-2.5547-1.1406-2.5547-2.5586s1.1367-2.5547 2.5547-2.5547m-23.004-8.7539c-.87891.0-1.5859.70703-1.5859 1.582v61.738c0 .875.70703 1.5781 1.5859 1.5781h61.738c.875.0 1.582-.70312 1.582-1.5781v-61.738c0-.875-.70703-1.582-1.582-1.582z" fill="#b09454"/><g transform="translate(-9.3672,-9.1211)" fill="#353688"><path d="m110.98 164c13.109.0 23.523 10.414 23.523 23.523.0 13.113-10.414 23.523-23.523 23.523s-23.523-10.41-23.523-23.523c0-13.109 10.414-23.523 23.523-23.523m0-19.871c-23.848.0-43.395 19.547-43.395 43.395.0 23.852 19.547 43.395 43.395 43.395 23.852.0 43.398-19.543 43.398-43.395.0-23.848-19.547-43.395-43.398-43.395"/><path d="m9.3672 224.48v-73.914h20.301v28.109l22.488-28.109h22.902l-26.859 33.105 28.734 40.809h-23.32l-18.324-27.172-5.6211 5.832v21.34z"/><path d="m181.01 188.14v36.332h-20.301v-73.914h15.824l29.672 37.582v-37.582h20.301v73.914h-16.137z"/><path d="m253.47 150.56 14.469 48.41 14.266-48.41h21.34l-27.172 73.914H259.51l-27.484-73.914z"/><path d="m361.84 206.78v17.695h-52.676v-73.914h51.742v17.699h-31.441v10.41h26.859v16.449h-26.859v11.66z"/><path d="m386.3 150.56 13.223 31.961 13.531-31.961h22.07l-25.504 49.449v24.465h-20.195v-24.672l-25.09-49.242z"/><path d="m541.04 184.09h12.805c1.25.0 2.3945-.69532 3.4375-2.082 1.1094-1.3906 1.6641-3.332 1.6641-5.832.0-2.5664-.625-4.5117-1.875-5.8281-1.2461-1.3867-2.4961-2.082-3.7461-2.082h-12.285zm-20.301 40.391v-73.914h33.938c3.6094.0 6.9414.76562 9.9961 2.293 3.0547 1.457 5.6562 3.3984 7.8086 5.8281 2.2188 2.3594 3.9531 5.1016 5.2031 8.2227 1.25 3.0547 1.875 6.1445 1.875 9.2656.0 4.3047-.9375 8.3281-2.8125 12.078-1.8711 3.6797-4.4766 6.6953-7.8086 9.0586l15.617 27.168h-22.902l-13.012-22.695h-7.6016v22.695z"/><path d="m471.77 164c13.109.0 23.523 10.414 23.523 23.523.0 13.113-10.414 23.523-23.523 23.523s-23.523-10.41-23.523-23.523c0-13.109 10.414-23.523 23.523-23.523m0-19.871c-23.848.0-43.395 19.547-43.395 43.395.0 23.852 19.547 43.395 43.395 43.395 23.852.0 43.398-19.543 43.398-43.395.0-23.848-19.547-43.395-43.398-43.395"/></g></svg></span><span class=navbar-brand__name>Konveyor</span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class="nav-item sub-menu dropdown"><div class=dropdown><a class="nav-link dropdown-toggle" href=# id=navbarDropdown role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false><span>Components</span></a><ul class="dropdown-menu dropdown-menu-end -bg-primary"><li><a class=dropdown-item href=/components/konveyor-hub>Konveyor Hub</a></li><li><a class=dropdown-item href=/components/konveyor-cli>Konveyor CLI</a></li><li><a class=dropdown-item href=/components/kai>Konveyor AI</a></li></ul></div></li><li class=nav-item><a class=nav-link href=/docs><span>Documentation</span></a></li><li class=nav-item><a class=nav-link href=/docs/konveyor/contributetokonveyor/><span>Community</span></a></li><li class=nav-item><a class=nav-link href=/ecosystem><span>Ecosystem</span></a></li><li class=nav-item><a class=nav-link href=/blog><span>Blog</span></a></li></ul></div><div class="d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/offline-search-index.aee1a6172d1c6decda758fc5eb7f05de.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"><div id=td-sidebar-menu class=td-sidebar__inner><form class="td-sidebar__search d-flex align-items-center"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/offline-search-index.aee1a6172d1c6decda758fc5eb7f05de.json data-offline-search-base-href=/ data-offline-search-max-results=10></div><button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type=button data-bs-toggle=collapse data-bs-target=#td-section-nav aria-controls=td-section-nav aria-expanded=false aria-label="Toggle section navigation"></button></form><nav class="td-sidebar-nav collapse foldable-nav" id=td-section-nav><ul class="td-sidebar-nav__section pe-md-3 ul-0"><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docs-li><a href=/docs/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id=m-docs><span>Konveyor Docs</span></a><ul class=ul-1><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docskonveyor-li><input type=checkbox id=m-docskonveyor-check>
+<label for=m-docskonveyor-check><a href=/docs/konveyor/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docskonveyor><span>Konveyor</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorcontributetokonveyor-li><input type=checkbox id=m-docskonveyorcontributetokonveyor-check>
+<label for=m-docskonveyorcontributetokonveyor-check><a href=/docs/konveyor/contributetokonveyor/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorcontributetokonveyor><span>Contributing To Konveyor</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyoradmintasks-li><input type=checkbox id=m-docskonveyoradmintasks-check>
+<label for=m-docskonveyoradmintasks-check><a href=/docs/konveyor/admintasks/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyoradmintasks><span>Administrator view tasks</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorviews-li><input type=checkbox id=m-docskonveyorviews-check>
+<label for=m-docskonveyorviews-check><a href=/docs/konveyor/views/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorviews><span>Views</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorinstances-li><input type=checkbox id=m-docskonveyorinstances-check>
+<label for=m-docskonveyorinstances-check><a href=/docs/konveyor/instances/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorinstances><span>Seeding Instances</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorinstallation-li><input type=checkbox id=m-docskonveyorinstallation-check>
+<label for=m-docskonveyorinstallation-check><a href=/docs/konveyor/installation/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorinstallation><span>Installing Konveyor</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorassessanalyze-li><input type=checkbox id=m-docskonveyorassessanalyze-check>
+<label for=m-docskonveyorassessanalyze-check><a href=/docs/konveyor/assessanalyze/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorassessanalyze><span>Assessing and analyzing applications</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyoraddapps-li><input type=checkbox id=m-docskonveyoraddapps-check>
+<label for=m-docskonveyoraddapps-check><a href=/docs/konveyor/addapps/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyoraddapps><span>Adding applications</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docsmove2kube-li><input type=checkbox id=m-docsmove2kube-check checked>
+<label for=m-docsmove2kube-check><a href=/docs/move2kube/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kube><span>Move2Kube</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubeconcepts-li><input type=checkbox id=m-docsmove2kubeconcepts-check>
+<label for=m-docsmove2kubeconcepts-check><a href=/docs/move2kube/concepts/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubeconcepts><span>Concepts</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsmove2kubeinstallation-li><input type=checkbox id=m-docsmove2kubeinstallation-check>
+<label for=m-docsmove2kubeinstallation-check><a href=/docs/move2kube/installation/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubeinstallation><span>Installation</span></a></label><ul class="ul-3 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubeinstallationinstallweb-li><input type=checkbox id=m-docsmove2kubeinstallationinstallweb-check>
+<label for=m-docsmove2kubeinstallationinstallweb-check><a href=/docs/move2kube/installation/installweb/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubeinstallationinstallweb><span>Web Interface</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubeinstallationinstallcli-li><input type=checkbox id=m-docsmove2kubeinstallationinstallcli-check>
+<label for=m-docsmove2kubeinstallationinstallcli-check><a href=/docs/move2kube/installation/installcli/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubeinstallationinstallcli><span>Command line tool</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubecommands-li><input type=checkbox id=m-docsmove2kubecommands-check>
+<label for=m-docsmove2kubecommands-check><a href=/docs/move2kube/commands/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubecommands><span>Commands</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetransformers-li><input type=checkbox id=m-docsmove2kubetransformers-check>
+<label for=m-docsmove2kubetransformers-check><a href=/docs/move2kube/transformers/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetransformers><span>Transformers</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docsmove2kubetutorials-li><input type=checkbox id=m-docsmove2kubetutorials-check checked>
+<label for=m-docsmove2kubetutorials-check><a href=/docs/move2kube/tutorials/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubetutorials><span>Tutorials</span></a></label><ul class="ul-3 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsusingcli-li><input type=checkbox id=m-docsmove2kubetutorialsusingcli-check>
+<label for=m-docsmove2kubetutorialsusingcli-check><a href=/docs/move2kube/tutorials/usingcli/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsusingcli><span>Using Move2Kube CLI</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsusingui-li><input type=checkbox id=m-docsmove2kubetutorialsusingui-check>
+<label for=m-docsmove2kubetutorialsusingui-check><a href=/docs/move2kube/tutorials/usingui/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsusingui><span>Using Move2Kube UI</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsmove2kubetutorialscfappstok8-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok8-check>
+<label for=m-docsmove2kubetutorialscfappstok8-check><a href=/docs/move2kube/tutorials/cfappstok8/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubetutorialscfappstok8><span>Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes</span></a></label><ul class="ul-4 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscfappstok81collect-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok81collect-check>
+<label for=m-docsmove2kubetutorialscfappstok81collect-check><a href=/docs/move2kube/tutorials/cfappstok8/1collect/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscfappstok81collect><span>1. Collect</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscfappstok82plan-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok82plan-check>
+<label for=m-docsmove2kubetutorialscfappstok82plan-check><a href=/docs/move2kube/tutorials/cfappstok8/2plan/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscfappstok82plan><span>2. Plan</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscfappstok83transform-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok83transform-check>
+<label for=m-docsmove2kubetutorialscfappstok83transform-check><a href=/docs/move2kube/tutorials/cfappstok8/3transform/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscfappstok83transform><span>3. Transform</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsmove2kubetutorialscustomizeoutput-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutput-check>
+<label for=m-docsmove2kubetutorialscustomizeoutput-check><a href=/docs/move2kube/tutorials/customizeoutput/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubetutorialscustomizeoutput><span>Customizing the output</span></a></label><ul class="ul-4 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir-check><a href=/docs/move2kube/tutorials/customizeoutput/addcustfiledir/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir><span>Add custom files and directories in custom locations</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm-check><a href=/docs/move2kube/tutorials/customizeoutput/paramcustomfieldshelm/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm><span>Parameterizing custom fields in Helm Chart, Kustomize, OC templates</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml-check><a href=/docs/move2kube/tutorials/customizeoutput/customannotationsyaml/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml><span>Add custom annotations to Kubernetes YAMLs</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile-check><a href=/docs/move2kube/tutorials/customizeoutput/customgendockerfile/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile><span>Customize generated Dockerfile and built-in transformer behavior</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomkubeyaml-li><input type=checkbox id=m-docsmove2kubetutorialscustomkubeyaml-check>
+<label for=m-docsmove2kubetutorialscustomkubeyaml-check><a href=/docs/move2kube/tutorials/customkubeyaml/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomkubeyaml><span>Customize Kubernetes YAMLs to target specific clusters</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscreatehelmchartskustomize-li><input type=checkbox id=m-docsmove2kubetutorialscreatehelmchartskustomize-check>
+<label for=m-docsmove2kubetutorialscreatehelmchartskustomize-check><a href=/docs/move2kube/tutorials/createhelmchartskustomize/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscreatehelmchartskustomize><span>Create Helm-charts, Kustomize overlays from Kubernetes Yamls</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscreatewincontainersnet-li><input type=checkbox id=m-docsmove2kubetutorialscreatewincontainersnet-check>
+<label for=m-docsmove2kubetutorialscreatewincontainersnet-check><a href=/docs/move2kube/tutorials/createwincontainersnet/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscreatewincontainersnet><span>Create and deploy Windows .NET containers</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsmigratedeploynetcore-li><input type=checkbox id=m-docsmove2kubetutorialsmigratedeploynetcore-check>
+<label for=m-docsmove2kubetutorialsmigratedeploynetcore-check><a href=/docs/move2kube/tutorials/migratedeploynetcore/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsmigratedeploynetcore><span>Migrate and deploy .NET Core applications to Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id=m-docsmove2kubetutorialsmigratedockercomposekube-li><input type=checkbox id=m-docsmove2kubetutorialsmigratedockercomposekube-check checked>
+<label for=m-docsmove2kubetutorialsmigratedockercomposekube-check><a href=/docs/move2kube/tutorials/migratedockercomposekube/ class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsmigratedockercomposekube><span class=td-sidebar-nav-active-item>Migrate from Docker Compose to Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsmigratedeploycfapps-li><input type=checkbox id=m-docsmove2kubetutorialsmigratedeploycfapps-check>
+<label for=m-docsmove2kubetutorialsmigratedeploycfapps-check><a href=/docs/move2kube/tutorials/migratedeploycfapps/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsmigratedeploycfapps><span>Migrate and deploy Cloud Foundry applications to Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsrunnoninteractively-li><input type=checkbox id=m-docsmove2kubetutorialsrunnoninteractively-check>
+<label for=m-docsmove2kubetutorialsrunnoninteractively-check><a href=/docs/move2kube/tutorials/runnoninteractively/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsrunnoninteractively><span>Run transforms non-interactively</span></a></label></li></ul></li></ul></li></ul></li></ul></nav></div></aside><aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none"><div class="td-page-meta ms-2 pb-1 pt-2 mb-0"></div><div class=td-toc><nav id=TableOfContents><ul><li><a href=#prerequisites>Prerequisites</a></li><li><a href=#overview>Overview</a></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div><div class="taxonomy taxonomy-terms-cloud taxo-tags"><h5 class=taxonomy-title>Tags</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=http://konveyor.io/tags/appmodernization/ data-taxonomy-term=appmodernization><span class=taxonomy-label>AppModernization</span><span class=taxonomy-count>9</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/cncf/ data-taxonomy-term=cncf><span class=taxonomy-label>CNCF</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/crane/ data-taxonomy-term=crane><span class=taxonomy-label>Crane</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/forklift/ data-taxonomy-term=forklift><span class=taxonomy-label>Forklift</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/genai/ data-taxonomy-term=genai><span class=taxonomy-label>GenAI</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/hackfest/ data-taxonomy-term=hackfest><span class=taxonomy-label>HackFest</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kai/ data-taxonomy-term=kai><span class=taxonomy-label>Kai</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/konveyor/ data-taxonomy-term=konveyor><span class=taxonomy-label>Konveyor</span><span class=taxonomy-count>9</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kubecon/ data-taxonomy-term=kubecon><span class=taxonomy-label>KubeCon</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kubernetes/ data-taxonomy-term=kubernetes><span class=taxonomy-label>Kubernetes</span><span class=taxonomy-count>5</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/metrics/ data-taxonomy-term=metrics><span class=taxonomy-label>Metrics</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/move2kube/ data-taxonomy-term=move2kube><span class=taxonomy-label>Move2Kube</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/mtc/ data-taxonomy-term=mtc><span class=taxonomy-label>MTC</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/openshift/ data-taxonomy-term=openshift><span class=taxonomy-label>OpenShift</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/pelorus/ data-taxonomy-term=pelorus><span class=taxonomy-label>Pelorus</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/tackle/ data-taxonomy-term=tackle><span class=taxonomy-label>Tackle</span><span class=taxonomy-count>3</span></a></li></ul></div></aside><main class="col-12 col-md-9 col-xl-8 ps-md-5" role=main><nav aria-label=breadcrumb class=td-breadcrumbs><ol class=breadcrumb><li class=breadcrumb-item><a href=/docs/>Konveyor Docs</a></li><li class=breadcrumb-item><a href=/docs/move2kube/>Move2Kube</a></li><li class=breadcrumb-item><a href=/docs/move2kube/tutorials/>Tutorials</a></li><li class="breadcrumb-item active" aria-current=page>Migrate from Docker Compose to Kubernetes</li></ol></nav><div class=td-content><h1>Migrate from Docker Compose to Kubernetes</h1><header class=article-meta></header><p>Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the <code>transform</code> command.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube transform -s docker-compose
+</span></span></code></pre></div><h2 id=prerequisites>Prerequisites</h2><ul><li>Install the Move2Kube CLI tool.</li></ul><blockquote><p><strong>Note:</strong> This tutorial has been created with <code>v0.3.3-rc.2</code> version of Move2Kube.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ MOVE2KUBE_TAG<span style=color:#f92672>=</span><span style=color:#e6db74>&#39;v0.3.3-rc.2&#39;</span> bash &lt;<span style=color:#f92672>(</span>curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh<span style=color:#f92672>)</span>
+</span></span></code></pre></div><ul><li>Install a Kubernetes cluster from <a href=https://minikube.sigs.k8s.io/docs/start/>MiniKube</a>.</li></ul><h2 id=overview>Overview</h2><p>This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two <a href=https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose>Docker Compose</a> samples from the <a href=https://github.com/konveyor/move2kube-demos>move2kube-demos</a> repo.</p><ul><li><p><a href=https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/single-service>Sample 1</a> is a web app with a single service using Nginx and a prebuilt image.</p></li><li><p><a href=https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose/multiple-services>Sample 2</a> is more complicated. It is also a web app, but it has three services.</p><ul><li>A frontend written in PHP for Apache.</li><li>An API backend written for NodeJS.</li><li>A service for caching the calculations performed by the backend.</li></ul></li></ul><p>For the cache service use a prebuilt Redis image for this tutorial.</p><p>Below are the steps for migrating the second sample. The steps for the first sample are similar except that since it uses prebuilt images, skip the build and push the images portion.</p><p><strong>Procedure</strong></p><ol><li>Download the <code>samples/docker-compose/multiple-services</code> sample.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/docker-compose/multiple-services -r move2kube-demos
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>$ ls
+</span></span><span style=display:flex><span>multiple-services
+</span></span></code></pre></div><ol start=2><li>Run the planning phase.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube plan -s multiple-services/
+</span></span><span style=display:flex><span>INFO[0000] Configuration loading done
+</span></span><span style=display:flex><span>INFO[0000] Start planning
+</span></span><span style=display:flex><span>INFO[0000] Planning started on the base directory
+</span></span><span style=display:flex><span>INFO[0000] [CloudFoundry] Planning
+</span></span><span style=display:flex><span>INFO[0000] [CloudFoundry] Done
+</span></span><span style=display:flex><span>INFO[0000] [ComposeAnalyser] Planning
+</span></span><span style=display:flex><span>INFO[0000] Identified 3 named services and 0 to-be-named services
+</span></span><span style=display:flex><span>INFO[0000] [ComposeAnalyser] Done
+</span></span><span style=display:flex><span>INFO[0000] [DockerfileDetector] Planning
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 1 to-be-named services
+</span></span><span style=display:flex><span>INFO[0000] [DockerfileDetector] Done
+</span></span><span style=display:flex><span>INFO[0000] [Base Directory] Identified 4 named services and 1 to-be-named services
+</span></span><span style=display:flex><span>INFO[0000] Planning finished on the base directory
+</span></span><span style=display:flex><span>INFO[0000] Planning started on its sub directories
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in api
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in web
+</span></span><span style=display:flex><span>INFO[0000] Planning finished on its sub directories
+</span></span><span style=display:flex><span>INFO[0000] [Directory Walk] Identified 4 named services and 2 to-be-named services
+</span></span><span style=display:flex><span>INFO[0000] [Named Services] Identified 3 named services
+</span></span><span style=display:flex><span>INFO[0000] Planning done
+</span></span><span style=display:flex><span>INFO[0000] No of services identified : 3
+</span></span><span style=display:flex><span>INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan]
+</span></span></code></pre></div><ol start=3><li>Inspect the plan to verify all three services were detected.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cat m2k.plan
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>    <span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>move2kube.konveyor.io/v1alpha1</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Plan</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>name</span>: <span style=color:#ae81ff>myproject</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>sourceDir</span>: <span style=color:#ae81ff>multiple-services</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>services</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>api</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>ComposeAnalyser</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>DockerCompose</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>docker-compose.yaml</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>Dockerfile</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>api/Dockerfile</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ServiceDirectories</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>api</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ComposeService</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>api</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Nodejs-Dockerfile</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ServiceDirectories</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>api</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>DockerfileDetector</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>Dockerfile</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>api/Dockerfile</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ServiceDirectories</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>api</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>redis</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>ComposeAnalyser</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>DockerCompose</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>docker-compose.yaml</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ComposeService</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>redis</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>web</span>:
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>ComposeAnalyser</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>DockerCompose</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>docker-compose.yaml</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>Dockerfile</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>web/Dockerfile</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ServiceDirectories</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ComposeService</span>:
+</span></span><span style=display:flex><span>                <span style=color:#f92672>serviceName</span>: <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>DockerfileDetector</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>Dockerfile</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>web/Dockerfile</span>
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ServiceDirectories</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>          - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>PHP-Dockerfile</span>
+</span></span><span style=display:flex><span>            <span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>              <span style=color:#f92672>ServiceDirectories</span>:
+</span></span><span style=display:flex><span>                - <span style=color:#ae81ff>web</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>transformers</span>:
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ArgoCD</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/argocd/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Buildconfig</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/buildconfig/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>CloudFoundry</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/cloudfoundry/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ClusterSelector</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/clusterselector/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ComposeAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/compose/composeanalyser/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ComposeGenerator</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/compose/composegenerator/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ContainerImagesPushScriptGenerator</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/containerimagespushscript/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>DockerfileDetector</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfile/dockerfiledetector/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>DockerfileImageBuildScript</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>DockerfileParser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfile/dockerfileparser/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>DotNetCore-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>EarAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>EarRouter</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Golang-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/golang/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Gradle</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Jar</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/jar/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Jboss</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Knative</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/knative/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Kubernetes</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/kubernetes/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>KubernetesVersionChanger</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Liberty</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Maven</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/maven/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Nodejs-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/nodejs/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>PHP-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/php/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Parameterizer</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/parameterizer/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Python-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/python/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ReadMeGenerator</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/readmegenerator/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Ruby-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/ruby/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Rust-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/rust/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Tekton</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/tekton/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>Tomcat</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>WarAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>WarRouter</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>WinConsoleApp-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>WinSLWebApp-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>WinWebApp-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/transformer.yaml</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>ZuulAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/transformer.yaml</span>
+</span></span></code></pre></div><ol start=4><li>Run the transformation phase.</li></ol><blockquote><p><strong>Important:</strong> For most prompts, accept the default in this tutorial. However, some prompts to watch out for are:</p></blockquote><ul><li><strong>Kind of service/ingress created for the <code>redis</code> service:</strong>. Select <code>ClusterIP</code> so the service port will not be exposed via the Ingress.</li><li><strong>Exposed &lsquo;web&rsquo; service URL path:</strong> Since most website frontends are built to be served under <code>/</code> use that instead of <code>/web</code>.</li><li><strong>Image registry URL and image registry namespace:</strong> The image registry URL is where the container images will be pushed after building Docker Hub (index.docker.io), Quay (quay.io), IBM Cloud Container Registry (us.icr.io), etc. The <code>namespace</code> here means the username on the target image registry and not the Kubernetes cluster namespace.</li><li><strong>Ingress host and TLS secret:</strong> If deploying to MiniKube, use <code>localhost</code> as the ingress host domain. If deploying to a Kubernetes cluster on IBM Cloud, then find the ingress subdomain on the cluster on IBM Cloud as shown here. Leave the TLS secret blank.</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube transform
+</span></span><span style=display:flex><span>INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan.
+</span></span><span style=display:flex><span>? Select all transformer types that you are interested in:
+</span></span><span style=display:flex><span>ID: move2kube.transformers.types
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Services that don&#39;t support any of the transformer types you are interested in will be ignored.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> ArgoCD, Buildconfig, CloudFoundry, ClusterSelector, ComposeAnalyser, ComposeGenerator, ContainerImagesPushScriptGenerator, DockerfileDetector, DockerfileImageBuildScript, DockerfileParser, DotNetCore-Dockerfile, EarAnalyser, EarRouter, Golang-Dockerfile, Gradle, Jar, Jboss, Knative, Kubernetes, KubernetesVersionChanger, Liberty, Maven, Nodejs-Dockerfile, PHP-Dockerfile, Parameterizer, Python-Dockerfile, ReadMeGenerator, Ruby-Dockerfile, Rust-Dockerfile, Tekton, Tomcat, WarAnalyser, WarRouter, WinConsoleApp-Dockerfile, WinSLWebApp-Dockerfile, WinWebApp-Dockerfile, ZuulAnalyser
+</span></span><span style=display:flex><span>? Select all services that are needed:
+</span></span><span style=display:flex><span>ID: move2kube.services.[].enable
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- The services unselected here will be ignored.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> api, redis, web
+</span></span><span style=display:flex><span>INFO[0133] Iteration 1
+</span></span><span style=display:flex><span>INFO[0133] Iteration 2 - 3 artifacts to process
+</span></span><span style=display:flex><span>INFO[0133] Transformer ComposeAnalyser processing 3 artifacts
+</span></span><span style=display:flex><span>INFO[0133] Transformer ZuulAnalyser processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0133] Transformer ZuulAnalyser Done
+</span></span><span style=display:flex><span>INFO[0133] Transformer ComposeAnalyser Done
+</span></span><span style=display:flex><span>INFO[0133] Created 2 pathMappings and 4 artifacts. Total Path Mappings : 2. Total Artifacts : 3.
+</span></span><span style=display:flex><span>INFO[0133] Iteration 3 - 4 artifacts to process
+</span></span><span style=display:flex><span>INFO[0133] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>? Choose the cluster type:
+</span></span><span style=display:flex><span>ID: move2kube.target.clustertype
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Choose the cluster type you would like to target
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> Kubernetes
+</span></span><span style=display:flex><span>INFO[0179] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0179] Transformer ArgoCD processing 2 artifacts
+</span></span><span style=display:flex><span>? What kind of service/ingress should be created for the service redis&#39;s 6379 port?
+</span></span><span style=display:flex><span>ID: move2kube.services.&#34;redis&#34;.&#34;6379&#34;.servicetype
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Choose Ingress if you want a ingress/route resource to be created
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> ClusterIP
+</span></span><span style=display:flex><span>? What kind of service/ingress should be created for the service api&#39;s 1234 port?
+</span></span><span style=display:flex><span>ID: move2kube.services.&#34;api&#34;.&#34;1234&#34;.servicetype
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Choose Ingress if you want a ingress/route resource to be created
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> Ingress
+</span></span><span style=display:flex><span>? Specify the ingress path to expose the service api&#39;s 1234 port on?
+</span></span><span style=display:flex><span>ID: move2kube.services.&#34;api&#34;.&#34;1234&#34;.urlpath
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Leave out leading / to use first part as subdomain
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>/api
+</span></span><span style=display:flex><span>? What kind of service/ingress should be created for the service web&#39;s 8080 port?
+</span></span><span style=display:flex><span>ID: move2kube.services.&#34;web&#34;.&#34;8080&#34;.servicetype
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Choose Ingress if you want a ingress/route resource to be created
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> Ingress
+</span></span><span style=display:flex><span>? Specify the ingress path to expose the service web&#39;s 8080 port on?
+</span></span><span style=display:flex><span>ID: move2kube.services.&#34;web&#34;.&#34;8080&#34;.urlpath
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Leave out leading / to use first part as subdomain
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>/
+</span></span><span style=display:flex><span>? Provide the minimum number of replicas each service should have
+</span></span><span style=display:flex><span>ID: move2kube.minreplicas
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- If the value is 0 pods won&#39;t be started by default
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> 2
+</span></span><span style=display:flex><span>? Enter the URL of the image registry :
+</span></span><span style=display:flex><span>ID: move2kube.target.imageregistry.url
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- You can always change it later by changing the yamls.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> quay.io
+</span></span><span style=display:flex><span>? Enter the namespace where the new images should be pushed :
+</span></span><span style=display:flex><span>ID: move2kube.target.imageregistry.namespace
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Ex : myproject
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> move2kube
+</span></span><span style=display:flex><span>? [quay.io] What type of container registry login do you want to use?
+</span></span><span style=display:flex><span>ID: move2kube.target.imageregistry.logintype
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Docker login from config mode, will use the default config from your local machine.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span> No authentication
+</span></span><span style=display:flex><span>INFO[1487] Transformer ArgoCD Done
+</span></span><span style=display:flex><span>INFO[1487] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1487] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[1487] Transformer Buildconfig processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1487] Transformer Buildconfig Done
+</span></span><span style=display:flex><span>INFO[1487] Transformer ComposeGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1487] Transformer ComposeGenerator Done
+</span></span><span style=display:flex><span>INFO[1487] Transformer DockerfileImageBuildScript processing 3 artifacts
+</span></span><span style=display:flex><span>? Select the container runtime to use :
+</span></span><span style=display:flex><span>ID: move2kube.containerruntime
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- The container runtime selected will be used in the scripts
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>docker
+</span></span><span style=display:flex><span>INFO[1492] Transformer DockerfileImageBuildScript Done
+</span></span><span style=display:flex><span>INFO[1492] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1492] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[1492] Transformer Knative processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1492] Transformer Knative Done
+</span></span><span style=display:flex><span>INFO[1492] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1492] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[1492] Transformer Kubernetes processing 2 artifacts
+</span></span><span style=display:flex><span>? Provide the ingress host domain
+</span></span><span style=display:flex><span>ID: move2kube.target.ingress.host
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Ingress host domain is part of service URL
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>localhost
+</span></span><span style=display:flex><span>? Provide the TLS secret for ingress
+</span></span><span style=display:flex><span>ID: move2kube.target.ingress.tls
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>- Leave empty to use http
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>INFO[1499] Transformer Kubernetes Done
+</span></span><span style=display:flex><span>INFO[1499] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1499] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[1499] Transformer Tekton processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1499] Transformer Tekton Done
+</span></span><span style=display:flex><span>INFO[1499] Created 33 pathMappings and 11 artifacts. Total Path Mappings : 35. Total Artifacts : 7.
+</span></span><span style=display:flex><span>INFO[1499] Iteration 4 - 11 artifacts to process
+</span></span><span style=display:flex><span>INFO[1499] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1499] Transformer ContainerImagesPushScriptGenerator Done
+</span></span><span style=display:flex><span>INFO[1499] Transformer Parameterizer processing 5 artifacts
+</span></span><span style=display:flex><span>INFO[1499] Transformer Parameterizer Done
+</span></span><span style=display:flex><span>INFO[1499] Transformer ReadMeGenerator processing 5 artifacts
+</span></span><span style=display:flex><span>INFO[1500] Transformer ReadMeGenerator Done
+</span></span><span style=display:flex><span>INFO[1500] Created 17 pathMappings and 1 artifacts. Total Path Mappings : 52. Total Artifacts : 18.
+</span></span><span style=display:flex><span>INFO[1500] Iteration 5 - 1 artifacts to process
+</span></span><span style=display:flex><span>INFO[1500] Transformer ReadMeGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[1500] Transformer ReadMeGenerator Done
+</span></span><span style=display:flex><span>INFO[1500] Transformation done
+</span></span><span style=display:flex><span>INFO[1500] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
+</span></span></code></pre></div><p>The tranformatin is complete.</p><ol start=5><li>View the transformation output.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    # click to see the output
+</span></span><span style=display:flex><span>    $ ls
+</span></span><span style=display:flex><span>    docker-compose		m2k.plan		m2kqacache.yaml		myproject docker-compose.zip	m2kconfig.yaml		multiple-services
+</span></span><span style=display:flex><span>    $ tree myproject/
+</span></span><span style=display:flex><span>    myproject/
+</span></span><span style=display:flex><span>    ├── Readme.md
+</span></span><span style=display:flex><span>    ├── deploy
+</span></span><span style=display:flex><span>    │   ├── cicd
+</span></span><span style=display:flex><span>    │   │   ├── argocd
+</span></span><span style=display:flex><span>    │   │   │   └── myproject-deploy-application.yaml
+</span></span><span style=display:flex><span>    │   │   ├── argocd-parameterized
+</span></span><span style=display:flex><span>    │   │   │   ├── helm-chart
+</span></span><span style=display:flex><span>    │   │   │   │   └── myproject
+</span></span><span style=display:flex><span>    │   │   │   │       ├── Chart.yaml
+</span></span><span style=display:flex><span>    │   │   │   │       └── templates
+</span></span><span style=display:flex><span>    │   │   │   │           └── myproject-deploy-application.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── kustomize
+</span></span><span style=display:flex><span>    │   │   │   │   └── base
+</span></span><span style=display:flex><span>    │   │   │   │       ├── kustomization.yaml
+</span></span><span style=display:flex><span>    │   │   │   │       └── myproject-deploy-application.yaml
+</span></span><span style=display:flex><span>    │   │   │   └── openshift-template
+</span></span><span style=display:flex><span>    │   │   │       └── template.yaml
+</span></span><span style=display:flex><span>    │   │   ├── tekton
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>    │   │   │   ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>    │   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>    │   │   └── tekton-parameterized
+</span></span><span style=display:flex><span>    │   │       ├── helm-chart
+</span></span><span style=display:flex><span>    │   │       │   └── myproject
+</span></span><span style=display:flex><span>    │   │       │       ├── Chart.yaml
+</span></span><span style=display:flex><span>    │   │       │       └── templates
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>    │   │       │           ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>    │   │       │           └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>    │   │       ├── kustomize
+</span></span><span style=display:flex><span>    │   │       │   └── base
+</span></span><span style=display:flex><span>    │   │       │       ├── kustomization.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>    │   │       │       ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>    │   │       │       └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>    │   │       └── openshift-template
+</span></span><span style=display:flex><span>    │   │           └── template.yaml
+</span></span><span style=display:flex><span>    │   ├── compose
+</span></span><span style=display:flex><span>    │   │   └── docker-compose.yaml
+</span></span><span style=display:flex><span>    │   ├── knative
+</span></span><span style=display:flex><span>    │   │   ├── api-service.yaml
+</span></span><span style=display:flex><span>    │   │   ├── redis-service.yaml
+</span></span><span style=display:flex><span>    │   │   └── web-service.yaml
+</span></span><span style=display:flex><span>    │   ├── knative-parameterized
+</span></span><span style=display:flex><span>    │   │   ├── helm-chart
+</span></span><span style=display:flex><span>    │   │   │   └── myproject
+</span></span><span style=display:flex><span>    │   │   │       ├── Chart.yaml
+</span></span><span style=display:flex><span>    │   │   │       └── templates
+</span></span><span style=display:flex><span>    │   │   │           ├── api-service.yaml
+</span></span><span style=display:flex><span>    │   │   │           ├── redis-service.yaml
+</span></span><span style=display:flex><span>    │   │   │           └── web-service.yaml
+</span></span><span style=display:flex><span>    │   │   ├── kustomize
+</span></span><span style=display:flex><span>    │   │   │   └── base
+</span></span><span style=display:flex><span>    │   │   │       ├── api-service.yaml
+</span></span><span style=display:flex><span>    │   │   │       ├── kustomization.yaml
+</span></span><span style=display:flex><span>    │   │   │       ├── redis-service.yaml
+</span></span><span style=display:flex><span>    │   │   │       └── web-service.yaml
+</span></span><span style=display:flex><span>    │   │   └── openshift-template
+</span></span><span style=display:flex><span>    │   │       └── template.yaml
+</span></span><span style=display:flex><span>    │   ├── yamls
+</span></span><span style=display:flex><span>    │   │   ├── api-deployment.yaml
+</span></span><span style=display:flex><span>    │   │   ├── api-service.yaml
+</span></span><span style=display:flex><span>    │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>    │   │   ├── redis-deployment.yaml
+</span></span><span style=display:flex><span>    │   │   ├── redis-service.yaml
+</span></span><span style=display:flex><span>    │   │   ├── web-deployment.yaml
+</span></span><span style=display:flex><span>    │   │   └── web-service.yaml
+</span></span><span style=display:flex><span>    │   └── yamls-parameterized
+</span></span><span style=display:flex><span>    │       ├── helm-chart
+</span></span><span style=display:flex><span>    │       │   └── myproject
+</span></span><span style=display:flex><span>    │       │       ├── Chart.yaml
+</span></span><span style=display:flex><span>    │       │       ├── templates
+</span></span><span style=display:flex><span>    │       │       │   ├── api-deployment.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── api-service.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── redis-deployment.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── redis-service.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── web-deployment.yaml
+</span></span><span style=display:flex><span>    │       │       │   └── web-service.yaml
+</span></span><span style=display:flex><span>    │       │       ├── values-dev.yaml
+</span></span><span style=display:flex><span>    │       │       ├── values-prod.yaml
+</span></span><span style=display:flex><span>    │       │       └── values-staging.yaml
+</span></span><span style=display:flex><span>    │       ├── kustomize
+</span></span><span style=display:flex><span>    │       │   ├── base
+</span></span><span style=display:flex><span>    │       │   │   ├── api-deployment.yaml
+</span></span><span style=display:flex><span>    │       │   │   ├── api-service.yaml
+</span></span><span style=display:flex><span>    │       │   │   ├── kustomization.yaml
+</span></span><span style=display:flex><span>    │       │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>    │       │   │   ├── redis-deployment.yaml
+</span></span><span style=display:flex><span>    │       │   │   ├── redis-service.yaml
+</span></span><span style=display:flex><span>    │       │   │   ├── web-deployment.yaml
+</span></span><span style=display:flex><span>    │       │   │   └── web-service.yaml
+</span></span><span style=display:flex><span>    │       │   └── overlays
+</span></span><span style=display:flex><span>    │       │       ├── dev
+</span></span><span style=display:flex><span>    │       │       │   ├── apps-v1-deployment-api.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── apps-v1-deployment-redis.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── apps-v1-deployment-web.yaml
+</span></span><span style=display:flex><span>    │       │       │   └── kustomization.yaml
+</span></span><span style=display:flex><span>    │       │       ├── prod
+</span></span><span style=display:flex><span>    │       │       │   ├── apps-v1-deployment-api.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── apps-v1-deployment-redis.yaml
+</span></span><span style=display:flex><span>    │       │       │   ├── apps-v1-deployment-web.yaml
+</span></span><span style=display:flex><span>    │       │       │   └── kustomization.yaml
+</span></span><span style=display:flex><span>    │       │       └── staging
+</span></span><span style=display:flex><span>    │       │           ├── apps-v1-deployment-api.yaml
+</span></span><span style=display:flex><span>    │       │           ├── apps-v1-deployment-redis.yaml
+</span></span><span style=display:flex><span>    │       │           ├── apps-v1-deployment-web.yaml
+</span></span><span style=display:flex><span>    │       │           └── kustomization.yaml
+</span></span><span style=display:flex><span>    │       └── openshift-template
+</span></span><span style=display:flex><span>    │           ├── parameters-dev.yaml
+</span></span><span style=display:flex><span>    │           ├── parameters-prod.yaml
+</span></span><span style=display:flex><span>    │           ├── parameters-staging.yaml
+</span></span><span style=display:flex><span>    │           └── template.yaml
+</span></span><span style=display:flex><span>    ├── scripts
+</span></span><span style=display:flex><span>    │   ├── builddockerimages.bat
+</span></span><span style=display:flex><span>    │   ├── builddockerimages.sh
+</span></span><span style=display:flex><span>    │   ├── pushimages.bat
+</span></span><span style=display:flex><span>    │   └── pushimages.sh
+</span></span><span style=display:flex><span>    └── source
+</span></span><span style=display:flex><span>        ├── api
+</span></span><span style=display:flex><span>        │   ├── Dockerfile
+</span></span><span style=display:flex><span>        │   ├── index.js
+</span></span><span style=display:flex><span>        │   ├── package-lock.json
+</span></span><span style=display:flex><span>        │   └── package.json
+</span></span><span style=display:flex><span>        ├── docker-compose.yaml
+</span></span><span style=display:flex><span>        └── web
+</span></span><span style=display:flex><span>            ├── Dockerfile
+</span></span><span style=display:flex><span>            ├── fib.php
+</span></span><span style=display:flex><span>            └── index.php
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    43 directories, 107 files
+</span></span></code></pre></div><p>Inside the <code>scripts</code> directory note some helpful scripts that Move2Kube has generated to help build and push the needed container images.</p><ol start=6><li>Build all the images using the <code>builddockerimages.sh</code> script.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span># click to see the output
+</span></span><span style=display:flex><span>$ cd myproject/
+</span></span><span style=display:flex><span>$ ./builddockerimages.sh
+</span></span><span style=display:flex><span>    [+] Building 4.3s (10/10) FINISHED                                                                                                                                
+</span></span><span style=display:flex><span>     =&gt; [internal] load build definition from Dockerfile                                                                                                         0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; transferring dockerfile: 133B                                                                                                                         0.0s
+</span></span><span style=display:flex><span>     =&gt; [internal] load .dockerignore                                                                                                                            0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; transferring context: 2B                                                                                                                              0.0s
+</span></span><span style=display:flex><span>     =&gt; [internal] load metadata for docker.io/library/node:14                                                                                                   2.5s
+</span></span><span style=display:flex><span>     =&gt; [auth] library/node:pull token for registry-1.docker.io                                                                                                  0.0s
+</span></span><span style=display:flex><span>     =&gt; [internal] load build context                                                                                                                            0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; transferring context: 3.69kB                                                                                                                          0.0s
+</span></span><span style=display:flex><span>     =&gt; [1/4] FROM docker.io/library/node:14@sha256:e5c6aac226819f88d6431a56f502972d323d052b1b6108094ba7e6b07154a542                                             0.0s
+</span></span><span style=display:flex><span>     =&gt; CACHED [2/4] WORKDIR /app                                                                                                                                0.0s
+</span></span><span style=display:flex><span>     =&gt; [3/4] COPY . .                                                                                                                                           0.0s
+</span></span><span style=display:flex><span>     =&gt; [4/4] RUN npm install                                                                                                                                    1.5s
+</span></span><span style=display:flex><span>     =&gt; exporting to image                                                                                                                                       0.1s
+</span></span><span style=display:flex><span>     =&gt; =&gt; exporting layers                                                                                                                                      0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; writing image sha256:d5a8e3d3f05592f6edefe5df286c31c2327dbde4ad3d5832fc059f1a9381157a                                                                 0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; naming to docker.io/library/fibonacci-api:latest                                                                                                      0.0s
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    Use &#39;docker scan&#39; to run Snyk tests against images to find vulnerabilities and learn how to fix them
+</span></span><span style=display:flex><span>    /Users/user/Desktop/tutorial/myproject
+</span></span><span style=display:flex><span>    [+] Building 2.5s (8/8) FINISHED                                                                                                                                  
+</span></span><span style=display:flex><span>     =&gt; [internal] load build definition from Dockerfile                                                                                                         0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; transferring dockerfile: 82B                                                                                                                          0.0s
+</span></span><span style=display:flex><span>     =&gt; [internal] load .dockerignore                                                                                                                            0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; transferring context: 2B                                                                                                                              0.0s
+</span></span><span style=display:flex><span>     =&gt; [internal] load metadata for docker.io/library/php:7-apache                                                                                              2.2s
+</span></span><span style=display:flex><span>     =&gt; [auth] library/php:pull token for registry-1.docker.io                                                                                                   0.0s
+</span></span><span style=display:flex><span>     =&gt; [internal] load build context                                                                                                                            0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; transferring context: 1.51kB                                                                                                                          0.0s
+</span></span><span style=display:flex><span>     =&gt; CACHED [1/2] FROM docker.io/library/php:7-apache@sha256:729ad01c7d8e10fd992a6d4f3eb05dce3fb69bdf5c4fb4a9de4be4f4f5ae4dcc                                 0.0s
+</span></span><span style=display:flex><span>     =&gt; [2/2] COPY . /var/www/html/                                                                                                                              0.0s
+</span></span><span style=display:flex><span>     =&gt; exporting to image                                                                                                                                       0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; exporting layers                                                                                                                                      0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; writing image sha256:f5d91c6d96de3f8bb4c2c5d8bf6cde84985b7ee29d00ad21fad07e05cbe5ddca                                                                 0.0s
+</span></span><span style=display:flex><span>     =&gt; =&gt; naming to docker.io/library/fibonacci-web:latest                                                                                                      0.0s
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    Use &#39;docker scan&#39; to run Snyk tests against images to find vulnerabilities and learn how to fix them
+</span></span><span style=display:flex><span>    /Users/user/Desktop/tutorial/myproject
+</span></span><span style=display:flex><span>    done
+</span></span></code></pre></div><ol start=7><li>Push the images to the registry and namespace selected using the <code>pushimages.sh</code> script.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    # click to see the output
+</span></span><span style=display:flex><span>    $ ./pushimages.sh
+</span></span><span style=display:flex><span>    The push refers to repository [quay.io/move2kube/fibonacci-web]
+</span></span><span style=display:flex><span>    29db8d44d6a6: Pushed
+</span></span><span style=display:flex><span>    10dfb82106c4: Layer already exists
+</span></span><span style=display:flex><span>    7446d340e7f8: Layer already exists
+</span></span><span style=display:flex><span>    55d40777afe6: Layer already exists
+</span></span><span style=display:flex><span>    56543a169be6: Layer already exists
+</span></span><span style=display:flex><span>    b299cffd87cb: Layer already exists
+</span></span><span style=display:flex><span>    23946094ff3f: Layer already exists
+</span></span><span style=display:flex><span>    6c39776a30a0: Layer already exists
+</span></span><span style=display:flex><span>    564928686313: Layer already exists
+</span></span><span style=display:flex><span>    6e4300c6b758: Layer already exists
+</span></span><span style=display:flex><span>    ee0ca96d307e: Layer already exists
+</span></span><span style=display:flex><span>    0fdfbbf7aebd: Layer already exists
+</span></span><span style=display:flex><span>    2a3138346faa: Layer already exists
+</span></span><span style=display:flex><span>    2edcec3590a4: Layer already exists
+</span></span><span style=display:flex><span>    latest: digest: sha256:b34a669c75afda3dd4b8d5ef264a6f818cb394bb147d754d6e1a8699798a4c70 size: 3242
+</span></span><span style=display:flex><span>    The push refers to repository [quay.io/move2kube/fibonacci-api]
+</span></span><span style=display:flex><span>    aef80d5c2943: Pushed
+</span></span><span style=display:flex><span>    4471bdef8049: Pushed
+</span></span><span style=display:flex><span>    5825d126ab35: Layer already exists
+</span></span><span style=display:flex><span>    d48d998e8307: Layer already exists
+</span></span><span style=display:flex><span>    1f95b68fc83b: Layer already exists
+</span></span><span style=display:flex><span>    c1a45f6975fa: Layer already exists
+</span></span><span style=display:flex><span>    be099ea57c79: Layer already exists
+</span></span><span style=display:flex><span>    2b2dfe091b20: Layer already exists
+</span></span><span style=display:flex><span>    df74cf750cc8: Layer already exists
+</span></span><span style=display:flex><span>    75a95a2ddc29: Layer already exists
+</span></span><span style=display:flex><span>    e8fb9c1faa8f: Layer already exists
+</span></span><span style=display:flex><span>    9d1a9278f26b: Layer already exists
+</span></span><span style=display:flex><span>    latest: digest: sha256:521be8d409c29414274c912600dc7606b7db591f69abb2fbfb5e402ccb547878 size: 2840
+</span></span></code></pre></div><blockquote><p><strong>Note:</strong> If using Quay.io, change the pushed repositories <code>visibility</code> to <code>Public</code> or the Kubernetes pods may fail to pull the images from the registry and could fail to start due to <code>ErrImagePullBack</code>.</p></blockquote><ol start=8><li>If there is a Kubernetes cluster already, log in to it. Or, start MiniKube to start a local Kubernetes cluster.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ minikube start
+</span></span><span style=display:flex><span>    😄  minikube v1.24.0 on Darwin 12.0.1
+</span></span><span style=display:flex><span>    ✨  Using the docker driver based on existing profile
+</span></span><span style=display:flex><span>    👍  Starting control plane node minikube in cluster minikube
+</span></span><span style=display:flex><span>    🚜  Pulling base image ...
+</span></span><span style=display:flex><span>    🏃  Updating the running docker &#34;minikube&#34; container ...
+</span></span><span style=display:flex><span>    🐳  Preparing Kubernetes v1.22.3 on Docker 20.10.8 ...
+</span></span><span style=display:flex><span>    🔎  Verifying Kubernetes components...
+</span></span><span style=display:flex><span>        ▪ Using image gcr.io/k8s-minikube/storage-provisioner:v5
+</span></span><span style=display:flex><span>    💡  After the addon is enabled, please run &#34;minikube tunnel&#34; and your ingress resources would be available at &#34;127.0.0.1&#34;
+</span></span><span style=display:flex><span>        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
+</span></span><span style=display:flex><span>        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+</span></span><span style=display:flex><span>        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+</span></span><span style=display:flex><span>    🔎  Verifying ingress addon...
+</span></span><span style=display:flex><span>    🌟  Enabled addons: storage-provisioner, default-storageclass, ingress
+</span></span><span style=display:flex><span>    🏄  Done! kubectl is now configured to use &#34;minikube&#34; cluster and &#34;default&#34; namespace by default
+</span></span></code></pre></div><blockquote><p><strong>Important:</strong> Enable the ingress addon.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ minikube addons enable ingress
+</span></span><span style=display:flex><span>    💡  After the addon is enabled, please run &#34;minikube tunnel&#34; and your ingress resources would be available at &#34;127.0.0.1&#34;
+</span></span><span style=display:flex><span>        ▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
+</span></span><span style=display:flex><span>        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+</span></span><span style=display:flex><span>        ▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+</span></span><span style=display:flex><span>    🔎  Verifying ingress addon...
+</span></span><span style=display:flex><span>    🌟  The &#39;ingress&#39; addon is enabled
+</span></span></code></pre></div><ol start=9><li>Check if the kubectl related command will run.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ kubectl get pods
+</span></span></code></pre></div><ol start=10><li>Deploy the Kubernetes YAMLs to the Kubernetes/MiniKube cluster.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ kubectl apply -f deploy/yamls
+</span></span><span style=display:flex><span>deployment.apps/api created
+</span></span><span style=display:flex><span>service/api created
+</span></span><span style=display:flex><span>ingress.networking.k8s.io/myproject created
+</span></span><span style=display:flex><span>deployment.apps/redis created
+</span></span><span style=display:flex><span>service/redis created
+</span></span><span style=display:flex><span>deployment.apps/web created
+</span></span><span style=display:flex><span>service/web created
+</span></span></code></pre></div><ol start=11><li>View all the Kubernetes resources that were created.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>    $ kubectl get all
+</span></span><span style=display:flex><span>    NAME                        READY   STATUS    RESTARTS   AGE
+</span></span><span style=display:flex><span>    pod/api-84fc6cf59f-6z4nl    1/1     Running   0          8h
+</span></span><span style=display:flex><span>    pod/api-84fc6cf59f-72lmx    1/1     Running   0          8h
+</span></span><span style=display:flex><span>    pod/redis-5c94584bb-c9zk5   1/1     Running   0          8h
+</span></span><span style=display:flex><span>    pod/redis-5c94584bb-sv2zx   1/1     Running   0          8h
+</span></span><span style=display:flex><span>    pod/web-999d4cc74-6ckbj     1/1     Running   0          8h
+</span></span><span style=display:flex><span>    pod/web-999d4cc74-97hnc     1/1     Running   0          8h
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+</span></span><span style=display:flex><span>    service/api          ClusterIP   10.103.24.55    &lt;none&gt;        1234/TCP   8h
+</span></span><span style=display:flex><span>    service/kubernetes   ClusterIP   10.96.0.1       &lt;none&gt;        443/TCP    12h
+</span></span><span style=display:flex><span>    service/redis        ClusterIP   None            &lt;none&gt;        &lt;none&gt;     8h
+</span></span><span style=display:flex><span>    service/web          ClusterIP   10.100.18.139   &lt;none&gt;        8080/TCP   8h
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+</span></span><span style=display:flex><span>    deployment.apps/api     2/2     2            2           8h
+</span></span><span style=display:flex><span>    deployment.apps/redis   2/2     2            2           8h
+</span></span><span style=display:flex><span>    deployment.apps/web     2/2     2            2           8h
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>    NAME                              DESIRED   CURRENT   READY   AGE
+</span></span><span style=display:flex><span>    replicaset.apps/api-84fc6cf59f    2         2         2       8h
+</span></span><span style=display:flex><span>    replicaset.apps/redis-5c94584bb   2         2         2       8h
+</span></span><span style=display:flex><span>    replicaset.apps/web-999d4cc74     2         2         2       8h
+</span></span></code></pre></div><blockquote><p><strong>Important:</strong> This step is required only if the app has been deployed on MiniKube cluster.</p></blockquote><ol start=12><li>Access the running application using the Ingress created by starting a tunnel to the MiniKube cluster.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ minikube tunnel
+</span></span><span style=display:flex><span>❗  The service/ingress myproject requires privileged ports to be exposed: [80 443]
+</span></span><span style=display:flex><span>🔑  sudo permission will be asked for it.
+</span></span><span style=display:flex><span>🏃  Starting tunnel for service myproject.
+</span></span><span style=display:flex><span>Password:
+</span></span></code></pre></div><ol start=13><li>Access the app on the ingress specified during the ingress host domain QA. (For MiniKube, it will be http://localhost).</li></ol><h2 id=conclusion>Conclusion</h2><p>In this tutorial showed hot to transform a Docker Compose application with multiple services. We used Move2Kube to come up with a plan for migration, transform the input using the plan, generate the appropriate build scripts, Kubernetes YAMLs, etc. and deployed them to MiniKube.</p><p><a href=https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/migrateDockerComposeKube.md>Source</a></p></div></main></div></div><footer class=footer-container><div class=footer-inner-top><p>©2025 the Konveyor authors</p><ul class=footer-links><li><a href=/privacy>Privacy Statement</a></li><li><a href=https://www.linuxfoundation.org/legal/trademark-usage target=_blank>Trademark</a></li></ul><ul class=footer-links><li><a href=https://twitter.com/Konveyor_io target=_blank><i class="fa-brands fa-x-twitter"></i></a></li><li><a href=https://www.youtube.com/channel/UCQ3pW3gSBeCy0tj1J0ub2bw target=_blank><i class="fa-brands fa-youtube"></i></a></li><li><a href="https://www.linkedin.com/company/konveyor-community/?viewAsMember=true" target=_blank><i class="fa-brands fa-linkedin"></i></a></li><li><a href=https://www.konveyor.io/slack/ target=_blank><i class="fa-brands fa-slack"></i></a></li><li><a href=https://github.com/konveyor target=_blank><i class="fa-brands fa-github"></i></a></li></ul></div><div class=footer-inner-bottom><div><div class=konveyor-logo-container><img src=/images/Konveyor-logo-color-wh.svg alt="konveyor logo"></div><p>The Konveyor community helps modernize applications by providing open source tools.</p></div><div><div class=cncf-logo-container><img src=/images/cncf-logo-white.svg alt="cncf logo"></div><p>We are a Cloud Native Computing Foundation sandbox project.</p></div></div><p class=text-center>The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href=https://www.linuxfoundation.org/legal/trademark-usage target=_blank>Trademark Usage.</a></p></footer></div><script src=/js/main.min.8bdc707530d61dee3a6fd659f8a422c05d2e2319377a8710175451ca21fa83b0.js integrity="sha256-i9xwdTDWHe46b9ZZ+KQiwF0uIxk3eocQF1RRyiH6g7A=" crossorigin=anonymous></script><script defer src=/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js integrity="sha256-c0eKfUgHaYrtfjVesj+YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin=anonymous></script><script src=/js/tabpane-persist.js></script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKPDMS3" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></body></html>

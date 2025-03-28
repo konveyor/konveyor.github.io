@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tutorials on Konveyor</title><link>http://konveyor.io/docs/move2kube/tutorials/</link><description>Recent content in Tutorials on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 04 Aug 2022 19:13:38 -0600</lastBuildDate><atom:link href="http://konveyor.io/docs/move2kube/tutorials/index.xml" rel="self" type="application/rss+xml"/><item><title>Using Move2Kube CLI</title><link>http://konveyor.io/docs/move2kube/tutorials/usingcli/</link><pubDate>Thu, 04 Aug 2022 19:09:57 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/usingcli/</guid><description>&lt;p>This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Install the Move2Kube CLI tool.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Use the&lt;a href="https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms">&lt;code>language-platforms&lt;/code>&lt;/a> sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes.&lt;/p></description></item><item><title>Using Move2Kube UI</title><link>http://konveyor.io/docs/move2kube/tutorials/usingui/</link><pubDate>Thu, 04 Aug 2022 19:10:11 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/usingui/</guid><description>&lt;p>Similar to the command line tool, the Move2Kube Web-UI can also perform the transformation with all the capabilities that are in the command line tool. This document explains the steps to bring up the UI and backend using Docker and use it for transformation.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Install &lt;a href="https://www.docker.com/get-started">Docker&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Use the &lt;a href="https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms">language-platforms&lt;/a> sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which need to be containerized and then put into Kubernetes.&lt;/p></description></item><item><title>Customize Kubernetes YAMLs to target specific clusters</title><link>http://konveyor.io/docs/move2kube/tutorials/customkubeyaml/</link><pubDate>Thu, 04 Aug 2022 19:13:38 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/customkubeyaml/</guid><description>&lt;p>Move2Kube already supports targeting across multiple clusters including: Kubernetes, Openshift, IBM-IKS, IBM-Openshift, Azure-EKS, Azure-AKS and GCP-GKS. There might be situations that require generating Kubernetes YAMLs to target a particular cluster. This tutorial shows how to use Konveyor Move2Kube to change the versions of existing Kubernetes resources to target a particular cluster. Move2Kube can also be customized to generate Kubernetes YAMLS deployable on a particular cluster.&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Install the Move2Kube CLI tool.&lt;/p></description></item><item><title>Create Helm-charts, Kustomize overlays from Kubernetes Yamls</title><link>http://konveyor.io/docs/move2kube/tutorials/createhelmchartskustomize/</link><pubDate>Thu, 04 Aug 2022 19:13:10 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/createhelmchartskustomize/</guid><description>&lt;p>This tutorial will show how to transform a set of Kubernetes YAMLs by parameterizing them by using Move2Kube to generate parameterized Helm charts, Kustomize and Openshift Templates from the Kubernetes YAMLs. Move2Kube can also change the version of Kubernetes resources to target particular clusters.&lt;/p>
+&lt;p>&lt;strong>Prerequisites&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Move2Kube CLI tool is installed.&lt;/li>
+&lt;li>Use a &lt;a href="https://github.com/konveyor/move2kube-demos/tree/main/samples/kubernetes-to-kubernetes">kubernetes-to-kubernetes&lt;/a> sample. The &lt;code>kubernetes-to-kubernetes&lt;/code> directory has some Kubernetes YAMLs that deploy a web app with multiple services. There are three services: a frontend website in PHP, a backend API in Node.JS, and a cache service using Redis.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Procedure&lt;/strong>&lt;/p></description></item><item><title>Create and deploy Windows .NET containers</title><link>http://konveyor.io/docs/move2kube/tutorials/createwincontainersnet/</link><pubDate>Thu, 04 Aug 2022 19:12:22 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/createwincontainersnet/</guid><description>&lt;h2 id="net-applications-in-4x-framework">.NET applications in 4.x framework&lt;/h2>
+&lt;p>This tutorial shows how containerize .NET applications developed for 4.x versions of .NET framework using Windows containers and deploy them to Kubernetes cluster using Move2Kube. This tutorial uses the sample &lt;a href="https://docs.microsoft.com/en-us/dotnet/framework/wcf/whats-wcf">WCF&lt;/a> service from &lt;a href="https://github.com/konveyor/move2kube-demos/tree/main/samples/wcfservice">samples/wcfservice&lt;/a>.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Install Move2Kube.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Configure Kubernetes with &lt;a href="https://kubernetes.io/docs/setup/production-environment/windows/user-guide-windows-containers/">windows node support&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Download the &lt;code>samples/wcfservice&lt;/code> sample from &lt;a href="https://github.com/konveyor/move2kube-demos">move2kube-demos&lt;/a> repository.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/wcfservice -r move2kube-demos
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span> $ tree -L 2 wcfservice/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> wcfservice/
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> ├── wcfservice
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── App.config
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── IWindowsSampleService.cs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── Properties
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── WindowsSampleService.cs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ ├── wcfservice.cs
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> │ └── wcfservice.csproj
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> └── wcfservice.sln
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#960050;background-color:#1e0010">&lt;/span> 2 directories, 6 files
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="generating-target-artifacts">Generating target artifacts&lt;/h2>
+&lt;p>This procedure uses a two stage process for the transformation: plan and &lt;em>transform&lt;/em>. Run these steps from the directory containing the &lt;code>./wcfservice/&lt;/code> directory:&lt;/p></description></item><item><title>Migrate and deploy .NET Core applications to Kubernetes</title><link>http://konveyor.io/docs/move2kube/tutorials/migratedeploynetcore/</link><pubDate>Thu, 04 Aug 2022 19:11:51 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/migratedeploynetcore/</guid><description>&lt;p>This tutorial shows how to migrate and deploy .NET Core applications to a Kubernetes cluster using the target artifacts generated by Move2Kube with the data from &lt;a href="https://github.com/konveyor/move2kube-demos/tree/main/samples/dotnet5">samples/dotnet5&lt;/a>.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Install Move2Kube.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Install a container runtime: &lt;a href="https://www.docker.com/get-started">Docker&lt;/a> or &lt;a href="https://podman.io/getting-started/installation">Podman&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Install &lt;a href="https://kubernetes.io/docs/tasks/tools/install-kubectl">Kubectl&lt;/a>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Verify the dependencies were correctly installed.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ docker version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>or&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ podman info
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ kubectl version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Download the &lt;code>samples/dotnet5&lt;/code> sample from &lt;a href="https://github.com/konveyor/move2kube-demos">move2kube-demos&lt;/a> repository.&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/dotnet5 -r move2kube-demos
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ol start="6">
+&lt;li>View the structure inside the &lt;code>./dotnet5&lt;/code> directory and the four different applications:&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;code>dotnetwebapp&lt;/code> - an ASP.NET Core web application.&lt;/p></description></item><item><title>Migrate from Docker Compose to Kubernetes</title><link>http://konveyor.io/docs/move2kube/tutorials/migratedockercomposekube/</link><pubDate>Thu, 04 Aug 2022 19:11:24 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/migratedockercomposekube/</guid><description>&lt;p>Move2Kube automatically analyzes all the YAML files in the docker-compose directory and transforms and creates all artifacts required for deploying the application in Kubernetes using the &lt;code>transform&lt;/code> command.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ move2kube transform -s docker-compose
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>Install the Move2Kube CLI tool.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Note:&lt;/strong> This tutorial has been created with &lt;code>v0.3.3-rc.2&lt;/code> version of Move2Kube.&lt;/p>&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ MOVE2KUBE_TAG&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#39;v0.3.3-rc.2&amp;#39;&lt;/span> bash &amp;lt;&lt;span style="color:#f92672">(&lt;/span>curl https://raw.githubusercontent.com/konveyor/move2kube/main/scripts/install.sh&lt;span style="color:#f92672">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
+&lt;li>Install a Kubernetes cluster from &lt;a href="https://minikube.sigs.k8s.io/docs/start/">MiniKube&lt;/a>.&lt;/li>
+&lt;/ul>
+&lt;h2 id="overview">Overview&lt;/h2>
+&lt;p>This tutorial shows how to migrate an application written for Docker Compose to run on Kubernetes using the two &lt;a href="https://github.com/konveyor/move2kube-demos/tree/main/samples/docker-compose">Docker Compose&lt;/a> samples from the &lt;a href="https://github.com/konveyor/move2kube-demos">move2kube-demos&lt;/a> repo.&lt;/p></description></item><item><title>Migrate and deploy Cloud Foundry applications to Kubernetes</title><link>http://konveyor.io/docs/move2kube/tutorials/migratedeploycfapps/</link><pubDate>Thu, 04 Aug 2022 19:10:59 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/migratedeploycfapps/</guid><description>&lt;p>This tutorial shows how to install Move2Kube and use the Move2Kube process (collect, plan and transform) to create deployment artifacts for Cloud Foundry apps using the data from &lt;a href="https://github.com/konveyor/move2kube-demos/tree/main/samples/cloud-foundry">samples/cloud-foundry&lt;/a>.&lt;/p>
+&lt;p>Using the &lt;code>transform&lt;/code> command, Move2Kube will automatically analyze all the artifacts in the cloud-foundry directory and transform and create all the artifacts required for deploying the application in Kubernetes.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-console" data-lang="console">&lt;span style="display:flex;">&lt;span>$ move2kube transform -s cloud-foundry
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>A source directory containing the source code files and/or the manifest.yml file of a Cloud Foundry application.&lt;/li>
+&lt;/ul>
+&lt;p>A sample of this is present in the &lt;a href="https://github.com/konveyor/move2kube-demos">move2kube-demos&lt;/a> repository. This tutorial will be using the &lt;code>cloud-foundry&lt;/code> sample from this repository.&lt;/p></description></item><item><title>Run transforms non-interactively</title><link>http://konveyor.io/docs/move2kube/tutorials/runnoninteractively/</link><pubDate>Thu, 04 Aug 2022 19:10:32 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/runnoninteractively/</guid><description>&lt;p>Move2Kube interacts with users through a series of questions during the transformation phase. After looking at the output, re-running it and giving different answers to some of the questions may be necessary. In order to avoid answering all of the same questions over and over, Move2Kube provides a simple configuration file.&lt;/p>
+&lt;p>In the directory where the &lt;code>move2kube transform&lt;/code> command was run there is a file called &lt;code>m2kconfig.yaml&lt;/code> which contains the answers provided to all of the questions that were asked. There is also a &lt;code>m2kqacache.yaml&lt;/code> file which contains both the questions and the answers in more detail and can be used when running the transform using the &lt;code>--config&lt;/code> flag&lt;/p></description></item></channel></rss>

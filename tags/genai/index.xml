@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GenAI on Konveyor</title><link>http://konveyor.io/tags/genai/</link><description>Recent content in GenAI on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 29 Aug 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://konveyor.io/tags/genai/index.xml" rel="self" type="application/rss+xml"/><item><title>Incident Storage in Kai - A Deep Dive</title><link>http://konveyor.io/blog/2024/kai-incident-storage-2024/</link><pubDate>Thu, 29 Aug 2024 00:00:00 +0000</pubDate><guid>http://konveyor.io/blog/2024/kai-incident-storage-2024/</guid><description>&lt;p>&lt;strong>Author&lt;/strong>: Jonah Sussman (&lt;a href="https://www.GitHub.com/jonahsussman/">GitHub&lt;/a>, &lt;a href="https://www.linkedin.com/in/jonahsussman/">LinkedIn&lt;/a>, &lt;a href="mailto:jsussman@redhat.com">E-mail&lt;/a>)&lt;/p>
+&lt;h2 id="introduction">Introduction&lt;/h2>
+&lt;p>The process of modernizing an application is complex and time-consuming. Despite
+our best efforts as software engineers with things like &lt;a href="https://semver.org/">semantic
+versioning&lt;/a>, detailed release notes, and thorough testing,
+modernizing a single application is an intimidating task.&lt;/p>
+&lt;p>This kind of work is often one of the most unglamorous, and error-prone tasks
+that developers have to do. It involves rewriting large portions of the
+codebase, which can be daunting for even the most battle-hardened of developers.
+There&amp;rsquo;s an interconnected web of functions, classes, and modules that all depend
+on each other. One wrong move and the whole thing can come crashing down.&lt;/p></description></item><item><title>Konveyor AI (Kai) Roadmap 2024</title><link>http://konveyor.io/blog/2024/kai-roadmap-2024/</link><pubDate>Mon, 29 Jul 2024 07:00:00 +0000</pubDate><guid>http://konveyor.io/blog/2024/kai-roadmap-2024/</guid><description>&lt;p>&lt;strong>Author&lt;/strong>: &lt;a href="https://github.com/jwmatthews">John Matthews&lt;/a>&lt;/p>
+&lt;p>This post shares the roadmap for &lt;a href="https://github.com/konveyor/kai">Konveyor AI (Kai)&lt;/a> as of summer 2024.
+&lt;em>For a recap of what is Konveyor AI (Kai) please see our prior post: &lt;a href="http://konveyor.io/blog/kai-deep-dive-2024/">Kai - Generative AI Applied to Application Modernization&lt;/a>&lt;/em>&lt;/p>
+&lt;p>The roadmap is organized by themes of functionality, each focusing on a specific aspect of the project&amp;rsquo;s development.&lt;/p>
+&lt;p>Roadmap Outline:&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#purpose">Purpose&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#maturity">Maturity&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#guiding-principles">Guiding Principles&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#themes">Themes&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#milestones">Milestones&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#future-areas-to-consider">Future Areas to Consider&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#access-to-early-builds">Access to Early Builds&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="purpose">Purpose&lt;/h2>
+&lt;p>&lt;strong>What is the purpose of Konveyor AI?&lt;/strong>
+Kai intends to improve the economics of re-platforming and refactoring applications to Kubernetes and cloud-native technologies via use of Generative AI leveraging data in Konveyor.&lt;/p></description></item><item><title>Kai - Generative AI Applied to Application Modernization</title><link>http://konveyor.io/blog/2024/kai-deep-dive-2024/</link><pubDate>Tue, 07 May 2024 07:00:00 +0000</pubDate><guid>http://konveyor.io/blog/2024/kai-deep-dive-2024/</guid><description>&lt;p>&lt;strong>Author&lt;/strong>: &lt;a href="https://github.com/jwmatthews">John Matthews&lt;/a>&lt;/p>
+&lt;h3 id="overview">Overview&lt;/h3>
+&lt;p>Konveyor AI or &amp;ldquo;Kai&amp;rdquo;, is an early effort of Generative AI applied to Application Modernization being explored under the Konveyor Ecosystem at &lt;a href="https://github.com/konveyor-ecosystem/kai">konveyor-ecosystem/kai&lt;/a>.&lt;/p>
+&lt;p>Kai implements a &lt;a href="https://www.promptingguide.ai/techniques/rag">Retrieval Augmented Generation (RAG)&lt;/a> approach that leverages data from Konveyor to help generate code suggestions to aid migrating legacy code bases to a different technology. The intent of this RAG approach is to shape the code suggestions to be similar to how an organization has solved problems in the past, without additional fine-tuning of the model.&lt;/p></description></item></channel></rss>

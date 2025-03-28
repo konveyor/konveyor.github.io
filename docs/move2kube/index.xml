@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Move2Kube on Konveyor</title><link>http://konveyor.io/docs/move2kube/</link><description>Recent content in Move2Kube on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Tue, 16 Aug 2022 17:21:40 -0600</lastBuildDate><atom:link href="http://konveyor.io/docs/move2kube/index.xml" rel="self" type="application/rss+xml"/><item><title>Concepts</title><link>http://konveyor.io/docs/move2kube/concepts/</link><pubDate>Tue, 16 Aug 2022 17:21:40 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/concepts/</guid><description>&lt;p>Move2Kube has four concepts that are useful to understand when customizing output.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Important:&lt;/strong> It may be helpful to go through the tutorials first, then reading this section to learn more about each concept in more detail.&lt;/p>&lt;/blockquote>
+&lt;h2 id="artifacts">Artifacts&lt;/h2>
+&lt;p>&lt;a href="https://github.com/konveyor/move2kube/blob/6448624d79c37809417c05e34fcb3b2456952bcb/types/transformer/artifact.go#L37-L45">Source code&lt;/a>&lt;/p>
+&lt;p>Artifacts represent the application objects that can be passed between transformers.&lt;/p>
+&lt;pre tabindex="0">&lt;code>type Artifact struct {
+	Name string `yaml:&amp;#34;name,omitempty&amp;#34; json:&amp;#34;name,omitempty&amp;#34;`
+	Type ArtifactType `yaml:&amp;#34;type,omitempty&amp;#34; json:&amp;#34;type,omitempty&amp;#34;`
+	ProcessWith metav1.LabelSelector `yaml:&amp;#34;processWith,omitempty&amp;#34; json:&amp;#34;processWith,omitempty&amp;#34;` // Selector for choosing transformers that should process this artifact, empty is everything
+
+	Paths map[PathType][]string `yaml:&amp;#34;paths,omitempty&amp;#34; json:&amp;#34;paths,omitempty&amp;#34; m2kpath:&amp;#34;normal&amp;#34;`
+	Configs map[ConfigType]interface{} `yaml:&amp;#34;configs,omitempty&amp;#34; json:&amp;#34;config,omitempty&amp;#34;` // Could be IR or template config or any custom configuration
+}
+&lt;/code>&lt;/pre>&lt;h3 id="artifact-fields">Artifact fields&lt;/h3>
+&lt;p>Each artifact is an object with fields that need to be understood in order to write transformers effectively.&lt;/p></description></item><item><title>Commands</title><link>http://konveyor.io/docs/move2kube/commands/</link><pubDate>Fri, 05 Aug 2022 11:13:15 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/commands/</guid><description>&lt;p>Move2Kube creates all resources required for deploying applications into Kubernetes including containerization and Kubernetes resources. It supports translating from Docker swarm/Docker-compose, Cloud Foundry, and other non-containerized applications. If the application does not use any of those or is not containerized, it can still be transformed by Move2Kube.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Note:&lt;/strong> Use these commands to view the options available in Move2Kube.&lt;/p>&lt;/blockquote>
+&lt;pre tabindex="0">&lt;code> -h, --help help for move2kube
+ --log-file string File to store the logs in. By default it only prints to console.
+ --log-level string Set logging levels. (default &amp;#34;info&amp;#34;)
+&lt;/code>&lt;/pre>&lt;h3 id="move2kube-commands">Move2Kube commands&lt;/h3>
+&lt;p>There are four phases of the Move2Kube processes that are created, configured, and run using four commands and their options:&lt;/p></description></item><item><title>Transformers</title><link>http://konveyor.io/docs/move2kube/transformers/</link><pubDate>Fri, 05 Aug 2022 10:42:32 -0600</pubDate><guid>http://konveyor.io/docs/move2kube/transformers/</guid><description>&lt;p>Move2Kube uses a suite of transformers to modify objects. To customize the output artifacts generated for a specific input, these transformers can be configured or new custom transformers can be created to achieve the required result. Transformer behavior and configuration is determined by the Transformer Class it uses. Though all the transformer classes are equal internally in Move2Kube, from a usage perspective, they are classified into three categories.&lt;/p>
+&lt;ul>
+&lt;li>Purpose Built - Has a specific job and the customization allows for changing the parameters/configuration required for performing the specific job. Ex: &lt;code>Kubernetes&lt;/code>, &lt;code>Parameterizer&lt;/code>, &lt;code>GolangDockerfileGenerator&lt;/code>, etc..&lt;/li>
+&lt;li>External - Allows you to write custom transformers performing any behavior. It exposes the internal functions of the transformer class through different interfaces to be implemented by the transformer externally. Ex: &lt;code>Starlark&lt;/code>, &lt;code>Executable&lt;/code>&lt;/li>
+&lt;li>Special - These classes allow special behaviors. Ex: &lt;code>Router&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="purpose-built">Purpose Built&lt;/h2>
+&lt;p>These transformer classes do a specific job, and the customization allows for changing the parameters/configuration required for performing the specific job.&lt;/p></description></item></channel></rss>

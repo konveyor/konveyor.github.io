@@ -1,0 +1,927 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>Using Move2Kube CLI | Konveyor</title>
+<meta name=description content="This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.
+Prerequisites Install the Move2Kube CLI tool.
+Use thelanguage-platforms sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes."><meta property="og:url" content="http://konveyor.io/docs/move2kube/tutorials/usingcli/"><meta property="og:site_name" content="Konveyor"><meta property="og:title" content="Using Move2Kube CLI"><meta property="og:description" content="This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.
+Prerequisites Install the Move2Kube CLI tool.
+Use thelanguage-platforms sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="docs"><meta property="article:published_time" content="2022-08-04T19:09:57-06:00"><meta property="article:modified_time" content="2022-08-04T19:09:57-06:00"><meta itemprop=name content="Using Move2Kube CLI"><meta itemprop=description content="This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.
+Prerequisites Install the Move2Kube CLI tool.
+Use thelanguage-platforms sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes."><meta itemprop=datePublished content="2022-08-04T19:09:57-06:00"><meta itemprop=dateModified content="2022-08-04T19:09:57-06:00"><meta itemprop=wordCount content="4777"><meta name=twitter:card content="summary"><meta name=twitter:title content="Using Move2Kube CLI"><meta name=twitter:description content="This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.
+Prerequisites Install the Move2Kube CLI tool.
+Use thelanguage-platforms sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes."><link rel=preload href=/scss/main.min.baa48bdc810b00549fa012f6adc6b2b008c86b5b3df483032d70e6abe36a8bbe.css as=style integrity="sha256-uqSL3IELAFSfoBL2rcaysAjIa1s99IMDLXDmq+Nqi74=" crossorigin=anonymous><link href=/scss/main.min.baa48bdc810b00549fa012f6adc6b2b008c86b5b3df483032d70e6abe36a8bbe.css rel=stylesheet integrity="sha256-uqSL3IELAFSfoBL2rcaysAjIa1s99IMDLXDmq+Nqi74=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body class=td-page><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/><span class="navbar-brand__logo navbar-logo"><svg width="575.19pt" height="221.79pt" version="1.2" viewBox="0 0 575.19 221.79"><g transform="translate(-9.3672,-9.1211)"><path d="m174.6 82.258h38.348v14.941H174.6z"/><path d="m246.31 82.258h38.348v14.941H246.31z"/><path d="m209.96 14.031h38.348v14.941H209.96z"/></g><path d="m247.85 78.121h15.727c1.418.0 2.5586 1.1367 2.5586 2.5547s-1.1406 2.5586-2.5586 2.5586H247.85c-1.418.0-2.5586-1.1406-2.5586-2.5586s1.1406-2.5547 2.5586-2.5547m-70.941.0h15.727c1.4141.0 2.5586 1.1367 2.5586 2.5547s-1.1445 2.5586-2.5586 2.5586h-15.727c-1.4141.0-2.5586-1.1406-2.5586-2.5586s1.1445-2.5547 2.5586-2.5547m47.938-8.7539c-.8789.0-1.5859.70703-1.5859 1.582v61.738c0 .87891.70703 1.5859 1.5859 1.5859h61.734c.8789.0 1.582-.71094 1.582-1.5859v-61.738c0-.875-.70313-1.582-1.582-1.582zm-70.945.0c-.875.0-1.5781.70703-1.5781 1.582v61.738c0 .87891.70312 1.5859 1.5781 1.5859h61.742c.875.0 1.5781-.71094 1.5781-1.5859v-61.738c0-.875-.70312-1.582-1.5781-1.582zm58.477-60.613h15.727c1.418.0 2.5586 1.1367 2.5586 2.5547s-1.1406 2.5586-2.5586 2.5586h-15.727c-1.418.0-2.5547-1.1406-2.5547-2.5586s1.1367-2.5547 2.5547-2.5547m-23.004-8.7539c-.87891.0-1.5859.70703-1.5859 1.582v61.738c0 .875.70703 1.5781 1.5859 1.5781h61.738c.875.0 1.582-.70312 1.582-1.5781v-61.738c0-.875-.70703-1.582-1.582-1.582z" fill="#b09454"/><g transform="translate(-9.3672,-9.1211)" fill="#353688"><path d="m110.98 164c13.109.0 23.523 10.414 23.523 23.523.0 13.113-10.414 23.523-23.523 23.523s-23.523-10.41-23.523-23.523c0-13.109 10.414-23.523 23.523-23.523m0-19.871c-23.848.0-43.395 19.547-43.395 43.395.0 23.852 19.547 43.395 43.395 43.395 23.852.0 43.398-19.543 43.398-43.395.0-23.848-19.547-43.395-43.398-43.395"/><path d="m9.3672 224.48v-73.914h20.301v28.109l22.488-28.109h22.902l-26.859 33.105 28.734 40.809h-23.32l-18.324-27.172-5.6211 5.832v21.34z"/><path d="m181.01 188.14v36.332h-20.301v-73.914h15.824l29.672 37.582v-37.582h20.301v73.914h-16.137z"/><path d="m253.47 150.56 14.469 48.41 14.266-48.41h21.34l-27.172 73.914H259.51l-27.484-73.914z"/><path d="m361.84 206.78v17.695h-52.676v-73.914h51.742v17.699h-31.441v10.41h26.859v16.449h-26.859v11.66z"/><path d="m386.3 150.56 13.223 31.961 13.531-31.961h22.07l-25.504 49.449v24.465h-20.195v-24.672l-25.09-49.242z"/><path d="m541.04 184.09h12.805c1.25.0 2.3945-.69532 3.4375-2.082 1.1094-1.3906 1.6641-3.332 1.6641-5.832.0-2.5664-.625-4.5117-1.875-5.8281-1.2461-1.3867-2.4961-2.082-3.7461-2.082h-12.285zm-20.301 40.391v-73.914h33.938c3.6094.0 6.9414.76562 9.9961 2.293 3.0547 1.457 5.6562 3.3984 7.8086 5.8281 2.2188 2.3594 3.9531 5.1016 5.2031 8.2227 1.25 3.0547 1.875 6.1445 1.875 9.2656.0 4.3047-.9375 8.3281-2.8125 12.078-1.8711 3.6797-4.4766 6.6953-7.8086 9.0586l15.617 27.168h-22.902l-13.012-22.695h-7.6016v22.695z"/><path d="m471.77 164c13.109.0 23.523 10.414 23.523 23.523.0 13.113-10.414 23.523-23.523 23.523s-23.523-10.41-23.523-23.523c0-13.109 10.414-23.523 23.523-23.523m0-19.871c-23.848.0-43.395 19.547-43.395 43.395.0 23.852 19.547 43.395 43.395 43.395 23.852.0 43.398-19.543 43.398-43.395.0-23.848-19.547-43.395-43.398-43.395"/></g></svg></span><span class=navbar-brand__name>Konveyor</span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class="nav-item sub-menu dropdown"><div class=dropdown><a class="nav-link dropdown-toggle" href=# id=navbarDropdown role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false><span>Components</span></a><ul class="dropdown-menu dropdown-menu-end -bg-primary"><li><a class=dropdown-item href=/components/konveyor-hub>Konveyor Hub</a></li><li><a class=dropdown-item href=/components/konveyor-cli>Konveyor CLI</a></li><li><a class=dropdown-item href=/components/kai>Konveyor AI</a></li></ul></div></li><li class=nav-item><a class=nav-link href=/docs><span>Documentation</span></a></li><li class=nav-item><a class=nav-link href=/docs/konveyor/contributetokonveyor/><span>Community</span></a></li><li class=nav-item><a class=nav-link href=/ecosystem><span>Ecosystem</span></a></li><li class=nav-item><a class=nav-link href=/blog><span>Blog</span></a></li></ul></div><div class="d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/offline-search-index.aee1a6172d1c6decda758fc5eb7f05de.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"><div id=td-sidebar-menu class=td-sidebar__inner><form class="td-sidebar__search d-flex align-items-center"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/offline-search-index.aee1a6172d1c6decda758fc5eb7f05de.json data-offline-search-base-href=/ data-offline-search-max-results=10></div><button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type=button data-bs-toggle=collapse data-bs-target=#td-section-nav aria-controls=td-section-nav aria-expanded=false aria-label="Toggle section navigation"></button></form><nav class="td-sidebar-nav collapse foldable-nav" id=td-section-nav><ul class="td-sidebar-nav__section pe-md-3 ul-0"><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docs-li><a href=/docs/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id=m-docs><span>Konveyor Docs</span></a><ul class=ul-1><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docskonveyor-li><input type=checkbox id=m-docskonveyor-check>
+<label for=m-docskonveyor-check><a href=/docs/konveyor/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docskonveyor><span>Konveyor</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorcontributetokonveyor-li><input type=checkbox id=m-docskonveyorcontributetokonveyor-check>
+<label for=m-docskonveyorcontributetokonveyor-check><a href=/docs/konveyor/contributetokonveyor/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorcontributetokonveyor><span>Contributing To Konveyor</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyoradmintasks-li><input type=checkbox id=m-docskonveyoradmintasks-check>
+<label for=m-docskonveyoradmintasks-check><a href=/docs/konveyor/admintasks/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyoradmintasks><span>Administrator view tasks</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorviews-li><input type=checkbox id=m-docskonveyorviews-check>
+<label for=m-docskonveyorviews-check><a href=/docs/konveyor/views/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorviews><span>Views</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorinstances-li><input type=checkbox id=m-docskonveyorinstances-check>
+<label for=m-docskonveyorinstances-check><a href=/docs/konveyor/instances/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorinstances><span>Seeding Instances</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorinstallation-li><input type=checkbox id=m-docskonveyorinstallation-check>
+<label for=m-docskonveyorinstallation-check><a href=/docs/konveyor/installation/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorinstallation><span>Installing Konveyor</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyorassessanalyze-li><input type=checkbox id=m-docskonveyorassessanalyze-check>
+<label for=m-docskonveyorassessanalyze-check><a href=/docs/konveyor/assessanalyze/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyorassessanalyze><span>Assessing and analyzing applications</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docskonveyoraddapps-li><input type=checkbox id=m-docskonveyoraddapps-check>
+<label for=m-docskonveyoraddapps-check><a href=/docs/konveyor/addapps/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docskonveyoraddapps><span>Adding applications</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docsmove2kube-li><input type=checkbox id=m-docsmove2kube-check checked>
+<label for=m-docsmove2kube-check><a href=/docs/move2kube/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kube><span>Move2Kube</span></a></label><ul class="ul-2 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubeconcepts-li><input type=checkbox id=m-docsmove2kubeconcepts-check>
+<label for=m-docsmove2kubeconcepts-check><a href=/docs/move2kube/concepts/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubeconcepts><span>Concepts</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsmove2kubeinstallation-li><input type=checkbox id=m-docsmove2kubeinstallation-check>
+<label for=m-docsmove2kubeinstallation-check><a href=/docs/move2kube/installation/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubeinstallation><span>Installation</span></a></label><ul class="ul-3 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubeinstallationinstallweb-li><input type=checkbox id=m-docsmove2kubeinstallationinstallweb-check>
+<label for=m-docsmove2kubeinstallationinstallweb-check><a href=/docs/move2kube/installation/installweb/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubeinstallationinstallweb><span>Web Interface</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubeinstallationinstallcli-li><input type=checkbox id=m-docsmove2kubeinstallationinstallcli-check>
+<label for=m-docsmove2kubeinstallationinstallcli-check><a href=/docs/move2kube/installation/installcli/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubeinstallationinstallcli><span>Command line tool</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubecommands-li><input type=checkbox id=m-docsmove2kubecommands-check>
+<label for=m-docsmove2kubecommands-check><a href=/docs/move2kube/commands/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubecommands><span>Commands</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetransformers-li><input type=checkbox id=m-docsmove2kubetransformers-check>
+<label for=m-docsmove2kubetransformers-check><a href=/docs/move2kube/transformers/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetransformers><span>Transformers</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-docsmove2kubetutorials-li><input type=checkbox id=m-docsmove2kubetutorials-check checked>
+<label for=m-docsmove2kubetutorials-check><a href=/docs/move2kube/tutorials/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubetutorials><span>Tutorials</span></a></label><ul class="ul-3 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id=m-docsmove2kubetutorialsusingcli-li><input type=checkbox id=m-docsmove2kubetutorialsusingcli-check checked>
+<label for=m-docsmove2kubetutorialsusingcli-check><a href=/docs/move2kube/tutorials/usingcli/ class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsusingcli><span class=td-sidebar-nav-active-item>Using Move2Kube CLI</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsusingui-li><input type=checkbox id=m-docsmove2kubetutorialsusingui-check>
+<label for=m-docsmove2kubetutorialsusingui-check><a href=/docs/move2kube/tutorials/usingui/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsusingui><span>Using Move2Kube UI</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsmove2kubetutorialscfappstok8-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok8-check>
+<label for=m-docsmove2kubetutorialscfappstok8-check><a href=/docs/move2kube/tutorials/cfappstok8/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubetutorialscfappstok8><span>Migrating Enterprise Scale Cloud Foundry Apps to Kubernetes</span></a></label><ul class="ul-4 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscfappstok81collect-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok81collect-check>
+<label for=m-docsmove2kubetutorialscfappstok81collect-check><a href=/docs/move2kube/tutorials/cfappstok8/1collect/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscfappstok81collect><span>1. Collect</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscfappstok82plan-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok82plan-check>
+<label for=m-docsmove2kubetutorialscfappstok82plan-check><a href=/docs/move2kube/tutorials/cfappstok8/2plan/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscfappstok82plan><span>2. Plan</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscfappstok83transform-li><input type=checkbox id=m-docsmove2kubetutorialscfappstok83transform-check>
+<label for=m-docsmove2kubetutorialscfappstok83transform-check><a href=/docs/move2kube/tutorials/cfappstok8/3transform/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscfappstok83transform><span>3. Transform</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child" id=m-docsmove2kubetutorialscustomizeoutput-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutput-check>
+<label for=m-docsmove2kubetutorialscustomizeoutput-check><a href=/docs/move2kube/tutorials/customizeoutput/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section" id=m-docsmove2kubetutorialscustomizeoutput><span>Customizing the output</span></a></label><ul class="ul-4 foldable"><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir-check><a href=/docs/move2kube/tutorials/customizeoutput/addcustfiledir/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputaddcustfiledir><span>Add custom files and directories in custom locations</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm-check><a href=/docs/move2kube/tutorials/customizeoutput/paramcustomfieldshelm/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputparamcustomfieldshelm><span>Parameterizing custom fields in Helm Chart, Kustomize, OC templates</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml-check><a href=/docs/move2kube/tutorials/customizeoutput/customannotationsyaml/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputcustomannotationsyaml><span>Add custom annotations to Kubernetes YAMLs</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile-li><input type=checkbox id=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile-check>
+<label for=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile-check><a href=/docs/move2kube/tutorials/customizeoutput/customgendockerfile/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomizeoutputcustomgendockerfile><span>Customize generated Dockerfile and built-in transformer behavior</span></a></label></li></ul></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscustomkubeyaml-li><input type=checkbox id=m-docsmove2kubetutorialscustomkubeyaml-check>
+<label for=m-docsmove2kubetutorialscustomkubeyaml-check><a href=/docs/move2kube/tutorials/customkubeyaml/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscustomkubeyaml><span>Customize Kubernetes YAMLs to target specific clusters</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscreatehelmchartskustomize-li><input type=checkbox id=m-docsmove2kubetutorialscreatehelmchartskustomize-check>
+<label for=m-docsmove2kubetutorialscreatehelmchartskustomize-check><a href=/docs/move2kube/tutorials/createhelmchartskustomize/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscreatehelmchartskustomize><span>Create Helm-charts, Kustomize overlays from Kubernetes Yamls</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialscreatewincontainersnet-li><input type=checkbox id=m-docsmove2kubetutorialscreatewincontainersnet-check>
+<label for=m-docsmove2kubetutorialscreatewincontainersnet-check><a href=/docs/move2kube/tutorials/createwincontainersnet/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialscreatewincontainersnet><span>Create and deploy Windows .NET containers</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsmigratedeploynetcore-li><input type=checkbox id=m-docsmove2kubetutorialsmigratedeploynetcore-check>
+<label for=m-docsmove2kubetutorialsmigratedeploynetcore-check><a href=/docs/move2kube/tutorials/migratedeploynetcore/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsmigratedeploynetcore><span>Migrate and deploy .NET Core applications to Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsmigratedockercomposekube-li><input type=checkbox id=m-docsmove2kubetutorialsmigratedockercomposekube-check>
+<label for=m-docsmove2kubetutorialsmigratedockercomposekube-check><a href=/docs/move2kube/tutorials/migratedockercomposekube/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsmigratedockercomposekube><span>Migrate from Docker Compose to Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsmigratedeploycfapps-li><input type=checkbox id=m-docsmove2kubetutorialsmigratedeploycfapps-check>
+<label for=m-docsmove2kubetutorialsmigratedeploycfapps-check><a href=/docs/move2kube/tutorials/migratedeploycfapps/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsmigratedeploycfapps><span>Migrate and deploy Cloud Foundry applications to Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-docsmove2kubetutorialsrunnoninteractively-li><input type=checkbox id=m-docsmove2kubetutorialsrunnoninteractively-check>
+<label for=m-docsmove2kubetutorialsrunnoninteractively-check><a href=/docs/move2kube/tutorials/runnoninteractively/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-docsmove2kubetutorialsrunnoninteractively><span>Run transforms non-interactively</span></a></label></li></ul></li></ul></li></ul></li></ul></nav></div></aside><aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none"><div class="td-page-meta ms-2 pb-1 pt-2 mb-0"></div><div class=td-toc><nav id=TableOfContents><ul><li><a href=#prerequisites>Prerequisites</a></li><li><a href=#using-the-cli-to-perform-a-transformation>Using the CLI to perform a transformation</a></li><li><a href=#deploying-the-application-to-kubernetes-with-the-generated-artifacts>Deploying the application to Kubernetes with the generated artifacts</a></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div><div class="taxonomy taxonomy-terms-cloud taxo-tags"><h5 class=taxonomy-title>Tags</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=http://konveyor.io/tags/appmodernization/ data-taxonomy-term=appmodernization><span class=taxonomy-label>AppModernization</span><span class=taxonomy-count>9</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/cncf/ data-taxonomy-term=cncf><span class=taxonomy-label>CNCF</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/crane/ data-taxonomy-term=crane><span class=taxonomy-label>Crane</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/forklift/ data-taxonomy-term=forklift><span class=taxonomy-label>Forklift</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/genai/ data-taxonomy-term=genai><span class=taxonomy-label>GenAI</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/hackfest/ data-taxonomy-term=hackfest><span class=taxonomy-label>HackFest</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kai/ data-taxonomy-term=kai><span class=taxonomy-label>Kai</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/konveyor/ data-taxonomy-term=konveyor><span class=taxonomy-label>Konveyor</span><span class=taxonomy-count>9</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kubecon/ data-taxonomy-term=kubecon><span class=taxonomy-label>KubeCon</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kubernetes/ data-taxonomy-term=kubernetes><span class=taxonomy-label>Kubernetes</span><span class=taxonomy-count>5</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/metrics/ data-taxonomy-term=metrics><span class=taxonomy-label>Metrics</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/move2kube/ data-taxonomy-term=move2kube><span class=taxonomy-label>Move2Kube</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/mtc/ data-taxonomy-term=mtc><span class=taxonomy-label>MTC</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/openshift/ data-taxonomy-term=openshift><span class=taxonomy-label>OpenShift</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/pelorus/ data-taxonomy-term=pelorus><span class=taxonomy-label>Pelorus</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/tackle/ data-taxonomy-term=tackle><span class=taxonomy-label>Tackle</span><span class=taxonomy-count>3</span></a></li></ul></div></aside><main class="col-12 col-md-9 col-xl-8 ps-md-5" role=main><nav aria-label=breadcrumb class=td-breadcrumbs><ol class=breadcrumb><li class=breadcrumb-item><a href=/docs/>Konveyor Docs</a></li><li class=breadcrumb-item><a href=/docs/move2kube/>Move2Kube</a></li><li class=breadcrumb-item><a href=/docs/move2kube/tutorials/>Tutorials</a></li><li class="breadcrumb-item active" aria-current=page>Using Move2Kube CLI</li></ol></nav><div class=td-content><h1>Using Move2Kube CLI</h1><header class=article-meta></header><p>This tutorial shows how to transform a set of sample applications to run on Kubernetes using the Move2Kube CLI tool to generate the Kubernetes YAMLs, Dockerfiles, build scripts for each application, and then build the container images to deploy them to a cluster.</p><h2 id=prerequisites>Prerequisites</h2><ol><li><p>Install the Move2Kube CLI tool.</p></li><li><p>Use the<a href=https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms><code>language-platforms</code></a> sample directory which has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) that need to be containerized and deployed to Kubernetes.</p></li></ol><h2 id=using-the-cli-to-perform-a-transformation>Using the CLI to perform a transformation</h2><ol><li>Download the language platforms sample. Each directory contains a simple web application written in different languages.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ curl https://move2kube.konveyor.io/scripts/download.sh | bash -s -- -d samples/language-platforms -r move2kube-demos
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>$ ls language-platforms
+</span></span><span style=display:flex><span>django		golang		java-gradle	java-gradle-war	java-maven	java-maven-war	nodejs		php		python		ruby		rust
+</span></span></code></pre></div><ol start=2><li>Run <code>move2kube plan -s language-platforms</code> to generate a plan file. The <code>-s</code> flag specifies <code>language-platforms</code> as the source directory for Move2Kube to analyze the source code and come up with a plan for transforming them to Kubernetes YAMLs.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube plan -s language-platforms
+</span></span><span style=display:flex><span>INFO[0000] Configuration loading done   
+</span></span><span style=display:flex><span>INFO[0000] Planning Transformation - Base Directory
+</span></span><span style=display:flex><span>INFO[0000] [CloudFoundry] Planning transformation   
+</span></span><span style=display:flex><span>INFO[0000] [CloudFoundry] Done  
+</span></span><span style=display:flex><span>INFO[0000] [ComposeAnalyser] Planning transformation
+</span></span><span style=display:flex><span>INFO[0000] [ComposeAnalyser] Done   
+</span></span><span style=display:flex><span>INFO[0000] [DockerfileDetector] Planning transformation
+</span></span><span style=display:flex><span>INFO[0000] [DockerfileDetector] Done
+</span></span><span style=display:flex><span>INFO[0000] [Base Directory] Identified 0 named services and 0 to-be-named services
+</span></span><span style=display:flex><span>INFO[0000] Transformation planning - Base Directory done
+</span></span><span style=display:flex><span>INFO[0000] Planning Transformation - Directory Walk
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in django
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in golang
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in java-gradle
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in java-gradle-war
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in java-maven
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in java-maven-war
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in nodejs
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in php
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in python
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in ruby
+</span></span><span style=display:flex><span>INFO[0000] Identified 1 named services and 0 to-be-named services in rust
+</span></span><span style=display:flex><span>INFO[0000] Transformation planning - Directory Walk done
+</span></span><span style=display:flex><span>INFO[0000] [Directory Walk] Identified 6 named services and 5 to-be-named services
+</span></span><span style=display:flex><span>INFO[0000] [Named Services] Identified 11 named services
+</span></span><span style=display:flex><span>INFO[0000] No of services identified : 11   
+</span></span><span style=display:flex><span>INFO[0000] Plan can be found at [/Users/user/Desktop/tutorial/m2k.plan].
+</span></span></code></pre></div><ol><li>Look at the plan file generated in YAML format. Notice Move2Kube has detected all the different services, one for each web app.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ ls
+</span></span><span style=display:flex><span>language-platforms	language-platforms.zip	m2k.plan
+</span></span><span style=display:flex><span>$ cat m2k.plan
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#f92672>apiVersion</span>: <span style=color:#ae81ff>move2kube.konveyor.io/v1alpha1</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Plan</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>metadata</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>name</span>: <span style=color:#ae81ff>myproject</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>spec</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>sourceDir</span>: <span style=color:#ae81ff>language-platforms</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>services</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>golang</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Golang-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>GoModFilePath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>golang/go.mod</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>golang</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>myproject-django</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Python-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>MainPythonFilesPathType</span>: []
+</span></span><span style=display:flex><span>  <span style=color:#f92672>PythonFilesPathType</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>django/manage.py</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>RequirementsTxtPathType</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>django/requirements.txt</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>django</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>PythonConfig</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>IsDjango</span>: <span style=color:#66d9ef>true</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>myproject-java-gradle</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Gradle</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>GradleBuildFile</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-gradle/build.gradle</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-gradle</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Gradle</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>artifactType</span>: <span style=color:#ae81ff>jar</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>myproject-java-gradle-war</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>WarAnalyser</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-gradle-war</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>War</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-gradle-war/java-gradle-war.war</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>War</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>deploymentFile</span>: <span style=color:#ae81ff>java-gradle-war.war</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>javaVersion</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>buildContainerName</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>deploymentFileDirInBuildContainer</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>envVariables</span>: {}
+</span></span><span style=display:flex><span><span style=color:#f92672>myproject-java-maven-war</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>WarAnalyser</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-maven-war</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>War</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-maven-war/java-maven-war.war</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>War</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>deploymentFile</span>: <span style=color:#ae81ff>java-maven-war.war</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>javaVersion</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>buildContainerName</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>deploymentFileDirInBuildContainer</span>: <span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>envVariables</span>: {}
+</span></span><span style=display:flex><span><span style=color:#f92672>myproject-php</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>PHP-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>php</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>myproject-python</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Python-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>MainPythonFilesPathType</span>: []
+</span></span><span style=display:flex><span>  <span style=color:#f92672>PythonFilesPathType</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>python/main.py</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>RequirementsTxtPathType</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>python/requirements.txt</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>python</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>PythonConfig</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>IsDjango</span>: <span style=color:#66d9ef>false</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>nodejs</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Nodejs-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>nodejs</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ruby</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Ruby-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>ruby</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>rust</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Rust-Dockerfile</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>rust</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>simplewebapp</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#f92672>transformerName</span>: <span style=color:#ae81ff>Maven</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>paths</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>MavenPom</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-maven/pom.xml</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>ServiceDirPath</span>:
+</span></span><span style=display:flex><span>- <span style=color:#ae81ff>java-maven</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>configs</span>:
+</span></span><span style=display:flex><span>  <span style=color:#f92672>Maven</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>mavenAppName</span>: <span style=color:#ae81ff>simplewebapp</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>artifactType</span>: <span style=color:#ae81ff>war</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>transformers</span>:
+</span></span><span style=display:flex><span><span style=color:#f92672>Buildconfig</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/buildconfig/buildconfig.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>CloudFoundry</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/cloudfoundry/cloudfoundry.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ClusterSelector</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/clusterselector/clusterselector.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ComposeAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/compose/composeanalyser/composeanalyser.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ComposeGenerator</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/compose/composegenerator/composegenerator.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ContainerImagesPushScriptGenerator</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/containerimage/containerimagespushscript/containerimagespushscript.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>DockerfileDetector</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfile/dockerfiledetector/dockerfiledetector.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>DockerfileImageBuildScript</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfile/dockerimagebuildscript/dockerfilebuildscriptgenerator.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>DockerfileParser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfile/dockerfileparser/dockerfileparser.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>DotNetCore-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/dotnetcore/dotnetcore.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>EarAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/earanalyser/ear.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>EarRouter</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/earrouter/earrouter.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Golang-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/golang/golang.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Gradle</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/gradle/gradle.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Jar</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/jar/jar.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Jboss</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/jboss/jboss.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Knative</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/knative/knative.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Kubernetes</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/kubernetes/kubernetes.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>KubernetesVersionChanger</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/kubernetesversionchanger/kubernetesversionchanger.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Liberty</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/liberty/liberty.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Maven</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/maven/maven.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Nodejs-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/nodejs/nodejs.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>PHP-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/php/php.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Parameterizer</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/parameterizer/parameterizer.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Python-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/python/python.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ReadMeGenerator</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/readmegenerator/readmegenerator.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Ruby-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/ruby/ruby.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Rust-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/rust/rust.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Tekton</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/kubernetes/tekton/tekton.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>Tomcat</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/tomcat/tomcat.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>WarAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/waranalyser/war.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>WarRouter</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/warrouter/warrouter.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>WinConsoleApp-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/windows/winconsole/winconsole.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>WinSLWebApp-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/windows/winsilverlightweb/winsilverlightweb.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>WinWebApp-Dockerfile</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/windows/winweb/winweb.yaml</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>ZuulAnalyser</span>: <span style=color:#ae81ff>m2kassets/built-in/transformers/dockerfilegenerator/java/zuul/zuulanalyser.yaml</span>
+</span></span></code></pre></div><ol><li>Run the transformation using <code>move2kube transform</code> to perform the transformation according to the generated plan. By default Move2Kube looks for a plan file in the current directory. Specify the path to a different plan file using the <code>-p</code> flag.</li></ol><p>During transformation Move2Kube will ask several questions to help guide the transformation process. For most questions accept the default answers. Some questions to watch out for are:</p><ul><li>The container registry and namespace to use. A container registry is where all the images are stored (Example: Quay, Docker Hub, etc.).</li><li>The ingress hostname and ingress TLS secret. If deploying to MiniKube, give <code>localhost</code> as the ingress host and leave the TLS secret blank.</li></ul><p>For all other questions accept the default answers by pressing <code>Enter</code> for each.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ move2kube transform
+</span></span><span style=display:flex><span>INFO[0000] Detected a plan file at path /Users/user/Desktop/tutorial/m2k.plan. Will transform using this plan.
+</span></span><span style=display:flex><span>? Select all transformer types that you are interested in:
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Services that don&#39;t support any of the transformer types you are interested in will be ignored.]
+</span></span><span style=display:flex><span> ComposeGenerator, DockerfileDetector, Jboss, WinSLWebApp-Dockerfile, ZuulAnalyser, Buildconfig, Maven, Tekton, Tomcat, WarRouter, WinConsoleApp-Dockerfile,DotNetCore-Dockerfile, EarAnalyser, KubernetesVersionChanger, Nodejs-Dockerfile, Ruby-Dockerfile, WinWebApp-Dockerfile, CloudFoundry, ComposeAnalyser, DockerfileParser,   EarRouter, Gradle, ClusterSelector, Rust-Dockerfile, ContainerImagesPushScriptGenerator, ReadMeGenerator, WarAnalyser, Jar, Golang-Dockerfile, Knative, Kubernetes, Liberty,  PHP-Dockerfile, Parameterizer, Python-Dockerfile, DockerfileImageBuildScript
+</span></span><span style=display:flex><span>? Select all services that are needed:
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[The services unselected here will be ignored.]
+</span></span><span style=display:flex><span> golang, myproject-python, nodejs, rust, simplewebapp, myproject-django, myproject-java-gradle, myproject-java-gradle-war, myproject-java-maven-war, myproject-php, ruby
+</span></span><span style=display:flex><span>INFO[0009] Starting Plan Transformation
+</span></span><span style=display:flex><span>INFO[0009] Iteration 1  
+</span></span><span style=display:flex><span>INFO[0009] Iteration 2 - 11 artifacts to process
+</span></span><span style=display:flex><span>INFO[0009] Transformer Maven processing 1 artifacts
+</span></span><span style=display:flex><span>INFO[0009] Transformer WarRouter processing 2 artifacts
+</span></span><span style=display:flex><span>? Select the transformer to use for service simplewebapp
+</span></span><span style=display:flex><span> Tomcat
+</span></span><span style=display:flex><span>INFO[0014] Transformer WarRouter Done   
+</span></span><span style=display:flex><span>INFO[0014] Transformer Maven Done   
+</span></span><span style=display:flex><span>INFO[0014] Transformer PHP-Dockerfile processing 1 artifacts
+</span></span><span style=display:flex><span>INFO[0014] Transformer PHP-Dockerfile Done  
+</span></span><span style=display:flex><span>INFO[0014] Transformer Nodejs-Dockerfile processing 1 artifacts
+</span></span><span style=display:flex><span>? Enter the port to be exposed for the service nodejs:
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[The service nodejs will be exposed to the specified port]
+</span></span><span style=display:flex><span> 8080
+</span></span><span style=display:flex><span>INFO[0016] Transformer Nodejs-Dockerfile Done   
+</span></span><span style=display:flex><span>INFO[0016] Transformer Ruby-Dockerfile processing 1 artifacts
+</span></span><span style=display:flex><span>? Select port to be exposed for the service ruby :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Select Other if you want to expose the service ruby to some other port]
+</span></span><span style=display:flex><span> 8080
+</span></span><span style=display:flex><span>INFO[0017] Transformer Ruby-Dockerfile Done
+</span></span><span style=display:flex><span>INFO[0017] Transformer WarAnalyser processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0017] Transformer WarRouter processing 3 artifacts
+</span></span><span style=display:flex><span>? Select the transformer to use for service myproject-java-gradle-war
+</span></span><span style=display:flex><span> Tomcat
+</span></span><span style=display:flex><span>? Select the transformer to use for service myproject-java-maven-war
+</span></span><span style=display:flex><span> Tomcat
+</span></span><span style=display:flex><span>INFO[0020] Transformer WarRouter Done   
+</span></span><span style=display:flex><span>INFO[0020] Transformer WarAnalyser Done
+</span></span><span style=display:flex><span>INFO[0020] Transformer Golang-Dockerfile processing 1 artifacts
+</span></span><span style=display:flex><span>? Select ports to be exposed for the service golang :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Select Other if you want to add more ports]
+</span></span><span style=display:flex><span> 8080
+</span></span><span style=display:flex><span>INFO[0021] Transformer Golang-Dockerfile Done   
+</span></span><span style=display:flex><span>INFO[0021] Transformer Gradle processing 1 artifacts
+</span></span><span style=display:flex><span>? Select port to be exposed for the service myproject-java-gradle :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Select Other if you want to expose the service myproject-java-gradle to some other port]
+</span></span><span style=display:flex><span> 8080
+</span></span><span style=display:flex><span>INFO[0022] Transformer Gradle Done  
+</span></span><span style=display:flex><span>INFO[0022] Transformer Rust-Dockerfile processing 1 artifacts
+</span></span><span style=display:flex><span>? Select port to be exposed for the service rust :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Select Other if you want to expose the service rust to some other port]
+</span></span><span style=display:flex><span> 8085
+</span></span><span style=display:flex><span>INFO[0023] Transformer Rust-Dockerfile Done
+</span></span><span style=display:flex><span>INFO[0023] Transformer Python-Dockerfile processing 2 artifacts
+</span></span><span style=display:flex><span>? Select port to be exposed for the service myproject-django :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Select Other if you want to expose the service myproject-django to some other port]
+</span></span><span style=display:flex><span> 8080
+</span></span><span style=display:flex><span>? Select port to be exposed for the service myproject-python :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Select Other if you want to expose the service myproject-python to some other port]
+</span></span><span style=display:flex><span> 8080
+</span></span><span style=display:flex><span>INFO[0024] Transformer Python-Dockerfile Done   
+</span></span><span style=display:flex><span>INFO[0024] Created 16 pathMappings and 20 artifacts. Total Path Mappings : 16. Total Artifacts : 11.
+</span></span><span style=display:flex><span>INFO[0024] Iteration 3 - 20 artifacts to process
+</span></span><span style=display:flex><span>INFO[0024] Transformer DockerfileImageBuildScript processing 8 artifacts
+</span></span><span style=display:flex><span>? Select the container runtime to use :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[The container runtime selected will be used in the scripts]
+</span></span><span style=display:flex><span> docker
+</span></span><span style=display:flex><span>INFO[0028] Transformer DockerfileImageBuildScript Done  
+</span></span><span style=display:flex><span>INFO[0028] Transformer Jar processing 1 artifacts   
+</span></span><span style=display:flex><span>INFO[0028] Transformer Jar Done
+</span></span><span style=display:flex><span>INFO[0028] Transformer DockerfileParser processing 7 artifacts
+</span></span><span style=display:flex><span>INFO[0028] Transformer ZuulAnalyser processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0028] Transformer ZuulAnalyser Done
+</span></span><span style=display:flex><span>INFO[0028] Transformer DockerfileParser Done
+</span></span><span style=display:flex><span>INFO[0028] Transformer Tomcat processing 4 artifacts
+</span></span><span style=display:flex><span>INFO[0028] Transformer Tomcat Done  
+</span></span><span style=display:flex><span>INFO[0028] Created 11 pathMappings and 20 artifacts. Total Path Mappings : 27. Total Artifacts : 31.
+</span></span><span style=display:flex><span>INFO[0028] Iteration 4 - 20 artifacts to process
+</span></span><span style=display:flex><span>INFO[0028] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>? Choose the cluster type:
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Choose the cluster type you would like to target]
+</span></span><span style=display:flex><span> Kubernetes
+</span></span><span style=display:flex><span>INFO[0030] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0030] Transformer Tekton processing 2 artifacts
+</span></span><span style=display:flex><span>? What URL/path should we expose the service rust&#39;s 8085 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /rust
+</span></span><span style=display:flex><span>? What URL/path should we expose the service golang&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /golang
+</span></span><span style=display:flex><span>? What URL/path should we expose the service ruby&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /ruby
+</span></span><span style=display:flex><span>? What URL/path should we expose the service myproject-python&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /myproject-python
+</span></span><span style=display:flex><span>? What URL/path should we expose the service nodejs&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /nodejs
+</span></span><span style=display:flex><span>? What URL/path should we expose the service myproject-php&#39;s 8082 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /myproject-php
+</span></span><span style=display:flex><span>? What URL/path should we expose the service myproject-django&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /myproject-django
+</span></span><span style=display:flex><span>? Provide the minimum number of replicas each service should have
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[If the value is 0 pods won&#39;t be started by default]
+</span></span><span style=display:flex><span> 2
+</span></span><span style=display:flex><span>? Enter the URL of the image registry :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[You can always change it later by changing the yamls.]
+</span></span><span style=display:flex><span> quay.io
+</span></span><span style=display:flex><span>? Enter the namespace where the new images should be pushed :
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Ex : myproject]
+</span></span><span style=display:flex><span> move2kube
+</span></span><span style=display:flex><span>? [quay.io] What type of container registry login do you want to use?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Docker login from config mode, will use the default config from your local machine.]
+</span></span><span style=display:flex><span> No authentication
+</span></span><span style=display:flex><span>? Provide the ingress host domain
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Ingress host domain is part of service URL]
+</span></span><span style=display:flex><span> localhost
+</span></span><span style=display:flex><span>? Provide the TLS secret for ingress
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Leave empty to use http]
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>INFO[0049] Transformer Tekton Done  
+</span></span><span style=display:flex><span>INFO[0049] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0049] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0049] Transformer Knative processing 2 artifacts   
+</span></span><span style=display:flex><span>INFO[0050] Transformer Knative Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer ComposeGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ComposeGenerator Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer Kubernetes processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer Kubernetes Done  
+</span></span><span style=display:flex><span>INFO[0050] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ContainerImagesPushScriptGenerator Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer DockerfileImageBuildScript processing 5 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer DockerfileImageBuildScript Done  
+</span></span><span style=display:flex><span>INFO[0050] Transformer DockerfileParser processing 5 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ZuulAnalyser processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ZuulAnalyser Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer DockerfileParser Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer Buildconfig processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer Buildconfig Done
+</span></span><span style=display:flex><span>INFO[0050] Created 40 pathMappings and 21 artifacts. Total Path Mappings : 67. Total Artifacts : 51.
+</span></span><span style=display:flex><span>INFO[0050] Iteration 5 - 21 artifacts to process
+</span></span><span style=display:flex><span>INFO[0050] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0050] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0050] Transformer Buildconfig processing 2 artifacts
+</span></span><span style=display:flex><span>? What URL/path should we expose the service simplewebapp&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /simplewebapp
+</span></span><span style=display:flex><span>? What URL/path should we expose the service myproject-java-gradle&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /myproject-java-gradle
+</span></span><span style=display:flex><span>? What URL/path should we expose the service myproject-java-gradle-war&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /myproject-java-gradle-war
+</span></span><span style=display:flex><span>? What URL/path should we expose the service myproject-java-maven-war&#39;s 8080 port on?
+</span></span><span style=display:flex><span>Hints:
+</span></span><span style=display:flex><span>[Enter :- not expose the service, Leave out leading / to use first part as subdomain, Add :N as suffix for NodePort service type, Add :L for Load Balancer service type]
+</span></span><span style=display:flex><span> /myproject-java-maven-war
+</span></span><span style=display:flex><span>INFO[0054] Transformer Buildconfig Done
+</span></span><span style=display:flex><span>INFO[0054] Transformer ReadMeGenerator processing 5 artifacts
+</span></span><span style=display:flex><span>INFO[0054] Transformer ReadMeGenerator Done
+</span></span><span style=display:flex><span>INFO[0054] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0054] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0054] Transformer Knative processing 2 artifacts   
+</span></span><span style=display:flex><span>INFO[0055] Transformer Knative Done
+</span></span><span style=display:flex><span>INFO[0055] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0055] Transformer Tekton processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer Tekton Done  
+</span></span><span style=display:flex><span>INFO[0055] Transformer ClusterSelector processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer ClusterSelector Done
+</span></span><span style=display:flex><span>INFO[0055] Transformer Kubernetes processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer Kubernetes Done  
+</span></span><span style=display:flex><span>INFO[0055] Transformer ComposeGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer ComposeGenerator Done
+</span></span><span style=display:flex><span>INFO[0055] Transformer ContainerImagesPushScriptGenerator processing 2 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer ContainerImagesPushScriptGenerator Done
+</span></span><span style=display:flex><span>INFO[0055] Transformer Parameterizer processing 4 artifacts
+</span></span><span style=display:flex><span>INFO[0055] Transformer Parameterizer Done   
+</span></span><span style=display:flex><span>INFO[0056] Created 60 pathMappings and 7 artifacts. Total Path Mappings : 127. Total Artifacts : 72.
+</span></span><span style=display:flex><span>INFO[0056] Iteration 6 - 7 artifacts to process
+</span></span><span style=display:flex><span>INFO[0056] Transformer Parameterizer processing 4 artifacts
+</span></span><span style=display:flex><span>INFO[0056] Transformer Parameterizer Done   
+</span></span><span style=display:flex><span>INFO[0056] Transformer ReadMeGenerator processing 5 artifacts
+</span></span><span style=display:flex><span>INFO[0056] Transformer ReadMeGenerator Done
+</span></span><span style=display:flex><span>INFO[0056] Plan Transformation done
+</span></span><span style=display:flex><span>INFO[0056] Transformed target artifacts can be found at [/Users/user/Desktop/tutorial/myproject].
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>After the questions are finished wait a few minutes for it to finish processing and generated a directory called `myproject`. The name of the output directory is the same as the project name (by default `myproject`). The project name can be changed using the `-n` flag.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>```console
+</span></span><span style=display:flex><span>$ ls
+</span></span><span style=display:flex><span>language-platforms	language-platforms.zip	m2k.plan		m2kconfig.yaml		m2kqacache.yaml		myproject
+</span></span><span style=display:flex><span>$ ls myproject/
+</span></span><span style=display:flex><span>Readme.md	deploy		scripts		source
+</span></span></code></pre></div><p>The applications can now be deployed to Kubernetes using these generated artifacts.</p><h2 id=deploying-the-application-to-kubernetes-with-the-generated-artifacts>Deploying the application to Kubernetes with the generated artifacts</h2><ol><li>View the full structure of the output directory by executing the <code>tree</code> command.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cd myproject/
+</span></span><span style=display:flex><span>$ tree
+</span></span><span style=display:flex><span>$ cd myproject/
+</span></span><span style=display:flex><span>$ tree
+</span></span><span style=display:flex><span>.
+</span></span><span style=display:flex><span>├── Readme.md
+</span></span><span style=display:flex><span>├── deploy
+</span></span><span style=display:flex><span>│   ├── cicd
+</span></span><span style=display:flex><span>│   │   ├── tekton
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>│   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   └── tekton-parameterized
+</span></span><span style=display:flex><span>│   │   ├── helm-chart
+</span></span><span style=display:flex><span>│   │   │   └── myproject
+</span></span><span style=display:flex><span>│   │   │   ├── Chart.yaml
+</span></span><span style=display:flex><span>│   │   │   └── templates
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>│   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   ├── kustomize
+</span></span><span style=display:flex><span>│   │   │   └── base
+</span></span><span style=display:flex><span>│   │   │   ├── kustomization.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-build-push-pipeline.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-clone-push-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-event-triggerbinding.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-git-repo-eventlistener.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-image-registry-secret.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-run-clone-build-push-triggertemplate.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-role.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-tekton-triggers-admin-rolebinding.yaml
+</span></span><span style=display:flex><span>│   │   │   └── myproject-tekton-triggers-admin-serviceaccount.yaml
+</span></span><span style=display:flex><span>│   │   └── openshift-template
+</span></span><span style=display:flex><span>│   │   └── template.yaml
+</span></span><span style=display:flex><span>│   ├── compose
+</span></span><span style=display:flex><span>│   │   └── docker-compose.yaml
+</span></span><span style=display:flex><span>│   ├── knative
+</span></span><span style=display:flex><span>│   │   ├── golang-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-django-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-gradle-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-gradle-war-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-maven-war-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-php-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-python-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── nodejs-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── ruby-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── rust-service.yaml
+</span></span><span style=display:flex><span>│   │   └── simplewebapp-service.yaml
+</span></span><span style=display:flex><span>│   ├── knative-parameterized
+</span></span><span style=display:flex><span>│   │   ├── helm-chart
+</span></span><span style=display:flex><span>│   │   │   └── myproject
+</span></span><span style=display:flex><span>│   │   │   ├── Chart.yaml
+</span></span><span style=display:flex><span>│   │   │   └── templates
+</span></span><span style=display:flex><span>│   │   │   ├── golang-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-django-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-maven-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-php-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-python-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── nodejs-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── ruby-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── rust-service.yaml
+</span></span><span style=display:flex><span>│   │   │   └── simplewebapp-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── kustomize
+</span></span><span style=display:flex><span>│   │   │   └── base
+</span></span><span style=display:flex><span>│   │   │   ├── golang-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── kustomization.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-django-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-maven-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-php-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-python-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── nodejs-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── ruby-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── rust-service.yaml
+</span></span><span style=display:flex><span>│   │   │   └── simplewebapp-service.yaml
+</span></span><span style=display:flex><span>│   │   └── openshift-template
+</span></span><span style=display:flex><span>│   │   └── template.yaml
+</span></span><span style=display:flex><span>│   ├── yamls
+</span></span><span style=display:flex><span>│   │   ├── golang-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── golang-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-django-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-django-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-gradle-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-gradle-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-gradle-war-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-gradle-war-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-maven-war-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-java-maven-war-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-php-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-php-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-python-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── myproject-python-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── nodejs-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── nodejs-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── ruby-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── ruby-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── rust-deployment.yaml
+</span></span><span style=display:flex><span>│   │   ├── rust-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── simplewebapp-deployment.yaml
+</span></span><span style=display:flex><span>│   │   └── simplewebapp-service.yaml
+</span></span><span style=display:flex><span>│   └── yamls-parameterized
+</span></span><span style=display:flex><span>│   ├── helm-chart
+</span></span><span style=display:flex><span>│   │   └── myproject
+</span></span><span style=display:flex><span>│   │   ├── Chart.yaml
+</span></span><span style=display:flex><span>│   │   ├── templates
+</span></span><span style=display:flex><span>│   │   │   ├── golang-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── golang-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-django-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-django-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-war-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-maven-war-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-maven-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-php-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-php-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-python-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-python-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── nodejs-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── nodejs-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── ruby-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── ruby-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── rust-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── rust-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── simplewebapp-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   └── simplewebapp-service.yaml
+</span></span><span style=display:flex><span>│   │   ├── values-dev.yaml
+</span></span><span style=display:flex><span>│   │   ├── values-prod.yaml
+</span></span><span style=display:flex><span>│   │   └── values-staging.yaml
+</span></span><span style=display:flex><span>│   ├── kustomize
+</span></span><span style=display:flex><span>│   │   ├── base
+</span></span><span style=display:flex><span>│   │   │   ├── golang-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── golang-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── kustomization.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-django-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-django-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-ingress.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-war-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-gradle-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-maven-war-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-java-maven-war-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-php-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-php-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-python-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── myproject-python-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── nodejs-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── nodejs-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── ruby-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── ruby-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── rust-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── rust-service.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── simplewebapp-deployment.yaml
+</span></span><span style=display:flex><span>│   │   │   └── simplewebapp-service.yaml
+</span></span><span style=display:flex><span>│   │   └── overlays
+</span></span><span style=display:flex><span>│   │   ├── dev
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-golang.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-django.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-java-gradle-war.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-java-gradle.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-java-maven-war.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-php.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-python.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-nodejs.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-ruby.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-rust.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-simplewebapp.yaml
+</span></span><span style=display:flex><span>│   │   │   └── kustomization.yaml
+</span></span><span style=display:flex><span>│   │   ├── prod
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-golang.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-django.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-java-gradle-war.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-java-gradle.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-java-maven-war.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-php.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-myproject-python.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-nodejs.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-ruby.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-rust.yaml
+</span></span><span style=display:flex><span>│   │   │   ├── apps-v1-deployment-simplewebapp.yaml
+</span></span><span style=display:flex><span>│   │   │   └── kustomization.yaml
+</span></span><span style=display:flex><span>│   │   └── staging
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-golang.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-myproject-django.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-myproject-java-gradle-war.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-myproject-java-gradle.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-myproject-java-maven-war.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-myproject-php.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-myproject-python.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-nodejs.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-ruby.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-rust.yaml
+</span></span><span style=display:flex><span>│   │   ├── apps-v1-deployment-simplewebapp.yaml
+</span></span><span style=display:flex><span>│   │   └── kustomization.yaml
+</span></span><span style=display:flex><span>│   └── openshift-template
+</span></span><span style=display:flex><span>│   ├── parameters-dev.yaml
+</span></span><span style=display:flex><span>│   ├── parameters-prod.yaml
+</span></span><span style=display:flex><span>│   ├── parameters-staging.yaml
+</span></span><span style=display:flex><span>│   └── template.yaml
+</span></span><span style=display:flex><span>├── scripts
+</span></span><span style=display:flex><span>│   ├── builddockerimages.bat
+</span></span><span style=display:flex><span>│   ├── builddockerimages.sh
+</span></span><span style=display:flex><span>│   ├── pushimages.bat
+</span></span><span style=display:flex><span>│   └── pushimages.sh
+</span></span><span style=display:flex><span>└── source
+</span></span><span style=display:flex><span>├── django
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── Pipfile
+</span></span><span style=display:flex><span>│   ├── Pipfile.lock
+</span></span><span style=display:flex><span>│   ├── db.sqlite3
+</span></span><span style=display:flex><span>│   ├── manage.py
+</span></span><span style=display:flex><span>│   ├── requirements.txt
+</span></span><span style=display:flex><span>│   ├── simplewebapp
+</span></span><span style=display:flex><span>│   │   ├── __init__.py
+</span></span><span style=display:flex><span>│   │   ├── asgi.py
+</span></span><span style=display:flex><span>│   │   ├── settings.py
+</span></span><span style=display:flex><span>│   │   ├── urls.py
+</span></span><span style=display:flex><span>│   │   └── wsgi.py
+</span></span><span style=display:flex><span>│   └── webroot
+</span></span><span style=display:flex><span>│   ├── __init__.py
+</span></span><span style=display:flex><span>│   ├── admin.py
+</span></span><span style=display:flex><span>│   ├── apps.py
+</span></span><span style=display:flex><span>│   ├── migrations
+</span></span><span style=display:flex><span>│   │   └── __init__.py
+</span></span><span style=display:flex><span>│   ├── models.py
+</span></span><span style=display:flex><span>│   ├── tests.py
+</span></span><span style=display:flex><span>│   ├── urls.py
+</span></span><span style=display:flex><span>│   └── views.py
+</span></span><span style=display:flex><span>├── golang
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── go.mod
+</span></span><span style=display:flex><span>│   └── main.go
+</span></span><span style=display:flex><span>├── java-gradle
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── build.gradle
+</span></span><span style=display:flex><span>│   └── src
+</span></span><span style=display:flex><span>│   └── main
+</span></span><span style=display:flex><span>│   ├── java
+</span></span><span style=display:flex><span>│   │   └── simplewebapp
+</span></span><span style=display:flex><span>│   │   └── MainServlet.java
+</span></span><span style=display:flex><span>│   └── webapp
+</span></span><span style=display:flex><span>│   └── WEB-INF
+</span></span><span style=display:flex><span>│   └── web.xml
+</span></span><span style=display:flex><span>├── java-gradle-war
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   └── java-gradle-war.war
+</span></span><span style=display:flex><span>├── java-maven
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── pom.xml
+</span></span><span style=display:flex><span>│   └── src
+</span></span><span style=display:flex><span>│   └── main
+</span></span><span style=display:flex><span>│   └── webapp
+</span></span><span style=display:flex><span>│   ├── WEB-INF
+</span></span><span style=display:flex><span>│   │   └── web.xml
+</span></span><span style=display:flex><span>│   └── index.jsp
+</span></span><span style=display:flex><span>├── java-maven-war
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   └── java-maven-war.war
+</span></span><span style=display:flex><span>├── nodejs
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── main.js
+</span></span><span style=display:flex><span>│   └── package.json
+</span></span><span style=display:flex><span>├── php
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── index.php
+</span></span><span style=display:flex><span>│   └── site.conf
+</span></span><span style=display:flex><span>├── python
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── main.py
+</span></span><span style=display:flex><span>│   └── requirements.txt
+</span></span><span style=display:flex><span>├── ruby
+</span></span><span style=display:flex><span>│   ├── Dockerfile
+</span></span><span style=display:flex><span>│   ├── Gemfile
+</span></span><span style=display:flex><span>│   ├── config.ru
+</span></span><span style=display:flex><span>│   ├── ruby.rb
+</span></span><span style=display:flex><span>│   └── views
+</span></span><span style=display:flex><span>│   └── main.erb
+</span></span><span style=display:flex><span>└── rust
+</span></span><span style=display:flex><span>├── Cargo.toml
+</span></span><span style=display:flex><span>├── Dockerfile
+</span></span><span style=display:flex><span>├── Rocket.toml
+</span></span><span style=display:flex><span>└── src
+</span></span><span style=display:flex><span>└── main.rs
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>59 directories, 241 files
+</span></span></code></pre></div><p>The CLI has created Kubernetes YAMLs which are stored inside the <code>deploy/yamls</code> directory. For each of the directories and the services identified, it has created the deployment artifacts, service artifacts, and the ingress as required. The <code>scripts</code> directory contains the scripts for building the images for the applications using Dockerfiles.</p><p>Many scripts like <code>builddockerimages.sh</code> and <code>pushimages.sh</code> are also present inside the directory. It has also created a simple <code>deploy/compose/docker-compose.yaml</code> to test the images locally. It has also created Tekton artifacts inside the <code>deploy/cicd/tekton</code> directory that are required if you want to use Tekton as your CI/CD pipeline.</p><p>The <code>Readme.md</code> file guides the next steps to follow.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cat Readme.md
+</span></span><span style=display:flex><span>Move2Kube
+</span></span><span style=display:flex><span>---------
+</span></span><span style=display:flex><span>Congratulations! Move2Kube has generated the necessary build artfiacts for moving all your application components to Kubernetes. Using the artifacts in this directory you can deploy your application in a kubernetes cluster.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>Next Steps
+</span></span><span style=display:flex><span>----------
+</span></span><span style=display:flex><span>To try locally, use the scripts in the &#34;./scripts&#34; directory, to build, push and deploy.
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>For production usage, use the CI/CD pipelines for deployment.
+</span></span></code></pre></div><ol><li>Run the <code>builddockerimages.sh</code> script.</li></ol><blockquote><p><strong>Note:</strong> This step may take some time to complete.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cd scripts/
+</span></span><span style=display:flex><span>$ ./builddockerimages.sh
+</span></span><span style=display:flex><span>[+] Building 2.2s (11/11) FINISHED
+</span></span><span style=display:flex><span>=&gt; [internal] load build definition from Dockerfile 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring dockerfile: 1.36kB 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load .dockerignore 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 2B 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load metadata for registry.access.redhat.com/ubi8/ubi-minimal:latest 2.0s
+</span></span><span style=display:flex><span>=&gt; [1/6] FROM registry.access.redhat.com/ubi8/ubi-minimal:latest@sha256:cf1c63e3247e4074ee3549a064b8798a1a2513ad57dd79c9edb979836355b469 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load build context 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 19.68kB 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [2/6] RUN microdnf update &amp;&amp; microdnf install -y java-11-openjdk-devel wget tar &amp;&amp; microdnf clean all 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [3/6] WORKDIR /usr/local 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [4/6] RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz &amp;&amp; tar -zxf apache-tomcat-9.0.56.tar.gz &amp;&amp; rm -f  apache-tomcat-9.0.56.tar.gz &amp;&amp; mv apache-tomcat-9.0.56 tomcat9 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [5/6] RUN useradd -r tomcat &amp;&amp; chown -R tomcat:tomcat tomcat9 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [6/6] COPY --chown=tomcat:tomcat java-gradle-war.war /usr/local/tomcat9/webapps/ 0.0s
+</span></span><span style=display:flex><span>=&gt; exporting to image 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; exporting layers 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; writing image sha256:3b3a60601e19f502b4163984702bc4e35729a26470ec2e3b8e5e076ad0662db6 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; naming to docker.io/library/myproject-java-gradle-war 0.0s
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>Use &#39;docker scan&#39; to run Snyk tests against images to find vulnerabilities and learn how to fix them
+</span></span><span style=display:flex><span>/Users/user/Desktop/tutorial/myproject
+</span></span><span style=display:flex><span>[+] Building 0.9s (11/11) FINISHED
+</span></span><span style=display:flex><span>=&gt; [internal] load build definition from Dockerfile 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring dockerfile: 1.36kB 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load .dockerignore 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 2B 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load metadata for registry.access.redhat.com/ubi8/ubi-minimal:latest 0.7s
+</span></span><span style=display:flex><span>=&gt; [1/6] FROM registry.access.redhat.com/ubi8/ubi-minimal:latest@sha256:cf1c63e3247e4074ee3549a064b8798a1a2513ad57dd79c9edb979836355b469 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load build context 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 3.15kB 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [2/6] RUN microdnf update &amp;&amp; microdnf install -y java-11-openjdk-devel wget tar &amp;&amp; microdnf clean all 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [3/6] WORKDIR /usr/local 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [4/6] RUN wget https://downloads.apache.org/tomcat/tomcat-9/v9.0.56/bin/apache-tomcat-9.0.56.tar.gz &amp;&amp; tar -zxf apache-tomcat-9.0.56.tar.gz &amp;&amp; rm -f  apache-tomcat-9.0.56.tar.gz &amp;&amp; mv apache-tomcat-9.0.56 tomcat9 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [5/6] RUN useradd -r tomcat &amp;&amp; chown -R tomcat:tomcat tomcat9 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [6/6] COPY --chown=tomcat:tomcat java-maven-war.war /usr/local/tomcat9/webapps/ 0.0s
+</span></span><span style=display:flex><span>=&gt; exporting to image 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; exporting layers 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; writing image sha256:07fb8e8c412414af37d0cc43100325eae37f0ede3885f09f627836c540f8514e 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; naming to docker.io/library/myproject-java-maven-war 0.0s
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>Use &#39;docker scan&#39; to run Snyk tests against images to find vulnerabilities and learn how to fix them
+</span></span><span style=display:flex><span>/Users/user/Desktop/tutorial/myproject
+</span></span><span style=display:flex><span>[+] Building 3.5s (8/8) FINISHED
+</span></span><span style=display:flex><span>=&gt; [internal] load build definition from Dockerfile 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring dockerfile: 798B 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load .dockerignore 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 2B 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load metadata for registry.access.redhat.com/ubi8/php-74:latest 3.3s
+</span></span><span style=display:flex><span>=&gt; [1/3] FROM registry.access.redhat.com/ubi8/php-74:latest@sha256:6409cbedb0f80c0ffc823e8b9912245ea40f6bac7ec980c80f838554a8356d55 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load build context 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 1.79kB 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [2/3] COPY site.conf /etc/httpd/conf.d/ 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [3/3] COPY . /var/www/html/ 0.0s
+</span></span><span style=display:flex><span>=&gt; exporting to image 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; exporting layers 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; writing image sha256:0c2f598d30a420c255d546fddbbf7ba5431bddd4befb6ce2c1e79caec95e6a89 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; naming to docker.io/library/myproject-php 0.0s
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>
+</span></span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010></span>Use &#39;docker scan&#39; to run Snyk tests against images to find vulnerabilities and learn how to fix them
+</span></span><span style=display:flex><span>/Users/user/Desktop/tutorial/myproject
+</span></span><span style=display:flex><span>[+] Building 1.6s (8/8) FINISHED
+</span></span><span style=display:flex><span>=&gt; [internal] load build definition from Dockerfile 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring dockerfile: 747B 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load .dockerignore 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 2B 0.0s
+</span></span><span style=display:flex><span>=&gt; [internal] load metadata for registry.access.redhat.com/ubi8/nodejs-12:latest 1.4s
+</span></span><span style=display:flex><span>=&gt; [internal] load build context 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; transferring context: 1.77kB 0.0s
+</span></span><span style=display:flex><span>=&gt; [1/3] FROM registry.access.redhat.com/ubi8/nodejs-12@sha256:0d0632645a115013db659b59aaadc56473c628b0fe4f14585eee12d37d15b66e 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [2/3] COPY . . 0.0s
+</span></span><span style=display:flex><span>=&gt; CACHED [3/3] RUN npm install 0.0s
+</span></span><span style=display:flex><span>=&gt; exporting to image 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; exporting layers 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; writing image sha256:c1e60390daed5c3e6e2268b9fcbcd395da58c926d2b6ca542432aff3fbceada4 0.0s
+</span></span><span style=display:flex><span>=&gt; =&gt; naming to docker.io/library/nodejs 0.0s
+</span></span><span style=display:flex><span>...
+</span></span></code></pre></div><ol><li><p>Log in to a container registry from the terminal. Refer to the instructions for <a href=https://docs.quay.io/solution/getting-started.html>Quay</a> and <a href=https://docs.docker.com/engine/reference/commandline/login/>Docker Hub</a></p></li><li><p>Push the container images to the registry specified during the transformation using the <code>pushimages.sh</code> script.</p></li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ ./pushimages.sh
+</span></span><span style=display:flex><span>Using default tag: latest
+</span></span><span style=display:flex><span>The push refers to repository [quay.io/move2kube/myproject-python]
+</span></span><span style=display:flex><span>8558b30e6fa3: Pushed
+</span></span><span style=display:flex><span>c25982faebf0: Pushed
+</span></span><span style=display:flex><span>e262751a7e43: Layer already exists
+</span></span><span style=display:flex><span>5e6a0ab87a4b: Layer already exists
+</span></span><span style=display:flex><span>7b17276847a2: Layer already exists
+</span></span><span style=display:flex><span>558b534f4e1b: Layer already exists
+</span></span><span style=display:flex><span>3ba8c926eef9: Layer already exists
+</span></span><span style=display:flex><span>352ba846236b: Layer already exists
+</span></span><span style=display:flex><span>latest: digest: sha256:d76b1dc841442b0e31c533c1e2419b3ae670de7b4381d4ff1ca2eaf1fbf5dfe6 size: 1999
+</span></span><span style=display:flex><span>Using default tag: latest
+</span></span><span style=display:flex><span>The push refers to repository [quay.io/move2kube/myproject-php]
+</span></span><span style=display:flex><span>44abc3aaaae4: Layer already exists
+</span></span><span style=display:flex><span>c6a7a5dc5bb6: Layer already exists
+</span></span><span style=display:flex><span>6a1b2ca6ba18: Layer already exists
+</span></span><span style=display:flex><span>7b17276847a2: Layer already exists
+</span></span><span style=display:flex><span>558b534f4e1b: Mounted from quay.io/move2kube/myproject-django
+</span></span><span style=display:flex><span>3ba8c926eef9: Layer already exists
+</span></span><span style=display:flex><span>352ba846236b: Layer already exists
+</span></span><span style=display:flex><span>latest: digest: sha256:a42087a9c938dc46a265c2aba787040ddd106248954c09a50a8e45e2d9e068f7 size: 1788
+</span></span><span style=display:flex><span>Using default tag: latest
+</span></span><span style=display:flex><span>The push refers to repository [quay.io/move2kube/nodejs]
+</span></span><span style=display:flex><span>c76f2a9d04f4: Layer already exists
+</span></span><span style=display:flex><span>d9ba94873664: Layer already exists
+</span></span><span style=display:flex><span>24607ae115a3: Layer already exists
+</span></span><span style=display:flex><span>7b17276847a2: Layer already exists
+</span></span><span style=display:flex><span>558b534f4e1b: Layer already exists
+</span></span><span style=display:flex><span>3ba8c926eef9: Layer already exists
+</span></span><span style=display:flex><span>352ba846236b: Layer already exists
+</span></span><span style=display:flex><span>latest: digest: sha256:169443441285694a29ec9235ac0b4d07c1f23a0e20b1f41be967e4416f8d1687 size: 1788
+</span></span><span style=display:flex><span>Using default tag: latest
+</span></span><span style=display:flex><span>The push refers to repository [quay.io/move2kube/ruby]
+</span></span><span style=display:flex><span>2177ca5056ad: Layer already exists
+</span></span><span style=display:flex><span>856aec824b2a: Layer already exists
+</span></span><span style=display:flex><span>5f70bf18a086: Layer already exists
+</span></span><span style=display:flex><span>...
+</span></span></code></pre></div><ol><li>Deploy the applications using <code>kubectl apply -f ./deploy/yamls</code>.</li></ol><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ cd ..
+</span></span><span style=display:flex><span>$ kubectl apply -f deploy/yamls
+</span></span><span style=display:flex><span>deployment.apps/golang created
+</span></span><span style=display:flex><span>service/golang created
+</span></span><span style=display:flex><span>deployment.apps/myproject-django created
+</span></span><span style=display:flex><span>service/myproject-django created
+</span></span><span style=display:flex><span>ingress.networking.k8s.io/myproject created
+</span></span><span style=display:flex><span>deployment.apps/myproject-java-gradle created
+</span></span><span style=display:flex><span>service/myproject-java-gradle created
+</span></span><span style=display:flex><span>deployment.apps/myproject-java-gradle-war created
+</span></span><span style=display:flex><span>service/myproject-java-gradle-war created
+</span></span><span style=display:flex><span>deployment.apps/myproject-java-maven-war created
+</span></span><span style=display:flex><span>service/myproject-java-maven-war created
+</span></span><span style=display:flex><span>deployment.apps/myproject-php created
+</span></span><span style=display:flex><span>service/myproject-php created
+</span></span><span style=display:flex><span>deployment.apps/myproject-python created
+</span></span><span style=display:flex><span>service/myproject-python created
+</span></span><span style=display:flex><span>deployment.apps/nodejs created
+</span></span><span style=display:flex><span>service/nodejs created
+</span></span><span style=display:flex><span>deployment.apps/ruby created
+</span></span><span style=display:flex><span>service/ruby created
+</span></span><span style=display:flex><span>deployment.apps/rust created
+</span></span><span style=display:flex><span>service/rust created
+</span></span><span style=display:flex><span>deployment.apps/simplewebapp created
+</span></span><span style=display:flex><span>service/simplewebapp created
+</span></span></code></pre></div><p>Now all applications are accessible on the cluster.</p><ol start=6><li>Get the ingress to see the URLs where the apps have been deployed to <code>kubectl get ingress myproject -o yaml</code>.</li></ol><blockquote><p><strong>Important:</strong> If deployed to Minikube, enable the ingress addon.</p></blockquote><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-console data-lang=console><span style=display:flex><span>$ minikube addons enable ingress
+</span></span><span style=display:flex><span>💡  After the addon is enabled, please run &#34;minikube tunnel&#34; and your ingress resources would be available at &#34;127.0.0.1&#34;
+</span></span><span style=display:flex><span>▪ Using image k8s.gcr.io/ingress-nginx/controller:v1.0.4
+</span></span><span style=display:flex><span>▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+</span></span><span style=display:flex><span>▪ Using image k8s.gcr.io/ingress-nginx/kube-webhook-certgen:v1.1.1
+</span></span><span style=display:flex><span>🔎  Verifying ingress addon...
+</span></span><span style=display:flex><span>🌟  The &#39;ingress&#39; addon is enabled
+</span></span><span style=display:flex><span>$ minikube addons enable ingress-dns
+</span></span><span style=display:flex><span>💡  After the addon is enabled, please run &#34;minikube tunnel&#34; and your ingress resources would be available at &#34;127.0.0.1&#34;
+</span></span><span style=display:flex><span>▪ Using image gcr.io/k8s-minikube/minikube-ingress-dns:0.0.2
+</span></span><span style=display:flex><span>🌟  The &#39;ingress-dns&#39; addon is enabled
+</span></span><span style=display:flex><span>$ minikube tunnel
+</span></span><span style=display:flex><span>❗  The service/ingress myproject requires privileged ports to be exposed: [80 443]
+</span></span><span style=display:flex><span>🔑  sudo permission will be asked for it.
+</span></span><span style=display:flex><span>🏃  Starting tunnel for service myproject.
+</span></span><span style=display:flex><span>Password:
+</span></span></code></pre></div><h2 id=conclusion>Conclusion</h2><p>A very diverse source environment like the <a href=https://github.com/konveyor/move2kube-demos/tree/main/samples/language-platforms>language-platforms</a> sample, which has multiple apps in different languages, but can simply containerize and deploy them to Kubernetes. A Move2Kube UI tool which has all the same features as the CLI.</p><p><a href=https://github.com/konveyor/konveyor.github.io/blob/main/content/Move2Kube/Tutorials/usingCLI.md>Source</a></p></div></main></div></div><footer class=footer-container><div class=footer-inner-top><p>©2025 the Konveyor authors</p><ul class=footer-links><li><a href=/privacy>Privacy Statement</a></li><li><a href=https://www.linuxfoundation.org/legal/trademark-usage target=_blank>Trademark</a></li></ul><ul class=footer-links><li><a href=https://twitter.com/Konveyor_io target=_blank><i class="fa-brands fa-x-twitter"></i></a></li><li><a href=https://www.youtube.com/channel/UCQ3pW3gSBeCy0tj1J0ub2bw target=_blank><i class="fa-brands fa-youtube"></i></a></li><li><a href="https://www.linkedin.com/company/konveyor-community/?viewAsMember=true" target=_blank><i class="fa-brands fa-linkedin"></i></a></li><li><a href=https://www.konveyor.io/slack/ target=_blank><i class="fa-brands fa-slack"></i></a></li><li><a href=https://github.com/konveyor target=_blank><i class="fa-brands fa-github"></i></a></li></ul></div><div class=footer-inner-bottom><div><div class=konveyor-logo-container><img src=/images/Konveyor-logo-color-wh.svg alt="konveyor logo"></div><p>The Konveyor community helps modernize applications by providing open source tools.</p></div><div><div class=cncf-logo-container><img src=/images/cncf-logo-white.svg alt="cncf logo"></div><p>We are a Cloud Native Computing Foundation sandbox project.</p></div></div><p class=text-center>The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href=https://www.linuxfoundation.org/legal/trademark-usage target=_blank>Trademark Usage.</a></p></footer></div><script src=/js/main.min.8bdc707530d61dee3a6fd659f8a422c05d2e2319377a8710175451ca21fa83b0.js integrity="sha256-i9xwdTDWHe46b9ZZ+KQiwF0uIxk3eocQF1RRyiH6g7A=" crossorigin=anonymous></script><script defer src=/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js integrity="sha256-c0eKfUgHaYrtfjVesj+YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin=anonymous></script><script src=/js/tabpane-persist.js></script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKPDMS3" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></body></html>

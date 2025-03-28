@@ -1,0 +1,409 @@
+<!doctype html><html itemscope itemtype=http://schema.org/WebPage lang=en class=no-js><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><meta name=robots content="index, follow"><link rel="shortcut icon" href=/favicons/favicon.ico><link rel=apple-touch-icon href=/favicons/apple-touch-icon-180x180.png sizes=180x180><link rel=icon type=image/png href=/favicons/favicon-16x16.png sizes=16x16><link rel=icon type=image/png href=/favicons/favicon-32x32.png sizes=32x32><link rel=icon type=image/png href=/favicons/android-36x36.png sizes=36x36><link rel=icon type=image/png href=/favicons/android-48x48.png sizes=48x48><link rel=icon type=image/png href=/favicons/android-72x72.png sizes=72x72><link rel=icon type=image/png href=/favicons/android-96x96.png sizes=96x96><link rel=icon type=image/png href=/favicons/android-144x144.png sizes=144x144><link rel=icon type=image/png href=/favicons/android-192x192.png sizes=192x192><title>Incident Storage in Kai - A Deep Dive | Konveyor</title>
+<meta name=description content="A walkthrough of how incident data is leveraged in Konveyor AI's (Kai)  workflow to improve the generation of results."><meta property="og:url" content="http://konveyor.io/blog/2024/kai-incident-storage-2024/"><meta property="og:site_name" content="Konveyor"><meta property="og:title" content="Incident Storage in Kai - A Deep Dive"><meta property="og:description" content="A walkthrough of how incident data is leveraged in Konveyor AI's (Kai)  workflow to improve the generation of results."><meta property="og:locale" content="en_us"><meta property="og:type" content="article"><meta property="article:section" content="blog"><meta property="article:published_time" content="2024-08-29T00:00:00+00:00"><meta property="article:modified_time" content="2024-08-29T00:00:00+00:00"><meta property="article:tag" content="Konveyor"><meta property="article:tag" content="Kai"><meta property="article:tag" content="GenAI"><meta property="article:tag" content="AppModernization"><meta itemprop=name content="Incident Storage in Kai - A Deep Dive"><meta itemprop=description content="A walkthrough of how incident data is leveraged in Konveyor AI's (Kai)  workflow to improve the generation of results."><meta itemprop=datePublished content="2024-08-29T00:00:00+00:00"><meta itemprop=dateModified content="2024-08-29T00:00:00+00:00"><meta itemprop=wordCount content="2535"><meta itemprop=keywords content="Konveyor,Kai,GenAI,AppModernization"><meta name=twitter:card content="summary"><meta name=twitter:title content="Incident Storage in Kai - A Deep Dive"><meta name=twitter:description content="A walkthrough of how incident data is leveraged in Konveyor AI's (Kai)  workflow to improve the generation of results."><link rel=preload href=/scss/main.min.baa48bdc810b00549fa012f6adc6b2b008c86b5b3df483032d70e6abe36a8bbe.css as=style integrity="sha256-uqSL3IELAFSfoBL2rcaysAjIa1s99IMDLXDmq+Nqi74=" crossorigin=anonymous><link href=/scss/main.min.baa48bdc810b00549fa012f6adc6b2b008c86b5b3df483032d70e6abe36a8bbe.css rel=stylesheet integrity="sha256-uqSL3IELAFSfoBL2rcaysAjIa1s99IMDLXDmq+Nqi74=" crossorigin=anonymous><script src=https://code.jquery.com/jquery-3.7.1.min.js integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin=anonymous></script><script defer src=https://unpkg.com/lunr@2.3.9/lunr.min.js integrity=sha384-203J0SNzyqHby3iU6hzvzltrWi/M41wOP5Gu+BiJMz5nwKykbkUx8Kp7iti0Lpli crossorigin=anonymous></script><script>(function(e,t,n,s,o){e[s]=e[s]||[],e[s].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var a=t.getElementsByTagName(n)[0],i=t.createElement(n),r=s!="dataLayer"?"&l="+s:"";i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+o+r,a.parentNode.insertBefore(i,a)})(window,document,"script","dataLayer","GTM-TKPDMS3")</script></head><body class="td-page td-blog"><header><nav class="td-navbar js-navbar-scroll" data-bs-theme=dark><div class="container-fluid flex-column flex-md-row"><a class=navbar-brand href=/><span class="navbar-brand__logo navbar-logo"><svg width="575.19pt" height="221.79pt" version="1.2" viewBox="0 0 575.19 221.79"><g transform="translate(-9.3672,-9.1211)"><path d="m174.6 82.258h38.348v14.941H174.6z"/><path d="m246.31 82.258h38.348v14.941H246.31z"/><path d="m209.96 14.031h38.348v14.941H209.96z"/></g><path d="m247.85 78.121h15.727c1.418.0 2.5586 1.1367 2.5586 2.5547s-1.1406 2.5586-2.5586 2.5586H247.85c-1.418.0-2.5586-1.1406-2.5586-2.5586s1.1406-2.5547 2.5586-2.5547m-70.941.0h15.727c1.4141.0 2.5586 1.1367 2.5586 2.5547s-1.1445 2.5586-2.5586 2.5586h-15.727c-1.4141.0-2.5586-1.1406-2.5586-2.5586s1.1445-2.5547 2.5586-2.5547m47.938-8.7539c-.8789.0-1.5859.70703-1.5859 1.582v61.738c0 .87891.70703 1.5859 1.5859 1.5859h61.734c.8789.0 1.582-.71094 1.582-1.5859v-61.738c0-.875-.70313-1.582-1.582-1.582zm-70.945.0c-.875.0-1.5781.70703-1.5781 1.582v61.738c0 .87891.70312 1.5859 1.5781 1.5859h61.742c.875.0 1.5781-.71094 1.5781-1.5859v-61.738c0-.875-.70312-1.582-1.5781-1.582zm58.477-60.613h15.727c1.418.0 2.5586 1.1367 2.5586 2.5547s-1.1406 2.5586-2.5586 2.5586h-15.727c-1.418.0-2.5547-1.1406-2.5547-2.5586s1.1367-2.5547 2.5547-2.5547m-23.004-8.7539c-.87891.0-1.5859.70703-1.5859 1.582v61.738c0 .875.70703 1.5781 1.5859 1.5781h61.738c.875.0 1.582-.70312 1.582-1.5781v-61.738c0-.875-.70703-1.582-1.582-1.582z" fill="#b09454"/><g transform="translate(-9.3672,-9.1211)" fill="#353688"><path d="m110.98 164c13.109.0 23.523 10.414 23.523 23.523.0 13.113-10.414 23.523-23.523 23.523s-23.523-10.41-23.523-23.523c0-13.109 10.414-23.523 23.523-23.523m0-19.871c-23.848.0-43.395 19.547-43.395 43.395.0 23.852 19.547 43.395 43.395 43.395 23.852.0 43.398-19.543 43.398-43.395.0-23.848-19.547-43.395-43.398-43.395"/><path d="m9.3672 224.48v-73.914h20.301v28.109l22.488-28.109h22.902l-26.859 33.105 28.734 40.809h-23.32l-18.324-27.172-5.6211 5.832v21.34z"/><path d="m181.01 188.14v36.332h-20.301v-73.914h15.824l29.672 37.582v-37.582h20.301v73.914h-16.137z"/><path d="m253.47 150.56 14.469 48.41 14.266-48.41h21.34l-27.172 73.914H259.51l-27.484-73.914z"/><path d="m361.84 206.78v17.695h-52.676v-73.914h51.742v17.699h-31.441v10.41h26.859v16.449h-26.859v11.66z"/><path d="m386.3 150.56 13.223 31.961 13.531-31.961h22.07l-25.504 49.449v24.465h-20.195v-24.672l-25.09-49.242z"/><path d="m541.04 184.09h12.805c1.25.0 2.3945-.69532 3.4375-2.082 1.1094-1.3906 1.6641-3.332 1.6641-5.832.0-2.5664-.625-4.5117-1.875-5.8281-1.2461-1.3867-2.4961-2.082-3.7461-2.082h-12.285zm-20.301 40.391v-73.914h33.938c3.6094.0 6.9414.76562 9.9961 2.293 3.0547 1.457 5.6562 3.3984 7.8086 5.8281 2.2188 2.3594 3.9531 5.1016 5.2031 8.2227 1.25 3.0547 1.875 6.1445 1.875 9.2656.0 4.3047-.9375 8.3281-2.8125 12.078-1.8711 3.6797-4.4766 6.6953-7.8086 9.0586l15.617 27.168h-22.902l-13.012-22.695h-7.6016v22.695z"/><path d="m471.77 164c13.109.0 23.523 10.414 23.523 23.523.0 13.113-10.414 23.523-23.523 23.523s-23.523-10.41-23.523-23.523c0-13.109 10.414-23.523 23.523-23.523m0-19.871c-23.848.0-43.395 19.547-43.395 43.395.0 23.852 19.547 43.395 43.395 43.395 23.852.0 43.398-19.543 43.398-43.395.0-23.848-19.547-43.395-43.398-43.395"/></g></svg></span><span class=navbar-brand__name>Konveyor</span></a><div class="td-navbar-nav-scroll ms-md-auto" id=main_navbar><ul class=navbar-nav><li class="nav-item sub-menu dropdown"><div class=dropdown><a class="nav-link dropdown-toggle" href=# id=navbarDropdown role=button data-bs-toggle=dropdown aria-haspopup=true aria-expanded=false><span>Components</span></a><ul class="dropdown-menu dropdown-menu-end -bg-primary"><li><a class=dropdown-item href=/components/konveyor-hub>Konveyor Hub</a></li><li><a class=dropdown-item href=/components/konveyor-cli>Konveyor CLI</a></li><li><a class=dropdown-item href=/components/kai>Konveyor AI</a></li></ul></div></li><li class=nav-item><a class=nav-link href=/docs><span>Documentation</span></a></li><li class=nav-item><a class=nav-link href=/docs/konveyor/contributetokonveyor/><span>Community</span></a></li><li class=nav-item><a class=nav-link href=/ecosystem><span>Ecosystem</span></a></li><li class=nav-item><a class=nav-link href=/blog><span>Blog</span></a></li></ul></div><div class="d-none d-lg-block"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/offline-search-index.aee1a6172d1c6decda758fc5eb7f05de.json data-offline-search-base-href=/ data-offline-search-max-results=10></div></div></div></nav></header><div class="container-fluid td-outer"><div class=td-main><div class="row flex-xl-nowrap"><aside class="col-12 col-md-3 col-xl-2 td-sidebar d-print-none"><div id=td-sidebar-menu class=td-sidebar__inner><form class="td-sidebar__search d-flex align-items-center"><div class="td-search td-search--offline"><div class=td-search__icon></div><input type=search class="td-search__input form-control" placeholder="Search this site…" aria-label="Search this site…" autocomplete=off data-offline-search-index-json-src=/offline-search-index.aee1a6172d1c6decda758fc5eb7f05de.json data-offline-search-base-href=/ data-offline-search-max-results=10></div><button class="btn btn-link td-sidebar__toggle d-md-none p-0 ms-3 fas fa-bars" type=button data-bs-toggle=collapse data-bs-target=#td-section-nav aria-controls=td-section-nav aria-expanded=false aria-label="Toggle section navigation"></button></form><nav class="td-sidebar-nav collapse foldable-nav" id=td-section-nav><ul class="td-sidebar-nav__section pe-md-3 ul-0"><li class="td-sidebar-nav__section-title td-sidebar-nav__section with-child active-path" id=m-blog-li><a href=/blog/ class="align-left ps-0 td-sidebar-link td-sidebar-link__section tree-root" id=m-blog><span>Blog</span></a><ul class=ul-1><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child active-path" id=m-blog2024kai-incident-storage-2024-li><input type=checkbox id=m-blog2024kai-incident-storage-2024-check checked>
+<label for=m-blog2024kai-incident-storage-2024-check><a href=/blog/2024/kai-incident-storage-2024/ class="align-left ps-0 active td-sidebar-link td-sidebar-link__page" id=m-blog2024kai-incident-storage-2024><span class=td-sidebar-nav-active-item>Incident Storage in Kai - A Deep Dive</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2024kai-roadmap-2024-li><input type=checkbox id=m-blog2024kai-roadmap-2024-check>
+<label for=m-blog2024kai-roadmap-2024-check><a href=/blog/2024/kai-roadmap-2024/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2024kai-roadmap-2024><span>Konveyor AI (Kai) Roadmap 2024</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2024kai-deep-dive-2024-li><input type=checkbox id=m-blog2024kai-deep-dive-2024-check>
+<label for=m-blog2024kai-deep-dive-2024-check><a href=/blog/2024/kai-deep-dive-2024/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2024kai-deep-dive-2024><span>Kai - Generative AI Applied to Application Modernization</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2024konveyor-kiosk-at-kubecon-europe-2024-li><input type=checkbox id=m-blog2024konveyor-kiosk-at-kubecon-europe-2024-check>
+<label for=m-blog2024konveyor-kiosk-at-kubecon-europe-2024-check><a href=/blog/2024/konveyor-kiosk-at-kubecon-europe-2024/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2024konveyor-kiosk-at-kubecon-europe-2024><span>Konveyor at KubeCon + CloudNativeCon 2024 EU Paris</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2023konveyor-kiosk-at-kubecon-north-america-2023-li><input type=checkbox id=m-blog2023konveyor-kiosk-at-kubecon-north-america-2023-check>
+<label for=m-blog2023konveyor-kiosk-at-kubecon-north-america-2023-check><a href=/blog/2023/konveyor-kiosk-at-kubecon-north-america-2023/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2023konveyor-kiosk-at-kubecon-north-america-2023><span>Konveyor Kiosk at KubeCon + CloudNativeCon 2023 NA Chicago</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2023one-year-cncf-sandbox-konveyor-reflective-journey-li><input type=checkbox id=m-blog2023one-year-cncf-sandbox-konveyor-reflective-journey-check>
+<label for=m-blog2023one-year-cncf-sandbox-konveyor-reflective-journey-check><a href=/blog/2023/one-year-cncf-sandbox-konveyor-reflective-journey/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2023one-year-cncf-sandbox-konveyor-reflective-journey><span>One Year in the CNCF Sandbox- Konveyor's Reflective Journey</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2023modernize-petclinic-to-k8s-using-konveyor-li><input type=checkbox id=m-blog2023modernize-petclinic-to-k8s-using-konveyor-check>
+<label for=m-blog2023modernize-petclinic-to-k8s-using-konveyor-check><a href=/blog/2023/modernize-petclinic-to-k8s-using-konveyor/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2023modernize-petclinic-to-k8s-using-konveyor><span>Modernize Petclinic App to Kubernetes Using Konveyor</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2023release-announcement-0-2-1-li><input type=checkbox id=m-blog2023release-announcement-0-2-1-check>
+<label for=m-blog2023release-announcement-0-2-1-check><a href=/blog/2023/release-announcement-0-2-1/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2023release-announcement-0-2-1><span>Konveyor v0.2.1 Release Announcement</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2023reflecting-on-large-scale-cloud-native-modernizations-at-kubecon-23-li><input type=checkbox id=m-blog2023reflecting-on-large-scale-cloud-native-modernizations-at-kubecon-23-check>
+<label for=m-blog2023reflecting-on-large-scale-cloud-native-modernizations-at-kubecon-23-check><a href=/blog/2023/reflecting-on-large-scale-cloud-native-modernizations-at-kubecon-23/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2023reflecting-on-large-scale-cloud-native-modernizations-at-kubecon-23><span>Reflecting on Large-Scale Cloud-Native Modernizations at KubeCon 23</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2022community-update-konveyor-refocuses-efforts-li><input type=checkbox id=m-blog2022community-update-konveyor-refocuses-efforts-check>
+<label for=m-blog2022community-update-konveyor-refocuses-efforts-check><a href=/blog/2022/community-update-konveyor-refocuses-efforts/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2022community-update-konveyor-refocuses-efforts><span>Community Update: Konveyor Refocuses Efforts on Replatforming and Refactoring Use Cases</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2022tackle-2-1-release-li><input type=checkbox id=m-blog2022tackle-2-1-release-check>
+<label for=m-blog2022tackle-2-1-release-check><a href=/blog/2022/tackle-2-1-release/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2022tackle-2-1-release><span>Tackle 2.1 release</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2022konveyor-is-a-cncf-sandbox-project-li><input type=checkbox id=m-blog2022konveyor-is-a-cncf-sandbox-project-check>
+<label for=m-blog2022konveyor-is-a-cncf-sandbox-project-check><a href=/blog/2022/konveyor-is-a-cncf-sandbox-project/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2022konveyor-is-a-cncf-sandbox-project><span>Konveyor is now a Cloud Native Computing Foundation (CNCF) Sandbox project</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2022measure-manage-technical-debt-li><input type=checkbox id=m-blog2022measure-manage-technical-debt-check>
+<label for=m-blog2022measure-manage-technical-debt-check><a href=/blog/2022/measure-manage-technical-debt/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2022measure-manage-technical-debt><span>A Method to Measure and Manage Technical Debt</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2022tackle-2-new-capabilities-li><input type=checkbox id=m-blog2022tackle-2-new-capabilities-check>
+<label for=m-blog2022tackle-2-new-capabilities-check><a href=/blog/2022/tackle-2-new-capabilities/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2022tackle-2-new-capabilities><span>Tackle 2: New capabilities for modernizing applications to leverage Kubernetes</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2022application-modernization-report-li><input type=checkbox id=m-blog2022application-modernization-report-check>
+<label for=m-blog2022application-modernization-report-check><a href=/blog/2022/application-modernization-report/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2022application-modernization-report><span>Application Modernization Report Shows Need For Kubernetes-specific Migration Tooling</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2021konveyor-community-hackfest-li><input type=checkbox id=m-blog2021konveyor-community-hackfest-check>
+<label for=m-blog2021konveyor-community-hackfest-check><a href=/blog/2021/konveyor-community-hackfest/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2021konveyor-community-hackfest><span>Konveyor Community HackFest</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2021metrics-driven-approach-to-transformation-li><input type=checkbox id=m-blog2021metrics-driven-approach-to-transformation-check>
+<label for=m-blog2021metrics-driven-approach-to-transformation-check><a href=/blog/2021/metrics-driven-approach-to-transformation/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2021metrics-driven-approach-to-transformation><span>Exploring a Metrics-Driven Approach to Transformation</span></a></label></li><li class="td-sidebar-nav__section-title td-sidebar-nav__section without-child" id=m-blog2021direct-migration-li><input type=checkbox id=m-blog2021direct-migration-check>
+<label for=m-blog2021direct-migration-check><a href=/blog/2021/direct-migration/ class="align-left ps-0 td-sidebar-link td-sidebar-link__page" id=m-blog2021direct-migration><span>Migrating Faster with Direct Migration</span></a></label></li></ul></li></ul></nav></div></aside><aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none"><div class="td-page-meta ms-2 pb-1 pt-2 mb-0"></div><div class=td-toc><nav id=TableOfContents><ul><li><a href=#introduction>Introduction</a></li><li><a href=#enter-kai>Enter: Kai</a></li><li><a href=#an-initial-migration>An Initial Migration</a></li><li><a href=#the-solution-pipeline>The Solution Pipeline</a></li><li><a href=#solution-detection>Solution Detection</a><ul><li><a href=#solution-producers>Solution Producers</a></li><li><a href=#solution-consumers>Solution Consumers</a></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div><div class="taxonomy taxonomy-terms-cloud taxo-tags"><h5 class=taxonomy-title>Tags</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=http://konveyor.io/tags/appmodernization/ data-taxonomy-term=appmodernization><span class=taxonomy-label>AppModernization</span><span class=taxonomy-count>9</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/cncf/ data-taxonomy-term=cncf><span class=taxonomy-label>CNCF</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/crane/ data-taxonomy-term=crane><span class=taxonomy-label>Crane</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/forklift/ data-taxonomy-term=forklift><span class=taxonomy-label>Forklift</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/genai/ data-taxonomy-term=genai><span class=taxonomy-label>GenAI</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/hackfest/ data-taxonomy-term=hackfest><span class=taxonomy-label>HackFest</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kai/ data-taxonomy-term=kai><span class=taxonomy-label>Kai</span><span class=taxonomy-count>3</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/konveyor/ data-taxonomy-term=konveyor><span class=taxonomy-label>Konveyor</span><span class=taxonomy-count>9</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kubecon/ data-taxonomy-term=kubecon><span class=taxonomy-label>KubeCon</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kubernetes/ data-taxonomy-term=kubernetes><span class=taxonomy-label>Kubernetes</span><span class=taxonomy-count>5</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/metrics/ data-taxonomy-term=metrics><span class=taxonomy-label>Metrics</span><span class=taxonomy-count>2</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/move2kube/ data-taxonomy-term=move2kube><span class=taxonomy-label>Move2Kube</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/mtc/ data-taxonomy-term=mtc><span class=taxonomy-label>MTC</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/openshift/ data-taxonomy-term=openshift><span class=taxonomy-label>OpenShift</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/pelorus/ data-taxonomy-term=pelorus><span class=taxonomy-label>Pelorus</span><span class=taxonomy-count>1</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/tackle/ data-taxonomy-term=tackle><span class=taxonomy-label>Tackle</span><span class=taxonomy-count>3</span></a></li></ul></div></aside><main class="col-12 col-md-9 col-xl-8 ps-md-5 pe-md-4" role=main><a class=td-rss-button title=RSS href=/blog/index.xml target=_blank rel=noopener><i class="fa-solid fa-rss" aria-hidden=true></i></a><div class=td-content><h1>Incident Storage in Kai - A Deep Dive</h1><div class=lead>A walkthrough of how incident data is leveraged in Konveyor AI&rsquo;s (Kai) workflow to improve the generation of results.</div><div class="td-byline mb-4">By <b>JonahSussman</b> |
+<time datetime=2024-08-29 class=text-body-secondary>Thursday, August 29, 2024</time></div><header class=article-meta><div class="taxonomy taxonomy-terms-article taxo-tags"><h5 class=taxonomy-title>Tags:</h5><ul class=taxonomy-terms><li><a class=taxonomy-term href=http://konveyor.io/tags/konveyor/ data-taxonomy-term=konveyor><span class=taxonomy-label>Konveyor</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/kai/ data-taxonomy-term=kai><span class=taxonomy-label>Kai</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/genai/ data-taxonomy-term=genai><span class=taxonomy-label>GenAI</span></a></li><li><a class=taxonomy-term href=http://konveyor.io/tags/appmodernization/ data-taxonomy-term=appmodernization><span class=taxonomy-label>AppModernization</span></a></li></ul></div></header><p><strong>Author</strong>: Jonah Sussman (<a href=https://www.GitHub.com/jonahsussman/>GitHub</a>, <a href=https://www.linkedin.com/in/jonahsussman/>LinkedIn</a>, <a href=mailto:jsussman@redhat.com>E-mail</a>)</p><h2 id=introduction>Introduction</h2><p>The process of modernizing an application is complex and time-consuming. Despite
+our best efforts as software engineers with things like <a href=https://semver.org/>semantic
+versioning</a>, detailed release notes, and thorough testing,
+modernizing a single application is an intimidating task.</p><p>This kind of work is often one of the most unglamorous, and error-prone tasks
+that developers have to do. It involves rewriting large portions of the
+codebase, which can be daunting for even the most battle-hardened of developers.
+There&rsquo;s an interconnected web of functions, classes, and modules that all depend
+on each other. One wrong move and the whole thing can come crashing down.</p><p><img src=./function_graph.png alt="A graph of functions connected to each other."></p><p>Now imagine you have to do this across <em>tens</em> or <em>hundreds</em> of applications.</p><p>Yeesh.</p><h2 id=enter-kai>Enter: Kai</h2><p><a href=https://www.github.com/konveyor/kai/><strong>Kai</strong></a> is an AI-enabled tool that assists
+with <em>modernizing applications</em>. Kai is designed to help developers write code
+more efficiently by providing suggestions and solutions to common problems. It
+does this by using <em>analysis reports from Konveyor</em> about the codebase and
+generating solutions based on what it finds.</p><p><img src=./kai_vscode_extension.png alt="Kai&rsquo;s VSCode Extension"></p><p>Now, you may be thinking: <em>How is Kai different than other generative AI tools?</em>
+I&rsquo;m so glad you asked.</p><ul><li><strong>Konveyor&rsquo;s analysis reports</strong>: Konveyor generates analysis reports
+throughout a migration. This history of reports tells you what&rsquo;s wrong with
+your codebase, where the issues are, and when they happened. Best of all, this
+functionality exists <em>today</em>. Developers are already doing this during a
+migration! As a result&mldr;</li><li><strong>Kai can learn throughout a migration</strong>: As you migrate more pieces of your
+codebase with Kai, it can learn from the data available, and get better
+recommendations for the next application, and the next, and so on. This leads
+to the fact that&mldr;</li><li><strong>Kai is more focused</strong>: LLMs are very powerful tools, but without explicit
+guidance, they can generate a lot of garbage. Using Konveyor&rsquo;s analysis
+reports allows us to focus Kai&rsquo;s generative power on the specific problems
+that need to be solved. <em>Pointed</em>, <em>specific data</em> is the key to unlocking the
+full potential of large language models.</li></ul><p>Recently, we overhauled how incidents are handled inside Kai. I&rsquo;m going to take
+you on a guided tour through these changes, and learn how Kai operates in a
+deep, technical level.</p><h2 id=an-initial-migration>An Initial Migration</h2><p>Let&rsquo;s imagine we&rsquo;re a developer for Bloopify Solutions. Stick with me here,
+there&rsquo;s going to be a fair amount of code snippets. You can follow along with
+the migration using <a href=https://github.com/JonahSussman/kai-tester/>this
+repository</a>. Now, suppose we have
+the following Java application:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> net.jsussman.ioedict;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.FileInputStream;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.FileOutputStream;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.IOException;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>App</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>    System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Starting application!&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> (FileInputStream in <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> FileInputStream(<span style=color:#e6db74>&#34;input.txt&#34;</span>);
+</span></span><span style=display:flex><span>        FileOutputStream out <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> FileOutputStream(<span style=color:#e6db74>&#34;output.txt&#34;</span>)) {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>int</span> c;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>while</span> ((c <span style=color:#f92672>=</span> in.<span style=color:#a6e22e>read</span>()) <span style=color:#f92672>!=</span> <span style=color:#f92672>-</span>1) {
+</span></span><span style=display:flex><span>        out.<span style=color:#a6e22e>write</span>(c);
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (IOException e) {
+</span></span><span style=display:flex><span>      e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Beautiful, isn&rsquo;t it? Now, let&rsquo;s say we have received an edict from on high that
+we can longer use old-school input/output from the Java IO package and standard
+logging via <code>System.out</code>. We decide to write a couple of rules to enforce this:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- <span style=color:#f92672>ruleID</span>: <span style=color:#ae81ff>blog-post-demo-0001</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid old-school input/output</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>when</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>java.referenced</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>location</span>: <span style=color:#ae81ff>CONSTRUCTOR_CALL</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>pattern</span>: <span style=color:#ae81ff>java.io.*</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>- <span style=color:#f92672>ruleID</span>: <span style=color:#ae81ff>blog-post-demo-0002</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid standard logging</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Standard logging should be avoided. Consider using SLF4J instead.</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>when</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>java.referenced</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>pattern</span>: <span style=color:#e6db74>&#34;System*&#34;</span>
+</span></span></code></pre></div><p>We feed this to Konveyor and presto! It generates an analysis report back for
+us:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>kai/blog-post</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Rules focused on demonstrating the capabilities of Kai</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>violations</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>blog-post-demo-0001</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid old-school input/output</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>incidents</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>11</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>net.jsussman.ioedict</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>12</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>net.jsussman.ioedict</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>blog-post-demo-0002</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid standard logging</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>incidents</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Standard logging should be avoided. Consider using SLF4J instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>9</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Method</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>net.jsussman.ioedict</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span></code></pre></div><p>Look at that! Each rule was <strong>violated</strong>, with two <strong>incidents</strong> for the io and
+one for the logging. Now, let&rsquo;s fix the io issue:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> net.jsussman.ioedict;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.IOException;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.nio.file.Files;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.nio.file.Path;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.nio.file.Paths;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>App</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>    System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Starting application!&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Path source <span style=color:#f92672>=</span> Paths.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;input.txt&#34;</span>);
+</span></span><span style=display:flex><span>    Path destination <span style=color:#f92672>=</span> Paths.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;output.txt&#34;</span>);
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>      Files.<span style=color:#a6e22e>copy</span>(source, destination);
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (IOException e) {
+</span></span><span style=display:flex><span>      e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>I promise we&rsquo;re going to get to the good stuff soon. Finally, Konveyor generates
+another report for us:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>kai/blog-post</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Rules focused on demonstrating the capabilities of Kai</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>violations</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>blog-post-demo-0002</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid standard logging</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>incidents</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Standard logging should be avoided. Consider using SLF4J instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Method</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>net.jsussman.ioedict</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>unmatched</span>:
+</span></span><span style=display:flex><span>  - <span style=color:#ae81ff>blog-post-demo-0001</span>
+</span></span></code></pre></div><p>We solved the io issue, but left the logging issue (this will be important for
+later). Now, let&rsquo;s see how Kai uses this data to generate solutions.</p><h2 id=the-solution-pipeline>The Solution Pipeline</h2><p>At the core of Konveyor&rsquo;s analysis reports (and by extension, Kai) is the humble
+<strong>incident</strong>. An incident is a code location in a file that signals something is
+wrong. It could be a bug, a security vulnerability, or a code smell.</p><p>You can view Kai&rsquo;s input as a snapshot of code at a particular point in time,
+and the incidents associated with it. It&rsquo;s Kai&rsquo;s job to use these incidents and
+generate <strong>solutions</strong> for them. Solutions are generated as a part of a
+highly-configurable pipeline, consisting of:</p><ul><li><strong>Solution Detectors</strong>: Classify incidents as unsolved, solved, or new.</li><li><strong>Solution Producers</strong>: Generate a solution for a solved incident.</li><li><strong>Solution Consumers</strong>: Turn the solution into something that an LLM can use.</li></ul><h2 id=solution-detection>Solution Detection</h2><p>At a fundamental level, the job of a solution detector is to classify which
+incidents are unsolved, solved, or new. It&rsquo;s given the old and new Report
+objects, as well as references to the git repo before and after the changes.
+They then perform their specific detection algorithm and spit out the classified
+incidents.</p><p>Currently, there are two types of detectors:</p><ul><li><strong>naive</strong>: Incidents are considered “the same” if everything matches.</li><li><strong>line_match</strong>: Incidents on different lines that are merely moved or can be
+matched to some other area of the AST are considered the same as well.</li></ul><p>Returning to our hypothetical job at Bloopify Solutions, let&rsquo;s see what the
+database of incidents looks like after loading the project before fixing the io issue:</p><p><img src=./database_before_io_fix.png alt="The database before fixing the io issue"></p><p>This is exactly what we expect. The report has been loaded successfully, and
+there are no solutions attached to the incidents. Now, let&rsquo;s see what it looks
+like after loading the project after fixing the io issue with the <code>line_match</code>
+solution detector:</p><p><img src=./database_after_io_fix.png alt="The database after fixing the io issue"></p><p>Kai has correctly identified that the io issue has been fixed and marked both
+incidents as solved. The logging issue remains unsolved. (Even though it was on
+a different line!)</p><p>Now that we&rsquo;ve seen Kai correctly mark which incidents are solved, let&rsquo;s see how
+it produces solutions.</p><h3 id=solution-producers>Solution Producers</h3><p>Solution producers take an incident that&rsquo;s been solved and generate a solution.
+Solutions are stored in Kai as flexible JSON, allowing for growth as the
+application evolves. A user can opt into and out of different solution
+detectors, producers, and consumers very fluidly, leaving maximum
+configurability for how we handle it on the table.</p><p>Currently, there are two types of producers:</p><ul><li><strong>text_only</strong>: The solution only contains a diff of the source code from the
+original to the updated version.</li><li><strong>llm_lazy</strong>: The same as text_only as well as the solution is earmarked for
+LLM summary generation. LLM summary is the generated only when the solution is
+needed, i.e. lazily.</li></ul><p>Let&rsquo;s take a look at the solutions generated by Kai for one of the incidents
+of the io issue:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-json data-lang=json><span style=display:flex><span>{
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;uri&#34;</span>: <span style=color:#e6db74>&#34;file:///opt/input/source/src/main/java/net/jsussman/ioedict/App.java&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;generated_at&#34;</span>: <span style=color:#e6db74>&#34;2024-08-22T17:35:31.979627&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;file_diff&#34;</span>: <span style=color:#e6db74>&#34;diff --git ... rest of diff here ...&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;repo_diff&#34;</span>: <span style=color:#66d9ef>null</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;original_code&#34;</span>: <span style=color:#e6db74>&#34;... full original code here ...&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;updated_code&#34;</span>: <span style=color:#e6db74>&#34;... full updated code here ...&#34;</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;llm_summary_generated&#34;</span>: <span style=color:#66d9ef>false</span>,
+</span></span><span style=display:flex><span>  <span style=color:#f92672>&#34;llm_summary&#34;</span>: <span style=color:#66d9ef>null</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>We can see that the solution contains a variety of information, including the
+diff between the old and new code. Additionally, since we selected the
+<code>llm_lazy</code> producer, the solution is earmarked for LLM summary generation (note
+that <code>llm_summary_generated</code> is <code>false</code> and not <code>null</code>).</p><p>This is fantastic. We have a solution for the io issue that we can use to
+generate solutions to future incidents of this problem. Now, let&rsquo;s see how we
+can do that.</p><h3 id=solution-consumers>Solution Consumers</h3><p>The history of solutions is stored in the database. During a migration, we can
+search this database for potential solutions to our problem. Once the solution
+is found, we consume it by turning it into something that an LLM can use. Right
+now, all producers take in a solution and build a string that can be pasted into
+the prompt.</p><p>Additionally, consumers can perform additional post-processing work once a
+solution is ready to be used. This is so that we only have to do as much work as
+we need; we don&rsquo;t want to hammer our LLM API endpoints.</p><blockquote><p>It&rsquo;s also through this mechanism that we can implement the next phase of
+Kai, so stay tuned!.</p></blockquote><p>Going back to our migration at Bloopify Solutions, let&rsquo;s say we have this
+separate application:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> io.konveyor.filer;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.File;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.FileInputStream;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.FileOutputStream;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.IOException;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>App</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>    File sourceDir <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> File(<span style=color:#e6db74>&#34;source_directory&#34;</span>);
+</span></span><span style=display:flex><span>    File destDir <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> File(<span style=color:#e6db74>&#34;destination_directory&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>      copyDirectoryLegacyIO(sourceDir, destDir);
+</span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Directory copied successfully using legacy I/O.&#34;</span>);
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (IOException e) {
+</span></span><span style=display:flex><span>      e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>copyDirectoryLegacyIO</span>(File source, File destination) <span style=color:#66d9ef>throws</span> IOException {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (source.<span style=color:#a6e22e>isDirectory</span>()) {
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> (<span style=color:#f92672>!</span>destination.<span style=color:#a6e22e>exists</span>()) {
+</span></span><span style=display:flex><span>        destination.<span style=color:#a6e22e>mkdirs</span>(); <span style=color:#75715e>// Create destination directory if it doesn&#39;t exist</span>
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>      String<span style=color:#f92672>[]</span> children <span style=color:#f92672>=</span> source.<span style=color:#a6e22e>list</span>();
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> (children <span style=color:#f92672>!=</span> <span style=color:#66d9ef>null</span>) {
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>for</span> (String child : children) {
+</span></span><span style=display:flex><span>          copyDirectoryLegacyIO(<span style=color:#66d9ef>new</span> File(source, child), <span style=color:#66d9ef>new</span> File(destination, child));
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>else</span> {
+</span></span><span style=display:flex><span>      copyFileLegacyIO(source, destination);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>private</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>copyFileLegacyIO</span>(File source, File destination) <span style=color:#66d9ef>throws</span> IOException {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> (FileInputStream in <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> FileInputStream(source);
+</span></span><span style=display:flex><span>        FileOutputStream out <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> FileOutputStream(destination)) {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>byte</span><span style=color:#f92672>[]</span> buffer <span style=color:#f92672>=</span> <span style=color:#66d9ef>new</span> <span style=color:#66d9ef>byte</span><span style=color:#f92672>[</span>1024<span style=color:#f92672>]</span>;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>int</span> bytesRead;
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>while</span> ((bytesRead <span style=color:#f92672>=</span> in.<span style=color:#a6e22e>read</span>(buffer)) <span style=color:#f92672>!=</span> <span style=color:#f92672>-</span>1) {
+</span></span><span style=display:flex><span>        out.<span style=color:#a6e22e>write</span>(buffer, 0, bytesRead);
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Konveyor comes back to us with the following report (get ready for a doozy of a report):</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- <span style=color:#f92672>name</span>: <span style=color:#ae81ff>kai/blog-post</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Rules focused on demonstrating the capabilities of Kai</span>
+</span></span><span style=display:flex><span>  <span style=color:#f92672>violations</span>:
+</span></span><span style=display:flex><span>    <span style=color:#f92672>blog-post-demo-0001</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid old-school input/output</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>incidents</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>10</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>io.konveyor.filer</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>11</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>io.konveyor.filer</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>29</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>copyDirectoryLegacyIO</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>io.konveyor.filer</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>38</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>copyFileLegacyIO</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>io.konveyor.filer</span>
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Legacy I/O should be avoided. Consider using NIO (java.nio) instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>39</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Constructor</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>copyFileLegacyIO</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>io.konveyor.filer</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span><span style=display:flex><span>    <span style=color:#f92672>blog-post-demo-0002</span>:
+</span></span><span style=display:flex><span>      <span style=color:#f92672>description</span>: <span style=color:#ae81ff>Avoid standard logging</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>category</span>: <span style=color:#ae81ff>mandatory</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>incidents</span>:
+</span></span><span style=display:flex><span>      - <span style=color:#f92672>uri</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>message</span>: <span style=color:#ae81ff>Standard logging should be avoided. Consider using SLF4J instead.</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>codeSnip</span>: <span style=color:#75715e># ... code snippet here ...</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>lineNumber</span>: <span style=color:#ae81ff>15</span>
+</span></span><span style=display:flex><span>        <span style=color:#f92672>variables</span>:
+</span></span><span style=display:flex><span>          <span style=color:#f92672>file</span>: <span style=color:#ae81ff>file:///opt/input/source/src/main/java/io/konveyor/filer/App.java</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>kind</span>: <span style=color:#ae81ff>Method</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>name</span>: <span style=color:#ae81ff>main</span>
+</span></span><span style=display:flex><span>          <span style=color:#f92672>package</span>: <span style=color:#ae81ff>io.konveyor.filer</span>
+</span></span><span style=display:flex><span>      <span style=color:#f92672>effort</span>: <span style=color:#ae81ff>5</span>
+</span></span></code></pre></div><p>Ouch! Migrating this by hand would certainly be a pain. But now, Kai is loaded
+with examples of how to fix these issues. Let&rsquo;s make a request to Kai to
+generate a solution for the io issue. First, it generates the LLM summary for
+the solutions it&rsquo;s using:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-md data-lang=md><span style=display:flex><span><span style=color:#75715e>## Reasoning
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>1.</span> <span style=font-weight:700>**Identify the problem**</span>: The incident report states that legacy I/O should be avoided and NIO should be used instead. The code in question is using Java&#39;s legacy I/O classes <span style=color:#e6db74>`FileInputStream`</span> and <span style=color:#e6db74>`FileOutputStream`</span> to read and write files.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>2.</span> <span style=font-weight:700>**Understand the solution**</span>: The solution provided uses the <span style=color:#e6db74>`java.nio`</span> package, specifically the <span style=color:#e6db74>`Files`</span> class, to copy the contents of one file to another. This is a more modern and efficient way to handle I/O operations.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>3.</span> <span style=font-weight:700>**Implement the solution**</span>: To implement this solution, we first import the necessary classes from the <span style=color:#e6db74>`java.nio.file`</span> package. We then replace the <span style=color:#e6db74>`FileInputStream`</span> and <span style=color:#e6db74>`FileOutputStream`</span> with the <span style=color:#e6db74>`Paths`</span> and <span style=color:#e6db74>`Files`</span> classes. The <span style=color:#e6db74>`Paths.get()`</span> method is used to get the file paths, and the <span style=color:#e6db74>`Files.copy()`</span> method is used to copy the contents of the source file to the destination file.
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>## Additional Information
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span>The <span style=color:#e6db74>`Files.copy()`</span> method throws a <span style=color:#e6db74>`IOException`</span> if an I/O error occurs, so we wrap it in a try-catch block to handle this exception. This is similar to how the original code handles exceptions thrown by the <span style=color:#e6db74>`read()`</span> method of the <span style=color:#e6db74>`FileInputStream`</span>. 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>The <span style=color:#e6db74>`Files`</span> class also provides other useful methods for working with files, such as <span style=color:#e6db74>`Files.exists()`</span>, <span style=color:#e6db74>`Files.delete()`</span>, and <span style=color:#e6db74>`Files.move()`</span>, which can be used for various file management tasks. 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>It&#39;s also worth noting that the <span style=color:#e6db74>`Files.copy()`</span> method can be used to copy a file to a new location, or to replace an existing file. If the destination file already exists, it will be deleted before the copy operation begins. If you want to keep the existing file and append to it instead, you can use the <span style=color:#e6db74>`Files.newOutputStream()`</span> method with the <span style=color:#e6db74>`APPEND`</span> option.
+</span></span></code></pre></div><p>And it comes back with the following code:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-java data-lang=java><span style=display:flex><span><span style=color:#f92672>package</span> io.konveyor.filer;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.io.IOException;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.nio.file.*;
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> java.nio.file.attribute.BasicFileAttributes;
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>public</span> <span style=color:#66d9ef>class</span> <span style=color:#a6e22e>App</span> {
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>main</span>(String<span style=color:#f92672>[]</span> args) {
+</span></span><span style=display:flex><span>    Path sourceDir <span style=color:#f92672>=</span> Paths.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;source_directory&#34;</span>);
+</span></span><span style=display:flex><span>    Path destDir <span style=color:#f92672>=</span> Paths.<span style=color:#a6e22e>get</span>(<span style=color:#e6db74>&#34;destination_directory&#34;</span>);
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>try</span> {
+</span></span><span style=display:flex><span>      copyDirectoryNIO(sourceDir, destDir);
+</span></span><span style=display:flex><span>      System.<span style=color:#a6e22e>out</span>.<span style=color:#a6e22e>println</span>(<span style=color:#e6db74>&#34;Directory copied successfully using NIO.&#34;</span>);
+</span></span><span style=display:flex><span>    } <span style=color:#66d9ef>catch</span> (IOException e) {
+</span></span><span style=display:flex><span>      e.<span style=color:#a6e22e>printStackTrace</span>();
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>  <span style=color:#66d9ef>public</span> <span style=color:#66d9ef>static</span> <span style=color:#66d9ef>void</span> <span style=color:#a6e22e>copyDirectoryNIO</span>(Path source, Path destination) <span style=color:#66d9ef>throws</span> IOException {
+</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> (Files.<span style=color:#a6e22e>notExists</span>(destination)) {
+</span></span><span style=display:flex><span>      Files.<span style=color:#a6e22e>createDirectories</span>(destination);
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    Files.<span style=color:#a6e22e>walkFileTree</span>(source, <span style=color:#66d9ef>new</span> SimpleFileVisitor<span style=color:#f92672>&lt;</span>Path<span style=color:#f92672>&gt;</span>() {
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>public</span> FileVisitResult <span style=color:#a6e22e>visitFile</span>(Path file, BasicFileAttributes attrs) <span style=color:#66d9ef>throws</span> IOException {
+</span></span><span style=display:flex><span>        Path destFile <span style=color:#f92672>=</span> destination.<span style=color:#a6e22e>resolve</span>(source.<span style=color:#a6e22e>relativize</span>(file));
+</span></span><span style=display:flex><span>        Files.<span style=color:#a6e22e>copy</span>(file, destFile, StandardCopyOption.<span style=color:#a6e22e>REPLACE_EXISTING</span>);
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> FileVisitResult.<span style=color:#a6e22e>CONTINUE</span>;
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>      <span style=color:#a6e22e>@Override</span>
+</span></span><span style=display:flex><span>      <span style=color:#66d9ef>public</span> FileVisitResult <span style=color:#a6e22e>preVisitDirectory</span>(Path dir, BasicFileAttributes attrs) <span style=color:#66d9ef>throws</span> IOException {
+</span></span><span style=display:flex><span>        Path destDir <span style=color:#f92672>=</span> destination.<span style=color:#a6e22e>resolve</span>(source.<span style=color:#a6e22e>relativize</span>(dir));
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>if</span> (Files.<span style=color:#a6e22e>notExists</span>(destDir)) {
+</span></span><span style=display:flex><span>          Files.<span style=color:#a6e22e>createDirectories</span>(destDir);
+</span></span><span style=display:flex><span>        }
+</span></span><span style=display:flex><span>        <span style=color:#66d9ef>return</span> FileVisitResult.<span style=color:#a6e22e>CONTINUE</span>;
+</span></span><span style=display:flex><span>      }
+</span></span><span style=display:flex><span>    });
+</span></span><span style=display:flex><span>  }
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>This is fantastic! We have a solution for the io issue for this entirely
+separate application, based on the history of solutions Kai has generated.</p><h2 id=conclusion>Conclusion</h2><p>In conclusion, Kai is a powerful tool that leverages Konveyor&rsquo;s analysis reports
+to generate solutions for common problems in codebases. By using pointed,
+specific data, Kai can focus its generative power on the specific problems that
+need to be solved. This allows developers to write code more efficiently and
+modernize their applications with confidence.</p><p>I hope this deep dive into Kai&rsquo;s incident storage has given you a better
+understanding of how Kai operates and how it can be used to improve the
+generation of results. If you have any questions or would like to learn more
+about Kai, feel free to reach out to me on
+<a href=https://www.GitHub.com/jonahsussman/>GitHub</a> or even contribute to the project
+at <a href=https://www.github.com/konveyor/kai/>Konveyor&rsquo;s GitHub</a>.</p><ul class="list-unstyled d-flex justify-content-between align-items-center mb-0 pt-5"><li><a href=/blog/2024/kai-roadmap-2024/ aria-label="Previous - Konveyor AI (Kai) Roadmap 2024" class="btn btn-primary"><span class=me-1>←</span>Previous</a></li><li><a class="btn btn-primary disabled">Next<span class=ms-1>→</span></a></li></ul></div></main></div></div><footer class=footer-container><div class=footer-inner-top><p>©2025 the Konveyor authors</p><ul class=footer-links><li><a href=/privacy>Privacy Statement</a></li><li><a href=https://www.linuxfoundation.org/legal/trademark-usage target=_blank>Trademark</a></li></ul><ul class=footer-links><li><a href=https://twitter.com/Konveyor_io target=_blank><i class="fa-brands fa-x-twitter"></i></a></li><li><a href=https://www.youtube.com/channel/UCQ3pW3gSBeCy0tj1J0ub2bw target=_blank><i class="fa-brands fa-youtube"></i></a></li><li><a href="https://www.linkedin.com/company/konveyor-community/?viewAsMember=true" target=_blank><i class="fa-brands fa-linkedin"></i></a></li><li><a href=https://www.konveyor.io/slack/ target=_blank><i class="fa-brands fa-slack"></i></a></li><li><a href=https://github.com/konveyor target=_blank><i class="fa-brands fa-github"></i></a></li></ul></div><div class=footer-inner-bottom><div><div class=konveyor-logo-container><img src=/images/Konveyor-logo-color-wh.svg alt="konveyor logo"></div><p>The Konveyor community helps modernize applications by providing open source tools.</p></div><div><div class=cncf-logo-container><img src=/images/cncf-logo-white.svg alt="cncf logo"></div><p>We are a Cloud Native Computing Foundation sandbox project.</p></div></div><p class=text-center>The Linux Foundation® (TLF) has registered trademarks and uses trademarks. For a list of TLF trademarks, see <a href=https://www.linuxfoundation.org/legal/trademark-usage target=_blank>Trademark Usage.</a></p></footer></div><script src=/js/main.min.8bdc707530d61dee3a6fd659f8a422c05d2e2319377a8710175451ca21fa83b0.js integrity="sha256-i9xwdTDWHe46b9ZZ+KQiwF0uIxk3eocQF1RRyiH6g7A=" crossorigin=anonymous></script><script defer src=/js/click-to-copy.min.73478a7d4807698aed7e355eb23f9890ca18fea3158604c8471746d046702bad.js integrity="sha256-c0eKfUgHaYrtfjVesj+YkMoY/qMVhgTIRxdG0EZwK60=" crossorigin=anonymous></script><script src=/js/tabpane-persist.js></script><noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TKPDMS3" height=0 width=0 style=display:none;visibility:hidden></iframe></noscript></body></html>

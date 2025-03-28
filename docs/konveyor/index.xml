@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Konveyor</title><link>http://konveyor.io/docs/konveyor/</link><description>Recent content on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Thu, 20 Jul 2023 00:00:00 +0000</lastBuildDate><atom:link href="http://konveyor.io/docs/konveyor/index.xml" rel="self" type="application/rss+xml"/><item><title>Contributing To Konveyor</title><link>http://konveyor.io/docs/konveyor/contributetokonveyor/</link><pubDate>Thu, 20 Jul 2023 00:00:00 +0000</pubDate><guid>http://konveyor.io/docs/konveyor/contributetokonveyor/</guid><description>&lt;h1 id="contributing-guide">Contributing Guide&lt;/h1>
+&lt;p>Welcome! We are glad that you want to contribute to our project! 💖&lt;/p>
+&lt;p>The project&amp;rsquo;s vision can be explored in detail in this enhancement: &lt;a href="https://github.com/konveyor/enhancements/tree/master/enhancements/unified_experience">Unified Experience&lt;/a>. Konveyor follows a collaborative and community-driven approach and the project encourages contributions from individuals and organizations alike. Konveyor&amp;rsquo;s &lt;a href="https://github.com/konveyor/community/blob/main/Charter.md">charter&lt;/a> outlines the project&amp;rsquo;s values, guidelines, and expectations for community members, making it easier for new contributors to get involved.&lt;/p>
+&lt;p>As you get started, you are in the best position to give us feedback on areas of
+our project that we need help with including:&lt;/p></description></item><item><title>Administrator view tasks</title><link>http://konveyor.io/docs/konveyor/admintasks/</link><pubDate>Tue, 28 Jun 2022 15:16:01 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/admintasks/</guid><description>&lt;p>The administrator view is intended to be used by administrators to set up the Tackle instance environment.
+&lt;img src="http://konveyor.io/Tackle2/Views/AdminMenu.png" alt="">&lt;/p>
+&lt;h2 id="credentials">Credentials&lt;/h2>
+&lt;p>This management module enables administrators to create and manage credentials for access to private repositories. It also allows for the architects to assign the credentials to applications without knowing their contents. Key credential attributes to have before starting the procedure include:&lt;/p>
+&lt;ul>
+&lt;li>Name&lt;/li>
+&lt;li>Description (optional)&lt;/li>
+&lt;li>Type (Souce control, Maven settings file, Proxy)&lt;/li>
+&lt;li>Created by&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Important&lt;/strong> There are three types of credentials. Follow the procedure below for the type being configured.&lt;/p></description></item><item><title>Views</title><link>http://konveyor.io/docs/konveyor/views/</link><pubDate>Tue, 14 Jun 2022 14:59:53 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/views/</guid><description>&lt;p>The latest version of Tackle has the Developers view and the new Architects view to support the three main roles of users:&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;strong>Administrators:&lt;/strong> Has access to some application-wide configuration parameters that other users can consume but not change or browse.&lt;/p>
+&lt;p>Example actions: Define Git credentials, Maven settings, .xml files.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;strong>Architects:&lt;/strong> Often the technical leads for the migration project that can create and modify applications and information related to it. The Architects do not need to have access to sensitive information, but can consume it.&lt;/p></description></item><item><title>Seeding Instances</title><link>http://konveyor.io/docs/konveyor/instances/</link><pubDate>Tue, 14 Jun 2022 14:59:46 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/instances/</guid><description>&lt;p>Tackle instances have key parameters that are configured in the Controls window prior to migration by the project architect and can be added and edited as needed.&lt;br>
+&lt;img src="http://konveyor.io/Tackle2/Instances/ControlsMain.png" alt="">
+These parameters define applications and individuals, teams, verticals or areas within an organization affected or participating in the migration.&lt;/p>
+&lt;ul>
+&lt;li>Stakeholders&lt;/li>
+&lt;li>Stakeholder groups&lt;/li>
+&lt;li>Job functions&lt;/li>
+&lt;li>Business services&lt;/li>
+&lt;li>Tag types&lt;/li>
+&lt;li>Tags&lt;/li>
+&lt;/ul>
+&lt;h2 id="seeding-tackle-instance">Seeding Tackle instance&lt;/h2>
+&lt;p>The steps to creating and configuring a Tackle instance can be performed in any order, but the suggested order below is the most efficient for creating stakeholders and tags.&lt;/p></description></item><item><title>Installing Konveyor</title><link>http://konveyor.io/docs/konveyor/installation/</link><pubDate>Tue, 14 Jun 2022 14:59:30 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/installation/</guid><description>&lt;p>Follow the steps below to provision the minikube cluster and install Konveyor.&lt;/p>
+&lt;h2 id="provisioning-minikube">Provisioning Minikube&lt;/h2>
+&lt;p>Follow the steps below to provision minikube for single users deploying Konveyor on a workstation. These steps will configure minikube and enable:&lt;/p>
+&lt;ul>
+&lt;li>Ingress so the Konveyor tool can publish outside of the Kubernetes cluster.&lt;/li>
+&lt;li>Operator lifecycle manager (OLM) addon.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Procedure&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Provision the minikube cluster with these recommended parameters. Replace &lt;code>&amp;lt;profile name&amp;gt;&lt;/code> with your choice of minikube profile name.&lt;/li>
+&lt;/ol>
+&lt;pre tabindex="0">&lt;code>[user@user ~]$ minikube start --memory=10g -p &amp;lt;profile name&amp;gt;
+&lt;/code>&lt;/pre>&lt;ol start="2">
+&lt;li>Enable the ingress addon.&lt;/li>
+&lt;/ol>
+&lt;pre tabindex="0">&lt;code>[user@user ~]$ minikube addons enable ingress -p &amp;lt;profile name&amp;gt;
+&lt;/code>&lt;/pre>&lt;ol start="3">
+&lt;li>Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.&lt;/li>
+&lt;/ol>
+&lt;pre tabindex="0">&lt;code>curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.25.0/install.sh | bash -s v0.25.0
+&lt;/code>&lt;/pre>&lt;h2 id="installing-konveyor-operator">Installing Konveyor Operator&lt;/h2>
+&lt;p>Operators are a structural layer that manages resources deployed on Kubernetes (database, front end, back end) to automatically create a Konveyor instance instead of doing it manually.&lt;/p></description></item><item><title>Assessing and analyzing applications</title><link>http://konveyor.io/docs/konveyor/assessanalyze/</link><pubDate>Tue, 14 Jun 2022 14:59:11 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/assessanalyze/</guid><description>&lt;p>Tackle core functions are assessing and analyzing the applications for migration and are performed on the Application inventory page.
+&lt;img src="http://konveyor.io/Tackle2/AppAssessAnalyze/ApplicationInventory.png" alt="">&lt;/p>
+&lt;h2 id="assessing-applications">Assessing applications&lt;/h2>
+&lt;p>Follow the steps below to facilitate discussion of application migration.&lt;/p>
+&lt;p>&lt;strong>Procedure&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Click &lt;strong>Application inventory&lt;/strong> in the left menu in the &lt;strong>Development&lt;/strong> view.
+&lt;img src="http://konveyor.io/Tackle2/AppAssessAnalyze/AnalysisSelect.png" alt="">&lt;/li>
+&lt;li>Click the checkbox to the left of the application being assessed.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Note:&lt;/strong> Only one application can be assessed at a time.&lt;/p>
+&lt;ol start="3">
+&lt;li>Click the &lt;strong>Assess&lt;/strong> button.
+&lt;img src="http://konveyor.io/Tackle2/AppAssessAnalyze/AssessDetails.png" alt="">&lt;/li>
+&lt;li>Select the &lt;strong>Stakeholders&lt;/strong> and &lt;strong>Stakeholder groups&lt;/strong> from the drop-down lists to track who contributed to the assessment for future reference.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;strong>Note:&lt;/strong> Additional list options can be added in the Stakeholder Groups or Stakeholders tab on the Controls page in the Developer view.&lt;/p></description></item><item><title>Adding applications</title><link>http://konveyor.io/docs/konveyor/addapps/</link><pubDate>Tue, 14 Jun 2022 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/addapps/</guid><description>&lt;p>Applications can be added to Tackle by creating new applications from scratch manually or by importing them.
+&lt;img src="http://konveyor.io/Tackle2/AddingApps/NewAppBasic.png" alt="">
+Tackle applications are defined by manually entered and pre-defined attributes:&lt;/p>
+&lt;ul>
+&lt;li>Name (manual)&lt;/li>
+&lt;li>Description (manual)&lt;/li>
+&lt;li>Business service (pre-defined)&lt;/li>
+&lt;li>Tags (pre-defined)&lt;/li>
+&lt;li>Source code&lt;/li>
+&lt;li>Binary&lt;/li>
+&lt;/ul>
+&lt;h2 id="creating-a-new-application">Creating a new application&lt;/h2>
+&lt;p>Follow the steps below to add a new application to the inventory for assessment and analysis.&lt;/p>
+&lt;p>&lt;strong>Note:&lt;/strong> Before starting this procedure, it is helpful to set up business services, check tags and tag types, and create additions as needed.&lt;/p></description></item></channel></rss>
