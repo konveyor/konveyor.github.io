@@ -14,7 +14,15 @@ jobs:
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive)
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
+      - name: Install PostCSS dependencies
+        run: npm install
+        
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
