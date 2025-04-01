@@ -4,3 +4,7 @@
 [build.environment]
 GO_VERSION = "1.22"
 HUGO_VERSION = "0.145.0"
+
+[build]
+publish = "public"
+command = "hugo --buildFuture"
