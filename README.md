@@ -76,7 +76,10 @@ The fields are:
 - **tags** — One tag per line, titlecase. Less is more with tags. These are only used to link to related posts. They are _not_ SEO keywords. Do not attempt to come up with as many tags as you can think of and all of their synonyms. No, seriously, don't do it.
 - **title** — Title of the post.
 
-### Announcements
+### Announcements/Banners
+
+> This feature is inspired by [OpenTelemetry announcements](https://opentelemetry.io/docs/contributing/announcements/)
+
 An announcement is a _regular Hugo page_ contained under the `announcements` section. This means that we leverage Hugo's builtin handling of page dates (future or expired) and weights to automatically show or hide banners depending on the build date and determine banner ordering.
 
 > Announcements are currently used as banners only.
