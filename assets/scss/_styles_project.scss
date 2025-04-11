@@ -344,7 +344,7 @@
     padding: 0 1rem;
     @include media-breakpoint-down(md) { 
         display: flex;
-        justify-self: center;
+        justify-content: center;
         padding: 0.5rem;
     }
     img {
