@@ -113,10 +113,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    @include media-breakpoint-down(sm) { 
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .text-center {
     text-align: center;
+}
+
+.text-center--mobile {
+    @include media-breakpoint-down(lg) { 
+        text-align: center;
+    }
 }
 
 .line-height-1 {
@@ -251,7 +261,7 @@
 .max-w-400px {
     max-width: 400px;
     @include media-breakpoint-down(lg) { 
-        width: 80%;
+        max-width: 100%;
     }
 }
 
@@ -287,12 +297,19 @@
     gap: 4rem;
 }
 
+.gap-3xl--mobile {
+    @include media-breakpoint-down(lg) {
+        gap: 6rem;
+    }
+}
+
 .feature-image {
     width: 500px;
     height: 300px;
     @include media-breakpoint-down(lg) { 
-        width: 80%;
+        width: 100%;
         height: auto;
+        padding-bottom: 1rem;
     }
     img {
         width: 100%;
@@ -303,17 +320,20 @@
 
 .cncf-banner {
     max-width: fit-content;
-    padding: 2rem 7rem 1rem 7rem;
+    padding: 2rem 7rem;
     background-color: #AC945D;
     color: #fff;
     margin: 0 auto;
+    text-align: center;
     border-radius: 10px;
     @include media-breakpoint-down(md) { 
         padding: 1rem 2rem;
+        max-width: 100%;
     }
 
     & p {
         font-size: 1.5rem;
+        margin-bottom: 0px;
         @include media-breakpoint-down(md) { 
             font-size: 1rem;
         }
@@ -322,10 +342,15 @@
 
 .cncf-banner-image {
     padding: 0 1rem;
+    @include media-breakpoint-down(md) { 
+        display: flex;
+        justify-self: center;
+        padding: 0.5rem;
+    }
     img {
         width: 300px;
         @include media-breakpoint-down(md) { 
-            width: 150px;
+            width: 200px;
         }
     }
 }
@@ -450,6 +475,9 @@
 .cta-group {
     display: flex;
     gap: 0.5rem;
+    @include media-breakpoint-down(lg) { 
+        justify-content: center;
+    }
     @media (max-width: 400px) {
         flex-direction: column;
     }
@@ -484,15 +512,16 @@
     }
 }
 
-.sub-menu {
-    @include media-breakpoint-down(sm) { 
-        margin-right: 55px;
-    }
-}
-
 .td-navbar .navbar-nav {
     @include media-breakpoint-down(lg) { 
-        padding-bottom: 3rem;
+        position: absolute;
+        left: 0; 
+        right: 0; 
+        margin-inline: auto; 
+        width: fit-content;
+        z-index: 10000;
+        overflow-x: unset;
+        font-size: 0.8rem;
     }
 }
 
