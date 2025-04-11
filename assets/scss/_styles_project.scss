@@ -531,6 +531,12 @@
     }
 }
 
+.td-sidebar {
+    @include media-breakpoint-down(lg) { 
+        padding-top: 1rem;
+    }
+}
+
 .fancy {
     line-height: 0.5;
     text-align: center;
