@@ -30,11 +30,11 @@
       {{ $activeMenu := $p.HasMenuCurrent "main" . -}}
         <li class="nav-item sub-menu{{if $activeMenu }} active{{end}} dropdown">
           <div class="dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" data-bs-display="static" aria-haspopup="true" aria-expanded="false">
                 {{ .Pre }}
                 <span>{{ .Name }}</span>
             </a>
-            <ul class="dropdown-menu dropdown-menu-end -bg-primary">
+            <ul class="dropdown-menu dropdown-menu-lg-end -bg-primary">
                 {{ range .Children }}
                 <li><a class="dropdown-item" href="{{ .URL }}">{{ .Name }}</a></li>
                 {{ end }}

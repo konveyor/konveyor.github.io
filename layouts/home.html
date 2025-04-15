@@ -14,7 +14,7 @@
   </div>
 </section>
 <h2 class="fancy text-center font-medium -text-primary"><span>Key components of Konveyor</span></h2>
-<section class="max-w-1000px m-auto">
+<section class="max-w-1000px m-auto text-center--mobile">
     {{ range $index, $component := site.Params.components }}
             {{ if not (modBool $index 2) }} 
                 <div class="flex flex-col--mobile flex-reverse align-center--mobile space-between py-120">
@@ -61,7 +61,7 @@
 </section>
 <section class="max-w-1000px m-auto">
     <h2 class="fancy mb-5 -text-primary text-center"><span>Recent Posts</span></h2>
-    <div class="flex flex-wrap gap-sm m-auto space-between--tablet">
+    <div class="flex flex-wrap gap-sm gap-3xl--mobile m-auto space-between--tablet">
         {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
             {{ if .Params.featured }}
                 <div>
