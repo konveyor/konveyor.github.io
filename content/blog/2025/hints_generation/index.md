@@ -1,8 +1,6 @@
 ---
 author: SavithaRaghunathan
 date: 2025-07-01
-description: >-
-  A behind-the-scenes look at how we turned migration scenarios examples,from JMS MDBs to Spring Boot upgrades,into a reusable GenAI component. You’ll see our R&D cycle in action: curating flawless before/after code, extracting AST diffs, crafting LLM prompts, and validating hints. Discover how we distilled those experiments into creating reusable hint that powers similar migration scenarios.
 featured: true
 tags:
     - Konveyor
