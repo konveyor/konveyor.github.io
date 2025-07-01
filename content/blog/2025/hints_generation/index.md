@@ -2,7 +2,7 @@
 author: SavithaRaghunathan
 date: 2025-07-01
 description: >-
-  A behind-the-scenes look at how we turned migration scenarios examples—from JMS MDBs to Spring Boot upgrades—into a reusable GenAI component. You’ll see our R&D cycle in action: curating flawless before/after code, extracting AST diffs, crafting LLM prompts, and validating hints. Discover how we distilled those experiments into creating reusable hint that powers similar migration scenarios.
+  A behind-the-scenes look at how we turned migration scenarios examples,from JMS MDBs to Spring Boot upgrades,into a reusable GenAI component. You’ll see our R&D cycle in action: curating flawless before/after code, extracting AST diffs, crafting LLM prompts, and validating hints. Discover how we distilled those experiments into creating reusable hint that powers similar migration scenarios.
 featured: true
 tags:
     - Konveyor
@@ -15,12 +15,12 @@ title: "From “Good Examples” to a Reusable Hint for App Modernization"
 
 **Author**: [Savitha Raghunathan](https://www.linkedin.com/in/savitharaghunathan) ([GitHub](https://github.com/savitharaghunathan))
 
-For the past several weeks, I’ve been running through a series of migration scenarios—everything from JMS-based Message-Driven Beans to Quarkus Reactive Messaging, JDK 8 apps to Java 17, and Spring Boot 2 services to Spring Boot 3 with Jakarta EE. Each scenario is its own mini experiment. I curated a handful of flawless before/after code pairs, extracted their AST diffs, crafted a focused LLM prompt, then used that to get hints.
+For the past several weeks, I’ve been running through a series of migration scenarios,everything from JMS-based Message-Driven Beans to Quarkus Reactive Messaging, JDK 8 apps to Java 17, and Spring Boot 2 services to Spring Boot 3 with Jakarta EE. Each scenario is its own mini experiment. I curated a handful of flawless before/after code pairs, extracted their AST diffs, crafted a focused LLM prompt, then used that to get hints.
 
-The above loop—_“design hypothesis, feed the model examples, validate against real code, tweak prompts, repeat”_—is the core of building Kai’s Generative AI hint component. It’s not “build feature X” so much as “run experiments until the model reliably reproduces our hard-won migrations.” In the sections below, you’ll shadow me through one of these R&D cycles: spinning up a JMS→Quarkus scenario, framing the perfect prompt, and ultimately capturing the distilled insight into a reusable hint.
+The above loop: _“design hypothesis, feed the model examples, validate against real code, tweak prompts, repeat”_,is the core of building Kai’s Generative AI hint component. It’s not “build feature X” so much as “run experiments until the model reliably reproduces our hard-won migrations.” In the sections below, you’ll shadow me through one of these R&D cycles: spinning up a JMS→Quarkus scenario, framing the perfect prompt, and ultimately capturing the distilled insight into a reusable hint.
 
 ![Hints pipeline header](header_hints.png)
-_Note: "Header image generated with AI"_
+_Note: "Above image generated with AI"_
 
 As a part of Kai’s future roadmap, there is a huge emphasis on the **Solution Server**—a component designed to use the solved examples from previous successful migrations and apply that knowledge in similar new scenarios. In Konveyor’s migration workflows, migrators/architects write rules that identify a problem (for example, “this class uses JMS”), but these rules often lack the extra contextual information developers need to fix it efficiently. A migration rule must do two things:
 
@@ -135,7 +135,7 @@ With this hint in hand, the same recipe could be reused for other JMS-based issu
 
 ## 2. Applying the Hint 
 Once the hint was finalized, the next step was to test it with other models and examples.
-The below example is uses the above generated hint and the model - llama-3.1-8B-Instruct
+The below example is uses the above generated hint and the model, `llama-3.1-8B-Instruct`.
 
 2.1. **Before / After Example (JMS → Quarkus)**
 
