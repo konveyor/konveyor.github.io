@@ -25,7 +25,7 @@ As a part of Kai’s future roadmap, there is a huge emphasis on the **Solution 
 1. **Identify a problem**  
 2. **Provide enough context** so developers know exactly how to fix it
 
-This research addresses that second part by showing how to extract and generalize migration insights from a small set of solved examples. Migrating a Java EE codebase can derail timelines if every class needs manual annotation fixes, import corrections, or tweaks. We discovered that by researching how a small set of “good example” migrations worked, then asking an LLM model to distill that insight into a single, reusable hint, we were able to migrate Java classes with far less manual intervention.
+This research addresses that second part by showing how to extract and generalize migration insights from a small set of solved examples. Migrating a Java EE codebase can derail timelines if every class needs manual annotation fixes, import corrections, or tweaks. I discovered that by researching how a small set of “good example” migrations worked, then asking an LLM model to distill that insight into a single, reusable hint, I was able to migrate Java classes with far less manual intervention.
 
 Below, I’ll walk you through the research journey, give you a taste of the prompt outline, and show concise before/after snippets. Finally, we’ll see how this generated hint produces reliable results.
 
@@ -33,9 +33,9 @@ Below, I’ll walk you through the research journey, give you a taste of the pro
 ## 1. From “Good Examples” to a Reusable Hint
 
 > **The starting point was:**  
-> “We have a handful of Java EE JMS MDBs already migrated to Quarkus and they look perfect. How do we capture that pattern and apply it across various migrations?”
+> “I have a handful of Java EE JMS MDBs already migrated to Quarkus and they look perfect. How do I capture that pattern and apply it across various migrations?”
 
-We had several “before” Java EE classes (using `@MessageDriven`, `implements MessageListener`, legacy JMS imports) and their “after” Quarkus migrations (annotated with `@Incoming("…")`, `@ApplicationScoped`, `@Transactional`, and valid MicroProfile/Jakarta imports). By studying these good examples, we aimed to use an LLM to generalize a hint that can be used in similar future migrations.
+I had several “before” Java EE classes (using `@MessageDriven`, `implements MessageListener`, legacy JMS imports) and their “after” Quarkus migrations (annotated with `@Incoming("…")`, `@ApplicationScoped`, `@Transactional`, and valid MicroProfile/Jakarta imports). By studying these good examples, I aimed to use an LLM to generalize a hint that can be used in similar future migrations.
 
 ![hints_generation](./hints_generation.png)
 
@@ -224,7 +224,7 @@ public class InventoryNotification {
 Without the hint, migration might forget the `@Transactional` or miss dropping a `javax.jms.*` import, leading to compilation issues. With the enhanced hint, the model produced a code that matched the expectations. 
 
 ## Conclusion
-By starting with a curated set of solved migrations and extracting their structural differences, we used an LLM to generate a concise, reusable hint that addresses every necessary annotation change, import swap, and configuration tweak.Using the newly generated hint  allowed us to migrate new Java EE MDBs (and similar classes) with minimal manual intervention.
+By starting with a curated set of solved migrations and extracting their structural differences, I used an LLM to generate a concise, reusable hint that addresses every necessary annotation change, import swap, and configuration tweak.Using the newly generated hint  allowed me to migrate new Java EE MDBs (and similar classes) with minimal manual intervention.
 
 If you’re interested in application modernization, AI-driven developer tools, or want to contribute to something exciting and community-led, [come join us!](https://github.com/konveyor/community/blob/main/README.md)
 
