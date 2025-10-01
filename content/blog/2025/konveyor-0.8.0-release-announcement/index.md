@@ -39,6 +39,9 @@ We've refined the user experience across the extension. The focus is on making K
 #### Agentic Workflow
 This release introduces early support for agent-driven workflows. Instead of a single suggestion at a time, Kai can now coordinate multiple steps to help resolve complex migration issues. This paves the way for richer, more automated modernization flows that still keep developers in the loop.
 
+#### IDE Extension Marketplace Release
+We're excited to announce that the Konveyor IDE extension is now available in the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=konveyor.konveyor)! 
+
 ### Platform Awareness & Asset Generation
 
 In 0.8.0, we’ve added support for Platform Awareness and Asset Generation. Platform awareness enables users to associate source and target platforms with an application in the inventory, allowing users to import and discover applications from the source platform directly. In v0.8.0, Konveyor has support for Cloud Foundry as a source platform enabling users to directly discover running applications from a Cloud Foundry instance into their application inventory.
