@@ -37,7 +37,7 @@ Check out our demo scenario for a hands-on example [here](https://github.com/kon
 We've refined the user experience across the extension. The focus is on making Kai feel lightweight and natural in the developer workflow.
 
 #### Agentic Workflow
-This release introduces early support for agent-driven workflows. Instead of a single suggestion at a time, Kai can now coordinate multiple steps to help resolve complex migration issues. After an issue has been fixed, the agentic workflow communicates with Vscode to gather diagnostics information and determine if its changes caused any new issues such as linter errors, compilation errors, etc. In the process, it makes changes across multiple files such as configuration files, build files, dependencies. It iterates on issues until either they are completely resolved or maximum iterations are reached.This paves the way for richer, more automated modernization flows that still keep developers in the loop.
+This release introduces early support for agent-driven workflows. These workflows allow Kai to leverage additional tools and IDE diagnostic information to detect and fix further problems after an initial suggestion as been applied. This paves the way for richer, more automated modernization flows that still keep developers in the loop.
 
 #### IDE Extension Marketplace Release
 We're excited to announce that the Konveyor IDE extension is now available in the [Visual Studio Code Marketplace](https://marketplace.visualstudio.com/items?itemName=konveyor.konveyor)! 
