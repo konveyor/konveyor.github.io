@@ -31,7 +31,7 @@ Konveyor AI (Kai), the AI-powered component of Konveyor, continues to evolve wit
 #### Solution server
 The new solution server acts as an institutional memory for modernization. It captures and reuses migration knowledge, so teams no longer need to start from scratch each time. This ensures more consistent, accurate, and scalable modernization guidance across projects.
 
-Check out our demo scenario for a hands-on example [here](https://github.com/konveyor/kai/blob/main/docs/scenarios/migrating_custom_library_apps_using_solution_server_short_edition/Partially_Migrated_Apps_Scenario.md).
+Check out our [demo scenario for a hands-on example](https://github.com/konveyor/kai/blob/main/docs/scenarios/migrating_custom_library_apps_using_solution_server_short_edition/Partially_Migrated_Apps_Scenario.md).
 
 #### Improved User Experience (UX)
 We've refined the user experience across the extension. The focus is on making Kai feel lightweight and natural in the developer workflow.
