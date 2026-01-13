@@ -22,7 +22,7 @@ Follow the steps below to provision minikube for single users deploying Konveyor
 ```
 3. Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.
 ```
-curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.25.0/install.sh | bash -s v0.25.0
+curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0
 
 ```
 
@@ -33,14 +33,15 @@ Follow the steps below to install the Konveyor Operator in the `my-konveyor-oper
 
 **Procedure**
 {{< tabpane >}}
-{{% tab name="Latest Release" %}}
+
+{{% tab header="Latest Release" text=true %}}
 1. Install the latest released Konveyor Operator.
 ```
-[user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-0.2/konveyor-operator.yaml
+[user@user ~]$ kubectl create -f https://operatorhub.io/install/konveyor-0.8/konveyor-operator.yaml
 ```
 This step will create the `my-konveyor-operator` namespace, catalogsource and other OLM related objects.
 {{% /tab %}}
-{{% tab name="Beta Release" %}}
+{{% tab header="Beta Release" text=true %}}
 ### Installing the beta version
 
 If you need to deploy a latest beta release build please use the below url
@@ -49,7 +50,8 @@ If you need to deploy a latest beta release build please use the below url
 [user@user ~]$ kubectl create -f https://operatorhub.io/install/beta/konveyor-operator.yaml
 ```
 {{% /tab %}}
-{{% tab name="Development" %}}
+
+{{% tab header="Development" text=true %}}
 ### Installing the latest version
 
 If you need to deploy a latest available build please follow the steps below,
@@ -102,6 +104,7 @@ spec:
 _Note: Latest builds are built nightly. It strictly for developmental purpose and not to be used in production._
 
 {{% /tab %}}
+
 {{< /tabpane >}}
 2. Verify Konveyor was installed.
 ```
