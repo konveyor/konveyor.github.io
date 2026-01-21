@@ -51,7 +51,7 @@ These parameters define applications and individuals, teams, verticals or areas 
 &lt;/code>&lt;/pre>&lt;ol start="3">
 &lt;li>Install Operator Lifecycle Manager (OLM), a tool to help manage the Operators running on your cluster.&lt;/li>
 &lt;/ol>
-&lt;pre tabindex="0">&lt;code>curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.25.0/install.sh | bash -s v0.25.0
+&lt;pre tabindex="0">&lt;code>curl -sL https://github.com/operator-framework/operator-lifecycle-manager/releases/download/v0.38.0/install.sh | bash -s v0.38.0
 &lt;/code>&lt;/pre>&lt;h2 id="installing-konveyor-operator">Installing Konveyor Operator&lt;/h2>
 &lt;p>Operators are a structural layer that manages resources deployed on Kubernetes (database, front end, back end) to automatically create a Konveyor instance instead of doing it manually.&lt;/p></description></item><item><title>Assessing and analyzing applications</title><link>http://konveyor.io/docs/konveyor/assessanalyze/</link><pubDate>Tue, 14 Jun 2022 14:59:11 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/assessanalyze/</guid><description>&lt;p>Tackle core functions are assessing and analyzing the applications for migration and are performed on the Application inventory page.
 &lt;img src="http://konveyor.io/Tackle2/AppAssessAnalyze/ApplicationInventory.png" alt="">&lt;/p>
