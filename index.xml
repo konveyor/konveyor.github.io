@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Konveyor</title><link>http://konveyor.io/</link><description>Recent content on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Wed, 01 Oct 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://konveyor.io/index.xml" rel="self" type="application/rss+xml"/><item><title>1. Collect</title><link>http://konveyor.io/docs/move2kube/tutorials/cfappstok8/1collect/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/cfappstok8/1collect/</guid><description>&lt;blockquote>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Konveyor</title><link>http://konveyor.io/</link><description>Recent content on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Mon, 15 Dec 2025 14:58:52 -0600</lastBuildDate><atom:link href="http://konveyor.io/index.xml" rel="self" type="application/rss+xml"/><item><title>1. Collect</title><link>http://konveyor.io/docs/move2kube/tutorials/cfappstok8/1collect/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://konveyor.io/docs/move2kube/tutorials/cfappstok8/1collect/</guid><description>&lt;blockquote>
 &lt;p>&lt;strong>Note:&lt;/strong> This is an optional step. If you are not familiar with Cloud Foundry or you do not want to collect information from the running app, skip to Customizing the output.&lt;/p>&lt;/blockquote>
 &lt;p>To analyze the running application in Cloud Foundry (CF), the Move2Kube CLI tool provides a command called &lt;code>collect&lt;/code>. As the name suggests, it collects information about applications running in the cloud.&lt;/p>
 &lt;ul>
@@ -35,7 +35,78 @@
 &lt;p>Install &lt;a href="https://www.docker.com/get-started">Docker&lt;/a>.&lt;/p>
 &lt;/li>
 &lt;li>
-&lt;p>Use the &lt;a href="https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms">language-platforms&lt;/a> sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which need to be containerized and then put into Kubernetes.&lt;/p></description></item><item><title>Konveyor 0.8.0 Release Announcement</title><link>http://konveyor.io/blog/2025/konveyor-0.8.0-release-announcement/</link><pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate><guid>http://konveyor.io/blog/2025/konveyor-0.8.0-release-announcement/</guid><description>&lt;p>&lt;strong>Author&lt;/strong>: &lt;a href="https://github.com/savitharaghunathan">Savitha Raghunathan&lt;/a>, &lt;a href="https://github.com/dymurray">Dylan Murray&lt;/a>&lt;/p>
+&lt;p>Use the &lt;a href="https://github.com/konveyor/move2kube-demos/raw/main/samples/language-platforms">language-platforms&lt;/a> sample. The language-platforms file has a combination of multiple applications in different languages (Java, Go, Python, Ruby, etc.) which need to be containerized and then put into Kubernetes.&lt;/p></description></item><item><title>How to use Konveyor AI</title><link>http://konveyor.io/docs/konveyor/kai/gettingstarted/con_developer-lightspeed-pathways/</link><pubDate>Mon, 15 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/gettingstarted/con_developer-lightspeed-pathways/</guid><description>&lt;p>You can opt to use Konveyor AI features to request a code fix suggestion after running a static code analysis of an application. Konveyor AI augments the manual changes made to code throughout your organization in different migration waves and creates a context that is shared with a large language model (LLM).&lt;/p>
+&lt;p>The LLM suggests code resolutions based on the issue description, context, and previous examples of code changes to resolve issues.&lt;/p></description></item><item><title>Generating code fix suggestion example</title><link>http://konveyor.io/docs/konveyor/kai/gettingstarted/ref_example-code-suggestion/</link><pubDate>Sun, 14 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/gettingstarted/ref_example-code-suggestion/</guid><description>&lt;p>This example will walk you through generating code fixes for a &lt;code>Java&lt;/code> application that must be migrated to the target technology &lt;code>quarkus&lt;/code>. To generate resolutions for issues in the code, we use the Agentic AI mode and the &lt;code>my-model&lt;/code> as the large language model (LLM) that you deployed in OpenShift AI.&lt;/p>
+&lt;h2 id="procedure">Procedure&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Open the &lt;code>my-Java&lt;/code> project in Visual Studio (VS) Code.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Download the Konveyor AI extension from the &lt;a href="https://github.com/konveyor/editor-extensions/releases/tag/v0.2.0">Konveyor AI release page in GitHub&lt;/a>.&lt;/p></description></item><item><title>Configuring the LLM secret key</title><link>http://konveyor.io/docs/konveyor/kai/solutionserver/proc_tackle-llm-secret/</link><pubDate>Thu, 11 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/solutionserver/proc_tackle-llm-secret/</guid><description>&lt;p>You must configure the Kubernetes secret for the large language model (LLM) provider in the Kubernetes namespace where you installed the Konveyor Operator.&lt;/p>
+&lt;p>You must create a LLM API key secret in your Kubernetes cluster to produce the resources necessary for the Solution Server. If you do not configure the LLM API key secret, Konveyor AI does not create the resources necessary to run the Solution Server.&lt;/p>
+&lt;h2 id="procedure">Procedure&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Create a credentials secret named &lt;code>kai-api-keys&lt;/code> in the
+&lt;code>konveyor-ai&lt;/code> project.&lt;/p></description></item><item><title>Enabling konveyor AI in Tackle custom resource</title><link>http://konveyor.io/docs/konveyor/kai/solutionserver/proc_tackle-enable-dev-lightspeed/</link><pubDate>Wed, 10 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/solutionserver/proc_tackle-enable-dev-lightspeed/</guid><description>&lt;p>Solution Server integrates with the Konveyor Hub backend component to use the database and volumes necessary to store and retrieve the solved examples.&lt;/p>
+&lt;p>To enable Solution Server and other AI configurations in the Konveyor AI VS Code extension, you must modify the Tackle custom resource (CR) with additional parameters.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>You deployed an additional RWO volume for the &lt;code>kai-database&lt;/code> if you
+want to use Konveyor AI.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>You installed the Konveyor operator v8.0.0.&lt;/p></description></item><item><title>Configuring the LLM provider settings</title><link>http://konveyor.io/docs/konveyor/kai/llmsettings/ref_llm-provider-configurations/</link><pubDate>Mon, 08 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/llmsettings/ref_llm-provider-configurations/</guid><description>&lt;p>Konveyor AI is large language model (LLM) agnostic and integrates with an LLM of your choice. To enable Konveyor AI to access your large language model (LLM), you must enter the LLM provider configurations in the &lt;code>provider-settings.yaml&lt;/code> file.&lt;/p>
+&lt;p>The &lt;code>provider-settings.yaml&lt;/code> file contains a list of LLM providers that are supported by default. The mandatory environment variables are different for each LLM provider. Depending on the provider that you choose, you can configure additional environment variables for a model in the &lt;code>provider-settings.yaml&lt;/code> file. You can also enter a new provider
+with the required environment variables, the base URL, and the model name.&lt;/p></description></item><item><title>Configuring the LLM in Podman Desktop</title><link>http://konveyor.io/docs/konveyor/kai/llmsettings/proc_configuring-llm-podman-desktop/</link><pubDate>Sun, 07 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/llmsettings/proc_configuring-llm-podman-desktop/</guid><description>&lt;p>The Podman AI lab extension enables you to use an open-source model from a curated list of models and use it locally in your system.&lt;/p>
+&lt;p>The code fix suggestions generated by a model depends on the model’s capabilities. Models deployed through the Podman AI Lab were found to be insufficient for the complexity of code changes required to fix issues discovered by Konveyor. You must not use such models in a production environment.&lt;/p></description></item><item><title>Configuring the LLM provider settings</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-lightspeed-ide-settings/</link><pubDate>Fri, 05 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-lightspeed-ide-settings/</guid><description>&lt;p>After you install the Konveyor extension in Visual Studio (VS) Code, you must provide your large language model (LLM) credentials to activate Konveyor AI settings in Visual Studio (VS) Code.&lt;/p>
+&lt;p>Konveyor AI settings are applied to all AI-assisted analysis that you perform by using the Konveyor extension. The extension settings can be broadly categorized into debugging and logging, Konveyor AI settings, analysis settings, and Solution Server settings.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;p>In addition to the overall prerequisites, you have configured the
+following:&lt;/p></description></item><item><title>Configuring the Solution Server settings</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-solution-server-settings-file/</link><pubDate>Thu, 04 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-solution-server-settings-file/</guid><description>&lt;p>You need a Keycloak realm and the Solution Server URL to connect
+Konveyor extension with the Solution Server.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>The Solution Server URL is available.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>An administrator configured the Keycloak realm for the Solution
+Server.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="procedure">Procedure&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Type &lt;code>Ctrl + Shift + P&lt;/code> or &lt;code>Cmd + Shift + P&lt;/code> on the search bar and
+enter &lt;code>Preferences:Open User Settings (JSON)&lt;/code>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>In the &lt;code>settings.json&lt;/code> file, enter &lt;code>Ctrl + SPACE&lt;/code> to enable the
+auto-complete for the Solution Server configurable fields.&lt;/p></description></item><item><title>Configuring the Konveyor AI profile settings</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-profile-settings/</link><pubDate>Wed, 03 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-profile-settings/</guid><description>&lt;p>You can use the Visual Studio (VS) Code plugin to run an analysis to discover issues in the code. You can optionally enable Konveyor AI to get AI-assisted code suggestions.&lt;/p>
+&lt;p>To generate code changes using the Konveyor extension, you must
+configure a profile that contains all the necessary configurations, such as source and target technologies and the API key to connect to your chosen large language model (LLM).&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>You completed the Solution Server configurations in Tackle custom
+resource if you opt to use the Solution Server.&lt;/p></description></item><item><title>Running an analysis</title><link>http://konveyor.io/docs/konveyor/kai/runanalysis/proc_running-rag-analysis/</link><pubDate>Mon, 01 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/runanalysis/proc_running-rag-analysis/</guid><description>&lt;p>You can run a static code analysis of an application with or without enabling the generative AI features. The RPC (Remote Procedure Call) server runs the analysis to detect all issues in the code for one or more target technologies to which you want to migrate the application.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>You opened a Java project in your VS Code workspace.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>You configured an analysis profile on the &lt;strong>Konveyor Analysis View&lt;/strong> page.&lt;/p></description></item><item><title>Applying resolutions generated by the solution server</title><link>http://konveyor.io/docs/konveyor/kai/runanalysis/proc_apply-rag-resolution/</link><pubDate>Sun, 30 Nov 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/runanalysis/proc_apply-rag-resolution/</guid><description>&lt;p>When you request code resolutions by enabling the Solution Server, an issue displays the success metric when the metric becomes available. A success metric indicates the confidence level in applying the fix suggestion from the LLM based on how many times the update was applied in past analysis.&lt;/p>
+&lt;p>You can review the code updates and edit the suggested code resolutions before accepting the suggestions.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>You opened a Java project in your VS Code workspace.&lt;/p></description></item><item><title>Generating code resolutions in the agent mode</title><link>http://konveyor.io/docs/konveyor/kai/runanalysis/proc_running-agent-analysis/</link><pubDate>Sat, 29 Nov 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/runanalysis/proc_running-agent-analysis/</guid><description>&lt;p>In the agent mode, the Konveyor AI planning agent creates the context for an issue and picks a sub-agent that is most suited to resolve the issue. The sub-agent runs an automated scan to describe how the issue can be resolved and generates files with the updated resolutions in one stream.&lt;/p>
+&lt;p>You can review the updated files and approve or reject the changes to the code. The agent runs another automated analysis to detect new issues in the code that may have occurred because of the accepted changes or diagnostic issues that your tool may generate following a previous analysis. If you allow the process to continue, Konveyor runs the stream again and generates a new file with the latest updates.&lt;/p></description></item><item><title>Debugging Konveyor AI</title><link>http://konveyor.io/docs/konveyor/kai/con_developer-lightspeed-logs/</link><pubDate>Fri, 28 Nov 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/con_developer-lightspeed-logs/</guid><description>&lt;p>Konveyor AI generates logs to debug issues specific to the extension host and the Konveyor analysis and RPC server. You can also configure the log level for the Konveyor AI in the extension settings. The default log level is &lt;strong>debug&lt;/strong>.&lt;/p>
+&lt;p>Extension logs are stored as &lt;code>extension.log&lt;/code> with automatic rotation. The maximum size of the log file is 10 MB and three files are retained. Analyzer RPC logs are stored as &lt;code>analyzer.log&lt;/code> without rotation.&lt;/p></description></item><item><title>Konveyor 0.8.0 Release Announcement</title><link>http://konveyor.io/blog/2025/konveyor-0.8.0-release-announcement/</link><pubDate>Wed, 01 Oct 2025 00:00:00 +0000</pubDate><guid>http://konveyor.io/blog/2025/konveyor-0.8.0-release-announcement/</guid><description>&lt;p>&lt;strong>Author&lt;/strong>: &lt;a href="https://github.com/savitharaghunathan">Savitha Raghunathan&lt;/a>, &lt;a href="https://github.com/dymurray">Dylan Murray&lt;/a>&lt;/p>
 &lt;p>We are thrilled to announce the release of Konveyor 0.8.0!&lt;/p>
 &lt;p>This milestone release brings together months of work from the community and introduces powerful new features, smoother user experiences, and deeper platform awareness to make application modernization faster, more reliable, and more developer-friendly.&lt;/p>
 &lt;p>Konveyor’s mission has always been to help organizations modernize their applications to run in Kubernetes and cloud native environments with confidence. With 0.8.0, we take another major step toward that goal.&lt;/p></description></item><item><title>From “Good Examples” to a Reusable Hint for App Modernization</title><link>http://konveyor.io/blog/2025/hints_generation/</link><pubDate>Tue, 01 Jul 2025 00:00:00 +0000</pubDate><guid>http://konveyor.io/blog/2025/hints_generation/</guid><description>&lt;p>&lt;strong>Author&lt;/strong>: &lt;a href="https://www.linkedin.com/in/savitharaghunathan">Savitha Raghunathan&lt;/a> (&lt;a href="https://github.com/savitharaghunathan">GitHub&lt;/a>)&lt;/p>

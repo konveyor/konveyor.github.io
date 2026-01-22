@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Using Konveyor AI in IDE on Konveyor</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/</link><description>Recent content in Using Konveyor AI in IDE on Konveyor</description><generator>Hugo</generator><language>en-us</language><lastBuildDate>Fri, 05 Dec 2025 14:58:52 -0600</lastBuildDate><atom:link href="http://konveyor.io/docs/konveyor/kai/idesettings/index.xml" rel="self" type="application/rss+xml"/><item><title>Configuring the LLM provider settings</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-lightspeed-ide-settings/</link><pubDate>Fri, 05 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-lightspeed-ide-settings/</guid><description>&lt;p>After you install the Konveyor extension in Visual Studio (VS) Code, you must provide your large language model (LLM) credentials to activate Konveyor AI settings in Visual Studio (VS) Code.&lt;/p>
+&lt;p>Konveyor AI settings are applied to all AI-assisted analysis that you perform by using the Konveyor extension. The extension settings can be broadly categorized into debugging and logging, Konveyor AI settings, analysis settings, and Solution Server settings.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;p>In addition to the overall prerequisites, you have configured the
+following:&lt;/p></description></item><item><title>Configuring the Solution Server settings</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-solution-server-settings-file/</link><pubDate>Thu, 04 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-solution-server-settings-file/</guid><description>&lt;p>You need a Keycloak realm and the Solution Server URL to connect
+Konveyor extension with the Solution Server.&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>The Solution Server URL is available.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>An administrator configured the Keycloak realm for the Solution
+Server.&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="procedure">Procedure&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Type &lt;code>Ctrl + Shift + P&lt;/code> or &lt;code>Cmd + Shift + P&lt;/code> on the search bar and
+enter &lt;code>Preferences:Open User Settings (JSON)&lt;/code>.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>In the &lt;code>settings.json&lt;/code> file, enter &lt;code>Ctrl + SPACE&lt;/code> to enable the
+auto-complete for the Solution Server configurable fields.&lt;/p></description></item><item><title>Configuring the Konveyor AI profile settings</title><link>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-profile-settings/</link><pubDate>Wed, 03 Dec 2025 14:58:52 -0600</pubDate><guid>http://konveyor.io/docs/konveyor/kai/idesettings/proc_configuring-developer-profile-settings/</guid><description>&lt;p>You can use the Visual Studio (VS) Code plugin to run an analysis to discover issues in the code. You can optionally enable Konveyor AI to get AI-assisted code suggestions.&lt;/p>
+&lt;p>To generate code changes using the Konveyor extension, you must
+configure a profile that contains all the necessary configurations, such as source and target technologies and the API key to connect to your chosen large language model (LLM).&lt;/p>
+&lt;h2 id="prerequisites">Prerequisites&lt;/h2>
+&lt;ul>
+&lt;li>
+&lt;p>You completed the Solution Server configurations in Tackle custom
+resource if you opt to use the Solution Server.&lt;/p></description></item></channel></rss>
