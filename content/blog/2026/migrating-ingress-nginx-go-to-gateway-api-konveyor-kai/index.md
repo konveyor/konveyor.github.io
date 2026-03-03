@@ -8,19 +8,19 @@ tags:
     - AppModernization
     - GatewayAPI
     - Ingress-nginx
-title: "Migrating Ingress-NGINX Go Code to Gateway API with Konveyor and KAI"
+title: "Migrating Ingress NGINX Go Code to Gateway API with Konveyor and KAI"
 ---
 
 **Author:** [Savitha Raghunathan](https://github.com/savitharaghunathan)
 
-[Ingress-NGINX](https://github.com/kubernetes/ingress-nginx) has been a cornerstone of Kubernetes networking for years, powering traffic routing for countless production workloads. As the ecosystem evolves, the project has [announced its retirement](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), passing the torch to the [Gateway API](https://gateway-api.sigs.k8s.io/) — a more expressive, role-oriented successor. Tools like [`ingress2gateway`](https://github.com/kubernetes-sigs/ingress2gateway) make it straightforward to convert Ingress YAML manifests into [Gateway](https://gateway-api.sigs.k8s.io/api-types/gateway/) and [HTTPRoute](https://gateway-api.sigs.k8s.io/api-types/httproute/) resources.
+[Ingress NGINX](https://github.com/kubernetes/ingress-nginx) has been a cornerstone of Kubernetes networking for years, powering traffic routing for countless production workloads. As the ecosystem evolves, the project has [announced its retirement](https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/), passing the torch to the [Gateway API](https://gateway-api.sigs.k8s.io/) — a more expressive, role-oriented successor. Tools like [`ingress2gateway`](https://github.com/kubernetes-sigs/ingress2gateway) make it straightforward to convert Ingress YAML manifests into [Gateway](https://gateway-api.sigs.k8s.io/api-types/gateway/) and [HTTPRoute](https://gateway-api.sigs.k8s.io/api-types/httproute/) resources.
 
 But what about the Go programs that *build* Ingress objects in code?
 
 Many platform teams have operators and CLI tools written in Go that programmatically create and manage Ingress resources using [`k8s.io/api/networking/v1`](https://pkg.go.dev/k8s.io/api/networking/v1) and [`client-go`](https://github.com/kubernetes/client-go). `ingress2gateway` can convert the deployed Ingress resources, but it doesn't modify the Go source code that creates and manages them. You'd still need to update every `networkingv1` type reference, every `client-go` API call, and every nginx annotation string in your codebase. [Konveyor](https://konveyor.io) addresses this source code side of the migration.
 
-![Migrating Ingress-NGINX Go code to Gateway API with Konveyor and KAI](header.png)
-_Image generated with Gemini Nano Banana Pro._
+![Migrating Ingress NGINX Go code to Gateway API with Konveyor and KAI](header.png)
+*Image generated with Gemini Nano Banana Pro.*
 
 ## How Konveyor Fills the Gap
 
@@ -52,7 +52,7 @@ The violations fall into three categories:
 
 **Type references** — flags every usage of `networkingv1` types and shows the [Gateway API](https://gateway-api.sigs.k8s.io/) equivalent ([HTTPRoute](https://gateway-api.sigs.k8s.io/api-types/httproute/), [GatewayClass](https://gateway-api.sigs.k8s.io/api-types/gatewayclass/), [HTTPRouteRule](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1.HTTPRouteRule)):
 
-```
+```text
 networkingv1.Ingress      →  gatewayv1.HTTPRoute
 networkingv1.IngressClass →  gatewayv1.GatewayClass
 networkingv1.IngressRule  →  gatewayv1.HTTPRouteRule
@@ -61,14 +61,14 @@ networkingv1.IngressTLS   →  Gateway.spec.listeners[].tls
 
 **Client-go API calls** — flags the Kubernetes API calls that need to change. The Gateway API uses a [separate clientset](https://pkg.go.dev/sigs.k8s.io/gateway-api/pkg/client/clientset/versioned) (not the core `client-go`); use `GatewayV1().HTTPRoutes(namespace)` and `GatewayV1().GatewayClasses()` on that client:
 
-```
+```text
 .NetworkingV1().Ingresses(namespace)  →  .GatewayV1().HTTPRoutes(namespace)
 .NetworkingV1().IngressClasses()      →  .GatewayV1().GatewayClasses()
 ```
 
 **Annotation patterns** — flags nginx annotation strings and maps them to native [Gateway API filters](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1.HTTPRouteFilter) and [timeouts](https://gateway-api.sigs.k8s.io/reference/spec/#gateway.networking.k8s.io/v1.HTTPRouteTimeouts):
 
-```
+```text
 ssl-redirect            →  TLS on Gateway listener + RequestRedirect filter
 configuration-snippet   →  ResponseHeaderModifier filter
 proxy-read/send-timeout →  HTTPRouteTimeouts (native on HTTPRouteRule)
@@ -109,7 +109,7 @@ The [rules](https://github.com/savitharaghunathan/ingress-to-gateway-migration-k
     Replace proxy timeout annotations with HTTPRouteTimeouts.
 ```
 
-A well-crafted message with concrete before/after code examples leads to better generated fixes. You can follow the same approach to write custom rules for other migration scenarios.
+A well-crafted message with concrete before/after code examples leads to better-generated fixes. You can follow the same approach to write custom rules for other migration scenarios.
 
 ## Demo
 
@@ -119,4 +119,4 @@ A well-crafted message with concrete before/after code examples leads to better 
 
 This scenario demonstrates Konveyor's capabilities with Go, but Konveyor supports multiple languages. The [Konveyor extension pack](https://marketplace.visualstudio.com/items?itemName=konveyor.konveyor) bundles providers for Java, JavaScript, Go, and C# — install once and the right provider activates when it detects a matching project. Whether you're migrating [Java EE to Quarkus](https://quarkus.io), upgrading [Spring Boot](https://spring.io/projects/spring-boot), or modernizing Go infrastructure tooling like this scenario, Konveyor and KAI can help discover what needs to change and generate the fixes.
 
-Check out the [step-by-step tutorial](https://github.com/savitharaghunathan/ingress-to-gateway-migration-konveyor/blob/main/TUTORIAL.md), and join us on the [Konveyor community](https://github.com/konveyor). We look forward to your [feedback, ideas, and collaboration](https://github.com/konveyor/kai/issues/new) as we grow Kai together.
+Check out the [step-by-step tutorial](https://github.com/savitharaghunathan/ingress-to-gateway-migration-konveyor/blob/main/TUTORIAL.md), and join us on the [Konveyor community](https://github.com/konveyor). We look forward to your [feedback, ideas, and collaboration](https://github.com/konveyor/kai/issues/new) as we grow Konveyor and KAI together.
