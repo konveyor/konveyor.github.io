@@ -62,25 +62,52 @@
 <section class="max-w-1000px m-auto">
     <h2 class="fancy mb-5 -text-primary text-center"><span>Recent Posts</span></h2>
     <div class="flex flex-wrap gap-sm gap-3xl--mobile m-auto space-between--tablet">
-        {{ range first 3 (where .Site.RegularPages "Type" "in" (slice "blog")) }}
-            {{ if .Params.featured }}
-                <div>
-                    <div class="featured-post-image">
-                        {{ with .Resources.Get .Params.image }}
-                            <img src="{{ .RelPermalink }}" alt="{{ .Title }}" />
-                        {{ end }}
-                    </div>
-                    <div class="max-w-300px">
-                        <a href="{{ .RelPermalink }}" class="text-decoration-none"><h3 class="-text-primary mt-3">{{ .Title }}</h3></a>
-                        <p>
-                            {{ .Description }}
-                        </p>
-                        <div>
-                            <a href="{{ .RelPermalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
-                        </div>
+        {{ range first 3 (sort (where site.RegularPages "Type" "blog") "Date" "desc") }}
+            {{ $post := . }}
+
+            {{/* Image: front matter value, then header/banner resource, then any image in the page bundle, then a site-wide default. */}}
+            {{ $image := "" }}
+            {{ with .Params.image }}
+                {{ $image = $post.Resources.GetMatch . }}
+            {{ end }}
+            {{ if not $image }}
+                {{ $image = .Resources.GetMatch "{header,banner}*" }}
+            {{ end }}
+            {{ if not $image }}
+                {{ with .Resources.ByType "image" }}
+                    {{ $image = index . 0 }}
+                {{ end }}
+            {{ end }}
+            {{ $imageURL := "/images/konveyor_header.png" }}
+            {{ with $image }}
+                {{ $imageURL = .RelPermalink }}
+            {{ end }}
+
+            {{/* Description: front matter value, then the first substantial line of the post. */}}
+            {{ $description := .Description }}
+            {{ if not $description }}
+                {{ range (split (.Summary | plainify | htmlUnescape) "\n") }}
+                    {{ $line := trim . " " }}
+                    {{ if and (not $description) (gt (len $line) 60) }}
+                        {{ $description = $line }}
+                    {{ end }}
+                {{ end }}
+            {{ end }}
+
+            <div>
+                <div class="featured-post-image">
+                    <img src="{{ $imageURL }}" alt="{{ .Title }}" loading="lazy" />
+                </div>
+                <div class="max-w-300px">
+                    <a href="{{ .RelPermalink }}" class="text-decoration-none"><h3 class="-text-primary mt-3">{{ .Title }}</h3></a>
+                    <p>
+                        {{ $description | truncate 160 }}
+                    </p>
+                    <div>
+                        <a href="{{ .RelPermalink }}" class="btn btn-transparent">Read More <i class="fa-solid fa-arrow-right ml-5px"></i></a>
                     </div>
                 </div>
-            {{ end }}
+            </div>
         {{ end }}
     </div>
 </section>
