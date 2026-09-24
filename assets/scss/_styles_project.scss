@@ -502,6 +502,8 @@
 
 .featured-post-image {
     width: 20rem;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
     @include media-breakpoint-down(lg) { 
         width: 100%;
     }
